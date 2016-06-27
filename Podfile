@@ -9,6 +9,16 @@ pod 'SwiftGen'
 #Network
 pod 'Alamofire', '~> 3.4'
 
-#Other
+#PhoneNumbers
 pod 'PhoneNumberKit', '~> 0.8'
+
+#Colors
+pod 'DynamicColor', '~> 3.0.0'
+
+#JSON
+pod 'AlamofireJsonToObjects', '~> 1.0'
+
+#Images
+pod 'AlamofireImage', '~> 2.0'
+
 end
