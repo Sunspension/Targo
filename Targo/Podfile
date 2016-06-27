@@ -1,0 +1,5 @@
+target 'Targo' do
+
+pod 'SwiftGen'
+
+end
