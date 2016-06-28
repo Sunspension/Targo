@@ -1,7 +1,7 @@
-target 'Targo' do
-source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, ‘8.0’
 use_frameworks!
+
+target 'Targo' do
 
 #Localization
 
@@ -21,5 +21,8 @@ pod 'AlamofireJsonToObjects', '~> 1.0'
 
 #Images
 pod 'AlamofireImage', '~> 2.0'
+
+#DB
+pod 'RealmSwift'
 
 end
