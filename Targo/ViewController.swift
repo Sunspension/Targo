@@ -15,14 +15,29 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        Alamofire.request(Router.ApiAuthorization(phoneNumber: "79119477269")).responseObject {
+        let deviceToken = NSUserDefaults.standardUserDefaults().objectForKey(kTargoDeviceToken)
+        let params: [String: AnyObject] = ["phone" : "79119477269", "device_type" : "ios", "device_token" : deviceToken ?? "11123123"]
+        
+        Alamofire.request(.POST, Router.baseURLString + "/code", parameters: params, encoding: Alamofire.ParameterEncoding.JSON, headers: nil).responseString { (response: Response<String, NSError>) in
             
-            (response: Result<AuthorizationCodeResponse, NSError>) in
+            print("response: \(response)")
             
-            if let result = response.value {
-                
-            }
+            }.responseObject { (request, response, result: Result<AuthorizationCodeResponse, NSError>) in
+            
+                if let res = result.value {
+                    
+                    let i = 0
+                }
         }
+        
+//        Alamofire.request(Router.ApiAuthorization(phoneNumber: "79119477269")).responseObject {
+//            
+//            (response: Result<AuthorizationCodeResponse, NSError>) in
+//            
+//            if let result = response.value {
+//                
+//            }
+//        }
         
         // Do any additional setup after loading the view, typically from a nib.
     }
