@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		280234C07102419763E9F91A /* Pods_Targo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EFAD6BD7514B14022B0BD1B /* Pods_Targo.framework */; };
+		D464027F1D21CC4B00644463 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = D464027E1D21CC4B00644463 /* Router.swift */; };
 		E5C062D91D2106BF002074C4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C062D81D2106BF002074C4 /* AppDelegate.swift */; };
 		E5C062DB1D2106BF002074C4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C062DA1D2106BF002074C4 /* ViewController.swift */; };
 		E5C062DE1D2106BF002074C4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5C062DC1D2106BF002074C4 /* Main.storyboard */; };
@@ -19,6 +20,7 @@
 		24123079AD1A2AFA6B2F5FA0 /* Pods-Targo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Targo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Targo/Pods-Targo.release.xcconfig"; sourceTree = "<group>"; };
 		4323934D0920EDEB476CFDE6 /* Pods-Targo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Targo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Targo/Pods-Targo.debug.xcconfig"; sourceTree = "<group>"; };
 		7EFAD6BD7514B14022B0BD1B /* Pods_Targo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Targo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D464027E1D21CC4B00644463 /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		E5C062D51D2106BF002074C4 /* Targo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Targo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5C062D81D2106BF002074C4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E5C062DA1D2106BF002074C4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -57,6 +59,22 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		D464027C1D21CBE200644463 /* ServerAPI */ = {
+			isa = PBXGroup;
+			children = (
+				D464027D1D21CC0600644463 /* APIHelpers */,
+			);
+			name = ServerAPI;
+			sourceTree = "<group>";
+		};
+		D464027D1D21CC0600644463 /* APIHelpers */ = {
+			isa = PBXGroup;
+			children = (
+				D464027E1D21CC4B00644463 /* Router.swift */,
+			);
+			name = APIHelpers;
+			sourceTree = "<group>";
+		};
 		E5C062CC1D2106BF002074C4 = {
 			isa = PBXGroup;
 			children = (
@@ -78,6 +96,7 @@
 		E5C062D71D2106BF002074C4 /* Targo */ = {
 			isa = PBXGroup;
 			children = (
+				D464027C1D21CBE200644463 /* ServerAPI */,
 				E5C062D81D2106BF002074C4 /* AppDelegate.swift */,
 				E5C062DA1D2106BF002074C4 /* ViewController.swift */,
 				E5C062DC1D2106BF002074C4 /* Main.storyboard */,
@@ -95,12 +114,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E5C062E71D2106BF002074C4 /* Build configuration list for PBXNativeTarget "Targo" */;
 			buildPhases = (
-				5A673004BEE006ADA839D3F8 /* 📦 Check Pods Manifest.lock */,
+				5A673004BEE006ADA839D3F8 /* [CP] Check Pods Manifest.lock */,
 				E5C062D11D2106BF002074C4 /* Sources */,
 				E5C062D21D2106BF002074C4 /* Frameworks */,
 				E5C062D31D2106BF002074C4 /* Resources */,
-				25E978A10890F0FB40AF15D8 /* 📦 Embed Pods Frameworks */,
-				F366E6960F32C734F1E199C8 /* 📦 Copy Pods Resources */,
+				25E978A10890F0FB40AF15D8 /* [CP] Embed Pods Frameworks */,
+				F366E6960F32C734F1E199C8 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -158,14 +177,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		25E978A10890F0FB40AF15D8 /* 📦 Embed Pods Frameworks */ = {
+		25E978A10890F0FB40AF15D8 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -173,14 +192,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Targo/Pods-Targo-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		5A673004BEE006ADA839D3F8 /* 📦 Check Pods Manifest.lock */ = {
+		5A673004BEE006ADA839D3F8 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -188,14 +207,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		F366E6960F32C734F1E199C8 /* 📦 Copy Pods Resources */ = {
+		F366E6960F32C734F1E199C8 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -211,6 +230,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5C062DB1D2106BF002074C4 /* ViewController.swift in Sources */,
+				D464027F1D21CC4B00644463 /* Router.swift in Sources */,
 				E5C062D91D2106BF002074C4 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -14,7 +14,7 @@ pod 'Alamofire', '~> 3.4'
 pod 'PhoneNumberKit', '~> 0.8'
 
 #Colors
-pod 'DynamicColor', '~> 3.0.0'
+pod 'DynamicColor', '~> 2.4.0'
 
 #JSON
 pod 'AlamofireJsonToObjects', '~> 1.0'
