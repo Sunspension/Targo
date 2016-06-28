@@ -7,11 +7,23 @@
 //
 
 import UIKit
+import Alamofire
+import AlamofireJsonToObjects
 
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        Alamofire.request(Router.ApiAuthorization(phoneNumber: "79119477269")).responseObject {
+            
+            (response: Result<AuthorizationCodeResponse, NSError>) in
+            
+            if let result = response.value {
+                
+            }
+        }
+        
         // Do any additional setup after loading the view, typically from a nib.
     }
 

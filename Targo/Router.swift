@@ -11,7 +11,7 @@ import Alamofire
 
 enum Router: URLRequestConvertible {
     
-    static let baseURLString = "http://45.62.123.157:8082/api/"
+    static let baseURLString = "http://45.62.123.157:8082/api"
     
     static let perPage = 10
     
@@ -33,11 +33,14 @@ enum Router: URLRequestConvertible {
                 
             case .ApiAuthorization(let phoneNumber):
                 
-                return ("code", ["phone" : phoneNumber])
+                let deviceToken = NSUserDefaults.standardUserDefaults().objectForKey(kTargoDeviceToken)
+                let params: [String: AnyObject] = ["phone" : phoneNumber, "device_type" : "ios", "device_token" : deviceToken ?? ""]
+                
+                return ("/code", params)
                 
             case .ApiAuthorizationCode(let phoneNumber, let code):
                 
-                return ("auth", ["phone" : phoneNumber, "code" : code])
+                return ("/auth", ["phone" : phoneNumber, "code" : code])
             }
         }()
         
@@ -66,6 +69,7 @@ enum Router: URLRequestConvertible {
         let encoding = Alamofire.ParameterEncoding.URL
         
         URLRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        URLRequest.HTTPMethod = Alamofire.Method.POST.rawValue
         
         return encoding.encode(URLRequest, parameters: result.params).0
     }
