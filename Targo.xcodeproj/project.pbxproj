@@ -8,7 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		280234C07102419763E9F91A /* Pods_Targo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EFAD6BD7514B14022B0BD1B /* Pods_Targo.framework */; };
-		D464027F1D21CC4B00644463 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = D464027E1D21CC4B00644463 /* Router.swift */; };
+		D4B96F761D244CAA00294A4B /* TRemoteServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B96F751D244CAA00294A4B /* TRemoteServer.swift */; };
+		D4B96F7B1D244DBA00294A4B /* PRemoteServerV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B96F7A1D244DBA00294A4B /* PRemoteServerV1.swift */; };
+		D4F84B431D24591300263D1A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F84B421D24591300263D1A /* Extensions.swift */; };
+		D4F84B491D24668400263D1A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F84B481D24668400263D1A /* User.swift */; };
 		E57C7E8A1D22B60D00F9A0FC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57C7E891D22B60D00F9A0FC /* Constants.swift */; };
 		E57C7E8E1D22B8A700F9A0FC /* AuthorizationCodeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57C7E8D1D22B8A700F9A0FC /* AuthorizationCodeResponse.swift */; };
 		E5C062D91D2106BF002074C4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C062D81D2106BF002074C4 /* AppDelegate.swift */; };
@@ -22,7 +25,10 @@
 		24123079AD1A2AFA6B2F5FA0 /* Pods-Targo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Targo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Targo/Pods-Targo.release.xcconfig"; sourceTree = "<group>"; };
 		4323934D0920EDEB476CFDE6 /* Pods-Targo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Targo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Targo/Pods-Targo.debug.xcconfig"; sourceTree = "<group>"; };
 		7EFAD6BD7514B14022B0BD1B /* Pods_Targo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Targo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D464027E1D21CC4B00644463 /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		D4B96F751D244CAA00294A4B /* TRemoteServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TRemoteServer.swift; path = ServerAPI/RemoteServer/TRemoteServer.swift; sourceTree = "<group>"; };
+		D4B96F7A1D244DBA00294A4B /* PRemoteServerV1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PRemoteServerV1.swift; path = ServerAPI/RemoteServer/PRemoteServerV1.swift; sourceTree = "<group>"; };
+		D4F84B421D24591300263D1A /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		D4F84B481D24668400263D1A /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Targo/Models/User/User.swift; sourceTree = SOURCE_ROOT; };
 		E57C7E891D22B60D00F9A0FC /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E57C7E8D1D22B8A700F9A0FC /* AuthorizationCodeResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorizationCodeResponse.swift; path = Models/Response/AuthorizationCodeResponse.swift; sourceTree = "<group>"; };
 		E5C062D51D2106BF002074C4 /* Targo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Targo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -66,17 +72,26 @@
 		D464027C1D21CBE200644463 /* ServerAPI */ = {
 			isa = PBXGroup;
 			children = (
-				D464027D1D21CC0600644463 /* APIHelpers */,
+				D4B96F741D244C2100294A4B /* RemoteServer */,
 			);
 			name = ServerAPI;
 			sourceTree = "<group>";
 		};
-		D464027D1D21CC0600644463 /* APIHelpers */ = {
+		D4B96F741D244C2100294A4B /* RemoteServer */ = {
 			isa = PBXGroup;
 			children = (
-				D464027E1D21CC4B00644463 /* Router.swift */,
+				D4B96F751D244CAA00294A4B /* TRemoteServer.swift */,
+				D4B96F7A1D244DBA00294A4B /* PRemoteServerV1.swift */,
 			);
-			name = APIHelpers;
+			name = RemoteServer;
+			sourceTree = "<group>";
+		};
+		D4F84B471D24666C00263D1A /* User */ = {
+			isa = PBXGroup;
+			children = (
+				D4F84B481D24668400263D1A /* User.swift */,
+			);
+			path = User;
 			sourceTree = "<group>";
 		};
 		E57C7E881D22B5BD00F9A0FC /* AppHelpers */ = {
@@ -90,6 +105,7 @@
 		E57C7E8B1D22B84A00F9A0FC /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				D4F84B471D24666C00263D1A /* User */,
 				E57C7E8C1D22B85400F9A0FC /* Response */,
 			);
 			name = Models;
@@ -141,6 +157,7 @@
 		E5C7D85F1D22DA4E00A50D60 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				D4F84B421D24591300263D1A /* Extensions.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -317,9 +334,12 @@
 			files = (
 				E5C062DB1D2106BF002074C4 /* ViewController.swift in Sources */,
 				E57C7E8E1D22B8A700F9A0FC /* AuthorizationCodeResponse.swift in Sources */,
-				D464027F1D21CC4B00644463 /* Router.swift in Sources */,
+				D4F84B431D24591300263D1A /* Extensions.swift in Sources */,
 				E5C062D91D2106BF002074C4 /* AppDelegate.swift in Sources */,
+				D4F84B491D24668400263D1A /* User.swift in Sources */,
 				E57C7E8A1D22B60D00F9A0FC /* Constants.swift in Sources */,
+				D4B96F761D244CAA00294A4B /* TRemoteServer.swift in Sources */,
+				D4B96F7B1D244DBA00294A4B /* PRemoteServerV1.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -18,6 +18,7 @@ pod 'DynamicColor', '~> 2.4.0'
 
 #JSON
 pod 'AlamofireJsonToObjects', '~> 1.0'
+pod 'ObjectMapper', '~> 1.3'
 
 #Images
 pod 'AlamofireImage', '~> 2.0'
