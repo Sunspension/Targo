@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		280234C07102419763E9F91A /* Pods_Targo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EFAD6BD7514B14022B0BD1B /* Pods_Targo.framework */; };
+		D41F36071D2855C8001896A2 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41F36061D2855C8001896A2 /* LoginViewController.swift */; };
+		D420B2CB1D293748003FDC83 /* RegistrationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D420B2CA1D293748003FDC83 /* RegistrationCodeViewController.swift */; };
+		D420B2CD1D294BE4003FDC83 /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D420B2CC1D294BE4003FDC83 /* CurrentUser.swift */; };
+		D498D49B1D2825EC002F0E88 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D498D49D1D2825EC002F0E88 /* Localizable.strings */; };
+		D49C7E891D281DB1004408AF /* RegistrationPhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49C7E881D281DB1004408AF /* RegistrationPhoneViewController.swift */; };
 		D4B96F761D244CAA00294A4B /* TRemoteServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B96F751D244CAA00294A4B /* TRemoteServer.swift */; };
 		D4B96F7B1D244DBA00294A4B /* PRemoteServerV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B96F7A1D244DBA00294A4B /* PRemoteServerV1.swift */; };
 		D4F84B431D24591300263D1A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F84B421D24591300263D1A /* Extensions.swift */; };
@@ -15,7 +20,6 @@
 		E57C7E8A1D22B60D00F9A0FC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57C7E891D22B60D00F9A0FC /* Constants.swift */; };
 		E57C7E8E1D22B8A700F9A0FC /* AuthorizationCodeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57C7E8D1D22B8A700F9A0FC /* AuthorizationCodeResponse.swift */; };
 		E5C062D91D2106BF002074C4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C062D81D2106BF002074C4 /* AppDelegate.swift */; };
-		E5C062DB1D2106BF002074C4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C062DA1D2106BF002074C4 /* ViewController.swift */; };
 		E5C062DE1D2106BF002074C4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5C062DC1D2106BF002074C4 /* Main.storyboard */; };
 		E5C062E01D2106BF002074C4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5C062DF1D2106BF002074C4 /* Assets.xcassets */; };
 		E5C062E31D2106BF002074C4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5C062E11D2106BF002074C4 /* LaunchScreen.storyboard */; };
@@ -25,6 +29,12 @@
 		24123079AD1A2AFA6B2F5FA0 /* Pods-Targo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Targo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Targo/Pods-Targo.release.xcconfig"; sourceTree = "<group>"; };
 		4323934D0920EDEB476CFDE6 /* Pods-Targo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Targo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Targo/Pods-Targo.debug.xcconfig"; sourceTree = "<group>"; };
 		7EFAD6BD7514B14022B0BD1B /* Pods_Targo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Targo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D41F36061D2855C8001896A2 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		D420B2CA1D293748003FDC83 /* RegistrationCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationCodeViewController.swift; sourceTree = "<group>"; };
+		D420B2CC1D294BE4003FDC83 /* CurrentUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
+		D498D4981D282480002F0E88 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
+		D498D49C1D2825EC002F0E88 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D49C7E881D281DB1004408AF /* RegistrationPhoneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationPhoneViewController.swift; sourceTree = "<group>"; };
 		D4B96F751D244CAA00294A4B /* TRemoteServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TRemoteServer.swift; path = ServerAPI/RemoteServer/TRemoteServer.swift; sourceTree = "<group>"; };
 		D4B96F7A1D244DBA00294A4B /* PRemoteServerV1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PRemoteServerV1.swift; path = ServerAPI/RemoteServer/PRemoteServerV1.swift; sourceTree = "<group>"; };
 		D4F84B421D24591300263D1A /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -33,7 +43,6 @@
 		E57C7E8D1D22B8A700F9A0FC /* AuthorizationCodeResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorizationCodeResponse.swift; path = Models/Response/AuthorizationCodeResponse.swift; sourceTree = "<group>"; };
 		E5C062D51D2106BF002074C4 /* Targo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Targo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5C062D81D2106BF002074C4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E5C062DA1D2106BF002074C4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		E5C062DD1D2106BF002074C4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E5C062DF1D2106BF002074C4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E5C062E21D2106BF002074C4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -77,6 +86,16 @@
 			name = ServerAPI;
 			sourceTree = "<group>";
 		};
+		D49C7E871D281D7F004408AF /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				D41F36061D2855C8001896A2 /* LoginViewController.swift */,
+				D49C7E881D281DB1004408AF /* RegistrationPhoneViewController.swift */,
+				D420B2CA1D293748003FDC83 /* RegistrationCodeViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
 		D4B96F741D244C2100294A4B /* RemoteServer */ = {
 			isa = PBXGroup;
 			children = (
@@ -90,6 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				D4F84B481D24668400263D1A /* User.swift */,
+				D420B2CC1D294BE4003FDC83 /* CurrentUser.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -140,16 +160,17 @@
 		E5C062D71D2106BF002074C4 /* Targo */ = {
 			isa = PBXGroup;
 			children = (
+				D49C7E871D281D7F004408AF /* Controllers */,
 				E5C7D85F1D22DA4E00A50D60 /* Extensions */,
 				E57C7E8B1D22B84A00F9A0FC /* Models */,
 				E57C7E881D22B5BD00F9A0FC /* AppHelpers */,
 				D464027C1D21CBE200644463 /* ServerAPI */,
 				E5C062D81D2106BF002074C4 /* AppDelegate.swift */,
-				E5C062DA1D2106BF002074C4 /* ViewController.swift */,
 				E5C062DC1D2106BF002074C4 /* Main.storyboard */,
 				E5C062DF1D2106BF002074C4 /* Assets.xcassets */,
 				E5C062E11D2106BF002074C4 /* LaunchScreen.storyboard */,
 				E5C062E41D2106BF002074C4 /* Info.plist */,
+				D498D49D1D2825EC002F0E88 /* Localizable.strings */,
 			);
 			path = Targo;
 			sourceTree = "<group>";
@@ -200,6 +221,7 @@
 				TargetAttributes = {
 					E5C062D41D2106BF002074C4 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = MHNJ942FZ9;
 					};
 				};
 			};
@@ -210,6 +232,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = E5C062CC1D2106BF002074C4;
 			productRefGroup = E5C062D61D2106BF002074C4 /* Products */;
@@ -227,6 +250,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5C062E31D2106BF002074C4 /* LaunchScreen.storyboard in Resources */,
+				D498D49B1D2825EC002F0E88 /* Localizable.strings in Resources */,
 				E5C062E01D2106BF002074C4 /* Assets.xcassets in Resources */,
 				E5C062DE1D2106BF002074C4 /* Main.storyboard in Resources */,
 			);
@@ -332,9 +356,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E5C062DB1D2106BF002074C4 /* ViewController.swift in Sources */,
+				D41F36071D2855C8001896A2 /* LoginViewController.swift in Sources */,
 				E57C7E8E1D22B8A700F9A0FC /* AuthorizationCodeResponse.swift in Sources */,
+				D420B2CD1D294BE4003FDC83 /* CurrentUser.swift in Sources */,
+				D420B2CB1D293748003FDC83 /* RegistrationCodeViewController.swift in Sources */,
 				D4F84B431D24591300263D1A /* Extensions.swift in Sources */,
+				D49C7E891D281DB1004408AF /* RegistrationPhoneViewController.swift in Sources */,
 				E5C062D91D2106BF002074C4 /* AppDelegate.swift in Sources */,
 				D4F84B491D24668400263D1A /* User.swift in Sources */,
 				E57C7E8A1D22B60D00F9A0FC /* Constants.swift in Sources */,
@@ -346,10 +373,19 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		D498D49D1D2825EC002F0E88 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D498D49C1D2825EC002F0E88 /* Base */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		E5C062DC1D2106BF002074C4 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				E5C062DD1D2106BF002074C4 /* Base */,
+				D498D4981D282480002F0E88 /* ru */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -453,6 +489,9 @@
 			baseConfigurationReference = 4323934D0920EDEB476CFDE6 /* Pods-Targo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -461,6 +500,9 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = targo.com.Targo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -469,6 +511,9 @@
 			baseConfigurationReference = 24123079AD1A2AFA6B2F5FA0 /* Pods-Targo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -477,6 +522,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = targo.com.Targo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 			};
 			name = Release;
 		};

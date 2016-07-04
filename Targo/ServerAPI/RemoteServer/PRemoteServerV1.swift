@@ -11,7 +11,7 @@ import Alamofire
 
 protocol PRemoteServerV1 {
     
-    static func registration(phoneNumber: String, parameters: [String : AnyObject]?) -> Request
+    static func registration(phoneNumber: String, deviceToken: String, parameters: [String : AnyObject]?) -> Request
     
-    static func authorization(phoneNumber: String, code: String, parameters: [String : AnyObject]?) -> Request
+    static func authorization(phoneNumber: String, code: String, deviceToken: String, parameters: [String : AnyObject]?) -> Request
 }

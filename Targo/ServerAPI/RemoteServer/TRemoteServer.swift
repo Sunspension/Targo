@@ -17,10 +17,11 @@ class TRemoteServer: NSObject, PRemoteServerV1 {
     
     
     
-    static func registration(phoneNumber: String, parameters: [String : AnyObject]?) -> Request {
+    static func registration(phoneNumber: String, deviceToken: String, parameters: [String : AnyObject]?) -> Request {
         
-        let deviceToken = NSUserDefaults.standardUserDefaults().objectForKey(kTargoDeviceToken)
-        var params: [String: AnyObject] = ["phone" : phoneNumber, "device_type" : deviceType, "device_token" : deviceToken ?? "11123123"]
+        var params: [String: AnyObject] = ["phone" : phoneNumber, "device_type" : deviceType, "device_token" : deviceToken]
+        
+        CurrentUser.sharedInstanse.currentUser?.alias
         
         if parameters != nil {
             
@@ -30,13 +31,22 @@ class TRemoteServer: NSObject, PRemoteServerV1 {
         return TRemoteServer.request(.POST, remotePath: baseURLString + "/code", parameters: params)
     }
     
-    static func authorization(phoneNumber: String, code: String, parameters: [String : AnyObject]?) -> Request {
+    static func authorization(phoneNumber: String, code: String, deviceToken: String, parameters: [String : AnyObject]?) -> Request {
+
+        let systemVersion = UIDevice.currentDevice().systemVersion;
+        let info = NSBundle.mainBundle().infoDictionary
+        let bundleId = NSBundle.mainBundle().bundleIdentifier
         
-        let deviceToken = NSUserDefaults.standardUserDefaults().objectForKey(kTargoDeviceToken)
+        let applicationVersion = info?["CFBundleShortVersionString"]
+        
         var params: [String: AnyObject] = ["phone" : phoneNumber,
                                            "code" : code,
                                            "device_type" : deviceType,
-                                           "device_token" : deviceToken ?? "11123123"]
+                                           "device_token" : deviceToken,
+                                           "type" : "code",
+                                           "application" : bundleId ?? "",
+                                           "system_version" : systemVersion,
+                                           "application_version" : applicationVersion ?? ""]
         
         if parameters != nil {
             

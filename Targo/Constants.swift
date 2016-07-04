@@ -9,3 +9,5 @@
 import Foundation
 
 let kTargoDeviceToken = "kTargoDeviceToken";
+let kHexLoginTextColor = "#625375"
+let kHexMainPinkColor = "#CD0079"

@@ -1,0 +1,18 @@
+
+/* Class = "UIButton"; normalTitle = "Login"; ObjectID = "0tT-yN-6Q1"; */
+"0tT-yN-6Q1.normalTitle" = "Вход";
+
+/* Class = "UIButton"; normalTitle = "Registration"; ObjectID = "6Up-UG-Vw1"; */
+"6Up-UG-Vw1.normalTitle" = "Регистрация";
+
+/* Class = "UIButton"; normalTitle = "Fogot password?"; ObjectID = "C86-U2-X54"; */
+"C86-U2-X54.normalTitle" = "Забыли пароль?";
+
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "Fza-gk-l7Q"; */
+"Fza-gk-l7Q.placeholder" = "Пароль";
+
+/* Class = "UITextField"; placeholder = "Phone number"; ObjectID = "T68-9z-Qt1"; */
+"T68-9z-Qt1.placeholder" = "Номер телефона";
+
+/* Class = "UITextField"; placeholder = "Email"; ObjectID = "ubN-j0-9Kk"; */
+"ubN-j0-9Kk.placeholder" = "Электронная почта";
