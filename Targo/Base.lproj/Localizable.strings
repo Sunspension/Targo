@@ -7,3 +7,5 @@
 */
 
 "registration_phone_title" = "Registration";
+
+"login_empty_code" = "This field can't be empty";

@@ -72,6 +72,11 @@ class RegistrationPhoneViewController: UIViewController {
         self.navigationController?.navigationBarHidden = true;
     }
     
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        
+        self.view.endEditing(true)
+    }
+    
     @IBAction func sendAction(sender: AnyObject) {
         
         let phoneNumber = self.phoneNumber.phoneNumber()
@@ -80,7 +85,7 @@ class RegistrationPhoneViewController: UIViewController {
         
         if let deviceToken = NSUserDefaults.standardUserDefaults().objectForKey(kTargoDeviceToken) as? String {
             
-            TRemoteServer.registration("", deviceToken:deviceToken, parameters: nil)
+            TRemoteServer.registration(phoneNumber, deviceToken:deviceToken, parameters: nil)
                 .validate()
                 .responseObject { (response: Result<AuthorizationCodeResponse, NSError>) in
                     
@@ -91,6 +96,8 @@ class RegistrationPhoneViewController: UIViewController {
                         print("error: \(error)")
                     }
                     else {
+                        
+                        AppSettings.sharedInstance.lastSessionPhoneNumber = phoneNumber
                         
                         let controller = self.instantiateViewControllerWithIdentifierOrNibName("RegistrationCode")
                         

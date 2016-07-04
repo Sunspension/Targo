@@ -31,4 +31,11 @@ pod 'RealmSwift'
 #UI
 pod 'EZLoadingActivity'
 
+#Text
+pod "SwiftString"
+
+#UITextField
+pod 'MaterialTextField', '~> 0.2'
+pod 'BSErrorMessageView', :git => 'https://github.com/BenjaminSarkisyan/BSErrorMessageView.git'
+
 end

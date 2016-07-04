@@ -11,11 +11,13 @@
 		D41F36071D2855C8001896A2 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41F36061D2855C8001896A2 /* LoginViewController.swift */; };
 		D420B2CB1D293748003FDC83 /* RegistrationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D420B2CA1D293748003FDC83 /* RegistrationCodeViewController.swift */; };
 		D420B2CD1D294BE4003FDC83 /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D420B2CC1D294BE4003FDC83 /* CurrentUser.swift */; };
+		D467AED31D2AFF6100319966 /* AlamofireExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D467AED21D2AFF6100319966 /* AlamofireExtensions.swift */; };
+		D467AED61D2B0F7100319966 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D467AED51D2B0F7100319966 /* AppSettings.swift */; };
 		D498D49B1D2825EC002F0E88 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D498D49D1D2825EC002F0E88 /* Localizable.strings */; };
 		D49C7E891D281DB1004408AF /* RegistrationPhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49C7E881D281DB1004408AF /* RegistrationPhoneViewController.swift */; };
 		D4B96F761D244CAA00294A4B /* TRemoteServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B96F751D244CAA00294A4B /* TRemoteServer.swift */; };
 		D4B96F7B1D244DBA00294A4B /* PRemoteServerV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B96F7A1D244DBA00294A4B /* PRemoteServerV1.swift */; };
-		D4F84B431D24591300263D1A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F84B421D24591300263D1A /* Extensions.swift */; };
+		D4F84B431D24591300263D1A /* AppExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F84B421D24591300263D1A /* AppExtensions.swift */; };
 		D4F84B491D24668400263D1A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F84B481D24668400263D1A /* User.swift */; };
 		E57C7E8A1D22B60D00F9A0FC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57C7E891D22B60D00F9A0FC /* Constants.swift */; };
 		E57C7E8E1D22B8A700F9A0FC /* AuthorizationCodeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57C7E8D1D22B8A700F9A0FC /* AuthorizationCodeResponse.swift */; };
@@ -32,17 +34,19 @@
 		D41F36061D2855C8001896A2 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D420B2CA1D293748003FDC83 /* RegistrationCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationCodeViewController.swift; sourceTree = "<group>"; };
 		D420B2CC1D294BE4003FDC83 /* CurrentUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
+		D467AED21D2AFF6100319966 /* AlamofireExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlamofireExtensions.swift; sourceTree = "<group>"; };
+		D467AED51D2B0F7100319966 /* AppSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppSettings.swift; path = Targo/AppSettings.swift; sourceTree = SOURCE_ROOT; };
 		D498D4981D282480002F0E88 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
 		D498D49C1D2825EC002F0E88 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D49C7E881D281DB1004408AF /* RegistrationPhoneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationPhoneViewController.swift; sourceTree = "<group>"; };
 		D4B96F751D244CAA00294A4B /* TRemoteServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TRemoteServer.swift; path = ServerAPI/RemoteServer/TRemoteServer.swift; sourceTree = "<group>"; };
 		D4B96F7A1D244DBA00294A4B /* PRemoteServerV1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PRemoteServerV1.swift; path = ServerAPI/RemoteServer/PRemoteServerV1.swift; sourceTree = "<group>"; };
-		D4F84B421D24591300263D1A /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		D4F84B421D24591300263D1A /* AppExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppExtensions.swift; sourceTree = "<group>"; };
 		D4F84B481D24668400263D1A /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Targo/Models/User/User.swift; sourceTree = SOURCE_ROOT; };
 		E57C7E891D22B60D00F9A0FC /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E57C7E8D1D22B8A700F9A0FC /* AuthorizationCodeResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorizationCodeResponse.swift; path = Models/Response/AuthorizationCodeResponse.swift; sourceTree = "<group>"; };
 		E5C062D51D2106BF002074C4 /* Targo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Targo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E5C062D81D2106BF002074C4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E5C062D81D2106BF002074C4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Targo/AppDelegate.swift; sourceTree = SOURCE_ROOT; };
 		E5C062DD1D2106BF002074C4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E5C062DF1D2106BF002074C4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E5C062E21D2106BF002074C4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -84,6 +88,15 @@
 				D4B96F741D244C2100294A4B /* RemoteServer */,
 			);
 			name = ServerAPI;
+			sourceTree = "<group>";
+		};
+		D467AED71D2B0F8C00319966 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				E5C062D81D2106BF002074C4 /* AppDelegate.swift */,
+				D467AED51D2B0F7100319966 /* AppSettings.swift */,
+			);
+			path = App;
 			sourceTree = "<group>";
 		};
 		D49C7E871D281D7F004408AF /* Controllers */ = {
@@ -165,7 +178,7 @@
 				E57C7E8B1D22B84A00F9A0FC /* Models */,
 				E57C7E881D22B5BD00F9A0FC /* AppHelpers */,
 				D464027C1D21CBE200644463 /* ServerAPI */,
-				E5C062D81D2106BF002074C4 /* AppDelegate.swift */,
+				D467AED71D2B0F8C00319966 /* App */,
 				E5C062DC1D2106BF002074C4 /* Main.storyboard */,
 				E5C062DF1D2106BF002074C4 /* Assets.xcassets */,
 				E5C062E11D2106BF002074C4 /* LaunchScreen.storyboard */,
@@ -178,7 +191,8 @@
 		E5C7D85F1D22DA4E00A50D60 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				D4F84B421D24591300263D1A /* Extensions.swift */,
+				D4F84B421D24591300263D1A /* AppExtensions.swift */,
+				D467AED21D2AFF6100319966 /* AlamofireExtensions.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -356,14 +370,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D467AED61D2B0F7100319966 /* AppSettings.swift in Sources */,
 				D41F36071D2855C8001896A2 /* LoginViewController.swift in Sources */,
 				E57C7E8E1D22B8A700F9A0FC /* AuthorizationCodeResponse.swift in Sources */,
 				D420B2CD1D294BE4003FDC83 /* CurrentUser.swift in Sources */,
 				D420B2CB1D293748003FDC83 /* RegistrationCodeViewController.swift in Sources */,
-				D4F84B431D24591300263D1A /* Extensions.swift in Sources */,
+				D4F84B431D24591300263D1A /* AppExtensions.swift in Sources */,
 				D49C7E891D281DB1004408AF /* RegistrationPhoneViewController.swift in Sources */,
 				E5C062D91D2106BF002074C4 /* AppDelegate.swift in Sources */,
 				D4F84B491D24668400263D1A /* User.swift in Sources */,
+				D467AED31D2AFF6100319966 /* AlamofireExtensions.swift in Sources */,
 				E57C7E8A1D22B60D00F9A0FC /* Constants.swift in Sources */,
 				D4B96F761D244CAA00294A4B /* TRemoteServer.swift in Sources */,
 				D4B96F7B1D244DBA00294A4B /* PRemoteServerV1.swift in Sources */,

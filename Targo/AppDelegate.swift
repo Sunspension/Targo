@@ -57,6 +57,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let defaults = NSUserDefaults.standardUserDefaults()
         
+        if (defaults.objectForKey(kTargoDeviceToken) as? String) != nil {
+            
+            return
+        }
+        
         defaults.setObject(deviceToken.description, forKey: kTargoDeviceToken)
         defaults.synchronize()
     }

@@ -16,7 +16,6 @@ class TRemoteServer: NSObject, PRemoteServerV1 {
     static let deviceType = "ios"
     
     
-    
     static func registration(phoneNumber: String, deviceToken: String, parameters: [String : AnyObject]?) -> Request {
         
         var params: [String: AnyObject] = ["phone" : phoneNumber, "device_type" : deviceType, "device_token" : deviceToken]
