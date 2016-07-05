@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -21,7 +22,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.registerUserNotificationSettings(settings)
         application.registerForRemoteNotifications()
         
-//        self.window?.tintColor = UIColor.whiteColor()
+        var config = Realm.Configuration()
+        config.schemaVersion = 1
+        config.migrationBlock = { (migration: Migration, oldSchemaVersion: UInt64) in
+        
+            if oldSchemaVersion < 1 {
+                
+            }
+        }
+        
+        Realm.Configuration.defaultConfiguration = config;
         
         return true
     }

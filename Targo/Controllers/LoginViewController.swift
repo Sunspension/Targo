@@ -12,9 +12,10 @@ import DynamicColor
 import SHSPhoneComponent
 import BSErrorMessageView
 import AlamofireObjectMapper
-import Alamofire
 import RealmSwift
 import EZLoadingActivity
+import BrightFutures
+import Result
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
 
@@ -105,39 +106,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
-        let defaults = NSUserDefaults.standardUserDefaults()
-        
-        if let token = defaults.objectForKey(kTargoDeviceToken) as? String {
-        
-            EZLoadingActivity.show("Please wait", disableUI: true)
+        Api.userLogin(phoneNumber, code: code!)
             
-            TRemoteServer.authorization(phoneNumber, code: code!, deviceToken: token, parameters: nil)
-                .validate()
-                .responseJSON(completionHandler: { (response: Response<AnyObject, NSError>) in
-                    
-                    print("response: \(response.result.value)")
-                    
-                })
-                .responseObject(queue: nil, keyPath: "data.user", mapToObject: User(), completionHandler: { (response: Response<User, NSError>) in
-                    
-                    EZLoadingActivity.hide()
-                    
-                    if let user = response.result.value {
-                        
-                        print("response: \(user)")
-                        
-//                        let realm = try! Realm()
-//                        
-//                        try! realm.write({
-//                            
-//                            realm.add(user, update: true)
-//                        })
-                    }
-                    else if let error = response.result.error {
-                        
-                        print("response user authentification: \(error)")
-                    }
-                })
+            .onSuccess { user in
+                
+                
+                
+            }.onFailure { eror in
+                
+                
         }
     }
     

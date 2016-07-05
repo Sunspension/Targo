@@ -38,4 +38,10 @@ pod "SwiftString"
 pod 'MaterialTextField', '~> 0.2'
 pod 'BSErrorMessageView', :git => 'https://github.com/BenjaminSarkisyan/BSErrorMessageView.git'
 
+#Keychain
+pod 'KeychainSwift', '~> 3.0'
+
+#Events
+pod 'BrightFutures'
+
 end

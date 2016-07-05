@@ -17,6 +17,8 @@
 		D49C7E891D281DB1004408AF /* RegistrationPhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49C7E881D281DB1004408AF /* RegistrationPhoneViewController.swift */; };
 		D4B96F761D244CAA00294A4B /* TRemoteServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B96F751D244CAA00294A4B /* TRemoteServer.swift */; };
 		D4B96F7B1D244DBA00294A4B /* PRemoteServerV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B96F7A1D244DBA00294A4B /* PRemoteServerV1.swift */; };
+		D4D0D6D61D2C5B5200B4E01D /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D0D6D51D2C5B5200B4E01D /* Api.swift */; };
+		D4D0D6D91D2C61BA00B4E01D /* TargoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D0D6D81D2C61BA00B4E01D /* TargoError.swift */; };
 		D4F84B431D24591300263D1A /* AppExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F84B421D24591300263D1A /* AppExtensions.swift */; };
 		D4F84B491D24668400263D1A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F84B481D24668400263D1A /* User.swift */; };
 		E57C7E8A1D22B60D00F9A0FC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57C7E891D22B60D00F9A0FC /* Constants.swift */; };
@@ -41,6 +43,8 @@
 		D49C7E881D281DB1004408AF /* RegistrationPhoneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationPhoneViewController.swift; sourceTree = "<group>"; };
 		D4B96F751D244CAA00294A4B /* TRemoteServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TRemoteServer.swift; path = ServerAPI/RemoteServer/TRemoteServer.swift; sourceTree = "<group>"; };
 		D4B96F7A1D244DBA00294A4B /* PRemoteServerV1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PRemoteServerV1.swift; path = ServerAPI/RemoteServer/PRemoteServerV1.swift; sourceTree = "<group>"; };
+		D4D0D6D51D2C5B5200B4E01D /* Api.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Api.swift; path = ServerAPI/Api.swift; sourceTree = "<group>"; };
+		D4D0D6D81D2C61BA00B4E01D /* TargoError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargoError.swift; sourceTree = "<group>"; };
 		D4F84B421D24591300263D1A /* AppExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppExtensions.swift; sourceTree = "<group>"; };
 		D4F84B481D24668400263D1A /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Targo/Models/User/User.swift; sourceTree = SOURCE_ROOT; };
 		E57C7E891D22B60D00F9A0FC /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -86,6 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				D4B96F741D244C2100294A4B /* RemoteServer */,
+				D4D0D6D51D2C5B5200B4E01D /* Api.swift */,
 			);
 			name = ServerAPI;
 			sourceTree = "<group>";
@@ -116,6 +121,14 @@
 				D4B96F7A1D244DBA00294A4B /* PRemoteServerV1.swift */,
 			);
 			name = RemoteServer;
+			sourceTree = "<group>";
+		};
+		D4D0D6D71D2C618800B4E01D /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				D4D0D6D81D2C61BA00B4E01D /* TargoError.swift */,
+			);
+			path = Errors;
 			sourceTree = "<group>";
 		};
 		D4F84B471D24666C00263D1A /* User */ = {
@@ -173,6 +186,7 @@
 		E5C062D71D2106BF002074C4 /* Targo */ = {
 			isa = PBXGroup;
 			children = (
+				D4D0D6D71D2C618800B4E01D /* Errors */,
 				D49C7E871D281D7F004408AF /* Controllers */,
 				E5C7D85F1D22DA4E00A50D60 /* Extensions */,
 				E57C7E8B1D22B84A00F9A0FC /* Models */,
@@ -376,11 +390,13 @@
 				D420B2CD1D294BE4003FDC83 /* CurrentUser.swift in Sources */,
 				D420B2CB1D293748003FDC83 /* RegistrationCodeViewController.swift in Sources */,
 				D4F84B431D24591300263D1A /* AppExtensions.swift in Sources */,
+				D4D0D6D61D2C5B5200B4E01D /* Api.swift in Sources */,
 				D49C7E891D281DB1004408AF /* RegistrationPhoneViewController.swift in Sources */,
 				E5C062D91D2106BF002074C4 /* AppDelegate.swift in Sources */,
 				D4F84B491D24668400263D1A /* User.swift in Sources */,
 				D467AED31D2AFF6100319966 /* AlamofireExtensions.swift in Sources */,
 				E57C7E8A1D22B60D00F9A0FC /* Constants.swift in Sources */,
+				D4D0D6D91D2C61BA00B4E01D /* TargoError.swift in Sources */,
 				D4B96F761D244CAA00294A4B /* TRemoteServer.swift in Sources */,
 				D4B96F7B1D244DBA00294A4B /* PRemoteServerV1.swift in Sources */,
 			);

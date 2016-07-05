@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class TRemoteServer: NSObject, PRemoteServerV1 {
+struct TRemoteServer: PRemoteServerV1 {
 
     static let baseURLString = "http://45.62.123.157:8082/api"
     

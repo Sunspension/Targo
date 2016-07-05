@@ -7,15 +7,11 @@
 //
 
 import UIKit
+import Realm
 
 class CurrentUser: NSObject {
 
     var currentUser: User?
     
     static let sharedInstanse = CurrentUser()
-    
-    override init() {
-        
-        
-    }
 }

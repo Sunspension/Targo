@@ -44,6 +44,11 @@ class User: Object, Mappable {
         self.init()
     }
     
+    override static func primaryKey() -> String? {
+        
+        return "id"
+    }
+    
     func mapping(map: Map) {
         
         id <- map["id"]
