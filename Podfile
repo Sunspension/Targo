@@ -21,6 +21,7 @@ pod 'DynamicColor', '~> 2.4.0'
 pod 'AlamofireJsonToObjects', '~> 1.0'
 pod 'ObjectMapper', '~> 1.3'
 pod 'AlamofireObjectMapper', '~> 3.0'
+#pod 'SwiftyJSON'
 
 #Images
 pod 'AlamofireImage', '~> 2.0'
@@ -32,7 +33,7 @@ pod 'RealmSwift'
 pod 'EZLoadingActivity'
 
 #Text
-pod "SwiftString"
+pod 'SwiftString'
 
 #UITextField
 pod 'MaterialTextField', '~> 0.2'

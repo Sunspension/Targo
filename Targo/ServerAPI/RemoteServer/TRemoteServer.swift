@@ -20,8 +20,6 @@ struct TRemoteServer: PRemoteServerV1 {
         
         var params: [String: AnyObject] = ["phone" : phoneNumber, "device_type" : deviceType, "device_token" : deviceToken]
         
-        CurrentUser.sharedInstanse.currentUser?.alias
-        
         if parameters != nil {
             
             params += parameters!
@@ -54,6 +52,12 @@ struct TRemoteServer: PRemoteServerV1 {
         
         return TRemoteServer.request(.POST, remotePath: baseURLString + "/auth", parameters: params)
     }
+
+    static func deauthorization() -> Request {
+        
+        return TRemoteServer.request(.DELETE, remotePath: baseURLString + "/auth", parameters: nil)
+    }
+    
     
     private static func request(method: Alamofire.Method, remotePath: URLStringConvertible, parameters: [String : AnyObject]?) -> Request {
         
@@ -62,6 +66,6 @@ struct TRemoteServer: PRemoteServerV1 {
     
     private static func request(method: Alamofire.Method, remotePath: URLStringConvertible, parameters: [String : AnyObject]?, headers: [String : String]?) -> Request {
         
-        return Alamofire.request(method, remotePath, parameters: parameters, encoding: Alamofire.ParameterEncoding.JSON, headers: headers).validate()
+        return Alamofire.request(method, remotePath, parameters: parameters, encoding:.JSON, headers: headers).validate()
     }
 }

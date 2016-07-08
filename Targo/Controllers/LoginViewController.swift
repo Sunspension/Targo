@@ -73,6 +73,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         if let phone = AppSettings.sharedInstance.lastSessionPhoneNumber {
             
             self.phoneNumber.setFormattedText(String(phone.characters.dropFirst()))
+            self.password.becomeFirstResponder()
         }
     }
 
@@ -110,11 +111,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             
             .onSuccess { user in
                 
+                print("User with user id: \(user.id) successfully logged in")
                 
+            }.onFailure { error in
                 
-            }.onFailure { eror in
-                
-                
+                print(error)
         }
     }
     

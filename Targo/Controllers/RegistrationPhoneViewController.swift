@@ -83,31 +83,23 @@ class RegistrationPhoneViewController: UIViewController {
         
         EZLoadingActivity.show("Please wait", disableUI: true)
         
-        if let deviceToken = NSUserDefaults.standardUserDefaults().objectForKey(kTargoDeviceToken) as? String {
+        Api.userRegistration(phoneNumber)
             
-            TRemoteServer.registration(phoneNumber, deviceToken:deviceToken, parameters: nil)
-                .validate()
-                .responseObject { (response: Result<AuthorizationCodeResponse, NSError>) in
+            .onSuccess { success in
+                
+                EZLoadingActivity.hide()
+                
+                let controller = self.instantiateViewControllerWithIdentifierOrNibName("RegistrationCode")
+                
+                if let phoneRegistration = controller {
                     
-                    EZLoadingActivity.hide()
-                    
-                    if let error = response.error {
-                        
-                        print("error: \(error)")
-                    }
-                    else {
-                        
-                        AppSettings.sharedInstance.lastSessionPhoneNumber = phoneNumber
-                        
-                        let controller = self.instantiateViewControllerWithIdentifierOrNibName("RegistrationCode")
-                        
-                        if let phoneRegistration = controller {
-                            
-                            self.navigationController?.pushViewController(phoneRegistration, animated: true)
-                        }
-                    }
-            }
-
+                    self.navigationController?.pushViewController(phoneRegistration, animated: true)
+                }
+                
+            }.onFailure { error in
+                
+                EZLoadingActivity.hide()
+                print(error)
         }
     }
 }

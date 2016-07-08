@@ -11,12 +11,67 @@ import AlamofireObjectMapper
 import Alamofire
 import RealmSwift
 import BrightFutures
+import KeychainSwift
 
 struct Api {
-
-    static func userLogin(phoneNumber: String, code: String) -> Future<User, TargoError> {
+    
+    static func userRegistration(phoneNumber: String) -> Future<Bool, UserRegistrationError> {
         
-        let p = Promise<User, TargoError>()
+        let p = Promise<Bool, UserRegistrationError>()
+        
+        let deviceToken = NSUserDefaults.standardUserDefaults().objectForKey(kTargoDeviceToken) as? String
+        
+        TRemoteServer.registration(phoneNumber, deviceToken:deviceToken ?? "", parameters: nil)
+            .validate()
+            .responseJSON(completionHandler: { (response: Response<AnyObject, NSError>) in
+                
+                if let error = response.result.error {
+                    
+                    print("User registration error :\(error)")
+                    
+                    if let errorKey = error.userInfo.keys.first as? String {
+                        
+                        switch errorKey {
+                            
+                        case "StatusCode":
+                            
+                            p.failure(.UnacceptableStatusCode)
+                            break
+                            
+                        case "phone":
+                            
+                            p.failure(.WrongPhoneNumber)
+                            break
+                            
+                        default:
+                            
+                            p.failure(.UknownError)
+                            break
+                        }
+                    }
+                    else {
+                        
+                        p.failure(.UknownError)
+                    }
+                }
+                
+                print("User registration value: \(response.result.value)")
+            })
+            .responseObject { (response: Result<AuthorizationCodeResponse, NSError>) in
+                
+                if response.isSuccess {
+                    
+                    AppSettings.sharedInstance.lastSessionPhoneNumber = phoneNumber
+                    p.success(true)
+                }
+        }
+        
+        return p.future
+    }
+    
+    static func userLogin(phoneNumber: String, code: String) -> Future<User, UserRegistrationError> {
+        
+        let p = Promise<User, UserRegistrationError>()
         
         let defaults = NSUserDefaults.standardUserDefaults()
         
@@ -26,14 +81,57 @@ struct Api {
                 .validate()
                 .responseJSON(completionHandler: { (response: Response<AnyObject, NSError>) in
                     
-                    print("response: \(response.result.value)")
+                    if let error = response.result.error {
+                        
+                        print("User login error :\(error)")
+                        
+                        if let errorKey = error.userInfo.keys.first as? String {
+                            
+                            switch errorKey {
+                                
+                            case "StatusCode":
+                                
+                                p.failure(.UnacceptableStatusCode)
+                                break
+                                
+                            case "phone":
+                                
+                                p.failure(.WrongPhoneNumber)
+                                break
+                                
+                            default:
+                                
+                                p.failure(.UknownError)
+                                break
+                            }
+                        }
+                        else {
+                            
+                            p.failure(.UknownError)
+                        }
+                    }
                     
+                    print("User login value: \(response.result.value)")
+                })
+                .responseObject(queue: nil, keyPath: "data", mapToObject: UserSession(), completionHandler: { (response:Response<UserSession, NSError>) in
+                    
+                    if let userSession = response.result.value {
+                        
+                        print("user session: \(userSession)")
+                        
+                        let realm = try! Realm()
+                        
+                        try! realm.write({
+                            
+                            realm.add(userSession, update: true)
+                        })
+                    }
                 })
                 .responseObject(queue: nil, keyPath: "data.user", mapToObject: User(), completionHandler: { (response: Response<User, NSError>) in
                     
                     if let user = response.result.value {
                         
-                        print("response: \(user)")
+                        print("user: \(user)")
                         
                         let realm = try! Realm()
                         
@@ -42,12 +140,11 @@ struct Api {
                             realm.add(user, update: true)
                         })
                         
-                        p.success(user)
-                    }
-                    else if let error = response.result.error {
+                        // save user data to secure storage
+                        let keyChain = KeychainSwift()
+                        keyChain.set(code, forKey: phoneNumber)
                         
-                        p.failure(.UserLoginFailed)
-                        print("response user authentification: \(error)")
+                        p.success(user)
                     }
                 })
         }

@@ -33,6 +33,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Realm.Configuration.defaultConfiguration = config;
         
+        let realm = try! Realm()
+        
+        if let session = realm.objects(UserSession).first {
+            
+            if !session.sid.isEmpty && session.userId.value != nil {
+                
+                // User logged in
+                
+            }
+            else {
+                
+                // Need authorize
+                
+            }
+        }
+        
         return true
     }
 
