@@ -23,7 +23,7 @@ class UserSession: Object, Mappable {
     
     override static func primaryKey() -> String? {
         
-        return "userId"
+        return "sid"
     }
     
     func mapping(map: Map) {

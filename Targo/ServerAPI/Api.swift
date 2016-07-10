@@ -151,4 +151,43 @@ struct Api {
         
         return p.future
     }
+    
+    static func userLogut() -> Future<Bool, TargoError> {
+        
+        let p = Promise<Bool, TargoError>()
+        
+        TRemoteServer.deauthorization().validate().responseJSON { (response: Response<AnyObject, NSError>) in
+            
+            if response.result.error != nil {
+                
+                p.failure(.UserDeauthorizationFailed)
+            }
+            
+            p.success(true)
+        }
+        .responseObject(queue: nil, keyPath: "data", mapToObject: UserSession(), completionHandler: { (response:Response<UserSession, NSError>) in
+                
+                if let userSession = response.result.value {
+                    
+                    print("user logout session: \(userSession)")
+                    
+                    let realm = try! Realm()
+                    
+                    let sessions = realm.objects(UserSession)
+                    realm.beginWrite()
+                    realm.delete(sessions)
+                    
+                    do {
+                        
+                        try realm.commitWrite()
+                    }
+                    catch {
+                        
+                        print("Caught an error when was trying to make commit to Realm")
+                    }
+                }
+            })
+        
+        return p.future
+    }
 }

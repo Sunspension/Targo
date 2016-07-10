@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.registerForRemoteNotifications()
         
         var config = Realm.Configuration()
-        config.schemaVersion = 1
+        config.schemaVersion = 2
         config.migrationBlock = { (migration: Migration, oldSchemaVersion: UInt64) in
         
             if oldSchemaVersion < 1 {
@@ -33,21 +33,53 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Realm.Configuration.defaultConfiguration = config;
         
+        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        
         let realm = try! Realm()
+        
+        let openLoginController = {
+            
+            self.window?.rootViewController = storyBoard.instantiateViewControllerWithIdentifier("TLoginNavigation")
+            self.window?.makeKeyAndVisible()
+        }
+        
+//        let sessions = realm.objects(UserSession)
+//        
+//        realm.beginWrite()
+//        realm.delete(sessions)
+//        
+//        do {
+//            
+//            try realm.commitWrite()
+//        }
+//        catch {
+//            
+//            print("Caught an error when was trying to make commit to Realm")
+//        }
         
         if let session = realm.objects(UserSession).first {
             
-            if !session.sid.isEmpty && session.userId.value != nil {
+            if session.userId.value != nil {
                 
                 // User logged in
-                
+                // Open main controller
+                self.window?.rootViewController = storyBoard.instantiateViewControllerWithIdentifier("TTabBar")
+                self.window?.makeKeyAndVisible()
             }
             else {
                 
-                // Need authorize
-                
+                openLoginController()
             }
         }
+        else {
+            
+            openLoginController()
+        }
+        
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AppDelegate.logoutAction), name: kTargoUserLoggedOutSuccessfully, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AppDelegate.loginAction), name: kTargoUserLoggedInSuccessfully, object: nil)
         
         return true
     }
@@ -90,6 +122,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         defaults.setObject(deviceToken.description, forKey: kTargoDeviceToken)
         defaults.synchronize()
+    }
+    
+    func logoutAction() {
+        
+        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        
+        let viewController = storyBoard.instantiateViewControllerWithIdentifier("TLoginNavigation")
+        self.changeRootViewController(viewController)
+    }
+    
+    func loginAction() {
+        
+        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        
+        let viewController = storyBoard.instantiateViewControllerWithIdentifier("TTabBar")
+        self.changeRootViewController(viewController)
+    }
+    
+    func changeRootViewController(viewController: UIViewController) {
+        
+        UIView.transitionWithView(self.window!,
+                                  duration: 0.5,
+                                  options: .TransitionCrossDissolve,
+                                  animations: {
+                                    
+                                    self.window?.rootViewController = viewController
+                                    
+            }, completion: nil)
     }
 }
 

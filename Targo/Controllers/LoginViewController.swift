@@ -111,6 +111,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             
             .onSuccess { user in
                 
+                NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: kTargoUserLoggedInSuccessfully, object: nil))
+                
                 print("User with user id: \(user.id) successfully logged in")
                 
             }.onFailure { error in

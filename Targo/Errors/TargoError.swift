@@ -12,6 +12,8 @@ enum TargoError: ErrorType {
     
     case UserLoginFailed
     
+    case UserDeauthorizationFailed
+    
     case DeviceTypeBlank
     
     case DeviceTokenBlank

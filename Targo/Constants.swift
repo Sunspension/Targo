@@ -10,5 +10,11 @@ import Foundation
 
 let kTargoDeviceToken = "kTargoDeviceToken"
 let kTargoLastSessionPhone = "kTargoLastSessionPhone"
+
+// Notifications
+let kTargoUserLoggedOutSuccessfully = "kTargoUserLoggedOutSuccessfully"
+let kTargoUserLoggedInSuccessfully = "kTargoUserLoggedInSuccessfully"
+
+// Colors
 let kHexLoginTextColor = "#625375"
 let kHexMainPinkColor = "#CD0079"
