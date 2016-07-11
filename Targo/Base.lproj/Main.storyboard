@@ -238,7 +238,7 @@
         <!--Search-->
         <scene sceneID="gGK-AV-lgh">
             <objects>
-                <tableViewController id="y7b-mG-cc3" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="TCompanySearch" useStoryboardIdentifierAsRestorationIdentifier="YES" id="y7b-mG-cc3" customClass="CompanySearchTableViewController" customModule="Targo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="231" sectionHeaderHeight="28" sectionFooterHeight="28" id="2GU-Ez-oI9">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

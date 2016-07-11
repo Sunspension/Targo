@@ -38,6 +38,10 @@ class User: Object, Mappable {
     
     dynamic var alias = ""
     
+    dynamic var email = ""
+    
+    dynamic var isEmailConfirmed = false
+    
     
     required convenience init?(_ map: Map) {
         
@@ -64,5 +68,7 @@ class User: Object, Mappable {
         sendPush <- map["send_push"]
         sendSMS <- map["send_sms"]
         alias <- map["alias"]
+        email <- map["email"]
+        isEmailConfirmed <- map["is_email_confirmed"]
     }
 }

@@ -12,7 +12,20 @@ enum UserRegistrationError: ErrorType {
     
     case UknownError
     
-    case UnacceptableStatusCode
+    case UnacceptableStatusCode(description: String)
     
     case WrongPhoneNumber
+    
+    var description: String {
+        
+        switch self {
+            
+        case .UnacceptableStatusCode(let description):
+            
+            return description
+        
+        default:
+            return ""
+        }
+    }
 }

@@ -12,16 +12,21 @@ import Alamofire
 import RealmSwift
 import BrightFutures
 import KeychainSwift
+import CoreLocation
 
 struct Api {
     
-    static func userRegistration(phoneNumber: String) -> Future<Bool, UserRegistrationError> {
+    static let sharedInstance = Api()
+    
+    let server: PRemoteServerV1 = TRemoteServer()
+    
+    func userRegistration(phoneNumber: String) -> Future<Bool, UserRegistrationError> {
         
         let p = Promise<Bool, UserRegistrationError>()
         
         let deviceToken = NSUserDefaults.standardUserDefaults().objectForKey(kTargoDeviceToken) as? String
         
-        TRemoteServer.registration(phoneNumber, deviceToken:deviceToken ?? "", parameters: nil)
+        server.registration(phoneNumber, deviceToken:deviceToken ?? "", parameters: nil)
             .validate()
             .responseJSON(completionHandler: { (response: Response<AnyObject, NSError>) in
                 
@@ -35,7 +40,7 @@ struct Api {
                             
                         case "StatusCode":
                             
-                            p.failure(.UnacceptableStatusCode)
+                            p.failure(.UnacceptableStatusCode(description: error.localizedDescription))
                             break
                             
                         case "phone":
@@ -69,7 +74,7 @@ struct Api {
         return p.future
     }
     
-    static func userLogin(phoneNumber: String, code: String) -> Future<User, UserRegistrationError> {
+    func userLogin(phoneNumber: String, code: String) -> Future<User, UserRegistrationError> {
         
         let p = Promise<User, UserRegistrationError>()
         
@@ -77,7 +82,7 @@ struct Api {
         
         if let token = defaults.objectForKey(kTargoDeviceToken) as? String {
             
-            TRemoteServer.authorization(phoneNumber, code: code, deviceToken: token, parameters: nil)
+            server.authorization(phoneNumber, code: code, deviceToken: token, parameters: nil)
                 .validate()
                 .responseJSON(completionHandler: { (response: Response<AnyObject, NSError>) in
                     
@@ -91,7 +96,7 @@ struct Api {
                                 
                             case "StatusCode":
                                 
-                                p.failure(.UnacceptableStatusCode)
+                                p.failure(.UnacceptableStatusCode(description: error.localizedDescription))
                                 break
                                 
                             case "phone":
@@ -152,11 +157,11 @@ struct Api {
         return p.future
     }
     
-    static func userLogut() -> Future<Bool, TargoError> {
+    func userLogut() -> Future<Bool, TargoError> {
         
         let p = Promise<Bool, TargoError>()
         
-        TRemoteServer.deauthorization().validate().responseJSON { (response: Response<AnyObject, NSError>) in
+        server.deauthorization().validate().responseJSON { (response: Response<AnyObject, NSError>) in
             
             if response.result.error != nil {
                 
@@ -164,8 +169,9 @@ struct Api {
             }
             
             p.success(true)
-        }
-        .responseObject(queue: nil, keyPath: "data", mapToObject: UserSession(), completionHandler: { (response:Response<UserSession, NSError>) in
+            
+            }
+            .responseObject(queue: nil, keyPath: "data", mapToObject: UserSession(), completionHandler: { (response:Response<UserSession, NSError>) in
                 
                 if let userSession = response.result.value {
                     
@@ -174,8 +180,11 @@ struct Api {
                     let realm = try! Realm()
                     
                     let sessions = realm.objects(UserSession)
+                    let users = realm.objects(User)
+                    
                     realm.beginWrite()
                     realm.delete(sessions)
+                    realm.delete(users)
                     
                     do {
                         
@@ -188,6 +197,43 @@ struct Api {
                 }
             })
         
+        return p.future
+    }
+    
+    func loadCurrentUser() -> Future<User, TargoError> {
+        
+        let p = Promise<User, TargoError>()
+        
+        let realm = try! Realm()
+        
+        if let session = realm.objects(UserSession).last {
+            
+            server.loadUserById(session.userId)
+                .validate()
+                .responseObject(queue: nil, keyPath: "data.user", mapToObject: User(), completionHandler: { (response: Response<User, NSError>) in
+                    
+                    if let user = response.result.value {
+                        
+                        print("user: \(user)")
+                        
+                        let realm = try! Realm()
+                        
+                        try! realm.write({
+                            
+                            realm.add(user, update: true)
+                        })
+                        
+                        p.success(user)
+                    }
+                })
+        }
+        
+        return p.future
+    }
+    
+    func loadCompanies() -> Future<TCompany, TargoError> {
+        
+        let p = Promise<TCompany, TargoError>()
         return p.future
     }
 }

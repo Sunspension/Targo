@@ -12,7 +12,7 @@ import RealmSwift
 
 class UserSession: Object, Mappable {
     
-    let userId = RealmOptional<Int>()
+    dynamic var userId = 0
     
     dynamic var sid = ""
     
@@ -28,7 +28,7 @@ class UserSession: Object, Mappable {
     
     func mapping(map: Map) {
      
-        userId.value <- map["user_id"]
+        userId <- map["user_id"]
         sid <- map["sid"]
     }
 }

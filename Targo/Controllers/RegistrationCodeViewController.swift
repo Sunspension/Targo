@@ -70,7 +70,7 @@ class RegistrationCodeViewController: UIViewController {
         
         if let phoneNumber = AppSettings.sharedInstance.lastSessionPhoneNumber {
             
-            Api.userLogin(phoneNumber, code: self.code.phoneNumber())
+            Api.sharedInstance.userLogin(phoneNumber, code: self.code.phoneNumber())
                 
                 .onSuccess { user in
                     

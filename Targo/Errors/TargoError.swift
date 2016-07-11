@@ -12,13 +12,17 @@ enum TargoError: ErrorType {
     
     case UserLoginFailed
     
+    case LoadUserFiled
+    
     case UserDeauthorizationFailed
     
     case DeviceTypeBlank
     
     case DeviceTokenBlank
     
+    case UndefinedError(message: String)
 
+    
     var message: String {
         
         switch self {

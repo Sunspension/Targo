@@ -8,15 +8,16 @@
 
 import UIKit
 import Alamofire
+import CoreLocation
 
 struct TRemoteServer: PRemoteServerV1 {
 
-    static let baseURLString = "http://45.62.123.157:8082/api"
+    let baseURLString = "http://45.62.123.157:8082/api"
     
-    static let deviceType = "ios"
+    let deviceType = "ios"
     
     
-    static func registration(phoneNumber: String, deviceToken: String, parameters: [String : AnyObject]?) -> Request {
+    func registration(phoneNumber: String, deviceToken: String, parameters: [String : AnyObject]?) -> Request {
         
         var params: [String: AnyObject] = ["phone" : phoneNumber, "device_type" : deviceType, "device_token" : deviceToken]
         
@@ -25,10 +26,10 @@ struct TRemoteServer: PRemoteServerV1 {
             params += parameters!
         }
         
-        return TRemoteServer.request(.POST, remotePath: baseURLString + "/code", parameters: params)
+        return self.request(.POST, remotePath: baseURLString + "/code", parameters: params)
     }
     
-    static func authorization(phoneNumber: String, code: String, deviceToken: String, parameters: [String : AnyObject]?) -> Request {
+    func authorization(phoneNumber: String, code: String, deviceToken: String, parameters: [String : AnyObject]?) -> Request {
 
         let systemVersion = UIDevice.currentDevice().systemVersion;
         let info = NSBundle.mainBundle().infoDictionary
@@ -50,21 +51,38 @@ struct TRemoteServer: PRemoteServerV1 {
             params += parameters!
         }
         
-        return TRemoteServer.request(.POST, remotePath: baseURLString + "/auth", parameters: params)
+        return self.request(.POST, remotePath: baseURLString + "/auth", parameters: params)
     }
 
-    static func deauthorization() -> Request {
+    func deauthorization() -> Request {
         
-        return TRemoteServer.request(.DELETE, remotePath: baseURLString + "/auth", parameters: nil)
+        return self.request(.DELETE, remotePath: baseURLString + "/auth")
     }
     
+    func loadUserById(userId: Int) -> Request {
+        
+        return self.request(.GET, remotePath: baseURLString + "/user/\(userId)")
+    }
     
-    private static func request(method: Alamofire.Method, remotePath: URLStringConvertible, parameters: [String : AnyObject]?) -> Request {
+    func loadCompaniesByLocation(location: CLLocation) -> Request {
+        
+        let params: [String: AnyObject] = ["lat" : location.coordinate.latitude,
+                                           "lon" : location.coordinate.longitude,
+                                           "order" : ["dist" : "asc"] ]
+        return self.request(.GET, remotePath: baseURLString + "/company-address", parameters: params)
+    }
+    
+    private func request(method: Alamofire.Method, remotePath: URLStringConvertible) -> Request {
+        
+        return self.request(method, remotePath: remotePath, parameters: nil)
+    }
+    
+    private func request(method: Alamofire.Method, remotePath: URLStringConvertible, parameters: [String : AnyObject]?) -> Request {
         
         return self.request(method, remotePath: remotePath, parameters: parameters, headers: nil);
     }
     
-    private static func request(method: Alamofire.Method, remotePath: URLStringConvertible, parameters: [String : AnyObject]?, headers: [String : String]?) -> Request {
+    private func request(method: Alamofire.Method, remotePath: URLStringConvertible, parameters: [String : AnyObject]?, headers: [String : String]?) -> Request {
         
         return Alamofire.request(method, remotePath, parameters: parameters, encoding:.JSON, headers: headers).validate()
     }

@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.registerForRemoteNotifications()
         
         var config = Realm.Configuration()
-        config.schemaVersion = 2
+        config.schemaVersion = 4
         config.migrationBlock = { (migration: Migration, oldSchemaVersion: UInt64) in
         
             if oldSchemaVersion < 1 {
@@ -44,9 +44,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
 //        let sessions = realm.objects(UserSession)
+//
+//        let users = realm.objects(User)
 //        
 //        realm.beginWrite()
 //        realm.delete(sessions)
+//        realm.delete(users)
 //        
 //        do {
 //            
@@ -57,25 +60,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            print("Caught an error when was trying to make commit to Realm")
 //        }
         
-        if let session = realm.objects(UserSession).first {
+        if realm.objects(UserSession).first != nil {
             
-            if session.userId.value != nil {
-                
-                // User logged in
-                // Open main controller
-                self.window?.rootViewController = storyBoard.instantiateViewControllerWithIdentifier("TTabBar")
-                self.window?.makeKeyAndVisible()
-            }
-            else {
-                
-                openLoginController()
-            }
+            // User logged in
+            // Open main controller
+            self.window?.rootViewController = storyBoard.instantiateViewControllerWithIdentifier("TTabBar")
+            self.window?.makeKeyAndVisible()
         }
         else {
             
             openLoginController()
         }
         
+//        let viewController = storyBoard.instantiateViewControllerWithIdentifier("TTabBar")
+//        self.window?.rootViewController = viewController
+//        self.window?.makeKeyAndVisible()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AppDelegate.logoutAction), name: kTargoUserLoggedOutSuccessfully, object: nil)
         

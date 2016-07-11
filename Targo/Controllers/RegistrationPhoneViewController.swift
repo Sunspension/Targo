@@ -83,7 +83,7 @@ class RegistrationPhoneViewController: UIViewController {
         
         EZLoadingActivity.show("Please wait", disableUI: true)
         
-        Api.userRegistration(phoneNumber)
+        Api.sharedInstance.userRegistration(phoneNumber)
             
             .onSuccess { success in
                 
@@ -99,6 +99,11 @@ class RegistrationPhoneViewController: UIViewController {
             }.onFailure { error in
                 
                 EZLoadingActivity.hide()
+                
+                let alert = UIAlertController(title: "Error", message: error.description, preferredStyle: .Alert)
+                let action = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                alert.addAction(action)
+                self.presentViewController(alert, animated: true, completion: nil)
                 print(error)
         }
     }

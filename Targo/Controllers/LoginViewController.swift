@@ -107,7 +107,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
-        Api.userLogin(phoneNumber, code: code!)
+        Api.sharedInstance.userLogin(phoneNumber, code: code!)
             
             .onSuccess { user in
                 
