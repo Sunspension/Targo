@@ -38,11 +38,6 @@ struct Api {
                         
                         switch errorKey {
                             
-                        case "StatusCode":
-                            
-                            p.failure(.UnacceptableStatusCode(description: error.localizedDescription))
-                            break
-                            
                         case "phone":
                             
                             p.failure(.WrongPhoneNumber)
@@ -50,13 +45,24 @@ struct Api {
                             
                         default:
                             
-                            p.failure(.UknownError)
+                            do {
+                                
+                                let json = try NSJSONSerialization.JSONObjectWithData(response.data!, options: NSJSONReadingOptions())
+                                let description = json.debugDescription
+                                p.failure(.UknownError(description: description))
+                                print(json)
+                            }
+                            catch {
+                                
+                                print(error)
+                            }
+                            
                             break
                         }
                     }
                     else {
                         
-                        p.failure(.UknownError)
+                        p.failure(.UknownError(description: response.result.error!.description))
                     }
                 }
                 
@@ -106,13 +112,13 @@ struct Api {
                                 
                             default:
                                 
-                                p.failure(.UknownError)
+                                p.failure(.UknownError(description: ""))
                                 break
                             }
                         }
                         else {
                             
-                            p.failure(.UknownError)
+                            p.failure(.UknownError(description: ""))
                         }
                     }
                     

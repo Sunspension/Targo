@@ -10,7 +10,7 @@ import Foundation
 
 enum UserRegistrationError: ErrorType {
     
-    case UknownError
+    case UknownError(description: String)
     
     case UnacceptableStatusCode(description: String)
     
@@ -24,6 +24,10 @@ enum UserRegistrationError: ErrorType {
             
             return description
         
+        case .UknownError(let description):
+            
+            return description
+            
         default:
             return ""
         }
