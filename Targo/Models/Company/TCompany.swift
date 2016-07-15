@@ -81,5 +81,12 @@ class TCompany: Object, Mappable {
         companyTitle <- map["company_title"]
         companyCategoryId <- map["company_category_id"]
         companyDescription <- map["company_description"]
+        companyImageId.value <- map["company_image_id"]
+        companySite <- map["company_site"]
+        companyPhone <- map["company_phone"]
+        companyCategoryTitle <- map["company_category_title"]
+        companyDescription <- map["company_category_description"]
+        companyCategoryImageId <- map["company_category_image_id"]
+        distance <- map["dist"]
     }
 }

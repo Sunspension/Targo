@@ -19,9 +19,9 @@ class TLocationManager: NSObject, CLLocationManagerDelegate {
     
     var subscribersCount: Int = 0 {
         
-        didSet (newValue) {
+        didSet {
             
-            if newValue == 0 {
+            if subscribersCount == 0 {
                 
                self.stopUpdatingLocation()
             }
@@ -63,6 +63,11 @@ class TLocationManager: NSObject, CLLocationManagerDelegate {
     
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         
+        if CLLocationManager.authorizationStatus() != .NotDetermined {
+            
+            self.locationManager.startUpdatingLocation()
+        }
+        
         NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: kTargodidChangeAuthorizationStatus, object: nil))
     }
     
@@ -77,8 +82,10 @@ class TLocationManager: NSObject, CLLocationManagerDelegate {
             
             self.locationManager.requestWhenInUseAuthorization()
         }
-        
-        self.locationManager.startUpdatingLocation()
+        else {
+            
+            self.locationManager.startUpdatingLocation()
+        }
     }
     
     func stopUpdatingLocation() {

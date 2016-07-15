@@ -15,7 +15,7 @@ class GenericCollectionSection<TCollectionItem>: NSObject {
     var items: [TCollectionItem] = []
     
     
-    init(title: String?) {
+    init(title: String? = nil) {
         
         self.title = title ?? ""
     }

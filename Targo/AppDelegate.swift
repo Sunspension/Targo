@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.registerForRemoteNotifications()
         
         var config = Realm.Configuration()
-        config.schemaVersion = 4
+        config.schemaVersion = 5
         config.migrationBlock = { (migration: Migration, oldSchemaVersion: UInt64) in
         
             if oldSchemaVersion < 1 {
@@ -42,6 +42,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.rootViewController = storyBoard.instantiateViewControllerWithIdentifier("TLoginNavigation")
             self.window?.makeKeyAndVisible()
         }
+        
+//        Api.sharedInstance.userLogut().onSuccess(callback: { success in
+//            
+//            NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: kTargoUserLoggedOutSuccessfully, object: nil))
+//            
+//        }).onFailure(callback: { error in
+//            
+//            print("User logout error: \(error)")
+//        })
         
 //        let sessions = realm.objects(UserSession)
 //

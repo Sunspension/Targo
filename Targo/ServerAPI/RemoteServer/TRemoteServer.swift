@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import CoreLocation
+import SwiftyJSON
 
 struct TRemoteServer: PRemoteServerV1 {
 
@@ -65,12 +66,21 @@ struct TRemoteServer: PRemoteServerV1 {
     }
     
     func loadCompaniesByLocation(location: CLLocation) -> Request {
+//        
+//        let params: [String: AnyObject] = ["lat" : location.coordinate.latitude,
+//                                           "lon" : location.coordinate.longitude,
+//                                           "order" : ["dist" : "asc"],
+//                                           "conditions" : ["dist" : ["<" : 3000]]]
         
         let params: [String: AnyObject] = ["lat" : location.coordinate.latitude,
                                            "lon" : location.coordinate.longitude,
-                                           "order" : ["dist" : "asc"] ]
-        return self.request(.GET, remotePath: baseURLString + "/company-address", parameters: params)
+                                           "order" : ["dist" : "asc"]]
+        
+        return Alamofire.request(.GET, baseURLString + "/company-address", parameters: params, headers: nil)
     }
+    
+    
+    //mark - private methods
     
     private func request(method: Alamofire.Method, remotePath: URLStringConvertible) -> Request {
         
@@ -84,6 +94,10 @@ struct TRemoteServer: PRemoteServerV1 {
     
     private func request(method: Alamofire.Method, remotePath: URLStringConvertible, parameters: [String : AnyObject]?, headers: [String : String]?) -> Request {
         
-        return Alamofire.request(method, remotePath, parameters: parameters, encoding:.JSON, headers: headers).validate()
+        let request = Alamofire.request(method, remotePath, parameters: parameters, encoding:.JSON, headers: headers).validate()
+        
+        debugPrint("request: \(request)")
+        
+        return request
     }
 }

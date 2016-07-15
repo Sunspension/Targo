@@ -12,7 +12,9 @@ enum TargoError: ErrorType {
     
     case UserLoginFailed
     
-    case LoadUserFiled
+    case UserLoadingFailed
+    
+    case CompanyPageLoadingFailed
     
     case UserDeauthorizationFailed
     

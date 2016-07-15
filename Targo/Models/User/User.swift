@@ -22,11 +22,11 @@ class User: Object, Mappable {
     
     dynamic var createdAt = ""
     
-    dynamic var updatedAt = ""
+    dynamic var updatedAt: String?
     
     dynamic var deleted = false
     
-    dynamic var deletedAt = ""
+    dynamic var deletedAt: String?
     
     dynamic var status = 0
     

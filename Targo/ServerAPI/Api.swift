@@ -28,7 +28,7 @@ struct Api {
         
         server.registration(phoneNumber, deviceToken:deviceToken ?? "", parameters: nil)
             .validate()
-            .responseJSON(completionHandler: { (response: Response<AnyObject, NSError>) in
+            .responseJSON(completionHandler: { response in
                 
                 if let error = response.result.error {
                     
@@ -237,9 +237,55 @@ struct Api {
         return p.future
     }
     
-    func loadCompanies() -> Future<TCompany, TargoError> {
+    func loadCompanies(location: CLLocation) -> Future<[TCompany], TargoError> {
         
-        let p = Promise<TCompany, TargoError>()
+        let p = Promise<[TCompany], TargoError>()
+        
+        server.loadCompaniesByLocation(location)
+            .validate()
+            .responseJSON(completionHandler: { (response: Response<AnyObject, NSError>) in
+                
+                print(response.request?.allHTTPHeaderFields)
+                
+//                do {
+//                    
+//                    let json = try NSJSONSerialization.JSONObjectWithData((response.request?.HTTPBody)!, options: NSJSONReadingOptions())
+//                    print(json)
+//                }
+//                catch {
+//                    
+//                    print(error)
+//                }
+                
+            })
+            .responseObject(queue: nil, keyPath: "data.meta", mapToObject: TCompaniesPage(), context: nil) { (response: Response<TCompaniesPage, NSError>) in
+                
+                if let page = response.result.value {
+                    
+                    print("companies page: \(page)")
+                }
+                else if let error = response.result.error {
+                    
+                    print("page error: \(error)")
+                    
+                    p.failure(.CompanyPageLoadingFailed)
+                }
+                
+            }.responseArray(queue: nil, keyPath: "data.company-address", context: nil) { (response: Response<[TCompany], NSError>) in
+                
+                if let companies = response.result.value {
+                    
+                    print("companies: \(companies)")
+                    
+                    p.success(companies)
+                }
+                else if let error = response.result.error {
+                    
+                    print("load companies error: \(error)")
+                    p.failure(.CompanyPageLoadingFailed)
+                }
+        }
+        
         return p.future
     }
 }
