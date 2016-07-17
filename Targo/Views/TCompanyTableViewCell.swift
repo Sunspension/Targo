@@ -16,6 +16,9 @@ class TCompanyTableViewCell: UITableViewCell {
     
     @IBOutlet weak var additionalInfo: UILabel!
     
+    @IBOutlet weak var shadowView: UIView!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -26,5 +29,4 @@ class TCompanyTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
 }

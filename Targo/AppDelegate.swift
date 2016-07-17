@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import Timberjack
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,8 +23,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.registerUserNotificationSettings(settings)
         application.registerForRemoteNotifications()
         
+        //Loggin
+        Timberjack.register()
+        
         var config = Realm.Configuration()
-        config.schemaVersion = 5
+        config.schemaVersion = 6
         config.migrationBlock = { (migration: Migration, oldSchemaVersion: UInt64) in
         
             if oldSchemaVersion < 1 {

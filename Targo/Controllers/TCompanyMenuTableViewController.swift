@@ -1,40 +1,38 @@
 //
-//  UserProfileTableViewController.swift
+//  TCompanyMenuTableViewController.swift
 //  Targo
 //
-//  Created by Vladimir Kokhanevich on 10/07/16.
+//  Created by Vladimir Kokhanevich on 17/07/16.
 //  Copyright © 2016 Targo. All rights reserved.
 //
 
 import UIKit
 import DynamicColor
 
-class UserProfileTableViewController: UITableViewController {
+class TCompanyMenuTableViewController: UITableViewController {
 
-    var itemsSource: GenericTableViewDataSource<UITableViewCell, String>?
+    var company: TCompany?
+    
+    var companyImage: UIImage?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        self.title = company?.companyTitle
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "icon-info"), style: .Plain, target: self, action: #selector(TCompanyMenuTableViewController.openInfo))
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-
+        
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        
-        self.itemsSource = GenericTableViewDataSource<UITableViewCell, String>(reusableIdentifierOrNibName: nil, bindingAction: { (cell, item ) in
-        
-            cell.textLabel?.text = item
-        })
-        
-        let section = GenericCollectionSection<String>(title: nil)
-        section.items.append("Logout")
-        
-        self.itemsSource?.sections.append(section)
-        
-        self.tableView.dataSource = self.itemsSource
-        self.tableView.delegate = self
-        self.tableView.tableFooterView = UIView()
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -44,29 +42,20 @@ class UserProfileTableViewController: UITableViewController {
         self.setup()
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func openInfo() {
         
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
-        if indexPath.row == 0 {
-            
-            Api.sharedInstance.userLogut().onSuccess(callback: { success in
-                
-                NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: kTargoUserLoggedOutSuccessfully, object: nil))
-                
-            }).onFailure(callback: { error in
-                
-                print("User logout error: \(error)")
-            })
-        }
     }
     
-    // MARK: - Table view data source
+    /*
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
+
+        // Configure the cell...
+
+        return cell
+    }
+    */
 
     /*
     // Override to support conditional editing of the table view.

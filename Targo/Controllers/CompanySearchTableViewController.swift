@@ -10,6 +10,7 @@ import UIKit
 import DynamicColor
 import CoreLocation
 import RealmSwift
+import AlamofireImage
 
 class CompanySearchTableViewController: UITableViewController {
     
@@ -17,26 +18,35 @@ class CompanySearchTableViewController: UITableViewController {
     
     var itemsSource: GenericTableViewDataSource<TCompanyTableViewCell, TCompany>?
     
+    var companyImages: [TCompanyImage] = []
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "icon-map"), style: .Plain, target: self, action: #selector(CompanySearchTableViewController.openMap))
         
-        self.itemsSource = GenericTableViewDataSource<TCompanyTableViewCell, TCompany>(reusableIdentifierOrNibName: "CompanyTableCell",
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        
+        self.itemsSource =
+            GenericTableViewDataSource<TCompanyTableViewCell, TCompany>(reusableIdentifierOrNibName: "CompanyTableCell",
                                                                                        bindingAction: { (cell, item) in
                                                                                         
                                                                                         cell.companyTitle.text = item.companyTitle
                                                                                         cell.additionalInfo.text = item.companyCategoryTitle
                                                                                         
-//                                                                                        let rect = cell.layer.bounds
-//                                                                                        let shadowPath = UIBezierPath(rect: rect).CGPath
-//                                                                                        cell.layer.shadowPath = shadowPath
-//                                                                                        
-//                                                                                        cell.layer.shadowOffset = CGSize(width: 1, height: 0)
-//                                                                                        cell.layer.shadowOpacity = 0.5
-//                                                                                        cell.layer.shadowRadius = 1
-//                                                                                        cell.clipsToBounds = true
+                                                                                        let imageSize = cell.companyImage.bounds.size
+                                                                                        
+                                                                                        if let image = self.companyImages.filter({$0.id == item.companyImageId.value}).first {
+                                                                                        
+                                                                                            let filter = AspectScaledToFillSizeFilter(size: imageSize)
+                                                                                            cell.companyImage.af_setImageWithURL(NSURL(string: image.url)!, filter: filter, imageTransition: .CrossDissolve(0.6))
+                                                                                        }
+                                                                                        
+                                                                                        let layer = cell.shadowView.layer
+                                                                                        //        layer.shadowPath = UIBezierPath(rect: self.shadowView.layer.bounds).CGPath
+                                                                                        layer.shadowOffset = CGSize(width: 0, height: 3)
+                                                                                        layer.shadowOpacity = 0.5
         })
         
         self.tableView.dataSource = self.itemsSource
@@ -63,21 +73,20 @@ class CompanySearchTableViewController: UITableViewController {
         
         super.viewWillAppear(animated)
         
-        self.navigationController?.navigationBar.barTintColor = DynamicColor(hexString: kHexMainPinkColor)
-        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-        self.navigationController?.navigationBar.titleTextAttributes = [ NSForegroundColorAttributeName : UIColor.whiteColor() ]
+        self.setup()
     }
     
-    // MARK: - Table view data source
-    
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-    
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        let item = self.itemsSource!.sections[indexPath.section].items[indexPath.row]
+        
+        if let controller = self.instantiateViewControllerWithIdentifierOrNibName("MenuController") as? TCompanyMenuTableViewController {
+            
+            controller.company = item
+            self.navigationController?.pushViewController(controller, animated: true)
+        }
     }
     
     func openMap() {
@@ -95,9 +104,9 @@ class CompanySearchTableViewController: UITableViewController {
                 
                 let testLocation = CLLocation(latitude: 59.97, longitude: 30.40)
                 
-                Api.sharedInstance.loadCompanies(testLocation).onSuccess(callback: { companies in
+                Api.sharedInstance.loadCompanies(testLocation).onSuccess(callback: { companyPage in
                     
-                    self.createDataSource(companies)
+                    self.createDataSource(companyPage)
                     
                 }).onFailure(callback: { error in
                     
@@ -107,17 +116,22 @@ class CompanySearchTableViewController: UITableViewController {
         }
     }
     
-    func createDataSource(companies:[TCompany]) {
+    func createDataSource(companyPage: TCompaniesPage?) {
         
         let section = GenericCollectionSection<TCompany>()
         
-        for company in companies {
+        if let page = companyPage {
             
-            section.items.append(company)
+            for company in page.companies {
+                
+                section.items.append(company)
+            }
+            
+            self.companyImages.removeAll()
+            self.companyImages.appendContentsOf(page.images)
+            self.itemsSource?.sections.append(section)
+            self.tableView.reloadData()
         }
-        
-        self.itemsSource?.sections.append(section)
-        self.tableView.reloadData()
     }
     
     /*

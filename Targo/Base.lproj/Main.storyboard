@@ -244,19 +244,31 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CompanyTableCell" rowHeight="282" id="tYb-MZ-Nk1" customClass="TCompanyTableViewCell" customModule="Targo" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="CompanyTableCell" rowHeight="282" id="tYb-MZ-Nk1" customClass="TCompanyTableViewCell" customModule="Targo" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="92" width="320" height="282"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tYb-MZ-Nk1" id="i3C-cS-dXc">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="282"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="company-image" translatesAutoresizingMaskIntoConstraints="NO" id="2eD-HU-hZF">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fK0-Vp-N3G">
+                                            <rect key="frame" x="8" y="8" width="304" height="266"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2eD-HU-hZF">
                                             <rect key="frame" x="8" y="8" width="304" height="171"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="2eD-HU-hZF" secondAttribute="height" multiplier="16:9" id="b6R-vh-TgR"/>
                                             </constraints>
                                         </imageView>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OuR-Qe-gdn">
+                                            <rect key="frame" x="8" y="8" width="304" height="3"/>
+                                            <color key="backgroundColor" red="0.80392156862745101" green="0.0" blue="0.47450980392156861" alpha="1" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="3" id="yWk-8K-gVw"/>
+                                            </constraints>
+                                        </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sbY-Kz-ikN">
                                             <rect key="frame" x="8" y="179" width="304" height="60"/>
                                             <subviews>
@@ -290,11 +302,18 @@
                                         </view>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="fK0-Vp-N3G" firstAttribute="bottom" secondItem="i3C-cS-dXc" secondAttribute="bottomMargin" id="6uh-HE-XDY"/>
                                         <constraint firstItem="2eD-HU-hZF" firstAttribute="top" secondItem="i3C-cS-dXc" secondAttribute="topMargin" id="8Hz-ff-obz"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="fK0-Vp-N3G" secondAttribute="trailing" id="AGS-GR-whx"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="OuR-Qe-gdn" secondAttribute="trailing" id="BII-CY-Opf"/>
+                                        <constraint firstItem="OuR-Qe-gdn" firstAttribute="top" secondItem="i3C-cS-dXc" secondAttribute="topMargin" id="Crn-3U-zxj"/>
                                         <constraint firstItem="sbY-Kz-ikN" firstAttribute="top" secondItem="2eD-HU-hZF" secondAttribute="bottom" id="Dbx-Iy-k6J"/>
+                                        <constraint firstItem="fK0-Vp-N3G" firstAttribute="leading" secondItem="i3C-cS-dXc" secondAttribute="leadingMargin" id="N3M-7n-SB5"/>
                                         <constraint firstItem="2eD-HU-hZF" firstAttribute="trailing" secondItem="i3C-cS-dXc" secondAttribute="trailingMargin" id="P31-t8-mNB"/>
+                                        <constraint firstItem="OuR-Qe-gdn" firstAttribute="leading" secondItem="i3C-cS-dXc" secondAttribute="leadingMargin" id="REY-fk-pkz"/>
                                         <constraint firstItem="sbY-Kz-ikN" firstAttribute="leading" secondItem="2eD-HU-hZF" secondAttribute="leading" id="q5G-rp-CeU"/>
                                         <constraint firstItem="2eD-HU-hZF" firstAttribute="leading" secondItem="i3C-cS-dXc" secondAttribute="leadingMargin" id="sr1-gC-gif"/>
+                                        <constraint firstItem="fK0-Vp-N3G" firstAttribute="top" secondItem="i3C-cS-dXc" secondAttribute="topMargin" id="uY1-UI-nbo"/>
                                         <constraint firstItem="sbY-Kz-ikN" firstAttribute="trailing" secondItem="2eD-HU-hZF" secondAttribute="trailing" id="z8W-VB-k6G"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -303,6 +322,7 @@
                                     <outlet property="additionalInfo" destination="atk-gd-9lH" id="cWx-GA-jHl"/>
                                     <outlet property="companyImage" destination="2eD-HU-hZF" id="bzK-Cd-j89"/>
                                     <outlet property="companyTitle" destination="JL5-oB-F9O" id="oVK-Oh-pnd"/>
+                                    <outlet property="shadowView" destination="fK0-Vp-N3G" id="4Rf-J3-A5b"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -318,6 +338,35 @@
             </objects>
             <point key="canvasLocation" x="1205" y="902"/>
         </scene>
+        <!--Company Menu Table View Controller-->
+        <scene sceneID="hhn-kE-rU4">
+            <objects>
+                <tableViewController storyboardIdentifier="MenuController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="hFe-ta-E5N" customClass="TCompanyMenuTableViewController" customModule="Targo" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="3a6-Yy-hsY">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="U6j-id-2LL">
+                                <rect key="frame" x="0.0" y="28" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="U6j-id-2LL" id="Lkx-xl-sbZ">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="hFe-ta-E5N" id="fi4-v1-4q6"/>
+                            <outlet property="delegate" destination="hFe-ta-E5N" id="JJc-YM-rQc"/>
+                        </connections>
+                    </tableView>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rWz-Vv-rvG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1621" y="902"/>
+        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="6zy-ie-s0z">
             <objects>
@@ -327,6 +376,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
+                                <color key="value" red="0.80392156862745101" green="0.0" blue="0.47450980392156861" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </tabBar>
                     <connections>
                         <segue destination="n0M-K0-YnC" kind="relationship" relationship="viewControllers" id="sik-FR-bMB"/>
@@ -491,7 +545,7 @@
         <!--Orders-->
         <scene sceneID="czz-lq-AIE">
             <objects>
-                <tableViewController id="h2V-yg-Se3" sceneMemberID="viewController">
+                <tableViewController id="h2V-yg-Se3" customClass="TOrdersTableViewController" customModule="Targo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="xGg-oH-q0a">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -521,7 +575,7 @@
         <!--Feed-->
         <scene sceneID="fjT-BK-zaK">
             <objects>
-                <tableViewController id="EVg-6a-jXo" sceneMemberID="viewController">
+                <tableViewController id="EVg-6a-jXo" customClass="TFeedTableViewController" customModule="Targo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="srz-fz-RMO">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -619,7 +673,6 @@
     </scenes>
     <resources>
         <image name="background" width="375" height="666"/>
-        <image name="company-image" width="373" height="202"/>
         <image name="icon-basket" width="30" height="30"/>
         <image name="icon-feed" width="30" height="30"/>
         <image name="icon-next" width="30" height="30"/>

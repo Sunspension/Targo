@@ -10,7 +10,11 @@ import Foundation
 import Alamofire
 import AlamofireObjectMapper
 
-extension Response {
+extension Request {
     
-    
+    func debugLog() -> Request {
+        
+        debugPrint(self)
+        return self
+    }
 }

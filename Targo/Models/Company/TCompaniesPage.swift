@@ -20,8 +20,9 @@ class TCompaniesPage: Object, Mappable {
     
     dynamic var pageSize = 0
     
-    let companies = List<TCompany>()
+    var companies = List<TCompany>()
     
+    var images = List<TCompanyImage>()
     
     required convenience init?(_ map: Map) {
         
@@ -31,9 +32,11 @@ class TCompaniesPage: Object, Mappable {
     
     func mapping(map: Map) {
         
-        totalCount <- map["total_count"]
-        pageCount <- map["page_count"]
-        currentPage <- map["current_page"]
-        pageSize <- map["page_size"]
+        totalCount <- map["meta.total_count"]
+        pageCount <- map["meta.page_count"]
+        currentPage <- map["meta.current_page"]
+        pageSize <- map["meta.page_size"]
+        companies <- (map["company-address"], ListTransform<TCompany>())
+        images <- (map["image"], ListTransform<TCompanyImage>())
     }
 }

@@ -216,53 +216,51 @@ struct Api {
             
             server.loadUserById(session.userId)
                 .validate()
-                .responseObject(queue: nil, keyPath: "data.user", mapToObject: User(), completionHandler: { (response: Response<User, NSError>) in
-                    
-                    if let user = response.result.value {
-                        
-                        print("user: \(user)")
-                        
-                        let realm = try! Realm()
-                        
-                        try! realm.write({
-                            
-                            realm.add(user, update: true)
-                        })
-                        
-                        p.success(user)
-                    }
+                .responseObject(queue: nil,
+                                keyPath: "data.user",
+                                mapToObject: User(),
+                                completionHandler: { (response: Response<User, NSError>) in
+                                    
+                                    if let user = response.result.value {
+                                        
+                                        print("user: \(user)")
+                                        
+                                        let realm = try! Realm()
+                                        
+                                        try! realm.write({
+                                            
+                                            realm.add(user, update: true)
+                                        })
+                                        
+                                        p.success(user)
+                                    }
                 })
         }
         
         return p.future
     }
     
-    func loadCompanies(location: CLLocation) -> Future<[TCompany], TargoError> {
+    func loadCompanies(location: CLLocation) -> Future<TCompaniesPage, TargoError> {
         
-        let p = Promise<[TCompany], TargoError>()
+        let p = Promise<TCompaniesPage, TargoError>()
         
         server.loadCompaniesByLocation(location)
+            .debugLog()
             .validate()
             .responseJSON(completionHandler: { (response: Response<AnyObject, NSError>) in
                 
-                print(response.request?.allHTTPHeaderFields)
-                
-//                do {
-//                    
-//                    let json = try NSJSONSerialization.JSONObjectWithData((response.request?.HTTPBody)!, options: NSJSONReadingOptions())
-//                    print(json)
-//                }
-//                catch {
-//                    
-//                    print(error)
-//                }
+                print(response.result.value)
                 
             })
-            .responseObject(queue: nil, keyPath: "data.meta", mapToObject: TCompaniesPage(), context: nil) { (response: Response<TCompaniesPage, NSError>) in
+            .responseObject(queue: nil,
+                keyPath: "data",
+                mapToObject: TCompaniesPage(),
+            context: nil) { (response: Response<TCompaniesPage, NSError>) in
                 
                 if let page = response.result.value {
                     
                     print("companies page: \(page)")
+                    p.success(page)
                 }
                 else if let error = response.result.error {
                     
@@ -270,21 +268,7 @@ struct Api {
                     
                     p.failure(.CompanyPageLoadingFailed)
                 }
-                
-            }.responseArray(queue: nil, keyPath: "data.company-address", context: nil) { (response: Response<[TCompany], NSError>) in
-                
-                if let companies = response.result.value {
-                    
-                    print("companies: \(companies)")
-                    
-                    p.success(companies)
-                }
-                else if let error = response.result.error {
-                    
-                    print("load companies error: \(error)")
-                    p.failure(.CompanyPageLoadingFailed)
-                }
-        }
+            }
         
         return p.future
     }

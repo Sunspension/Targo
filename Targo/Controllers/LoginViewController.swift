@@ -65,10 +65,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     override func viewWillAppear(animated: Bool) {
         
         super.viewWillAppear(animated)
-        
-        self.navigationController?.navigationBar.barTintColor = DynamicColor(hexString: kHexMainPinkColor)
-        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-        self.navigationController?.navigationBar.titleTextAttributes = [ NSForegroundColorAttributeName : UIColor.whiteColor() ]
+        self.setup()
         
         if let phone = AppSettings.sharedInstance.lastSessionPhoneNumber {
             

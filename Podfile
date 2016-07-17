@@ -45,4 +45,7 @@ pod 'KeychainSwift', '~> 3.0'
 #Events
 pod 'BrightFutures'
 
+#Loggin
+pod 'Timberjack', '~> 0.0'
+
 end

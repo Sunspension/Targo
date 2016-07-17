@@ -9,7 +9,6 @@
 import UIKit
 import Alamofire
 import CoreLocation
-import SwiftyJSON
 
 struct TRemoteServer: PRemoteServerV1 {
 
@@ -66,15 +65,16 @@ struct TRemoteServer: PRemoteServerV1 {
     }
     
     func loadCompaniesByLocation(location: CLLocation) -> Request {
-//        
-//        let params: [String: AnyObject] = ["lat" : location.coordinate.latitude,
-//                                           "lon" : location.coordinate.longitude,
-//                                           "order" : ["dist" : "asc"],
-//                                           "conditions" : ["dist" : ["<" : 3000]]]
+        //
+        //        let params: [String: AnyObject] = ["lat" : location.coordinate.latitude,
+        //                                           "lon" : location.coordinate.longitude,
+        //                                           "order" : ["dist" : "asc"],
+        //                                           "conditions" : ["dist" : ["<" : 3000]]]
         
         let params: [String: AnyObject] = ["lat" : location.coordinate.latitude,
                                            "lon" : location.coordinate.longitude,
-                                           "order" : ["dist" : "asc"]]
+                                           "order" : ["dist" : "asc"],
+                                           "extend" : "image"]
         
         return Alamofire.request(.GET, baseURLString + "/company-address", parameters: params, headers: nil)
     }
@@ -94,10 +94,6 @@ struct TRemoteServer: PRemoteServerV1 {
     
     private func request(method: Alamofire.Method, remotePath: URLStringConvertible, parameters: [String : AnyObject]?, headers: [String : String]?) -> Request {
         
-        let request = Alamofire.request(method, remotePath, parameters: parameters, encoding:.JSON, headers: headers).validate()
-        
-        debugPrint("request: \(request)")
-        
-        return request
+        return Alamofire.request(method, remotePath, parameters: parameters, encoding:.JSON, headers: headers)
     }
 }
