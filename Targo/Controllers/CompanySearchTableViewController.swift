@@ -24,6 +24,8 @@ class CompanySearchTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.tableView.setup()
+        
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "icon-map"), style: .Plain, target: self, action: #selector(CompanySearchTableViewController.openMap))
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
@@ -42,18 +44,12 @@ class CompanySearchTableViewController: UITableViewController {
                                                                                             let filter = AspectScaledToFillSizeFilter(size: imageSize)
                                                                                             cell.companyImage.af_setImageWithURL(NSURL(string: image.url)!, filter: filter, imageTransition: .CrossDissolve(0.6))
                                                                                         }
-                                                                                        
-                                                                                        let layer = cell.shadowView.layer
-                                                                                        //        layer.shadowPath = UIBezierPath(rect: self.shadowView.layer.bounds).CGPath
-                                                                                        layer.shadowOffset = CGSize(width: 0, height: 3)
-                                                                                        layer.shadowOpacity = 0.5
         })
-        
-        self.tableView.dataSource = self.itemsSource
         
         let background = UIImageView(image: UIImage(named: "background"))
         background.frame = self.tableView.frame
         self.tableView.backgroundView = background
+        self.tableView.dataSource = self.itemsSource
         
         TLocationManager.sharedInstance.subscribeObjectForLocationChange(self, selector: #selector(CompanySearchTableViewController.userLocationChanged))
         
@@ -78,13 +74,15 @@ class CompanySearchTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        
         let item = self.itemsSource!.sections[indexPath.section].items[indexPath.row]
         
         if let controller = self.instantiateViewControllerWithIdentifierOrNibName("MenuController") as? TCompanyMenuTableViewController {
             
+            let viewCell = tableView.cellForRowAtIndexPath(indexPath) as! TCompanyTableViewCell
+            
             controller.company = item
+            controller.companyImage = viewCell.companyImage.image
+                
             self.navigationController?.pushViewController(controller, animated: true)
         }
     }
@@ -92,6 +90,21 @@ class CompanySearchTableViewController: UITableViewController {
     func openMap() {
         
         
+    }
+    
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        // This code is here because of strange bug with the size of a shadow
+        if cell.layer.shadowPath != nil {
+            
+            return
+        }
+        
+        let viewCell = cell as! TCompanyTableViewCell
+        let layer = viewCell.shadowView.layer
+        layer.shadowOffset = CGSize(width: 0, height: 3)
+        layer.shadowOpacity = 0.5
+        layer.shadowPath = UIBezierPath(rect: layer.bounds).CGPath
     }
     
     func userLocationChanged() {

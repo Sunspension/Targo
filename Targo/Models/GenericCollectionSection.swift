@@ -8,11 +8,11 @@
 
 import UIKit
 
-class GenericCollectionSection<TCollectionItem>: NSObject {
+class GenericCollectionSection<TItem>: NSObject {
 
     var title: String
     
-    var items: [TCollectionItem] = []
+    var items: [TItem] = []
     
     
     init(title: String? = nil) {

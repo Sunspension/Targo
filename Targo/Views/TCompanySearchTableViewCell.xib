@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TCompanySearchCell" rowHeight="279" id="KGk-i7-Jjw" customClass="TCompanySearchTableViewCell" customModule="Targo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="279"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="278"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OdF-I6-Ilf">
+                        <rect key="frame" x="8" y="8" width="304" height="262"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Nuv-sn-Tei">
+                        <rect key="frame" x="8" y="8" width="304" height="171"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="Nuv-sn-Tei" secondAttribute="height" multiplier="16:9" id="5hr-Bo-f5l"/>
+                        </constraints>
+                    </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hQv-jb-76C">
+                        <rect key="frame" x="8" y="184" width="304" height="60"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Company Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wJc-Ve-nlV">
+                                <rect key="frame" x="8" y="8" width="206" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="9DF-SQ-BSs"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="350 m  Бизнес ланч, Кофе" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dv9-mh-nMh">
+                                <rect key="frame" x="8" y="31" width="288" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="60" id="28y-Sk-70K"/>
+                            <constraint firstItem="wJc-Ve-nlV" firstAttribute="top" secondItem="hQv-jb-76C" secondAttribute="top" constant="8" id="8pn-qD-WBI"/>
+                            <constraint firstItem="dv9-mh-nMh" firstAttribute="leading" secondItem="hQv-jb-76C" secondAttribute="leading" constant="8" id="YRZ-gv-m62"/>
+                            <constraint firstAttribute="bottom" secondItem="dv9-mh-nMh" secondAttribute="bottom" constant="8" id="bfa-Sc-5Pu"/>
+                            <constraint firstAttribute="trailing" secondItem="dv9-mh-nMh" secondAttribute="trailing" constant="8" id="f3k-lE-8ke"/>
+                            <constraint firstAttribute="trailing" secondItem="wJc-Ve-nlV" secondAttribute="trailing" constant="90" id="qXa-kp-Wzp"/>
+                            <constraint firstItem="wJc-Ve-nlV" firstAttribute="leading" secondItem="hQv-jb-76C" secondAttribute="leading" constant="8" id="wbf-cp-Eof"/>
+                            <constraint firstItem="dv9-mh-nMh" firstAttribute="top" secondItem="wJc-Ve-nlV" secondAttribute="bottom" constant="2" id="ybn-QH-dw4"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="OdF-I6-Ilf" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="9Zt-sf-jrU"/>
+                    <constraint firstItem="Nuv-sn-Tei" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="Bbt-JA-f5l"/>
+                    <constraint firstItem="OdF-I6-Ilf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="JAd-Ej-dMV"/>
+                    <constraint firstItem="OdF-I6-Ilf" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="KeA-pt-cd5"/>
+                    <constraint firstItem="hQv-jb-76C" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="OG1-Hc-VPT"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="hQv-jb-76C" secondAttribute="bottom" priority="999" id="PHf-Xq-hCp"/>
+                    <constraint firstItem="OdF-I6-Ilf" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="S77-RT-28l"/>
+                    <constraint firstItem="Nuv-sn-Tei" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="WFR-uf-Mlq"/>
+                    <constraint firstItem="hQv-jb-76C" firstAttribute="top" secondItem="Nuv-sn-Tei" secondAttribute="bottom" constant="5" id="tx0-Dn-LDA"/>
+                    <constraint firstItem="hQv-jb-76C" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="uMy-9V-EtZ"/>
+                    <constraint firstItem="Nuv-sn-Tei" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="wFp-cZ-f3F"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <connections>
+                <outlet property="additionalInfo" destination="dv9-mh-nMh" id="FJj-Da-RZ2"/>
+                <outlet property="companyImage" destination="Nuv-sn-Tei" id="thq-FB-YBC"/>
+                <outlet property="companyTitle" destination="wJc-Ve-nlV" id="v6y-VD-x42"/>
+                <outlet property="shadowView" destination="OdF-I6-Ilf" id="BWp-I5-u39"/>
+            </connections>
+            <point key="canvasLocation" x="409" y="478.5"/>
+        </tableViewCell>
+    </objects>
+</document>

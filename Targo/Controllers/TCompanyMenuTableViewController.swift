@@ -15,13 +15,40 @@ class TCompanyMenuTableViewController: UITableViewController {
     
     var companyImage: UIImage?
     
+    var itemsSource = TableViewDataSource()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.title = company?.companyTitle
         
+        self.tableView.setup()
+        self.tableView.delegate = self
+        self.tableView.dataSource = self.itemsSource
+        
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "icon-info"), style: .Plain, target: self, action: #selector(TCompanyMenuTableViewController.openInfo))
+        
+        self.tableView.registerNib(UINib(nibName: "TCompanyImageMenuTableViewCell", bundle: nil),
+                                   forCellReuseIdentifier: "CompanyImageMenu")
+    
+        let section = CollectionSection()
+        
+        section.initializeCellWithReusableIdentifierOrNibName("CompanyImageMenu",
+                                                                       item: self.companyImage) { (cell, item) in
+                                                                        
+                                                                        let viewCell = cell as! TCompanyImageMenuTableViewCell
+                                                                        viewCell.companyImage.image = item?.item as? UIImage
+        }
+        
+        section.initializeCellWithReusableIdentifierOrNibName("WorkingTimeViewCell",
+                                                                       item: company) { (cell, item) in
+                                                                        
+                                                                        let viewCell = cell as! TWorkingTimeTableViewCell
+                                                                        let item = item?.item as? TCompany
+        }
+        
+        self.itemsSource.sections.append(section)
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false

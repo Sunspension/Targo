@@ -105,3 +105,12 @@ extension UIImage {
         return nil;
     }
 }
+
+extension UITableView {
+    
+    func setup() {
+        
+        self.estimatedRowHeight = 44
+        self.rowHeight = UITableViewAutomaticDimension
+    }
+}

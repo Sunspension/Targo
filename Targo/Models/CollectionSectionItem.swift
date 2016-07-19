@@ -18,7 +18,7 @@ class CollectionSectionItem: NSObject {
     
     var itemType: Int?
     
-    var reusableIdentifierOrNibName: String
+    var reusableIdentifierOrNibName: String?
     
     var selected: Bool = false
     
@@ -28,15 +28,15 @@ class CollectionSectionItem: NSObject {
     
     var bindingAction: ((cell: UITableViewCell, item: CollectionSectionItem?) -> Void)!
     
-    init(reusableIdentifierOrNibName: String?, item: Any?) {
+    init(reusableIdentifierOrNibName: String? = nil, item: Any?) {
         
-        self.reusableIdentifierOrNibName = reusableIdentifierOrNibName ?? ""
+        self.reusableIdentifierOrNibName = reusableIdentifierOrNibName
         self.item = item
         
         super.init()
     }
     
-    init(cellStyle: UITableViewCellStyle, item: Any) {
+    init(cellStyle: UITableViewCellStyle, item: Any?) {
         
         self.item = item
         self.cellStyle = cellStyle

@@ -16,7 +16,7 @@ class GenericTableViewDataSource<TTableViewCell: UITableViewCell, TTableItem: An
     
     var reusableIdentifierOrNibName: String?
     
-    init(reusableIdentifierOrNibName: String?, bindingAction: (cell: TTableViewCell, item: TTableItem) -> Void) {
+    init(reusableIdentifierOrNibName: String? = nil, bindingAction: (cell: TTableViewCell, item: TTableItem) -> Void) {
         
         self.bindingAction = bindingAction
         self.reusableIdentifierOrNibName = reusableIdentifierOrNibName

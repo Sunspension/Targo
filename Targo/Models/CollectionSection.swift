@@ -22,12 +22,12 @@ class CollectionSection: NSObject {
         self.title = title;
     }
     
-    func initializeCellWithReusableIdentifierOrNibName(identifierOrNibName: String?, item: Any?, bindingAction: (cell:UITableViewCell, item: CollectionSectionItem?) -> Void) {
+    func initializeCellWithReusableIdentifierOrNibName(identifierOrNibName: String, item: Any?, bindingAction: (cell:UITableViewCell, item: CollectionSectionItem?) -> Void) {
         
         self.initializeCellWithReusableIdentifierOrNibName(identifierOrNibName, item: item, itemType: nil, bindingAction: bindingAction)
     }
     
-    func initializeCellWithReusableIdentifierOrNibName(identifierOrNibName: String?, item: Any?, itemType: Int?, bindingAction: (cell:UITableViewCell, item: CollectionSectionItem?) -> Void) {
+    func initializeCellWithReusableIdentifierOrNibName(identifierOrNibName: String, item: Any?, itemType: Int?, bindingAction: (cell:UITableViewCell, item: CollectionSectionItem?) -> Void) {
         
         let item = CollectionSectionItem(reusableIdentifierOrNibName: identifierOrNibName, item: item)
         item.itemType = itemType
@@ -35,3 +35,4 @@ class CollectionSection: NSObject {
         self.items.append(item)
     }
 }
+

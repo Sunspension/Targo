@@ -13,6 +13,11 @@
 		D403017A1D39936A00B7B610 /* TShopGood.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40301791D39936A00B7B610 /* TShopGood.swift */; };
 		D4036A0F1D36CE8200CA8E38 /* TCompany.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4036A0E1D36CE8200CA8E38 /* TCompany.swift */; };
 		D4036A111D36D08900CA8E38 /* TCompaniesPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4036A101D36D08900CA8E38 /* TCompaniesPage.swift */; };
+		D40E10211D3EAEE60012DCF4 /* TCompanyImageMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40E101F1D3EAEE60012DCF4 /* TCompanyImageMenuTableViewCell.swift */; };
+		D40E10221D3EAEE60012DCF4 /* TCompanyImageMenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D40E10201D3EAEE60012DCF4 /* TCompanyImageMenuTableViewCell.xib */; };
+		D40E10241D3EC1660012DCF4 /* TableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40E10231D3EC1660012DCF4 /* TableViewDataSource.swift */; };
+		D40E10281D3ECE260012DCF4 /* TCompanySearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40E10261D3ECE260012DCF4 /* TCompanySearchTableViewCell.swift */; };
+		D40E10291D3ECE260012DCF4 /* TCompanySearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D40E10271D3ECE260012DCF4 /* TCompanySearchTableViewCell.xib */; };
 		D41F36071D2855C8001896A2 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41F36061D2855C8001896A2 /* LoginViewController.swift */; };
 		D41F59C41D32902F0075568D /* CollectionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41F59C31D32902F0075568D /* CollectionSection.swift */; };
 		D41F59C61D32910A0075568D /* GenericTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41F59C51D32910A0075568D /* GenericTableViewDataSource.swift */; };
@@ -40,6 +45,7 @@
 		D4EE596B1D3AFFA60002022F /* AlamofireExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EE596A1D3AFFA60002022F /* AlamofireExtensions.swift */; };
 		D4F84B431D24591300263D1A /* AppExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F84B421D24591300263D1A /* AppExtensions.swift */; };
 		D4F84B491D24668400263D1A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F84B481D24668400263D1A /* User.swift */; };
+		D4FDE67A1D3C007E003EF2CC /* TWorkingTimeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FDE6791D3C007E003EF2CC /* TWorkingTimeTableViewCell.swift */; };
 		E57C7E8A1D22B60D00F9A0FC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57C7E891D22B60D00F9A0FC /* Constants.swift */; };
 		E57C7E8E1D22B8A700F9A0FC /* AuthorizationCodeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57C7E8D1D22B8A700F9A0FC /* AuthorizationCodeResponse.swift */; };
 		E5C062D91D2106BF002074C4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C062D81D2106BF002074C4 /* AppDelegate.swift */; };
@@ -57,6 +63,11 @@
 		D40301791D39936A00B7B610 /* TShopGood.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TShopGood.swift; path = Targo/Models/Menu/TShopGood.swift; sourceTree = SOURCE_ROOT; };
 		D4036A0E1D36CE8200CA8E38 /* TCompany.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TCompany.swift; path = Models/Company/TCompany.swift; sourceTree = "<group>"; };
 		D4036A101D36D08900CA8E38 /* TCompaniesPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TCompaniesPage.swift; path = Models/Company/TCompaniesPage.swift; sourceTree = "<group>"; };
+		D40E101F1D3EAEE60012DCF4 /* TCompanyImageMenuTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCompanyImageMenuTableViewCell.swift; sourceTree = "<group>"; };
+		D40E10201D3EAEE60012DCF4 /* TCompanyImageMenuTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCompanyImageMenuTableViewCell.xib; sourceTree = "<group>"; };
+		D40E10231D3EC1660012DCF4 /* TableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TableViewDataSource.swift; path = Models/TableViewDataSource.swift; sourceTree = "<group>"; };
+		D40E10261D3ECE260012DCF4 /* TCompanySearchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCompanySearchTableViewCell.swift; sourceTree = "<group>"; };
+		D40E10271D3ECE260012DCF4 /* TCompanySearchTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCompanySearchTableViewCell.xib; sourceTree = "<group>"; };
 		D41F36061D2855C8001896A2 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D41F59C31D32902F0075568D /* CollectionSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CollectionSection.swift; path = Models/CollectionSection.swift; sourceTree = "<group>"; };
 		D41F59C51D32910A0075568D /* GenericTableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GenericTableViewDataSource.swift; path = Models/GenericTableViewDataSource.swift; sourceTree = "<group>"; };
@@ -85,6 +96,7 @@
 		D4EE596A1D3AFFA60002022F /* AlamofireExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlamofireExtensions.swift; sourceTree = "<group>"; };
 		D4F84B421D24591300263D1A /* AppExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppExtensions.swift; sourceTree = "<group>"; };
 		D4F84B481D24668400263D1A /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Targo/Models/User/User.swift; sourceTree = SOURCE_ROOT; };
+		D4FDE6791D3C007E003EF2CC /* TWorkingTimeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TWorkingTimeTableViewCell.swift; sourceTree = "<group>"; };
 		E57C7E891D22B60D00F9A0FC /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E57C7E8D1D22B8A700F9A0FC /* AuthorizationCodeResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorizationCodeResponse.swift; path = Models/Response/AuthorizationCodeResponse.swift; sourceTree = "<group>"; };
 		E5C062D51D2106BF002074C4 /* Targo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Targo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -164,6 +176,11 @@
 			isa = PBXGroup;
 			children = (
 				D470DFB81D384D74003473E6 /* TCompanyTableViewCell.swift */,
+				D4FDE6791D3C007E003EF2CC /* TWorkingTimeTableViewCell.swift */,
+				D40E101F1D3EAEE60012DCF4 /* TCompanyImageMenuTableViewCell.swift */,
+				D40E10201D3EAEE60012DCF4 /* TCompanyImageMenuTableViewCell.xib */,
+				D40E10261D3ECE260012DCF4 /* TCompanySearchTableViewCell.swift */,
+				D40E10271D3ECE260012DCF4 /* TCompanySearchTableViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -240,6 +257,7 @@
 				D41F59C31D32902F0075568D /* CollectionSection.swift */,
 				D41F59C51D32910A0075568D /* GenericTableViewDataSource.swift */,
 				D41F59C91D32C6F00075568D /* GenericCollectionSection.swift */,
+				D40E10231D3EC1660012DCF4 /* TableViewDataSource.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -367,6 +385,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5C062E31D2106BF002074C4 /* LaunchScreen.storyboard in Resources */,
+				D40E10221D3EAEE60012DCF4 /* TCompanyImageMenuTableViewCell.xib in Resources */,
+				D40E10291D3ECE260012DCF4 /* TCompanySearchTableViewCell.xib in Resources */,
 				D498D49B1D2825EC002F0E88 /* Localizable.strings in Resources */,
 				E5C062E01D2106BF002074C4 /* Assets.xcassets in Resources */,
 				E5C062DE1D2106BF002074C4 /* Main.storyboard in Resources */,
@@ -481,6 +501,8 @@
 				D4C2A0AC1D343ED50090BAFC /* CompanySearchTableViewController.swift in Sources */,
 				D4E0B1CD1D2F061F00B65B96 /* UserRegistrationError.swift in Sources */,
 				D4EE59671D3AFE1E0002022F /* TFeedTableViewController.swift in Sources */,
+				D4FDE67A1D3C007E003EF2CC /* TWorkingTimeTableViewCell.swift in Sources */,
+				D40E10211D3EAEE60012DCF4 /* TCompanyImageMenuTableViewCell.swift in Sources */,
 				D420B2CB1D293748003FDC83 /* RegistrationCodeViewController.swift in Sources */,
 				D470DFB91D384D74003473E6 /* TCompanyTableViewCell.swift in Sources */,
 				D4F84B431D24591300263D1A /* AppExtensions.swift in Sources */,
@@ -490,12 +512,14 @@
 				D4D0D6D61D2C5B5200B4E01D /* Api.swift in Sources */,
 				D49C7E891D281DB1004408AF /* RegistrationPhoneViewController.swift in Sources */,
 				E5C062D91D2106BF002074C4 /* AppDelegate.swift in Sources */,
+				D40E10241D3EC1660012DCF4 /* TableViewDataSource.swift in Sources */,
 				D4036A0F1D36CE8200CA8E38 /* TCompany.swift in Sources */,
 				D4F84B491D24668400263D1A /* User.swift in Sources */,
 				D4EE59691D3AFEE90002022F /* TCompanyMenuTableViewController.swift in Sources */,
 				D4EE59631D3AFAF40002022F /* TTabBarController.swift in Sources */,
 				E57C7E8A1D22B60D00F9A0FC /* Constants.swift in Sources */,
 				D4D0D6D91D2C61BA00B4E01D /* TargoError.swift in Sources */,
+				D40E10281D3ECE260012DCF4 /* TCompanySearchTableViewCell.swift in Sources */,
 				D41F59CC1D32CDA80075568D /* UserProfileTableViewController.swift in Sources */,
 				D4C2A0A91D3422D20090BAFC /* TLocationManager.swift in Sources */,
 				D4B96F761D244CAA00294A4B /* TRemoteServer.swift in Sources */,
