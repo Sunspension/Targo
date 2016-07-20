@@ -21,4 +21,6 @@ protocol PRemoteServerV1 {
     func loadUserById(userId: Int) -> Request
     
     func loadCompaniesByLocation(location: CLLocation) -> Request
+    
+    func loadCompanyMenu(companyId: Int) -> Request
 }

@@ -12,9 +12,12 @@ import RealmSwift
 
 class TShopGood: Object, Mappable {
 
+    
     dynamic var id = 0
     
     dynamic var title = ""
+    
+    dynamic var goodDescription = ""
     
     dynamic var companyId = 0
     
@@ -28,7 +31,7 @@ class TShopGood: Object, Mappable {
     
     dynamic var createdAt = ""
     
-    dynamic var apdatedAt = ""
+    dynamic var updatedAt = ""
     
     dynamic var deleted = false;
     
@@ -40,6 +43,9 @@ class TShopGood: Object, Mappable {
     
     dynamic var history = ""
     
+    var imageIds = List<IntObject>()
+    
+    
     required convenience init?(_ map: Map) {
         
         self.init()
@@ -47,6 +53,21 @@ class TShopGood: Object, Mappable {
     
     func mapping(map: Map) {
         
-        
+        id <- map["id"]
+        title <- map["title"]
+        goodDescription <- map["description"]
+        companyId <- map["comapny_id"]
+        shopCategoryId <- map["shop_category_id"]
+        price <- map["price"]
+        externalId <- map["external_id"]
+        persistentId <- map["repsistent_id"]
+        createdAt <- map["created_at"]
+        updatedAt <- map["updated_at"]
+        deleted <- map["deleted"]
+        deletedAt.value <- map["deleted_at"]
+        parentId <- map["parent_id"]
+        searchVector <- map["search_vector"]
+        history <- map["history"]
+        imageIds <- (map["image_ids"], ListTransform<IntObject>())
     }
 }

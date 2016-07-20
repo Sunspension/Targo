@@ -43,6 +43,11 @@
 		D4EE59671D3AFE1E0002022F /* TFeedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EE59661D3AFE1E0002022F /* TFeedTableViewController.swift */; };
 		D4EE59691D3AFEE90002022F /* TCompanyMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EE59681D3AFEE90002022F /* TCompanyMenuTableViewController.swift */; };
 		D4EE596B1D3AFFA60002022F /* AlamofireExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EE596A1D3AFFA60002022F /* AlamofireExtensions.swift */; };
+		D4F464D31D40096A009015FC /* TCompanyMenuPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F464D21D40096A009015FC /* TCompanyMenuPage.swift */; };
+		D4F464D51D400A17009015FC /* TShopCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F464D41D400A17009015FC /* TShopCategory.swift */; };
+		D4F464D81D400E14009015FC /* IntObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F464D71D400E14009015FC /* IntObject.swift */; };
+		D4F464DA1D402EF3009015FC /* TCompanyMenuHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F464D91D402EF3009015FC /* TCompanyMenuHeaderView.swift */; };
+		D4F464DC1D402F08009015FC /* TCompanyMenuHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4F464DB1D402F08009015FC /* TCompanyMenuHeaderView.xib */; };
 		D4F84B431D24591300263D1A /* AppExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F84B421D24591300263D1A /* AppExtensions.swift */; };
 		D4F84B491D24668400263D1A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F84B481D24668400263D1A /* User.swift */; };
 		D4FDE67A1D3C007E003EF2CC /* TWorkingTimeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FDE6791D3C007E003EF2CC /* TWorkingTimeTableViewCell.swift */; };
@@ -94,6 +99,11 @@
 		D4EE59661D3AFE1E0002022F /* TFeedTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFeedTableViewController.swift; sourceTree = "<group>"; };
 		D4EE59681D3AFEE90002022F /* TCompanyMenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCompanyMenuTableViewController.swift; sourceTree = "<group>"; };
 		D4EE596A1D3AFFA60002022F /* AlamofireExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlamofireExtensions.swift; sourceTree = "<group>"; };
+		D4F464D21D40096A009015FC /* TCompanyMenuPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TCompanyMenuPage.swift; path = Targo/Models/Menu/TCompanyMenuPage.swift; sourceTree = SOURCE_ROOT; };
+		D4F464D41D400A17009015FC /* TShopCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TShopCategory.swift; path = Targo/Models/Menu/TShopCategory.swift; sourceTree = SOURCE_ROOT; };
+		D4F464D71D400E14009015FC /* IntObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IntObject.swift; path = Models/Realm/IntObject.swift; sourceTree = "<group>"; };
+		D4F464D91D402EF3009015FC /* TCompanyMenuHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCompanyMenuHeaderView.swift; sourceTree = "<group>"; };
+		D4F464DB1D402F08009015FC /* TCompanyMenuHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCompanyMenuHeaderView.xib; sourceTree = "<group>"; };
 		D4F84B421D24591300263D1A /* AppExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppExtensions.swift; sourceTree = "<group>"; };
 		D4F84B481D24668400263D1A /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Targo/Models/User/User.swift; sourceTree = SOURCE_ROOT; };
 		D4FDE6791D3C007E003EF2CC /* TWorkingTimeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TWorkingTimeTableViewCell.swift; sourceTree = "<group>"; };
@@ -140,6 +150,8 @@
 			isa = PBXGroup;
 			children = (
 				D40301791D39936A00B7B610 /* TShopGood.swift */,
+				D4F464D21D40096A009015FC /* TCompanyMenuPage.swift */,
+				D4F464D41D400A17009015FC /* TShopCategory.swift */,
 			);
 			path = Menu;
 			sourceTree = "<group>";
@@ -181,6 +193,8 @@
 				D40E10201D3EAEE60012DCF4 /* TCompanyImageMenuTableViewCell.xib */,
 				D40E10261D3ECE260012DCF4 /* TCompanySearchTableViewCell.swift */,
 				D40E10271D3ECE260012DCF4 /* TCompanySearchTableViewCell.xib */,
+				D4F464D91D402EF3009015FC /* TCompanyMenuHeaderView.swift */,
+				D4F464DB1D402F08009015FC /* TCompanyMenuHeaderView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -227,6 +241,14 @@
 			path = Errors;
 			sourceTree = "<group>";
 		};
+		D4F464D61D400DEF009015FC /* Realm */ = {
+			isa = PBXGroup;
+			children = (
+				D4F464D71D400E14009015FC /* IntObject.swift */,
+			);
+			name = Realm;
+			sourceTree = "<group>";
+		};
 		D4F84B471D24666C00263D1A /* User */ = {
 			isa = PBXGroup;
 			children = (
@@ -249,6 +271,7 @@
 		E57C7E8B1D22B84A00F9A0FC /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				D4F464D61D400DEF009015FC /* Realm */,
 				D40301781D39931800B7B610 /* Menu */,
 				D4036A0D1D36CE5E00CA8E38 /* Company */,
 				D4F84B471D24666C00263D1A /* User */,
@@ -386,6 +409,7 @@
 			files = (
 				E5C062E31D2106BF002074C4 /* LaunchScreen.storyboard in Resources */,
 				D40E10221D3EAEE60012DCF4 /* TCompanyImageMenuTableViewCell.xib in Resources */,
+				D4F464DC1D402F08009015FC /* TCompanyMenuHeaderView.xib in Resources */,
 				D40E10291D3ECE260012DCF4 /* TCompanySearchTableViewCell.xib in Resources */,
 				D498D49B1D2825EC002F0E88 /* Localizable.strings in Resources */,
 				E5C062E01D2106BF002074C4 /* Assets.xcassets in Resources */,
@@ -496,6 +520,7 @@
 				D467AED61D2B0F7100319966 /* AppSettings.swift in Sources */,
 				D41F36071D2855C8001896A2 /* LoginViewController.swift in Sources */,
 				D41F59C81D3294D00075568D /* CollectionSectionItem.swift in Sources */,
+				D4F464D31D40096A009015FC /* TCompanyMenuPage.swift in Sources */,
 				D41F59C61D32910A0075568D /* GenericTableViewDataSource.swift in Sources */,
 				E57C7E8E1D22B8A700F9A0FC /* AuthorizationCodeResponse.swift in Sources */,
 				D4C2A0AC1D343ED50090BAFC /* CompanySearchTableViewController.swift in Sources */,
@@ -510,8 +535,10 @@
 				D4EE596B1D3AFFA60002022F /* AlamofireExtensions.swift in Sources */,
 				D40301761D39839C00B7B610 /* ListTransform.swift in Sources */,
 				D4D0D6D61D2C5B5200B4E01D /* Api.swift in Sources */,
+				D4F464D51D400A17009015FC /* TShopCategory.swift in Sources */,
 				D49C7E891D281DB1004408AF /* RegistrationPhoneViewController.swift in Sources */,
 				E5C062D91D2106BF002074C4 /* AppDelegate.swift in Sources */,
+				D4F464DA1D402EF3009015FC /* TCompanyMenuHeaderView.swift in Sources */,
 				D40E10241D3EC1660012DCF4 /* TableViewDataSource.swift in Sources */,
 				D4036A0F1D36CE8200CA8E38 /* TCompany.swift in Sources */,
 				D4F84B491D24668400263D1A /* User.swift in Sources */,
@@ -527,6 +554,7 @@
 				D40301741D397F5100B7B610 /* HTTPManager.swift in Sources */,
 				D4EE59601D3AC98A0002022F /* TCompanyImage.swift in Sources */,
 				D41F59CA1D32C6F00075568D /* GenericCollectionSection.swift in Sources */,
+				D4F464D81D400E14009015FC /* IntObject.swift in Sources */,
 				D4036A111D36D08900CA8E38 /* TCompaniesPage.swift in Sources */,
 				D45391D11D2DBE0900669669 /* UserSession.swift in Sources */,
 				D403017A1D39936A00B7B610 /* TShopGood.swift in Sources */,

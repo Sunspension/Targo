@@ -18,9 +18,9 @@ class TCompany: Object, Mappable {
     
     dynamic var title = ""
     
-    dynamic var latitude = 0
+    dynamic var latitude = 0.0
     
-    dynamic var longitude = 0
+    dynamic var longitude = 0.0
     
     dynamic var createdAt:String?
     

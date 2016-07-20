@@ -12,7 +12,7 @@ import CoreLocation
 
 struct TRemoteServer: PRemoteServerV1 {
 
-    let baseURLString = "http://45.62.123.157:8082/api"
+    let baseURLString = "https://api.targo.club/api"
     
     let deviceType = "ios"
     
@@ -76,9 +76,16 @@ struct TRemoteServer: PRemoteServerV1 {
                                            "order" : ["dist" : "asc"],
                                            "extend" : "image"]
         
-        return Alamofire.request(.GET, baseURLString + "/company-address", parameters: params, headers: nil)
+        return self.request(.GET, remotePath: baseURLString + "/company-address", parameters: params)
     }
     
+    func loadCompanyMenu(companyId: Int) -> Request {
+        
+        let params: [String : AnyObject] = [ "filters" : ["company_id" : companyId],
+                                             "extend" : "shop-category"]
+        
+        return self.request(.GET, remotePath: baseURLString + "/shop-good", parameters: params)
+    }
     
     //mark - private methods
     
@@ -94,6 +101,6 @@ struct TRemoteServer: PRemoteServerV1 {
     
     private func request(method: Alamofire.Method, remotePath: URLStringConvertible, parameters: [String : AnyObject]?, headers: [String : String]?) -> Request {
         
-        return Alamofire.request(method, remotePath, parameters: parameters, encoding:.JSON, headers: headers)
+        return Alamofire.request(method, remotePath, parameters: parameters, encoding: method == .POST ? .JSON : .URL, headers: headers)
     }
 }

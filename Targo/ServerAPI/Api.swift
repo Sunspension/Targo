@@ -272,4 +272,33 @@ struct Api {
         
         return p.future
     }
+    
+    func loadCompanyMenu(companyId: Int) -> Future<TCompanyMenuPage, TargoError> {
+        
+        let p = Promise<TCompanyMenuPage, TargoError>()
+        
+        server.loadCompanyMenu(companyId)
+            .debugLog()
+            .validate().responseJSON { response in
+                
+                print(response.result.value)
+                
+        }.responseObject(queue: nil, keyPath: "data",
+                         mapToObject: TCompanyMenuPage(),
+                         context: nil) { response in
+                            
+                            if let page = response.result.value {
+                                
+                                print("company menu page: \(page)")
+                                p.success(page)
+                            }
+                            else if let error = response.result.error {
+                                
+                                print("menu page error: \(error)")
+                                p.failure(.CompanyMenuPageLoadingFailed)
+                            }
+        }
+        
+        return p.future
+    }
 }

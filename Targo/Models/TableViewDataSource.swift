@@ -26,6 +26,13 @@ class TableViewDataSource: NSObject, UITableViewDataSource {
         
         let item = self.sections[indexPath.section].items[indexPath.row]
         
+        if item.defaultcell == true {
+            
+            let cell = UITableViewCell(style: item.cellStyle!, reuseIdentifier: item.reusableIdentifierOrNibName)
+            item.bindingAction(cell: cell, item: item)
+            return cell;
+        }
+        
         if let identifier = item.reusableIdentifierOrNibName {
             
             if let cell = tableView.dequeueReusableCellWithIdentifier(identifier) {
@@ -45,5 +52,10 @@ class TableViewDataSource: NSObject, UITableViewDataSource {
         item.bindingAction(cell: cell, item: item)
         
         return cell;
+    }
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        
+        return self.sections[section].title
     }
 }

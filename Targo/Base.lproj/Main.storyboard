@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vYO-UF-LQ9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vYO-UF-LQ9">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -342,8 +342,8 @@
         <!--Company Menu Table View Controller-->
         <scene sceneID="hhn-kE-rU4">
             <objects>
-                <tableViewController storyboardIdentifier="MenuController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="hFe-ta-E5N" customClass="TCompanyMenuTableViewController" customModule="Targo" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="3a6-Yy-hsY">
+                <tableViewController storyboardIdentifier="MenuController" hidesBottomBarWhenPushed="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="hFe-ta-E5N" customClass="TCompanyMenuTableViewController" customModule="Targo" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="3a6-Yy-hsY">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -352,11 +352,11 @@
                                 <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="U6j-id-2LL" id="Lkx-xl-sbZ">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="enH-Fk-TxI">
-                                            <rect key="frame" x="8" y="11" width="152" height="21"/>
+                                            <rect key="frame" x="8" y="13" width="152" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="S0k-jw-siG"/>
                                             </constraints>
@@ -365,14 +365,14 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fix-yC-xSI">
-                                            <rect key="frame" x="160" y="8" width="1" height="27"/>
+                                            <rect key="frame" x="160" y="0.0" width="1" height="44"/>
                                             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="1" id="1vF-0x-bUi"/>
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4A3-Ld-d7f">
-                                            <rect key="frame" x="161" y="11" width="151" height="21"/>
+                                            <rect key="frame" x="161" y="13" width="151" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="saS-mG-rBB"/>
                                             </constraints>
@@ -382,14 +382,15 @@
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="4A3-Ld-d7f" firstAttribute="centerY" secondItem="Lkx-xl-sbZ" secondAttribute="centerY" id="28T-GV-nOP"/>
                                         <constraint firstItem="fix-yC-xSI" firstAttribute="centerX" secondItem="Lkx-xl-sbZ" secondAttribute="centerX" id="HPh-76-aJs"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="fix-yC-xSI" secondAttribute="bottom" id="K96-tG-p1V"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="fix-yC-xSI" secondAttribute="bottom" constant="-8" id="K96-tG-p1V"/>
                                         <constraint firstItem="4A3-Ld-d7f" firstAttribute="trailing" secondItem="Lkx-xl-sbZ" secondAttribute="trailingMargin" id="SKl-DD-spp"/>
                                         <constraint firstItem="fix-yC-xSI" firstAttribute="leading" secondItem="enH-Fk-TxI" secondAttribute="trailing" id="Tnt-0a-koU"/>
+                                        <constraint firstItem="enH-Fk-TxI" firstAttribute="top" secondItem="Lkx-xl-sbZ" secondAttribute="topMargin" constant="5" id="UFE-dF-ZFy"/>
                                         <constraint firstItem="enH-Fk-TxI" firstAttribute="leading" secondItem="Lkx-xl-sbZ" secondAttribute="leadingMargin" id="dmK-1z-nOe"/>
-                                        <constraint firstItem="enH-Fk-TxI" firstAttribute="centerY" secondItem="Lkx-xl-sbZ" secondAttribute="centerY" id="o6j-tP-N7V"/>
-                                        <constraint firstItem="fix-yC-xSI" firstAttribute="top" secondItem="Lkx-xl-sbZ" secondAttribute="topMargin" id="quz-bE-K8z"/>
+                                        <constraint firstItem="fix-yC-xSI" firstAttribute="top" secondItem="Lkx-xl-sbZ" secondAttribute="topMargin" constant="-8" id="quz-bE-K8z"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="enH-Fk-TxI" secondAttribute="bottom" priority="999" constant="5" id="r26-pT-jsN"/>
+                                        <constraint firstItem="4A3-Ld-d7f" firstAttribute="centerY" secondItem="enH-Fk-TxI" secondAttribute="centerY" id="suq-kx-o1h"/>
                                         <constraint firstItem="4A3-Ld-d7f" firstAttribute="leading" secondItem="fix-yC-xSI" secondAttribute="trailing" id="vKm-YU-Xgi"/>
                                     </constraints>
                                 </tableViewCellContentView>

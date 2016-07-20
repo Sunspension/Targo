@@ -25,7 +25,7 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="Qhf-ky-rES" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="Pt7-rw-ZIJ"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="Qhf-ky-rES" secondAttribute="bottom" priority="999" id="ZkZ-lM-EpD"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="Qhf-ky-rES" secondAttribute="bottom" priority="999" constant="-8" id="ZkZ-lM-EpD"/>
                     <constraint firstAttribute="trailingMargin" secondItem="Qhf-ky-rES" secondAttribute="trailing" constant="-8" id="gYB-6T-Ft1"/>
                     <constraint firstItem="Qhf-ky-rES" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="sK6-fb-94A"/>
                 </constraints>

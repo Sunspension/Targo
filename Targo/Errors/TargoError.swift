@@ -16,6 +16,8 @@ enum TargoError: ErrorType {
     
     case CompanyPageLoadingFailed
     
+    case CompanyMenuPageLoadingFailed
+    
     case UserDeauthorizationFailed
     
     case DeviceTypeBlank

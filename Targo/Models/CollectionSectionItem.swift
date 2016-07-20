@@ -16,7 +16,7 @@ class CollectionSectionItem: NSObject {
     
     var item: Any?
     
-    var itemType: Int?
+    var itemType: AnyObject?
     
     var reusableIdentifierOrNibName: String?
     
@@ -36,12 +36,12 @@ class CollectionSectionItem: NSObject {
         super.init()
     }
     
-    init(cellStyle: UITableViewCellStyle, item: Any?) {
+    init(reusableIdentifier: String?, cellStyle: UITableViewCellStyle, item: Any?) {
         
         self.item = item
         self.cellStyle = cellStyle
         self.defaultcell = true;
-        self.reusableIdentifierOrNibName = ""
+        self.reusableIdentifierOrNibName = reusableIdentifier
         
         super.init()
     }

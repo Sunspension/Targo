@@ -17,6 +17,8 @@ class TCompanyMenuTableViewController: UITableViewController {
     
     var itemsSource = TableViewDataSource()
     
+    var menuPage: TCompanyMenuPage?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,24 +33,19 @@ class TCompanyMenuTableViewController: UITableViewController {
         
         self.tableView.registerNib(UINib(nibName: "TCompanyImageMenuTableViewCell", bundle: nil),
                                    forCellReuseIdentifier: "CompanyImageMenu")
+        
+        self.tableView.registerNib(UINib(nibName: "TCompanyMenuHeaderView", bundle: nil),
+                                   forHeaderFooterViewReuseIdentifier: "sectionHeader")
     
-        let section = CollectionSection()
-        
-        section.initializeCellWithReusableIdentifierOrNibName("CompanyImageMenu",
-                                                                       item: self.companyImage) { (cell, item) in
-                                                                        
-                                                                        let viewCell = cell as! TCompanyImageMenuTableViewCell
-                                                                        viewCell.companyImage.image = item?.item as? UIImage
+        if let company = company {
+            
+            Api.sharedInstance.loadCompanyMenu(1).onSuccess(callback: { menuPage in
+                
+                self.menuPage = menuPage
+                self.createDataSource()
+                self.tableView.reloadData()
+            })
         }
-        
-        section.initializeCellWithReusableIdentifierOrNibName("WorkingTimeViewCell",
-                                                                       item: company) { (cell, item) in
-                                                                        
-                                                                        let viewCell = cell as! TWorkingTimeTableViewCell
-                                                                        let item = item?.item as? TCompany
-        }
-        
-        self.itemsSource.sections.append(section)
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -72,6 +69,76 @@ class TCompanyMenuTableViewController: UITableViewController {
     func openInfo() {
         
         
+    }
+    
+    func createDataSource() {
+        
+        let section = CollectionSection()
+        
+        section.initializeCellWithReusableIdentifierOrNibName("CompanyImageMenu", item: self.companyImage) { (cell, item) in
+            
+            let viewCell = cell as! TCompanyImageMenuTableViewCell
+            viewCell.companyImage.image = item?.item as? UIImage
+        }
+        
+        section.initializeCellWithReusableIdentifierOrNibName("WorkingTimeViewCell", item: company) { (cell, item) in
+        }
+        
+        self.itemsSource.sections.append(section)
+        
+        for good in self.menuPage!.goods {
+            
+            var section = self.itemsSource.sections.filter({ $0.sectionType as? Int == good.shopCategoryId }).first
+            
+            if (section == nil) {
+                
+                let category = menuPage!.categories.filter({ $0.id == good.shopCategoryId }).first
+                section = CollectionSection(title: category!.title)
+                section?.sectionType = good.shopCategoryId
+                self.itemsSource.sections.append(section!)
+            }
+            
+            section!.initializeDefaultCell("default",
+                                           cellStyle: .Subtitle,
+                                           item: good,
+                                           bindingAction: { (cell, item) in
+                                            
+                                            let itemGood = item!.item as! TShopGood
+                                            
+                                            cell.textLabel?.text = itemGood.title
+                                            cell.detailTextLabel?.text = itemGood.goodDescription
+            })
+        }
+    }
+    
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        return section == 0 ? nil : tableView.dequeueReusableHeaderFooterViewWithIdentifier("sectionHeader")
+    }
+    
+    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        
+        if section == 0 {
+            
+            return
+        }
+        
+        let header = view as! TCompanyMenuHeaderView
+        
+        if header.layer.shadowPath != nil {
+            
+            return
+        }
+        
+        header.background.backgroundColor = UIColor(hexString: kHexMainPinkColor)
+        header.layer.shadowPath = UIBezierPath(rect: header.layer.bounds).CGPath
+        header.layer.shadowOffset = CGSize(width: 0, height: 2)
+        header.layer.shadowOpacity = 0.5
+    }
+    
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        
+        return section == 0 ? 0.01 : 30
     }
     
     /*
