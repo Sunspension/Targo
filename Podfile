@@ -31,6 +31,9 @@ pod 'RealmSwift'
 
 #UI
 pod 'EZLoadingActivity'
+pod 'JLToast', '~> 1.4'
+#pod 'LiquidLoader'
+pod 'NVActivityIndicatorView'
 
 #Text
 pod 'SwiftString'

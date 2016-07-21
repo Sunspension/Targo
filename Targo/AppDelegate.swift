@@ -9,6 +9,7 @@
 import UIKit
 import RealmSwift
 import Timberjack
+import EZLoadingActivity
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -92,6 +93,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AppDelegate.logoutAction), name: kTargoUserLoggedOutSuccessfully, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AppDelegate.loginAction), name: kTargoUserLoggedInSuccessfully, object: nil)
+        
+        EZLoadingActivity.Settings.BackgroundColor = UIColor(colorLiteralRed: 0, green: 0, blue: 0, alpha: 0.5)
+        EZLoadingActivity.Settings.TextColor = UIColor.whiteColor()
+        EZLoadingActivity.Settings.ActivityWidth = 70
+        EZLoadingActivity.Settings.ActivityHeight = 70
+        EZLoadingActivity.Settings.ActivityColor = UIColor.whiteColor()
         
         return true
     }

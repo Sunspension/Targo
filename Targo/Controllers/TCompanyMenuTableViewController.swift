@@ -8,8 +8,10 @@
 
 import UIKit
 import DynamicColor
+import EZLoadingActivity
+import NVActivityIndicatorView
 
-class TCompanyMenuTableViewController: UITableViewController {
+class TCompanyMenuTableViewController: UITableViewController, NVActivityIndicatorViewable {
 
     var company: TCompany?
     
@@ -22,6 +24,10 @@ class TCompanyMenuTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let busyIndicator = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 70, height: 70), type: .BallClipRotateMultiple, color: UIColor(hexString: kHexMainPinkColor), padding: 20)
+        
+        self.view.addSubview(busyIndicator)
         
         self.title = company?.companyTitle
         
@@ -36,10 +42,16 @@ class TCompanyMenuTableViewController: UITableViewController {
         
         self.tableView.registerNib(UINib(nibName: "TCompanyMenuHeaderView", bundle: nil),
                                    forHeaderFooterViewReuseIdentifier: "sectionHeader")
-    
+        self.tableView.registerNib(UINib(nibName: "TMenuItemSmallTableViewCell", bundle: nil),
+                                   forCellReuseIdentifier: "MenuItemCell")
+        
         if let company = company {
             
+            busyIndicator.startAnimation()
+            
             Api.sharedInstance.loadCompanyMenu(1).onSuccess(callback: { menuPage in
+                
+                busyIndicator.stopAnimation()
                 
                 self.menuPage = menuPage
                 self.createDataSource()
@@ -82,6 +94,10 @@ class TCompanyMenuTableViewController: UITableViewController {
         }
         
         section.initializeCellWithReusableIdentifierOrNibName("WorkingTimeViewCell", item: company) { (cell, item) in
+        
+            let viewCell = cell as! TWorkingTimeTableViewCell
+            
+            viewCell.setWorkingTimeAndHandlingOrder("11:00 - 00:00", handlingOrder: "20 - 37 minutes")
         }
         
         self.itemsSource.sections.append(section)
@@ -98,15 +114,17 @@ class TCompanyMenuTableViewController: UITableViewController {
                 self.itemsSource.sections.append(section!)
             }
             
-            section!.initializeDefaultCell("default",
-                                           cellStyle: .Subtitle,
-                                           item: good,
-                                           bindingAction: { (cell, item) in
-                                            
-                                            let itemGood = item!.item as! TShopGood
-                                            
-                                            cell.textLabel?.text = itemGood.title
-                                            cell.detailTextLabel?.text = itemGood.goodDescription
+            section!.initializeCellWithReusableIdentifierOrNibName("MenuItemCell",
+                                                                   item: good,
+                                                                   bindingAction: { (cell, item) in
+            
+                                                                    let itemGood = item!.item as! TShopGood
+                                                                    let viewCell = cell as! TMenuItemSmallTableViewCell
+                                                                    
+                                                                    viewCell.addSeparator()
+                                                                    viewCell.goodTitle.text = itemGood.title
+                                                                    viewCell.goodDescription.text = itemGood.goodDescription
+                                                                    viewCell.price.text = String(format: "%li \u{20BD}", itemGood.price)
             })
         }
     }
@@ -125,10 +143,10 @@ class TCompanyMenuTableViewController: UITableViewController {
         
         let header = view as! TCompanyMenuHeaderView
         
-        if header.layer.shadowPath != nil {
-            
-            return
-        }
+//        if header.layer.shadowPath != nil {
+//            
+//            return
+//        }
         
         header.background.backgroundColor = UIColor(hexString: kHexMainPinkColor)
         header.layer.shadowPath = UIBezierPath(rect: header.layer.bounds).CGPath

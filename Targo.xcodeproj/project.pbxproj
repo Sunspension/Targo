@@ -36,6 +36,9 @@
 		D4C2A0AC1D343ED50090BAFC /* CompanySearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2A0AB1D343ED50090BAFC /* CompanySearchTableViewController.swift */; };
 		D4D0D6D61D2C5B5200B4E01D /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D0D6D51D2C5B5200B4E01D /* Api.swift */; };
 		D4D0D6D91D2C61BA00B4E01D /* TargoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D0D6D81D2C61BA00B4E01D /* TargoError.swift */; };
+		D4DD9DD91D41830A009C28D5 /* TMenuItemSmallTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4DD9DD71D41830A009C28D5 /* TMenuItemSmallTableViewCell.swift */; };
+		D4DD9DDA1D41830A009C28D5 /* TMenuItemSmallTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4DD9DD81D41830A009C28D5 /* TMenuItemSmallTableViewCell.xib */; };
+		D4DD9DDC1D418DC9009C28D5 /* TBaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4DD9DDB1D418DC9009C28D5 /* TBaseTableViewCell.swift */; };
 		D4E0B1CD1D2F061F00B65B96 /* UserRegistrationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E0B1CC1D2F061F00B65B96 /* UserRegistrationError.swift */; };
 		D4EE59601D3AC98A0002022F /* TCompanyImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EE595F1D3AC98A0002022F /* TCompanyImage.swift */; };
 		D4EE59631D3AFAF40002022F /* TTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EE59621D3AFAF40002022F /* TTabBarController.swift */; };
@@ -92,6 +95,9 @@
 		D4C2A0AB1D343ED50090BAFC /* CompanySearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompanySearchTableViewController.swift; sourceTree = "<group>"; };
 		D4D0D6D51D2C5B5200B4E01D /* Api.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Api.swift; path = ServerAPI/Api.swift; sourceTree = "<group>"; };
 		D4D0D6D81D2C61BA00B4E01D /* TargoError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargoError.swift; sourceTree = "<group>"; };
+		D4DD9DD71D41830A009C28D5 /* TMenuItemSmallTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMenuItemSmallTableViewCell.swift; sourceTree = "<group>"; };
+		D4DD9DD81D41830A009C28D5 /* TMenuItemSmallTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TMenuItemSmallTableViewCell.xib; sourceTree = "<group>"; };
+		D4DD9DDB1D418DC9009C28D5 /* TBaseTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TBaseTableViewCell.swift; sourceTree = "<group>"; };
 		D4E0B1CC1D2F061F00B65B96 /* UserRegistrationError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRegistrationError.swift; sourceTree = "<group>"; };
 		D4EE595F1D3AC98A0002022F /* TCompanyImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TCompanyImage.swift; path = Models/Company/TCompanyImage.swift; sourceTree = "<group>"; };
 		D4EE59621D3AFAF40002022F /* TTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TTabBarController.swift; sourceTree = "<group>"; };
@@ -195,6 +201,9 @@
 				D40E10271D3ECE260012DCF4 /* TCompanySearchTableViewCell.xib */,
 				D4F464D91D402EF3009015FC /* TCompanyMenuHeaderView.swift */,
 				D4F464DB1D402F08009015FC /* TCompanyMenuHeaderView.xib */,
+				D4DD9DD71D41830A009C28D5 /* TMenuItemSmallTableViewCell.swift */,
+				D4DD9DD81D41830A009C28D5 /* TMenuItemSmallTableViewCell.xib */,
+				D4DD9DDB1D418DC9009C28D5 /* TBaseTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -411,6 +420,7 @@
 				D40E10221D3EAEE60012DCF4 /* TCompanyImageMenuTableViewCell.xib in Resources */,
 				D4F464DC1D402F08009015FC /* TCompanyMenuHeaderView.xib in Resources */,
 				D40E10291D3ECE260012DCF4 /* TCompanySearchTableViewCell.xib in Resources */,
+				D4DD9DDA1D41830A009C28D5 /* TMenuItemSmallTableViewCell.xib in Resources */,
 				D498D49B1D2825EC002F0E88 /* Localizable.strings in Resources */,
 				E5C062E01D2106BF002074C4 /* Assets.xcassets in Resources */,
 				E5C062DE1D2106BF002074C4 /* Main.storyboard in Resources */,
@@ -542,6 +552,7 @@
 				D40E10241D3EC1660012DCF4 /* TableViewDataSource.swift in Sources */,
 				D4036A0F1D36CE8200CA8E38 /* TCompany.swift in Sources */,
 				D4F84B491D24668400263D1A /* User.swift in Sources */,
+				D4DD9DDC1D418DC9009C28D5 /* TBaseTableViewCell.swift in Sources */,
 				D4EE59691D3AFEE90002022F /* TCompanyMenuTableViewController.swift in Sources */,
 				D4EE59631D3AFAF40002022F /* TTabBarController.swift in Sources */,
 				E57C7E8A1D22B60D00F9A0FC /* Constants.swift in Sources */,
@@ -549,6 +560,7 @@
 				D40E10281D3ECE260012DCF4 /* TCompanySearchTableViewCell.swift in Sources */,
 				D41F59CC1D32CDA80075568D /* UserProfileTableViewController.swift in Sources */,
 				D4C2A0A91D3422D20090BAFC /* TLocationManager.swift in Sources */,
+				D4DD9DD91D41830A009C28D5 /* TMenuItemSmallTableViewCell.swift in Sources */,
 				D4B96F761D244CAA00294A4B /* TRemoteServer.swift in Sources */,
 				D4B96F7B1D244DBA00294A4B /* PRemoteServerV1.swift in Sources */,
 				D40301741D397F5100B7B610 /* HTTPManager.swift in Sources */,

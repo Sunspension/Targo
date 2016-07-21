@@ -9,3 +9,6 @@
 "registration_phone_title" = "Registration";
 
 "login_empty_code" = "This field can't be empty";
+
+"menu_working_time" = "working hours";
+"menu_handling_time" = "time to handle order";

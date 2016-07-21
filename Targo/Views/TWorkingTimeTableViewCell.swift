@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import DynamicColor
 
 class TWorkingTimeTableViewCell: UITableViewCell {
 
@@ -29,6 +30,18 @@ class TWorkingTimeTableViewCell: UITableViewCell {
     
     func setWorkingTimeAndHandlingOrder(workingTime: String, handlingOrder: String) {
         
+        let workingTitle = NSMutableAttributedString(string: "menu_working_time".localized, attributes: [ NSForegroundColorAttributeName : UIColor.grayColor(), NSFontAttributeName : UIFont.systemFontOfSize(13)])
+        let workingTime = NSMutableAttributedString(string: "\n" + workingTime)
         
+        workingTitle.appendAttributedString(workingTime)
+        
+        self.workingHours.attributedText = workingTitle
+        
+        let orderTitle = NSMutableAttributedString(string: "menu_handling_time".localized, attributes: [ NSForegroundColorAttributeName : UIColor.grayColor(), NSFontAttributeName : UIFont.systemFontOfSize(13)])
+        let orderTime = NSMutableAttributedString(string: "\n" + handlingOrder)
+        
+        orderTitle.appendAttributedString(orderTime)
+        
+        self.hadlingOrderTime.attributedText = orderTitle
     }
 }
