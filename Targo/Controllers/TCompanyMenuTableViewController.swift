@@ -10,6 +10,8 @@ import UIKit
 import DynamicColor
 import EZLoadingActivity
 import NVActivityIndicatorView
+import SwiftOverlays
+import SignalKit
 
 class TCompanyMenuTableViewController: UITableViewController, NVActivityIndicatorViewable {
 
@@ -20,12 +22,15 @@ class TCompanyMenuTableViewController: UITableViewController, NVActivityIndicato
     var itemsSource = TableViewDataSource()
     
     var menuPage: TCompanyMenuPage?
+
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let busyIndicator = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 70, height: 70), type: .BallClipRotateMultiple, color: UIColor(hexString: kHexMainPinkColor), padding: 20)
+        let frame = self.view.bounds
+        let toolBarHeigth: CGFloat = 44
+        let busyIndicator = NVActivityIndicatorView(frame: CGRect(x: frame.width / 2 - 35, y: frame.height / 2 - 35 - toolBarHeigth , width: 70, height: 70), type: .BallClipRotateMultiple, color: UIColor(hexString: kHexMainPinkColor), padding:0)
         
         self.view.addSubview(busyIndicator)
         
@@ -42,16 +47,22 @@ class TCompanyMenuTableViewController: UITableViewController, NVActivityIndicato
         
         self.tableView.registerNib(UINib(nibName: "TCompanyMenuHeaderView", bundle: nil),
                                    forHeaderFooterViewReuseIdentifier: "sectionHeader")
+        
         self.tableView.registerNib(UINib(nibName: "TMenuItemSmallTableViewCell", bundle: nil),
-                                   forCellReuseIdentifier: "MenuItemCell")
+                                   forCellReuseIdentifier: "MenuItemSmallCell")
+        
+        self.tableView.registerNib(UINib(nibName: "TMenuItemFullTableViewCell", bundle: nil),
+                                   forCellReuseIdentifier: "MenuItemFullCell")
         
         if let company = company {
             
-            busyIndicator.startAnimation()
+//            self.startActivityAnimating(type: .BallClipRotateMultiple, color: UIColor(hexString: kHexMainPinkColor))
+            
+            self.showWaitOverlay()
             
             Api.sharedInstance.loadCompanyMenu(1).onSuccess(callback: { menuPage in
                 
-                busyIndicator.stopAnimation()
+                self.removeAllOverlays()
                 
                 self.menuPage = menuPage
                 self.createDataSource()
@@ -90,7 +101,7 @@ class TCompanyMenuTableViewController: UITableViewController, NVActivityIndicato
         section.initializeCellWithReusableIdentifierOrNibName("CompanyImageMenu", item: self.companyImage) { (cell, item) in
             
             let viewCell = cell as! TCompanyImageMenuTableViewCell
-            viewCell.companyImage.image = item?.item as? UIImage
+            viewCell.companyImage.image = item.item! as? UIImage
         }
         
         section.initializeCellWithReusableIdentifierOrNibName("WorkingTimeViewCell", item: company) { (cell, item) in
@@ -114,17 +125,33 @@ class TCompanyMenuTableViewController: UITableViewController, NVActivityIndicato
                 self.itemsSource.sections.append(section!)
             }
             
-            section!.initializeCellWithReusableIdentifierOrNibName("MenuItemCell",
-                                                                   item: good,
-                                                                   bindingAction: { (cell, item) in
-            
-                                                                    let itemGood = item!.item as! TShopGood
-                                                                    let viewCell = cell as! TMenuItemSmallTableViewCell
-                                                                    
-                                                                    viewCell.addSeparator()
-                                                                    viewCell.goodTitle.text = itemGood.title
-                                                                    viewCell.goodDescription.text = itemGood.goodDescription
-                                                                    viewCell.price.text = String(format: "%li \u{20BD}", itemGood.price)
+            section!.initializeSwappableCellWithReusableIdentifierOrNibName("MenuItemSmallCell", secondIdentifierOrNibName: "MenuItemFullCell", item: good, bindingAction: { (cell, item) in
+                
+                if item.swappable {
+                    
+                    if !item.selected {
+                        
+                        let itemGood = item.item as! TShopGood
+                        let viewCell = cell as! TMenuItemSmallTableViewCell
+                        
+                        viewCell.addSeparator()
+                        viewCell.goodTitle.text = itemGood.title
+                        viewCell.goodDescription.text = itemGood.goodDescription
+                        viewCell.price.text = String(format: "%li \u{20BD}", itemGood.price)
+                        viewCell.selectionStyle = .None
+                    }
+                    else {
+                        
+                        let itemGood = item.item as! TShopGood
+                        let viewCell = cell as! TMenuItemFullTableViewCell
+                        
+                        viewCell.addSeparator()
+                        viewCell.goodTitle.text = itemGood.title
+                        viewCell.goodDescription.text = itemGood.goodDescription
+                        viewCell.price.text = String(format: "%li \u{20BD}", itemGood.price)
+                        viewCell.selectionStyle = .None
+                    }
+                }
             })
         }
     }
@@ -143,11 +170,6 @@ class TCompanyMenuTableViewController: UITableViewController, NVActivityIndicato
         
         let header = view as! TCompanyMenuHeaderView
         
-//        if header.layer.shadowPath != nil {
-//            
-//            return
-//        }
-        
         header.background.backgroundColor = UIColor(hexString: kHexMainPinkColor)
         header.layer.shadowPath = UIBezierPath(rect: header.layer.bounds).CGPath
         header.layer.shadowOffset = CGSize(width: 0, height: 2)
@@ -157,6 +179,14 @@ class TCompanyMenuTableViewController: UITableViewController, NVActivityIndicato
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
         return section == 0 ? 0.01 : 30
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        let item = self.itemsSource.sections[indexPath.section].items[indexPath.row]
+        item.selected = !item.selected
+        
+        tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
     }
     
     /*

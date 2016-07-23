@@ -14,24 +14,47 @@ class CollectionSectionItem: NSObject {
     
     private (set) var cellStyle: UITableViewCellStyle?
     
+    private (set) var firstReusableIdentifierOrNibName: String?
+    
+    private (set) var secondReusableIdentifierOrNibName: String?
+    
     var item: Any?
     
     var itemType: AnyObject?
     
-    var reusableIdentifierOrNibName: String?
+    var reusableIdentifierOrNibName: String? {
+        
+        get {
+            
+            return swappable ? (selected ? secondReusableIdentifierOrNibName : firstReusableIdentifierOrNibName) : firstReusableIdentifierOrNibName
+        }
+    }
     
-    var selected: Bool = false
+    var selected = false
     
-    var hasError: Bool = false
+    var hasError = false
     
     var indexPath: NSIndexPath!
     
-    var bindingAction: ((cell: UITableViewCell, item: CollectionSectionItem?) -> Void)!
+    var bindingAction: ((cell: UITableViewCell, item: CollectionSectionItem) -> Void)!
+    
+    var swappable = false
+    
     
     init(reusableIdentifierOrNibName: String? = nil, item: Any?) {
         
-        self.reusableIdentifierOrNibName = reusableIdentifierOrNibName
+        self.firstReusableIdentifierOrNibName = reusableIdentifierOrNibName
         self.item = item
+        
+        super.init()
+    }
+    
+    init(firstReusableIdentifierOrNibName: String? = nil, secondReusableIdentifierOrNibName: String? = nil, item: Any?) {
+        
+        self.firstReusableIdentifierOrNibName = firstReusableIdentifierOrNibName
+        self.secondReusableIdentifierOrNibName = secondReusableIdentifierOrNibName
+        self.item = item
+        self.swappable = true
         
         super.init()
     }
@@ -41,7 +64,7 @@ class CollectionSectionItem: NSObject {
         self.item = item
         self.cellStyle = cellStyle
         self.defaultcell = true;
-        self.reusableIdentifierOrNibName = reusableIdentifier
+        self.firstReusableIdentifierOrNibName = reusableIdentifier
         
         super.init()
     }

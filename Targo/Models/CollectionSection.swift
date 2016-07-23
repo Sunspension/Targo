@@ -18,18 +18,19 @@ class CollectionSection: NSObject {
     
     var sectionType: AnyObject?
     
+    var selected = false
+    
     
     init(title: String? = "") {
         
         self.title = title;
     }
     
-    func initializeDefaultCell(reusableIdentifier: String? = nil, cellStyle: UITableViewCellStyle, item: Any?, bindingAction: (cell:UITableViewCell, item: CollectionSectionItem?) -> Void) {
-        
-        self.initializeDefaultCell(reusableIdentifier, cellStyle: cellStyle, item: item, itemType: nil, bindingAction: bindingAction)
-    }
-    
-    func initializeDefaultCell(reusableIdentifier: String? = nil, cellStyle: UITableViewCellStyle, item: Any?, itemType: AnyObject?, bindingAction: (cell:UITableViewCell, item: CollectionSectionItem?) -> Void) {
+    func initializeDefaultCell(reusableIdentifier: String? = nil,
+                               cellStyle: UITableViewCellStyle,
+                               item: Any?,
+                               itemType: AnyObject? = nil,
+                               bindingAction: (cell:UITableViewCell, item: CollectionSectionItem) -> Void) {
     
         let item = CollectionSectionItem(reusableIdentifier: reusableIdentifier, cellStyle: cellStyle, item: item)
         item.bindingAction = bindingAction
@@ -37,16 +38,27 @@ class CollectionSection: NSObject {
         self.items.append(item)
     }
     
-    func initializeCellWithReusableIdentifierOrNibName(identifierOrNibName: String, item: Any?, bindingAction: (cell:UITableViewCell, item: CollectionSectionItem?) -> Void) {
-        
-        self.initializeCellWithReusableIdentifierOrNibName(identifierOrNibName, item: item, itemType: nil, bindingAction: bindingAction)
-    }
-    
-    func initializeCellWithReusableIdentifierOrNibName(identifierOrNibName: String, item: Any?, itemType: AnyObject?, bindingAction: (cell:UITableViewCell, item: CollectionSectionItem?) -> Void) {
+    func initializeCellWithReusableIdentifierOrNibName(identifierOrNibName: String,
+                                                       item: Any?,
+                                                       itemType: AnyObject? = nil,
+                                                       bindingAction: (cell:UITableViewCell, item: CollectionSectionItem) -> Void) {
         
         let item = CollectionSectionItem(reusableIdentifierOrNibName: identifierOrNibName, item: item)
         item.itemType = itemType
         item.bindingAction = bindingAction
+        self.items.append(item)
+    }
+    
+    func initializeSwappableCellWithReusableIdentifierOrNibName(firstIdentifierOrNibName: String,
+                                                                secondIdentifierOrNibName: String,
+                                                                item: Any?,
+                                                                itemType: AnyObject? = nil,
+                                                                bindingAction: (cell:UITableViewCell, item: CollectionSectionItem) -> Void) {
+        
+        let item = CollectionSectionItem(firstReusableIdentifierOrNibName: firstIdentifierOrNibName,
+                                         secondReusableIdentifierOrNibName: secondIdentifierOrNibName, item: item)
+        item.bindingAction = bindingAction
+        item.itemType = itemType
         self.items.append(item)
     }
 }

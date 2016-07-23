@@ -34,6 +34,7 @@ pod 'EZLoadingActivity'
 pod 'JLToast', '~> 1.4'
 #pod 'LiquidLoader'
 pod 'NVActivityIndicatorView'
+pod 'SwiftOverlays', '~> 2.0.0'
 
 #Text
 pod 'SwiftString'
@@ -50,5 +51,9 @@ pod 'BrightFutures'
 
 #Loggin
 pod 'Timberjack', '~> 0.0'
+
+#Events
+#pod 'EmitterKit'
+pod 'SignalKit'
 
 end

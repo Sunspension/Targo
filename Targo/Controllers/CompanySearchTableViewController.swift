@@ -11,6 +11,7 @@ import DynamicColor
 import CoreLocation
 import RealmSwift
 import AlamofireImage
+import SwiftOverlays
 
 class CompanySearchTableViewController: UITableViewController {
     
@@ -117,12 +118,16 @@ class CompanySearchTableViewController: UITableViewController {
                 
                 let testLocation = CLLocation(latitude: 59.97, longitude: 30.40)
                 
+                self.showWaitOverlay()
+                
                 Api.sharedInstance.loadCompanies(testLocation).onSuccess(callback: { companyPage in
                     
+                    self.removeAllOverlays()
                     self.createDataSource(companyPage)
                     
                 }).onFailure(callback: { error in
                     
+                    self.removeAllOverlays()
                     print(error)
                 })
             }
