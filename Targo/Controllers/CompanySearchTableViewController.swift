@@ -21,6 +21,8 @@ class CompanySearchTableViewController: UITableViewController {
     
     var companyImages: [TCompanyImage] = []
     
+    var companiesPage: TCompaniesPage?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +38,7 @@ class CompanySearchTableViewController: UITableViewController {
                                                                                        bindingAction: { (cell, item) in
                                                                                         
                                                                                         cell.companyTitle.text = item.companyTitle
-                                                                                        cell.additionalInfo.text = item.companyCategoryTitle
+                                                                                        cell.additionalInfo.text = item.companyCategoryTitle + ", " + item.distance + " m"
                                                                                         
                                                                                         let imageSize = cell.companyImage.bounds.size
                                                                                         
@@ -90,16 +92,21 @@ class CompanySearchTableViewController: UITableViewController {
     
     func openMap() {
         
-        
+        if let mapViewController = self.instantiateViewControllerWithIdentifierOrNibName("CompaniesOnMaps") as? TCompaniesOnMapsViewController {
+            
+            mapViewController.companiesPage = self.companiesPage
+            mapViewController.companyImages = self.companyImages
+            self.navigationController?.pushViewController(mapViewController, animated: true)
+        }
     }
     
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         
         // This code is here because of strange bug with the size of a shadow
-        if cell.layer.shadowPath != nil {
-            
-            return
-        }
+//        if cell.layer.shadowPath != nil {
+//            
+//            return
+//        }
         
         let viewCell = cell as! TCompanyTableViewCell
         let layer = viewCell.shadowView.layer
@@ -116,14 +123,13 @@ class CompanySearchTableViewController: UITableViewController {
             
             if self.userLocation != nil {
                 
-                let testLocation = CLLocation(latitude: 59.97, longitude: 30.40)
-                
                 self.showWaitOverlay()
                 
-                Api.sharedInstance.loadCompanies(testLocation).onSuccess(callback: { companyPage in
+                Api.sharedInstance.loadCompanies(self.userLocation!).onSuccess(callback: { companyPage in
                     
                     self.removeAllOverlays()
-                    self.createDataSource(companyPage)
+                    self.companiesPage = companyPage
+                    self.createDataSource()
                     
                 }).onFailure(callback: { error in
                     
@@ -134,11 +140,11 @@ class CompanySearchTableViewController: UITableViewController {
         }
     }
     
-    func createDataSource(companyPage: TCompaniesPage?) {
+    func createDataSource() {
         
         let section = GenericCollectionSection<TCompany>()
         
-        if let page = companyPage {
+        if let page = self.companiesPage {
             
             for company in page.companies {
                 

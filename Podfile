@@ -35,6 +35,7 @@ pod 'JLToast', '~> 1.4'
 #pod 'LiquidLoader'
 pod 'NVActivityIndicatorView'
 pod 'SwiftOverlays', '~> 2.0.0'
+pod 'GaugeKit'
 
 #Text
 pod 'SwiftString'
@@ -55,5 +56,9 @@ pod 'Timberjack', '~> 0.0'
 #Events
 #pod 'EmitterKit'
 pod 'SignalKit'
+
+#Maps
+source 'https://github.com/CocoaPods/Specs.git'
+pod 'GoogleMaps'
 
 end

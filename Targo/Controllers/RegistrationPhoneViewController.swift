@@ -11,7 +11,7 @@ import Alamofire
 import AlamofireJsonToObjects
 import DynamicColor
 import SHSPhoneComponent
-import EZLoadingActivity
+import SwiftOverlays
 
 class RegistrationPhoneViewController: UIViewController {
     
@@ -25,6 +25,9 @@ class RegistrationPhoneViewController: UIViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        self.setup()
+        
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         
         buttonSend.tintColor = DynamicColor(hexString: kHexMainPinkColor)
         buttonSend.enabled = false
@@ -81,13 +84,19 @@ class RegistrationPhoneViewController: UIViewController {
         
         let phoneNumber = self.phoneNumber.phoneNumber()
         
-        EZLoadingActivity.show("Please wait", disableUI: true)
+        showWaitOverlay()
         
         Api.sharedInstance.userRegistration(phoneNumber)
             
-            .onSuccess { success in
+            .onSuccess { response in
                 
-                EZLoadingActivity.hide()
+                self.removeAllOverlays()
+                
+                AppSettings.sharedInstance.lastSessionPhoneNumber = phoneNumber
+                
+                let defaults = NSUserDefaults.standardUserDefaults()
+                defaults.setBool(true, forKey: kTargoCodeSent)
+                defaults.synchronize()
                 
                 let controller = self.instantiateViewControllerWithIdentifierOrNibName("RegistrationCode")
                 
@@ -98,9 +107,9 @@ class RegistrationPhoneViewController: UIViewController {
                 
             }.onFailure { error in
                 
-                EZLoadingActivity.hide()
+                self.removeAllOverlays()
                 
-                let alert = UIAlertController(title: "Error", message: error.description, preferredStyle: .Alert)
+                let alert = UIAlertController(title: "Error", message: error.message, preferredStyle: .Alert)
                 let action = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
                 alert.addAction(action)
                 self.presentViewController(alert, animated: true, completion: nil)

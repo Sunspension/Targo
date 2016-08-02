@@ -17,7 +17,7 @@ struct TRemoteServer: PRemoteServerV1 {
     let deviceType = "ios"
     
     
-    func registration(phoneNumber: String, deviceToken: String, parameters: [String : AnyObject]?) -> Request {
+    func registration(phoneNumber: String, deviceToken: String, parameters: [String : AnyObject]? = nil) -> Request {
         
         var params: [String: AnyObject] = ["phone" : phoneNumber, "device_type" : deviceType, "device_token" : deviceToken]
         
@@ -87,7 +87,20 @@ struct TRemoteServer: PRemoteServerV1 {
         return self.request(.GET, remotePath: baseURLString + "/shop-good", parameters: params)
     }
     
-    //mark - private methods
+    func makeTestOrder() -> Request {
+        
+        let params: [String : AnyObject] = [ "type" : 1]
+        return self.request(.POST, remotePath: baseURLString + "/order", parameters: params)
+    }
+    
+    func loadCreditCards() -> Request {
+        
+        return self.request(.GET, remotePath: baseURLString + "/card")
+    }
+    
+    
+    
+    // mark - private methods
     
     private func request(method: Alamofire.Method, remotePath: URLStringConvertible) -> Request {
         

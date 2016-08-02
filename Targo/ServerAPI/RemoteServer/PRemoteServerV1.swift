@@ -23,4 +23,8 @@ protocol PRemoteServerV1 {
     func loadCompaniesByLocation(location: CLLocation) -> Request
     
     func loadCompanyMenu(companyId: Int) -> Request
+    
+    func makeTestOrder() -> Request
+    
+    func loadCreditCards() -> Request
 }

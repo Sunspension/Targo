@@ -29,6 +29,7 @@ class UserProfileTableViewController: UITableViewController {
         
         let section = GenericCollectionSection<String>(title: nil)
         section.items.append("Logout")
+        section.items.append("Add credit card")
         
         self.itemsSource?.sections.append(section)
         
@@ -53,8 +54,10 @@ class UserProfileTableViewController: UITableViewController {
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
-        if indexPath.row == 0 {
+        switch indexPath.row {
             
+        case 0:
+         
             Api.sharedInstance.userLogut().onSuccess(callback: { success in
                 
                 NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: kTargoUserLoggedOutSuccessfully, object: nil))
@@ -63,6 +66,20 @@ class UserProfileTableViewController: UITableViewController {
                 
                 print("User logout error: \(error)")
             })
+            
+            break
+            
+        case 1:
+            
+            if let controller = self.instantiateViewControllerWithIdentifierOrNibName("AddCreditCard") {
+                
+                self.navigationController?.pushViewController(controller, animated: true)
+            }
+            
+            break
+            
+        default:
+            break
         }
     }
     

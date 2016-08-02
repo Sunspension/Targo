@@ -1,18 +1,18 @@
 //
-//  TCompanyImageMenuTableViewCell.swift
+//  TWorkingHoursTableViewCell.swift
 //  Targo
 //
-//  Created by Vladimir Kokhanevich on 19/07/16.
+//  Created by Vladimir Kokhanevich on 25/07/16.
 //  Copyright © 2016 Targo. All rights reserved.
 //
 
 import UIKit
 
-class TCompanyImageMenuTableViewCell: UITableViewCell {
+class TWorkingHoursTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var companyImage: UIImageView!
+    @IBOutlet weak var weekday: UILabel!
     
-    @IBOutlet weak var buttonMakeOrder: UIButton!
+    @IBOutlet weak var hours: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -24,5 +24,5 @@ class TCompanyImageMenuTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
+
 }

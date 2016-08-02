@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="TCompanyInfoContactsHeader" customModule="Targo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="397" height="114"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fQY-ZS-TiC">
+                    <rect key="frame" x="0.0" y="0.0" width="397" height="114"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QSC-QD-tdV">
+                    <rect key="frame" x="8" y="15" width="116" height="84"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <state key="normal" image="icon-phone">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TQa-fK-E2i">
+                    <rect key="frame" x="141" y="15" width="115" height="84"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <state key="normal" image="icon-location">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Eh-WV-r55">
+                    <rect key="frame" x="273" y="15" width="116" height="84"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <state key="normal" image="icon-link">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jHd-31-lLM">
+                    <rect key="frame" x="132" y="0.0" width="1" height="114"/>
+                    <color key="backgroundColor" red="0.71764705882352942" green="0.0" blue="0.42745098039215684" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="1" id="3d0-9b-aMl"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="59G-vp-g8x">
+                    <rect key="frame" x="264" y="0.0" width="1" height="114"/>
+                    <color key="backgroundColor" red="0.71764705882352942" green="0.0" blue="0.42745098039215684" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="1" id="E0t-zB-w64"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="4Eh-WV-r55" firstAttribute="leading" secondItem="59G-vp-g8x" secondAttribute="trailing" constant="8" id="5Z0-At-ovL"/>
+                <constraint firstAttribute="trailing" secondItem="4Eh-WV-r55" secondAttribute="trailing" constant="8" id="FnP-X0-KZP"/>
+                <constraint firstAttribute="bottom" secondItem="jHd-31-lLM" secondAttribute="bottom" id="FpS-CQ-toX"/>
+                <constraint firstAttribute="trailing" secondItem="fQY-ZS-TiC" secondAttribute="trailing" id="IWa-Rn-kn3"/>
+                <constraint firstAttribute="bottom" secondItem="4Eh-WV-r55" secondAttribute="bottom" priority="999" constant="15" id="Iob-WR-eBD"/>
+                <constraint firstItem="jHd-31-lLM" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="MCS-wx-zfc"/>
+                <constraint firstItem="TQa-fK-E2i" firstAttribute="leading" secondItem="jHd-31-lLM" secondAttribute="trailing" constant="8" id="N7b-ZA-Cll"/>
+                <constraint firstAttribute="bottom" secondItem="fQY-ZS-TiC" secondAttribute="bottom" id="Ogo-Ls-H2o"/>
+                <constraint firstItem="jHd-31-lLM" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" multiplier="2:3" id="bgY-9p-Pfp"/>
+                <constraint firstItem="jHd-31-lLM" firstAttribute="leading" secondItem="QSC-QD-tdV" secondAttribute="trailing" constant="8" id="dYh-as-5jo"/>
+                <constraint firstItem="QSC-QD-tdV" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="15" id="fVj-t7-igh"/>
+                <constraint firstItem="fQY-ZS-TiC" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="fz5-pp-GPf"/>
+                <constraint firstItem="QSC-QD-tdV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="gwo-qY-4A8"/>
+                <constraint firstItem="59G-vp-g8x" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" multiplier="4:3" id="m0B-9H-qn7"/>
+                <constraint firstItem="4Eh-WV-r55" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="15" id="mk8-Vk-S0S"/>
+                <constraint firstAttribute="bottom" secondItem="TQa-fK-E2i" secondAttribute="bottom" priority="999" constant="15" id="myU-QO-DKE"/>
+                <constraint firstAttribute="bottom" secondItem="QSC-QD-tdV" secondAttribute="bottom" priority="999" constant="15" id="pC3-AL-0XB"/>
+                <constraint firstItem="TQa-fK-E2i" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="15" id="pgb-82-FWC"/>
+                <constraint firstItem="59G-vp-g8x" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="sDM-PQ-3OP"/>
+                <constraint firstItem="fQY-ZS-TiC" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="x6i-jb-wRq"/>
+                <constraint firstAttribute="bottom" secondItem="59G-vp-g8x" secondAttribute="bottom" id="zK0-kp-9dd"/>
+                <constraint firstItem="59G-vp-g8x" firstAttribute="leading" secondItem="TQa-fK-E2i" secondAttribute="trailing" constant="8" id="zyx-Wa-C64"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="background" destination="fQY-ZS-TiC" id="FaC-9o-vcf"/>
+                <outlet property="buttonLink" destination="4Eh-WV-r55" id="RFt-LD-U9w"/>
+                <outlet property="buttonLocation" destination="TQa-fK-E2i" id="txy-YU-Wlc"/>
+                <outlet property="buttonPhone" destination="QSC-QD-tdV" id="8z7-Fr-yNQ"/>
+            </connections>
+            <point key="canvasLocation" x="135.5" y="57"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="icon-link" width="40" height="40"/>
+        <image name="icon-location" width="40" height="40"/>
+        <image name="icon-phone" width="40" height="40"/>
+    </resources>
+</document>

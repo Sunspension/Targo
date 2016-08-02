@@ -48,7 +48,8 @@
                             <constraint firstAttribute="height" constant="25" id="Ha1-VM-RZd"/>
                             <constraint firstAttribute="width" constant="25" id="fYf-7s-OG8"/>
                         </constraints>
-                        <state key="normal" image="icon-clock"/>
+                        <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <state key="normal" image="icon-checked"/>
                     </button>
                 </subviews>
                 <constraints>
@@ -75,6 +76,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="icon-clock" width="25" height="25"/>
+        <image name="icon-checked" width="25" height="25"/>
     </resources>
 </document>

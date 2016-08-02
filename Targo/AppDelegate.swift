@@ -10,6 +10,7 @@ import UIKit
 import RealmSwift
 import Timberjack
 import EZLoadingActivity
+import GoogleMaps
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -24,11 +25,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.registerUserNotificationSettings(settings)
         application.registerForRemoteNotifications()
         
+        // register google maps
+        GMSServices.provideAPIKey("AIzaSyBj0pr7Cxm3b4tsM9O1gyIXdguRHvMmeW0")
+        
+        
         //Loggin
         Timberjack.register()
         
         var config = Realm.Configuration()
-        config.schemaVersion = 8
+        config.schemaVersion = 12
         config.migrationBlock = { (migration: Migration, oldSchemaVersion: UInt64) in
         
             if oldSchemaVersion < 1 {
@@ -41,12 +46,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         
         let realm = try! Realm()
-        
-        let openLoginController = {
-            
-            self.window?.rootViewController = storyBoard.instantiateViewControllerWithIdentifier("TLoginNavigation")
-            self.window?.makeKeyAndVisible()
-        }
         
 //        Api.sharedInstance.userLogut().onSuccess(callback: { success in
 //            
@@ -74,6 +73,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            print("Caught an error when was trying to make commit to Realm")
 //        }
         
+        
         if realm.objects(UserSession).first != nil {
             
             // User logged in
@@ -83,22 +83,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         else {
             
-            openLoginController()
+            let defaults = NSUserDefaults.standardUserDefaults()
+            
+            if defaults.boolForKey(kTargoCodeSent) == true {
+                
+                let controller = storyBoard.instantiateViewControllerWithIdentifier("RegistrationCode")
+                let navigation = UINavigationController(rootViewController: controller)
+                
+                self.window?.rootViewController = navigation
+                self.window?.makeKeyAndVisible()
+            }
+            else {
+                
+                let controller = storyBoard.instantiateViewControllerWithIdentifier("RegistrationPhone")
+                let navigation = UINavigationController(rootViewController: controller)
+                
+                self.window?.rootViewController = navigation
+                self.window?.makeKeyAndVisible()
+            }
         }
-        
-//        let viewController = storyBoard.instantiateViewControllerWithIdentifier("TTabBar")
-//        self.window?.rootViewController = viewController
-//        self.window?.makeKeyAndVisible()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AppDelegate.logoutAction), name: kTargoUserLoggedOutSuccessfully, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AppDelegate.loginAction), name: kTargoUserLoggedInSuccessfully, object: nil)
-        
-        EZLoadingActivity.Settings.BackgroundColor = UIColor(colorLiteralRed: 0, green: 0, blue: 0, alpha: 0.5)
-        EZLoadingActivity.Settings.TextColor = UIColor.whiteColor()
-        EZLoadingActivity.Settings.ActivityWidth = 70
-        EZLoadingActivity.Settings.ActivityHeight = 70
-        EZLoadingActivity.Settings.ActivityColor = UIColor.whiteColor()
         
         return true
     }
@@ -118,6 +125,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
+        
+        NSHTTPCookieStorage.sharedHTTPCookieStorage().cookieAcceptPolicy = .Always
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }
 
@@ -147,8 +156,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         
-        let viewController = storyBoard.instantiateViewControllerWithIdentifier("TLoginNavigation")
-        self.changeRootViewController(viewController)
+        let controller = storyBoard.instantiateViewControllerWithIdentifier("RegistrationPhone")
+        let navigation = UINavigationController(rootViewController: controller)
+        self.changeRootViewController(navigation)
     }
     
     func loginAction() {

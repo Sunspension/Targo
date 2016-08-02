@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GVd-gM-hWg" customClass="TShortCompanyOnMapInfo" customModule="Targo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="334" height="126"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Company Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X78-aw-3qH">
+                    <rect key="frame" x="8" y="8" width="318" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="dvJ-84-U9X"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="350 m  Бизнес ланч, Кофе" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gCh-q9-xiV">
+                    <rect key="frame" x="8" y="71" width="318" height="47"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AB5-4g-tTb">
+                    <rect key="frame" x="8" y="39" width="318" height="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="AB5-4g-tTb" firstAttribute="top" secondItem="X78-aw-3qH" secondAttribute="bottom" constant="10" id="1wv-lV-vAi"/>
+                <constraint firstAttribute="trailing" secondItem="gCh-q9-xiV" secondAttribute="trailing" constant="8" id="2b9-h6-XK6"/>
+                <constraint firstAttribute="trailing" secondItem="AB5-4g-tTb" secondAttribute="trailing" constant="8" id="7Rb-hP-xaQ"/>
+                <constraint firstItem="AB5-4g-tTb" firstAttribute="leading" secondItem="GVd-gM-hWg" secondAttribute="leading" constant="8" id="85w-yb-H4J"/>
+                <constraint firstItem="X78-aw-3qH" firstAttribute="top" secondItem="GVd-gM-hWg" secondAttribute="top" constant="8" id="8yb-Mo-jTs"/>
+                <constraint firstItem="X78-aw-3qH" firstAttribute="leading" secondItem="GVd-gM-hWg" secondAttribute="leading" constant="8" id="BZv-Ju-JAo"/>
+                <constraint firstAttribute="trailing" secondItem="X78-aw-3qH" secondAttribute="trailing" constant="8" id="OYi-Uj-DEm"/>
+                <constraint firstAttribute="bottom" secondItem="gCh-q9-xiV" secondAttribute="bottom" priority="999" constant="8" id="ea1-9U-r6g"/>
+                <constraint firstItem="gCh-q9-xiV" firstAttribute="top" secondItem="AB5-4g-tTb" secondAttribute="bottom" constant="15" id="p4Y-Sy-fYe"/>
+                <constraint firstItem="gCh-q9-xiV" firstAttribute="leading" secondItem="GVd-gM-hWg" secondAttribute="leading" constant="8" id="uwZ-0r-zv9"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="companyAddress" destination="AB5-4g-tTb" id="Eka-LU-wrJ"/>
+                <outlet property="companyInfo" destination="gCh-q9-xiV" id="N91-kO-2Pl"/>
+                <outlet property="companyTitle" destination="X78-aw-3qH" id="Lx6-LI-FhZ"/>
+            </connections>
+            <point key="canvasLocation" x="354" y="893"/>
+        </view>
+    </objects>
+</document>

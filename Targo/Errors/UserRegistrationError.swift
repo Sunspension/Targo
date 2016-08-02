@@ -12,24 +12,44 @@ enum UserRegistrationError: ErrorType {
     
     case UknownError(description: String)
     
-    case UnacceptableStatusCode(description: String)
+    case ToManyAuthorizationCodeRequest
     
-    case WrongPhoneNumber
+    case BlankPhoneNumber
     
-    var description: String {
+    case BlankDeviceType
+    
+    case BlankDeviceToken
+    
+    case WrongCode
+    
+    
+    var message: String {
         
         switch self {
             
-        case .UnacceptableStatusCode(let description):
-            
-            return description
-        
         case .UknownError(let description):
             
             return description
             
-        default:
-            return ""
+        case .ToManyAuthorizationCodeRequest:
+            
+            return "authorization_to_many_code_request".localized
+            
+        case BlankPhoneNumber:
+            
+            return "authorization_blank_phone".localized
+            
+        case BlankDeviceType:
+            
+            return "authorization_blank_device_type".localized
+            
+        case BlankDeviceToken:
+            
+            return "authorization_blank_device_token".localized
+            
+        case .WrongCode:
+            
+            return "authorization_uknown_code".localized
         }
     }
 }

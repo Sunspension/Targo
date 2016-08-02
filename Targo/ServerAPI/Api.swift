@@ -13,6 +13,7 @@ import RealmSwift
 import BrightFutures
 import KeychainSwift
 import CoreLocation
+import ObjectMapper
 
 struct Api {
     
@@ -26,56 +27,72 @@ struct Api {
         
         let deviceToken = NSUserDefaults.standardUserDefaults().objectForKey(kTargoDeviceToken) as? String
         
-        server.registration(phoneNumber, deviceToken:deviceToken ?? "", parameters: nil)
-            .validate()
-            .responseJSON(completionHandler: { response in
+        server.registration(phoneNumber, deviceToken: deviceToken ?? "", parameters: nil)
+            .responseObject("data", completionHandler: { (response: Response<AuthorizationResponse, TargoError>) in
                 
-                if let error = response.result.error {
+                guard let _ = response.result.value else {
                     
-                    print("User registration error :\(error)")
-                    
-                    if let errorKey = error.userInfo.keys.first as? String {
+                    switch response.result.error! {
                         
-                        switch errorKey {
+                    case .BadRequest:
+                        
+                        let error = response.result.error?.userData as! TBadRequest
+                        
+                        switch error.name {
+                            
+                        case "Bad Request":
+                            
+                            p.failure(.ToManyAuthorizationCodeRequest)
+                            return
+                            
+                        default:
+                            break
+                        }
+                        
+                    case .ServerError:
+                        
+                        let error = response.result.error?.userData as! TServerError
+                        
+                        // We can get many errors but we are going to handle just first
+                        let firstError = error.errors.first
+                        
+                        switch firstError!.field {
                             
                         case "phone":
                             
-                            p.failure(.WrongPhoneNumber)
-                            break
+                            p.failure(UserRegistrationError.BlankPhoneNumber)
+                            
+                            return
+                            
+                        case "device_type":
+                            
+                            p.failure(UserRegistrationError.BlankDeviceType)
+                            
+                            return
+                            
+                        case "device_token":
+                            
+                            p.failure(UserRegistrationError.BlankDeviceToken)
+                            
+                            return
                             
                         default:
-                            
-                            do {
-                                
-                                let json = try NSJSONSerialization.JSONObjectWithData(response.data!, options: NSJSONReadingOptions())
-                                let description = json.debugDescription
-                                p.failure(.UknownError(description: description))
-                                print(json)
-                            }
-                            catch {
-                                
-                                print(error)
-                            }
-                            
                             break
                         }
-                    }
-                    else {
                         
-                        p.failure(.UknownError(description: response.result.error!.description))
+                        break
+                        
+                    default:
+                        break
                     }
-                }
-                
-                print("User registration value: \(response.result.value)")
-            })
-            .responseObject { (response: Result<AuthorizationCodeResponse, NSError>) in
-                
-                if response.isSuccess {
                     
-                    AppSettings.sharedInstance.lastSessionPhoneNumber = phoneNumber
-                    p.success(true)
+                    p.failure(UserRegistrationError.UknownError(description: "Unknown error"))
+                    
+                    return
                 }
-        }
+                
+                p.success(true)
+            })
         
         return p.future
     }
@@ -89,56 +106,64 @@ struct Api {
         if let token = defaults.objectForKey(kTargoDeviceToken) as? String {
             
             server.authorization(phoneNumber, code: code, deviceToken: token, parameters: nil)
-                .validate()
-                .responseJSON(completionHandler: { (response: Response<AnyObject, NSError>) in
+                
+                .responseObject("data", completionHandler: { (response: Response<UserSession, TargoError>) in
                     
-                    if let error = response.result.error {
+                    guard let _ = response.result.value else {
                         
-                        print("User login error :\(error)")
+                        switch response.result.error! {
                         
-                        if let errorKey = error.userInfo.keys.first as? String {
+                        case .BadRequest:
                             
-                            switch errorKey {
+                            let error = response.result.error?.userData as! TBadRequest
+                            
+                            switch error.message {
                                 
-                            case "StatusCode":
+                            case "Code not found":
                                 
-                                p.failure(.UnacceptableStatusCode(description: error.localizedDescription))
-                                break
-                                
-                            case "phone":
-                                
-                                p.failure(.WrongPhoneNumber)
-                                break
+                                p.failure(.WrongCode)
+                                return
                                 
                             default:
-                                
-                                p.failure(.UknownError(description: ""))
                                 break
                             }
-                        }
-                        else {
                             
-                            p.failure(.UknownError(description: ""))
+                        default:
+                            break
                         }
+                        
+                        p.failure(UserRegistrationError.UknownError(description: "Unknown error"))
+                        
+                        return
                     }
                     
-                    print("User login value: \(response.result.value)")
-                })
-                .responseObject(queue: nil, keyPath: "data", mapToObject: UserSession(), completionHandler: { (response:Response<UserSession, NSError>) in
+                    let userSession = response.result.value!
                     
-                    if let userSession = response.result.value {
+                    let realm = try! Realm()
+                    
+                    try! realm.write({
                         
-                        print("user session: \(userSession)")
-                        
-                        let realm = try! Realm()
-                        
-                        try! realm.write({
-                            
-                            realm.add(userSession, update: true)
-                        })
-                    }
+                        realm.add(userSession, update: true)
+                    })
                 })
-                .responseObject(queue: nil, keyPath: "data.user", mapToObject: User(), completionHandler: { (response: Response<User, NSError>) in
+                
+//                .responseObject(keyPath: "data", mapToObject: UserSession(),
+//                    completionHandler: { (response:Response<UserSession, NSError>) in
+//                        
+//                        if let userSession = response.result.value {
+//                            
+//                            print("user session: \(userSession)")
+//                            
+//                            let realm = try! Realm()
+//                            
+//                            try! realm.write({
+//                                
+//                                realm.add(userSession, update: true)
+//                            })
+//                        }
+//                })
+                
+                .responseObject("data.user", completionHandler: { (response: Response<User, TargoError>) in
                     
                     if let user = response.result.value {
                         
@@ -158,6 +183,27 @@ struct Api {
                         p.success(user)
                     }
                 })
+//                .responseObject(keyPath: "data.user", mapToObject: User(),
+//                                completionHandler: { (response: Response<User, NSError>) in
+//                                    
+//                                    if let user = response.result.value {
+//                                        
+//                                        print("user: \(user)")
+//                                        
+//                                        let realm = try! Realm()
+//                                        
+//                                        try! realm.write({
+//                                            
+//                                            realm.add(user, update: true)
+//                                        })
+//                                        
+//                                        // save user data to secure storage
+//                                        let keyChain = KeychainSwift()
+//                                        keyChain.set(code, forKey: phoneNumber)
+//                                        
+//                                        p.success(user)
+//                                    }
+//                })
         }
         
         return p.future
@@ -167,40 +213,46 @@ struct Api {
         
         let p = Promise<Bool, TargoError>()
         
-        server.deauthorization().validate().responseJSON { (response: Response<AnyObject, NSError>) in
-            
-            if response.result.error != nil {
+        server.deauthorization()
+            .validate()
+            .responseJSON { (response: Response<AnyObject, NSError>) in
                 
-                p.failure(.UserDeauthorizationFailed)
-            }
-            
-            p.success(true)
-            
-            }
-            .responseObject(queue: nil, keyPath: "data", mapToObject: UserSession(), completionHandler: { (response:Response<UserSession, NSError>) in
-                
-                if let userSession = response.result.value {
+                if response.result.error != nil {
                     
-                    print("user logout session: \(userSession)")
-                    
-                    let realm = try! Realm()
-                    
-                    let sessions = realm.objects(UserSession)
-                    let users = realm.objects(User)
-                    
-                    realm.beginWrite()
-                    realm.delete(sessions)
-                    realm.delete(users)
-                    
-                    do {
-                        
-                        try realm.commitWrite()
-                    }
-                    catch {
-                        
-                        print("Caught an error when was trying to make commit to Realm")
-                    }
+                    p.failure(.UserDeauthorizationFailed)
                 }
+                
+                p.success(true)
+            }
+            .responseObject(keyPath: "data", mapToObject: UserSession(),
+                            completionHandler: { (response:Response<UserSession, NSError>) in
+                                
+                                if let userSession = response.result.value {
+                                    
+                                    print("user logout session: \(userSession)")
+                                    
+                                    let realm = try! Realm()
+                                    
+                                    let sessions = realm.objects(UserSession)
+                                    let users = realm.objects(User)
+                                    
+                                    realm.beginWrite()
+                                    realm.delete(sessions)
+                                    realm.delete(users)
+                                    
+                                    do {
+                                        
+                                        try realm.commitWrite()
+                                    }
+                                    catch {
+                                        
+                                        print("Caught an error when was trying to make commit to Realm")
+                                    }
+                                    
+                                    let defaults = NSUserDefaults.standardUserDefaults()
+                                    defaults.removeObjectForKey(kTargoCodeSent)
+                                    defaults.synchronize()
+                                }
             })
         
         return p.future
@@ -216,8 +268,7 @@ struct Api {
             
             server.loadUserById(session.userId)
                 .validate()
-                .responseObject(queue: nil,
-                                keyPath: "data.user",
+                .responseObject(keyPath: "data.user",
                                 mapToObject: User(),
                                 completionHandler: { (response: Response<User, NSError>) in
                                     
@@ -252,23 +303,22 @@ struct Api {
                 print(response.result.value)
                 
             })
-            .responseObject(queue: nil,
-                keyPath: "data",
-                mapToObject: TCompaniesPage(),
-            context: nil) { (response: Response<TCompaniesPage, NSError>) in
-                
-                if let page = response.result.value {
-                    
-                    print("companies page: \(page)")
-                    p.success(page)
-                }
-                else if let error = response.result.error {
-                    
-                    print("page error: \(error)")
-                    
-                    p.failure(.CompanyPageLoadingFailed)
-                }
-            }
+            .responseObject(keyPath: "data",
+                            mapToObject: TCompaniesPage(),
+                            context: nil) { (response: Response<TCompaniesPage, NSError>) in
+                                
+                                if let page = response.result.value {
+                                    
+                                    print("companies page: \(page)")
+                                    p.success(page)
+                                }
+                                else if let error = response.result.error {
+                                    
+                                    print("page error: \(error)")
+                                    
+                                    p.failure(.CompanyPageLoadingFailed)
+                                }
+        }
         
         return p.future
     }
@@ -279,24 +329,50 @@ struct Api {
         
         server.loadCompanyMenu(companyId)
             .debugLog()
-            .validate().responseJSON { response in
+            .validate()
+            .responseJSON { response in
                 
                 print(response.result.value)
                 
-        }.responseObject(queue: nil, keyPath: "data",
-                         mapToObject: TCompanyMenuPage(),
-                         context: nil) { response in
-                            
-                            if let page = response.result.value {
+            }.responseObject(keyPath: "data",
+                             mapToObject: TCompanyMenuPage(),
+                             context: nil) { response in
                                 
-                                print("company menu page: \(page)")
-                                p.success(page)
-                            }
-                            else if let error = response.result.error {
-                                
-                                print("menu page error: \(error)")
-                                p.failure(.CompanyMenuPageLoadingFailed)
-                            }
+                                if let page = response.result.value {
+                                    
+                                    print("company menu page: \(page)")
+                                    p.success(page)
+                                }
+                                else if let error = response.result.error {
+                                    
+                                    print("menu page error: \(error)")
+                                    p.failure(.CompanyMenuPageLoadingFailed)
+                                }
+        }
+        
+        return p.future
+    }
+    
+    func makeTestOrder() -> Future<TTestOrderResponse, TargoError> {
+        
+        let p = Promise<TTestOrderResponse, TargoError>()
+        
+        server.makeTestOrder()
+            .debugLog()
+            .responseJSON { response in
+                
+                print(response.result)
+                
+            }.responseObject { (response: Result<TTestOrderResponse, NSError>) in
+                
+                if let result = response.value {
+                    
+                    p.success(result)
+                }
+                else if let error = response.error {
+                    
+                    p.failure(TargoError.TestOrderError(message: error.localizedDescription))
+                }
         }
         
         return p.future

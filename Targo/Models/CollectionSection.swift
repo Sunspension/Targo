@@ -16,7 +16,7 @@ class CollectionSection: NSObject {
     
     var selectedItems: [Any] = []
     
-    var sectionType: AnyObject?
+    var sectionType: Any?
     
     var selected = false
     
@@ -29,7 +29,7 @@ class CollectionSection: NSObject {
     func initializeDefaultCell(reusableIdentifier: String? = nil,
                                cellStyle: UITableViewCellStyle,
                                item: Any?,
-                               itemType: AnyObject? = nil,
+                               itemType: Any? = nil,
                                bindingAction: (cell:UITableViewCell, item: CollectionSectionItem) -> Void) {
     
         let item = CollectionSectionItem(reusableIdentifier: reusableIdentifier, cellStyle: cellStyle, item: item)
@@ -40,7 +40,7 @@ class CollectionSection: NSObject {
     
     func initializeCellWithReusableIdentifierOrNibName(identifierOrNibName: String,
                                                        item: Any?,
-                                                       itemType: AnyObject? = nil,
+                                                       itemType: Any? = nil,
                                                        bindingAction: (cell:UITableViewCell, item: CollectionSectionItem) -> Void) {
         
         let item = CollectionSectionItem(reusableIdentifierOrNibName: identifierOrNibName, item: item)
@@ -52,7 +52,7 @@ class CollectionSection: NSObject {
     func initializeSwappableCellWithReusableIdentifierOrNibName(firstIdentifierOrNibName: String,
                                                                 secondIdentifierOrNibName: String,
                                                                 item: Any?,
-                                                                itemType: AnyObject? = nil,
+                                                                itemType: Any? = nil,
                                                                 bindingAction: (cell:UITableViewCell, item: CollectionSectionItem) -> Void) {
         
         let item = CollectionSectionItem(firstReusableIdentifierOrNibName: firstIdentifierOrNibName,

@@ -20,7 +20,7 @@ class CollectionSectionItem: NSObject {
     
     var item: Any?
     
-    var itemType: AnyObject?
+    var itemType: Any?
     
     var reusableIdentifierOrNibName: String? {
         

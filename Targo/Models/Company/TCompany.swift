@@ -52,7 +52,7 @@ class TCompany: Object, Mappable {
     
     dynamic var companyCategoryImageId = 0
     
-    dynamic var distance = 0
+    dynamic var distance = ""
     
     
     required convenience init?(_ map: Map) {

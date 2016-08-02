@@ -13,7 +13,7 @@ import NVActivityIndicatorView
 import SwiftOverlays
 import SignalKit
 
-class TCompanyMenuTableViewController: UITableViewController, NVActivityIndicatorViewable {
+class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
 
     var company: TCompany?
     
@@ -23,16 +23,32 @@ class TCompanyMenuTableViewController: UITableViewController, NVActivityIndicato
     
     var menuPage: TCompanyMenuPage?
 
+    @IBOutlet weak var tableView: UITableView!
+    
+    @IBOutlet weak var buttonMakeOrder: UIButton!
+    
+    
+    @IBAction func makeOrderAction(sender: AnyObject) {
+    
+        
+    }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        self.tableView.setup()
         
-        let frame = self.view.bounds
-        let toolBarHeigth: CGFloat = 44
-        let busyIndicator = NVActivityIndicatorView(frame: CGRect(x: frame.width / 2 - 35, y: frame.height / 2 - 35 - toolBarHeigth , width: 70, height: 70), type: .BallClipRotateMultiple, color: UIColor(hexString: kHexMainPinkColor), padding:0)
+        self.buttonMakeOrder.backgroundColor = UIColor(hexString: kHexMainPinkColor)
         
-        self.view.addSubview(busyIndicator)
+        self.buttonMakeOrder.enabled = false
+        self.buttonMakeOrder.alpha = 0.5
+        
+//        let frame = self.view.bounds
+//        let toolBarHeigth: CGFloat = 44
+//        let busyIndicator = NVActivityIndicatorView(frame: CGRect(x: frame.width / 2 - 35, y: frame.height / 2 - 35 - toolBarHeigth , width: 70, height: 70), type: .BallClipRotateMultiple, color: UIColor(hexString: kHexMainPinkColor), padding:0)
+//        
+//        self.view.addSubview(busyIndicator)
         
         self.title = company?.companyTitle
         
@@ -41,6 +57,8 @@ class TCompanyMenuTableViewController: UITableViewController, NVActivityIndicato
         self.tableView.dataSource = self.itemsSource
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "icon-info"), style: .Plain, target: self, action: #selector(TCompanyMenuTableViewController.openInfo))
+        
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         
         self.tableView.registerNib(UINib(nibName: "TCompanyImageMenuTableViewCell", bundle: nil),
                                    forCellReuseIdentifier: "CompanyImageMenu")
@@ -67,6 +85,10 @@ class TCompanyMenuTableViewController: UITableViewController, NVActivityIndicato
                 self.menuPage = menuPage
                 self.createDataSource()
                 self.tableView.reloadData()
+                
+            }).onFailure(callback: { error in
+                
+                self.removeAllOverlays()
             })
         }
         
@@ -91,7 +113,13 @@ class TCompanyMenuTableViewController: UITableViewController, NVActivityIndicato
     
     func openInfo() {
         
-        
+        if let controller =  self.instantiateViewControllerWithIdentifierOrNibName("CompanyInfoController") as? TCompanyInfoTableViewController {
+            
+            controller.company = self.company
+            controller.companyImage = self.companyImage
+            
+            self.navigationController?.pushViewController(controller, animated: true)
+        }
     }
     
     func createDataSource() {
@@ -102,12 +130,13 @@ class TCompanyMenuTableViewController: UITableViewController, NVActivityIndicato
             
             let viewCell = cell as! TCompanyImageMenuTableViewCell
             viewCell.companyImage.image = item.item! as? UIImage
+            viewCell.selectionStyle = .None
         }
         
         section.initializeCellWithReusableIdentifierOrNibName("WorkingTimeViewCell", item: company) { (cell, item) in
         
             let viewCell = cell as! TWorkingTimeTableViewCell
-            
+            viewCell.selectionStyle = .None
             viewCell.setWorkingTimeAndHandlingOrder("11:00 - 00:00", handlingOrder: "20 - 37 minutes")
         }
         
@@ -156,12 +185,20 @@ class TCompanyMenuTableViewController: UITableViewController, NVActivityIndicato
         }
     }
     
-    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
-        return section == 0 ? nil : tableView.dequeueReusableHeaderFooterViewWithIdentifier("sectionHeader")
+        if section == 0 {
+            
+            return nil
+        }
+        
+        let header = tableView.dequeueReusableHeaderFooterViewWithIdentifier("sectionHeader") as! TCompanyMenuHeaderView
+        header.title.text = self.itemsSource.sections[section].title
+        
+        return header;
     }
     
-    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         
         if section == 0 {
             
@@ -176,12 +213,12 @@ class TCompanyMenuTableViewController: UITableViewController, NVActivityIndicato
         header.layer.shadowOpacity = 0.5
     }
     
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
         return section == 0 ? 0.01 : 30
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         let item = self.itemsSource.sections[indexPath.section].items[indexPath.row]
         item.selected = !item.selected

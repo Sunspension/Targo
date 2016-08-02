@@ -18,6 +18,13 @@
 		D40E10241D3EC1660012DCF4 /* TableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40E10231D3EC1660012DCF4 /* TableViewDataSource.swift */; };
 		D40E10281D3ECE260012DCF4 /* TCompanySearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40E10261D3ECE260012DCF4 /* TCompanySearchTableViewCell.swift */; };
 		D40E10291D3ECE260012DCF4 /* TCompanySearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D40E10271D3ECE260012DCF4 /* TCompanySearchTableViewCell.xib */; };
+		D41D9D8E1D46A1AB00358961 /* TCompanyInfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41D9D8D1D46A1AB00358961 /* TCompanyInfoTableViewController.swift */; };
+		D41D9D901D46AD4000358961 /* TWorkingHoursTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41D9D8F1D46AD4000358961 /* TWorkingHoursTableViewCell.swift */; };
+		D41D9D921D46B46300358961 /* TWorkingHoursHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41D9D911D46B46300358961 /* TWorkingHoursHeader.swift */; };
+		D41D9D941D46B47300358961 /* TWorkingHoursHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = D41D9D931D46B47300358961 /* TWorkingHoursHeader.xib */; };
+		D41D9D961D46BA2500358961 /* TCompanyInfoContactsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41D9D951D46BA2500358961 /* TCompanyInfoContactsHeader.swift */; };
+		D41D9D981D46BA3600358961 /* TCompanyInfoContactsHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = D41D9D971D46BA3600358961 /* TCompanyInfoContactsHeader.xib */; };
+		D41D9D9A1D46C4F400358961 /* TCompanyAboutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41D9D991D46C4F400358961 /* TCompanyAboutTableViewCell.swift */; };
 		D41F36071D2855C8001896A2 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41F36061D2855C8001896A2 /* LoginViewController.swift */; };
 		D41F59C41D32902F0075568D /* CollectionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41F59C31D32902F0075568D /* CollectionSection.swift */; };
 		D41F59C61D32910A0075568D /* GenericTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41F59C51D32910A0075568D /* GenericTableViewDataSource.swift */; };
@@ -25,11 +32,17 @@
 		D41F59CA1D32C6F00075568D /* GenericCollectionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41F59C91D32C6F00075568D /* GenericCollectionSection.swift */; };
 		D41F59CC1D32CDA80075568D /* UserProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41F59CB1D32CDA80075568D /* UserProfileTableViewController.swift */; };
 		D420B2CB1D293748003FDC83 /* RegistrationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D420B2CA1D293748003FDC83 /* RegistrationCodeViewController.swift */; };
+		D44930921D49494800ADF70A /* TTestOrderResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44930911D49494800ADF70A /* TTestOrderResponse.swift */; };
+		D44930941D495D5100ADF70A /* TAddCreditCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44930931D495D5100ADF70A /* TAddCreditCardViewController.swift */; };
 		D45391D11D2DBE0900669669 /* UserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45391D01D2DBE0900669669 /* UserSession.swift */; };
 		D467AED61D2B0F7100319966 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D467AED51D2B0F7100319966 /* AppSettings.swift */; };
+		D46AC7341D43DB1F009C08D4 /* TCompaniesOnMapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46AC7331D43DB1F009C08D4 /* TCompaniesOnMapsViewController.swift */; };
 		D470DFB91D384D74003473E6 /* TCompanyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D470DFB81D384D74003473E6 /* TCompanyTableViewCell.swift */; };
 		D498D49B1D2825EC002F0E88 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D498D49D1D2825EC002F0E88 /* Localizable.strings */; };
 		D49C7E891D281DB1004408AF /* RegistrationPhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49C7E881D281DB1004408AF /* RegistrationPhoneViewController.swift */; };
+		D4B05FBE1D4FE202000E494E /* AuthorizationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B05FBD1D4FE202000E494E /* AuthorizationResponse.swift */; };
+		D4B81B3A1D4FE8AE00F9103C /* TServerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B81B391D4FE8AE00F9103C /* TServerError.swift */; };
+		D4B81B3C1D4FF22300F9103C /* TBadRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B81B3B1D4FF22300F9103C /* TBadRequest.swift */; };
 		D4B96F761D244CAA00294A4B /* TRemoteServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B96F751D244CAA00294A4B /* TRemoteServer.swift */; };
 		D4B96F7B1D244DBA00294A4B /* PRemoteServerV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B96F7A1D244DBA00294A4B /* PRemoteServerV1.swift */; };
 		D4C2A0A91D3422D20090BAFC /* TLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2A0A81D3422D20090BAFC /* TLocationManager.swift */; };
@@ -55,9 +68,10 @@
 		D4F464DC1D402F08009015FC /* TCompanyMenuHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4F464DB1D402F08009015FC /* TCompanyMenuHeaderView.xib */; };
 		D4F84B431D24591300263D1A /* AppExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F84B421D24591300263D1A /* AppExtensions.swift */; };
 		D4F84B491D24668400263D1A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F84B481D24668400263D1A /* User.swift */; };
+		D4FD14041D441BD300AC9722 /* TShortCompanyOnMapInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FD14031D441BD300AC9722 /* TShortCompanyOnMapInfo.swift */; };
+		D4FD14061D441BE500AC9722 /* TShortCompanyOnMapInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4FD14051D441BE500AC9722 /* TShortCompanyOnMapInfo.xib */; };
 		D4FDE67A1D3C007E003EF2CC /* TWorkingTimeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FDE6791D3C007E003EF2CC /* TWorkingTimeTableViewCell.swift */; };
 		E57C7E8A1D22B60D00F9A0FC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57C7E891D22B60D00F9A0FC /* Constants.swift */; };
-		E57C7E8E1D22B8A700F9A0FC /* AuthorizationCodeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57C7E8D1D22B8A700F9A0FC /* AuthorizationCodeResponse.swift */; };
 		E5C062D91D2106BF002074C4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C062D81D2106BF002074C4 /* AppDelegate.swift */; };
 		E5C062DE1D2106BF002074C4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5C062DC1D2106BF002074C4 /* Main.storyboard */; };
 		E5C062E01D2106BF002074C4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5C062DF1D2106BF002074C4 /* Assets.xcassets */; };
@@ -78,6 +92,13 @@
 		D40E10231D3EC1660012DCF4 /* TableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TableViewDataSource.swift; path = Models/TableViewDataSource.swift; sourceTree = "<group>"; };
 		D40E10261D3ECE260012DCF4 /* TCompanySearchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCompanySearchTableViewCell.swift; sourceTree = "<group>"; };
 		D40E10271D3ECE260012DCF4 /* TCompanySearchTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCompanySearchTableViewCell.xib; sourceTree = "<group>"; };
+		D41D9D8D1D46A1AB00358961 /* TCompanyInfoTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCompanyInfoTableViewController.swift; sourceTree = "<group>"; };
+		D41D9D8F1D46AD4000358961 /* TWorkingHoursTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TWorkingHoursTableViewCell.swift; sourceTree = "<group>"; };
+		D41D9D911D46B46300358961 /* TWorkingHoursHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TWorkingHoursHeader.swift; sourceTree = "<group>"; };
+		D41D9D931D46B47300358961 /* TWorkingHoursHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TWorkingHoursHeader.xib; sourceTree = "<group>"; };
+		D41D9D951D46BA2500358961 /* TCompanyInfoContactsHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCompanyInfoContactsHeader.swift; sourceTree = "<group>"; };
+		D41D9D971D46BA3600358961 /* TCompanyInfoContactsHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCompanyInfoContactsHeader.xib; sourceTree = "<group>"; };
+		D41D9D991D46C4F400358961 /* TCompanyAboutTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCompanyAboutTableViewCell.swift; sourceTree = "<group>"; };
 		D41F36061D2855C8001896A2 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D41F59C31D32902F0075568D /* CollectionSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CollectionSection.swift; path = Models/CollectionSection.swift; sourceTree = "<group>"; };
 		D41F59C51D32910A0075568D /* GenericTableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GenericTableViewDataSource.swift; path = Models/GenericTableViewDataSource.swift; sourceTree = "<group>"; };
@@ -85,12 +106,18 @@
 		D41F59C91D32C6F00075568D /* GenericCollectionSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GenericCollectionSection.swift; path = Models/GenericCollectionSection.swift; sourceTree = "<group>"; };
 		D41F59CB1D32CDA80075568D /* UserProfileTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileTableViewController.swift; sourceTree = "<group>"; };
 		D420B2CA1D293748003FDC83 /* RegistrationCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationCodeViewController.swift; sourceTree = "<group>"; };
+		D44930911D49494800ADF70A /* TTestOrderResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TTestOrderResponse.swift; path = Models/Response/TTestOrderResponse.swift; sourceTree = "<group>"; };
+		D44930931D495D5100ADF70A /* TAddCreditCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TAddCreditCardViewController.swift; sourceTree = "<group>"; };
 		D45391D01D2DBE0900669669 /* UserSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSession.swift; sourceTree = "<group>"; };
 		D467AED51D2B0F7100319966 /* AppSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppSettings.swift; path = Targo/AppSettings.swift; sourceTree = SOURCE_ROOT; };
+		D46AC7331D43DB1F009C08D4 /* TCompaniesOnMapsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCompaniesOnMapsViewController.swift; sourceTree = "<group>"; };
 		D470DFB81D384D74003473E6 /* TCompanyTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCompanyTableViewCell.swift; sourceTree = "<group>"; };
 		D498D4981D282480002F0E88 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
 		D498D49C1D2825EC002F0E88 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D49C7E881D281DB1004408AF /* RegistrationPhoneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationPhoneViewController.swift; sourceTree = "<group>"; };
+		D4B05FBD1D4FE202000E494E /* AuthorizationResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorizationResponse.swift; path = Models/Response/AuthorizationResponse.swift; sourceTree = "<group>"; };
+		D4B81B391D4FE8AE00F9103C /* TServerError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TServerError.swift; path = Models/Response/TServerError.swift; sourceTree = "<group>"; };
+		D4B81B3B1D4FF22300F9103C /* TBadRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TBadRequest.swift; path = Models/Response/TBadRequest.swift; sourceTree = "<group>"; };
 		D4B96F751D244CAA00294A4B /* TRemoteServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TRemoteServer.swift; path = ServerAPI/RemoteServer/TRemoteServer.swift; sourceTree = "<group>"; };
 		D4B96F7A1D244DBA00294A4B /* PRemoteServerV1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PRemoteServerV1.swift; path = ServerAPI/RemoteServer/PRemoteServerV1.swift; sourceTree = "<group>"; };
 		D4C2A0A81D3422D20090BAFC /* TLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TLocationManager.swift; sourceTree = "<group>"; };
@@ -116,9 +143,10 @@
 		D4F464DB1D402F08009015FC /* TCompanyMenuHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCompanyMenuHeaderView.xib; sourceTree = "<group>"; };
 		D4F84B421D24591300263D1A /* AppExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppExtensions.swift; sourceTree = "<group>"; };
 		D4F84B481D24668400263D1A /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Targo/Models/User/User.swift; sourceTree = SOURCE_ROOT; };
+		D4FD14031D441BD300AC9722 /* TShortCompanyOnMapInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TShortCompanyOnMapInfo.swift; sourceTree = "<group>"; };
+		D4FD14051D441BE500AC9722 /* TShortCompanyOnMapInfo.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TShortCompanyOnMapInfo.xib; sourceTree = "<group>"; };
 		D4FDE6791D3C007E003EF2CC /* TWorkingTimeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TWorkingTimeTableViewCell.swift; sourceTree = "<group>"; };
 		E57C7E891D22B60D00F9A0FC /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		E57C7E8D1D22B8A700F9A0FC /* AuthorizationCodeResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorizationCodeResponse.swift; path = Models/Response/AuthorizationCodeResponse.swift; sourceTree = "<group>"; };
 		E5C062D51D2106BF002074C4 /* Targo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Targo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5C062D81D2106BF002074C4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Targo/AppDelegate.swift; sourceTree = SOURCE_ROOT; };
 		E5C062DD1D2106BF002074C4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -210,6 +238,14 @@
 				D4DD9DDB1D418DC9009C28D5 /* TBaseTableViewCell.swift */,
 				D4D4B68A1D42C67300278E2D /* TMenuItemFullTableViewCell.swift */,
 				D4D4B68B1D42C67300278E2D /* TMenuItemFullTableViewCell.xib */,
+				D4FD14031D441BD300AC9722 /* TShortCompanyOnMapInfo.swift */,
+				D4FD14051D441BE500AC9722 /* TShortCompanyOnMapInfo.xib */,
+				D41D9D8F1D46AD4000358961 /* TWorkingHoursTableViewCell.swift */,
+				D41D9D911D46B46300358961 /* TWorkingHoursHeader.swift */,
+				D41D9D931D46B47300358961 /* TWorkingHoursHeader.xib */,
+				D41D9D951D46BA2500358961 /* TCompanyInfoContactsHeader.swift */,
+				D41D9D971D46BA3600358961 /* TCompanyInfoContactsHeader.xib */,
+				D41D9D991D46C4F400358961 /* TCompanyAboutTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -226,6 +262,9 @@
 				D4EE59641D3AFDE30002022F /* TOrdersTableViewController.swift */,
 				D4EE59661D3AFE1E0002022F /* TFeedTableViewController.swift */,
 				D4EE59681D3AFEE90002022F /* TCompanyMenuTableViewController.swift */,
+				D46AC7331D43DB1F009C08D4 /* TCompaniesOnMapsViewController.swift */,
+				D41D9D8D1D46A1AB00358961 /* TCompanyInfoTableViewController.swift */,
+				D44930931D495D5100ADF70A /* TAddCreditCardViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -303,7 +342,10 @@
 		E57C7E8C1D22B85400F9A0FC /* Response */ = {
 			isa = PBXGroup;
 			children = (
-				E57C7E8D1D22B8A700F9A0FC /* AuthorizationCodeResponse.swift */,
+				D44930911D49494800ADF70A /* TTestOrderResponse.swift */,
+				D4B05FBD1D4FE202000E494E /* AuthorizationResponse.swift */,
+				D4B81B391D4FE8AE00F9103C /* TServerError.swift */,
+				D4B81B3B1D4FF22300F9103C /* TBadRequest.swift */,
 			);
 			name = Response;
 			sourceTree = "<group>";
@@ -424,11 +466,14 @@
 			files = (
 				E5C062E31D2106BF002074C4 /* LaunchScreen.storyboard in Resources */,
 				D40E10221D3EAEE60012DCF4 /* TCompanyImageMenuTableViewCell.xib in Resources */,
+				D41D9D941D46B47300358961 /* TWorkingHoursHeader.xib in Resources */,
 				D4D4B68D1D42C67300278E2D /* TMenuItemFullTableViewCell.xib in Resources */,
 				D4F464DC1D402F08009015FC /* TCompanyMenuHeaderView.xib in Resources */,
 				D40E10291D3ECE260012DCF4 /* TCompanySearchTableViewCell.xib in Resources */,
+				D41D9D981D46BA3600358961 /* TCompanyInfoContactsHeader.xib in Resources */,
 				D4DD9DDA1D41830A009C28D5 /* TMenuItemSmallTableViewCell.xib in Resources */,
 				D498D49B1D2825EC002F0E88 /* Localizable.strings in Resources */,
+				D4FD14061D441BE500AC9722 /* TShortCompanyOnMapInfo.xib in Resources */,
 				E5C062E01D2106BF002074C4 /* Assets.xcassets in Resources */,
 				E5C062DE1D2106BF002074C4 /* Main.storyboard in Resources */,
 			);
@@ -538,35 +583,44 @@
 				D41F36071D2855C8001896A2 /* LoginViewController.swift in Sources */,
 				D41F59C81D3294D00075568D /* CollectionSectionItem.swift in Sources */,
 				D4F464D31D40096A009015FC /* TCompanyMenuPage.swift in Sources */,
+				D41D9D961D46BA2500358961 /* TCompanyInfoContactsHeader.swift in Sources */,
 				D41F59C61D32910A0075568D /* GenericTableViewDataSource.swift in Sources */,
-				E57C7E8E1D22B8A700F9A0FC /* AuthorizationCodeResponse.swift in Sources */,
+				D41D9D921D46B46300358961 /* TWorkingHoursHeader.swift in Sources */,
 				D4C2A0AC1D343ED50090BAFC /* CompanySearchTableViewController.swift in Sources */,
 				D4E0B1CD1D2F061F00B65B96 /* UserRegistrationError.swift in Sources */,
 				D4EE59671D3AFE1E0002022F /* TFeedTableViewController.swift in Sources */,
 				D4FDE67A1D3C007E003EF2CC /* TWorkingTimeTableViewCell.swift in Sources */,
+				D41D9D901D46AD4000358961 /* TWorkingHoursTableViewCell.swift in Sources */,
+				D4B81B3A1D4FE8AE00F9103C /* TServerError.swift in Sources */,
 				D40E10211D3EAEE60012DCF4 /* TCompanyImageMenuTableViewCell.swift in Sources */,
 				D420B2CB1D293748003FDC83 /* RegistrationCodeViewController.swift in Sources */,
 				D470DFB91D384D74003473E6 /* TCompanyTableViewCell.swift in Sources */,
 				D4F84B431D24591300263D1A /* AppExtensions.swift in Sources */,
+				D41D9D8E1D46A1AB00358961 /* TCompanyInfoTableViewController.swift in Sources */,
 				D4EE59651D3AFDE30002022F /* TOrdersTableViewController.swift in Sources */,
 				D4EE596B1D3AFFA60002022F /* AlamofireExtensions.swift in Sources */,
 				D40301761D39839C00B7B610 /* ListTransform.swift in Sources */,
+				D4B81B3C1D4FF22300F9103C /* TBadRequest.swift in Sources */,
 				D4D0D6D61D2C5B5200B4E01D /* Api.swift in Sources */,
 				D4F464D51D400A17009015FC /* TShopCategory.swift in Sources */,
 				D49C7E891D281DB1004408AF /* RegistrationPhoneViewController.swift in Sources */,
 				E5C062D91D2106BF002074C4 /* AppDelegate.swift in Sources */,
 				D4F464DA1D402EF3009015FC /* TCompanyMenuHeaderView.swift in Sources */,
+				D44930941D495D5100ADF70A /* TAddCreditCardViewController.swift in Sources */,
 				D40E10241D3EC1660012DCF4 /* TableViewDataSource.swift in Sources */,
 				D4036A0F1D36CE8200CA8E38 /* TCompany.swift in Sources */,
 				D4D4B68C1D42C67300278E2D /* TMenuItemFullTableViewCell.swift in Sources */,
 				D4F84B491D24668400263D1A /* User.swift in Sources */,
 				D4DD9DDC1D418DC9009C28D5 /* TBaseTableViewCell.swift in Sources */,
 				D4EE59691D3AFEE90002022F /* TCompanyMenuTableViewController.swift in Sources */,
+				D41D9D9A1D46C4F400358961 /* TCompanyAboutTableViewCell.swift in Sources */,
 				D4EE59631D3AFAF40002022F /* TTabBarController.swift in Sources */,
 				E57C7E8A1D22B60D00F9A0FC /* Constants.swift in Sources */,
 				D4D0D6D91D2C61BA00B4E01D /* TargoError.swift in Sources */,
 				D40E10281D3ECE260012DCF4 /* TCompanySearchTableViewCell.swift in Sources */,
+				D44930921D49494800ADF70A /* TTestOrderResponse.swift in Sources */,
 				D41F59CC1D32CDA80075568D /* UserProfileTableViewController.swift in Sources */,
+				D46AC7341D43DB1F009C08D4 /* TCompaniesOnMapsViewController.swift in Sources */,
 				D4C2A0A91D3422D20090BAFC /* TLocationManager.swift in Sources */,
 				D4DD9DD91D41830A009C28D5 /* TMenuItemSmallTableViewCell.swift in Sources */,
 				D4B96F761D244CAA00294A4B /* TRemoteServer.swift in Sources */,
@@ -574,10 +628,12 @@
 				D40301741D397F5100B7B610 /* HTTPManager.swift in Sources */,
 				D4EE59601D3AC98A0002022F /* TCompanyImage.swift in Sources */,
 				D41F59CA1D32C6F00075568D /* GenericCollectionSection.swift in Sources */,
+				D4FD14041D441BD300AC9722 /* TShortCompanyOnMapInfo.swift in Sources */,
 				D4F464D81D400E14009015FC /* IntObject.swift in Sources */,
 				D4036A111D36D08900CA8E38 /* TCompaniesPage.swift in Sources */,
 				D45391D11D2DBE0900669669 /* UserSession.swift in Sources */,
 				D403017A1D39936A00B7B610 /* TShopGood.swift in Sources */,
+				D4B05FBE1D4FE202000E494E /* AuthorizationResponse.swift in Sources */,
 				D41F59C41D32902F0075568D /* CollectionSection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

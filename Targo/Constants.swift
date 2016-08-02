@@ -10,6 +10,7 @@ import Foundation
 
 let kTargoDeviceToken = "kTargoDeviceToken"
 let kTargoLastSessionPhone = "kTargoLastSessionPhone"
+let kTargoCodeSent = "kTargoCodeSent"
 
 // Notifications
 let kTargoUserLoggedOutSuccessfully = "kTargoUserLoggedOutSuccessfully"

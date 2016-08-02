@@ -20,10 +20,15 @@ class RegistrationCodeViewController: UIViewController {
     
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
+        
+        self.setup()
         
         buttonNext.tintColor = DynamicColor(hexString: kHexMainPinkColor)
         self.title = "registration_phone_title".localized
+        
+        self.navigationItem.setHidesBackButton(true, animated: false)
         
         code.formatter.setDefaultOutputPattern("######")
         code.becomeFirstResponder()
@@ -66,13 +71,22 @@ class RegistrationCodeViewController: UIViewController {
         self.navigationController?.navigationBarHidden = true;
     }
     
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        
+        self.view.endEditing(true)
+    }
+    
     @IBAction func nextAction(sender: AnyObject) {
         
         if let phoneNumber = AppSettings.sharedInstance.lastSessionPhoneNumber {
             
+            showWaitOverlay()
+            
             Api.sharedInstance.userLogin(phoneNumber, code: self.code.phoneNumber())
                 
                 .onSuccess { user in
+                    
+                    self.removeAllOverlays()
                     
                     NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: kTargoUserLoggedInSuccessfully, object: nil))
                     
@@ -80,8 +94,39 @@ class RegistrationCodeViewController: UIViewController {
                     
                 }.onFailure { error in
                     
-                    print(error)
+                    self.removeAllOverlays()
+                    
+                    self.showError(error.message)
             }
         }
+    }
+    
+    @IBAction func sendCodeAction(sender: AnyObject) {
+        
+        if let phoneNumber = AppSettings.sharedInstance.lastSessionPhoneNumber {
+            
+            showWaitOverlay()
+            
+            Api.sharedInstance.userRegistration(phoneNumber)
+                
+                .onSuccess { response in
+                    
+                    self.removeAllOverlays()
+                    
+                }.onFailure { error in
+                    
+                    self.removeAllOverlays()
+                    
+                    self.showError(error.message)
+            }
+        }
+    }
+    
+    private func showError(errorMessage: String) {
+        
+        let alert = UIAlertController(title: "Error", message: errorMessage, preferredStyle: .Alert)
+        let action = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+        alert.addAction(action)
+        self.presentViewController(alert, animated: true, completion: nil)
     }
 }
