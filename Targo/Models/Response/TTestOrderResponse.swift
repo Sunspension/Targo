@@ -7,47 +7,45 @@
 //
 
 import UIKit
-import EVReflection
+import ObjectMapper
 
-class TTestOrderResponse: EVObject {
-
-    var order: TTestDataResponse?
-    var status = 0
+class TTestOrderResponse: NSObject, Mappable {
+    
+    var id = 0
+    
     var userId = 0
     
-    override func propertyMapping() -> [(String?, String?)] {
+    var responseDescription = ""
+    
+    var errorMessage = ""
+    
+    var paymentStatus = 0
+    
+    var type = 0
+    
+    var cardId = 0
+    
+    var amount = 0
+    
+    var url = ""
+    
+    
+    required convenience init?(_ map: Map) {
         
-        return[("order", "data")]
+        self.init()
     }
-}
-
-class TTestDataResponse: EVObject {
     
-    var id: Int?
     
-    var userId: Int?
-    
-    var responseDescription: String?
-    
-    var errorMessage: String?
-    
-    var paymentStatus: Int?
-    
-    var type: Int?
-    
-    var cardId: Int?
-    
-    var amount: Int?
-    
-    var url: String?
-    
-    override func propertyMapping() -> [(String?, String?)] {
+    func mapping(map: Map) {
         
-        return[("responseDescription", "description"),
-               ("errorMessage", "error_message"),
-               ("paymentStatus", "payment_status"),
-               ("cardType", "card_type"),
-               ("userId", "user_id"),
-               ("cardId", "card_id")]
+        userId <- map["user_id"]
+        responseDescription <- map["description"]
+        errorMessage <- map["error_message"]
+        paymentStatus <- map["paymant_status"]
+        type <- map["type"]
+        cardId <- map["card_id"]
+        amount <- map["card_id"]
+        id <- map["id"]
+        url <- map["url"]
     }
 }

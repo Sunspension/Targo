@@ -30,10 +30,10 @@ class AuthorizationResponse: Object, Mappable {
     
     func mapping(map: Map) {
         
-        phone <- map["data.phone"]
-        deviceToken <- map["data.device_token"]
-        deviceType <- map["data.device_type"]
-        type <- map["data.type"]
-        id <- map["data.id"]
+        phone <- map["phone"]
+        deviceToken <- map["device_token"]
+        deviceType <- map["device_type"]
+        type <- map["type"]
+        id <- map["id"]
     }
 }

@@ -49,9 +49,9 @@ class CompanySearchTableViewController: UITableViewController {
                                                                                         }
         })
         
-        let background = UIImageView(image: UIImage(named: "background"))
-        background.frame = self.tableView.frame
-        self.tableView.backgroundView = background
+//        let background = UIImageView(image: UIImage(named: "background"))
+//        background.frame = self.tableView.frame
+//        self.tableView.backgroundView = background
         self.tableView.dataSource = self.itemsSource
         
         TLocationManager.sharedInstance.subscribeObjectForLocationChange(self, selector: #selector(CompanySearchTableViewController.userLocationChanged))

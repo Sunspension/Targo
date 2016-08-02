@@ -47,7 +47,7 @@ extension Request {
             
             if let status = result.value?.valueForKey("status") as? Int {
                 
-                guard status != 400 else {
+                guard status != 400 && status != 403 else {
                     
                     let error = Mapper<TBadRequest>().map(result.value)
                     return .Failure(.BadRequest(failureReason: error!))

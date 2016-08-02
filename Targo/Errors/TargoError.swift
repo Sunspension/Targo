@@ -30,7 +30,7 @@ enum TargoError: ErrorType {
     
     case DeviceTokenBlank
     
-    case TestOrderError(message: String?)
+    case TestOrderError
     
     case UndefinedError(message: String)
 
@@ -53,21 +53,20 @@ enum TargoError: ErrorType {
         return self.domain
     }
     
-    var localizedDescription: String? {
+    var localizedDescription: String {
         
         switch self {
-            
-        case .TestOrderError(let message):
-            
-            return message
             
         case .DataSerializationFailed(let message):
             
             return message
             
+        case .BadRequest(let failureReason):
+            
+            return failureReason.message.isEmpty ? failureReason.name :failureReason.message
             
         default:
-            return nil
+            return ""
         }
     }
     
