@@ -8,31 +8,29 @@
 
 import UIKit
 import ObjectMapper
-import RealmSwift
 
-class TShopCategory: Object, Mappable {
+class TShopCategory: Mappable {
 
     
-    dynamic var id = 0
+    var id = 0
     
-    dynamic var title = ""
+    var title = ""
     
-    dynamic var categoryDescription = ""
+    var categoryDescription = ""
     
-    dynamic var companyId = 0
+    var companyId = 0
     
-    dynamic var addressId = 0
+    var addressId = 0
     
-    dynamic var imageId = 0
+    var imageId = 0
     
-    dynamic var createdAt = ""
+    var createdAt = ""
     
-    dynamic var updatedAt = ""
+    var updatedAt = ""
     
-    dynamic var deleted = false
+    var deleted = false
     
-    let deletedAt = RealmOptional<Bool>()
-    
+    var deletedAt: Bool?
     
     required convenience init?(_ map: Map) {
         
@@ -50,6 +48,6 @@ class TShopCategory: Object, Mappable {
         createdAt <- map["created_at"]
         updatedAt <- map["updated_at"]
         deleted <- map["deleted"]
-        deletedAt.value <- map["deleted_at"]
+        deletedAt <- map["deleted_at"]
     }
 }

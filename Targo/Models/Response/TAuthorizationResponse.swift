@@ -10,7 +10,7 @@ import UIKit
 import ObjectMapper
 import RealmSwift
 
-class AuthorizationResponse: Object, Mappable {
+class TAuthorizationResponse: Object, Mappable {
 
     dynamic var phone = 0
     

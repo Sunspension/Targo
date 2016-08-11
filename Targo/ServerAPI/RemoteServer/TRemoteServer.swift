@@ -98,7 +98,18 @@ struct TRemoteServer: PRemoteServerV1 {
         return self.request(.GET, remotePath: baseURLString + "/card")
     }
     
-    
+    func makeShopOrder(cardId: Int, items: [String: Int], addressId: Int) -> Request {
+        
+        let formatter = NSDateFormatter()
+        
+        
+        
+        let params: [String : AnyObject] = [ "service_id" : 1,
+                                             "items" : items,
+                                             "address_id" : addressId,
+                                             "card_id" : cardId, "prepared_at" : NSDate() ]
+        return self.request(.POST, remotePath: baseURLString + "/shop-order", parameters: params)
+    }
     
     // mark - private methods
     

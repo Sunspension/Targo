@@ -902,28 +902,32 @@
                     <view key="view" contentMode="scaleToFill" id="hDW-t8-hOA">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C6w-5F-kDw">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
-                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
-                            </webView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="C6w-5F-kDw" secondAttribute="trailing" id="1Jn-jE-OuM"/>
-                            <constraint firstItem="C6w-5F-kDw" firstAttribute="leading" secondItem="hDW-t8-hOA" secondAttribute="leading" id="4zn-fJ-OEq"/>
-                            <constraint firstItem="C6w-5F-kDw" firstAttribute="top" secondItem="hDW-t8-hOA" secondAttribute="top" id="PfN-5l-J5m"/>
-                            <constraint firstItem="C6w-5F-kDw" firstAttribute="bottom" secondItem="hDW-t8-hOA" secondAttribute="bottomMargin" id="d4t-m0-gCb"/>
-                        </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
-                    <connections>
-                        <outlet property="webView" destination="C6w-5F-kDw" id="eM1-zN-j5F"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ROG-a1-c89" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1595" y="2631"/>
+        </scene>
+        <!--Pop Up Web View Controller-->
+        <scene sceneID="7PV-5T-oLh">
+            <objects>
+                <viewController storyboardIdentifier="PopUpController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="G4c-jb-koF" customClass="TPopUpWebViewController" customModule="Targo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="5IY-3C-cp8"/>
+                        <viewControllerLayoutGuide type="bottom" id="KaO-Zj-V4P"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="k9k-xU-tfW">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rjm-1T-qg2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1982" y="2631"/>
         </scene>
         <!--Feed-->
         <scene sceneID="wz2-X0-sE9">

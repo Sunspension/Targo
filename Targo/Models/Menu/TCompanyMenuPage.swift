@@ -8,10 +8,8 @@
 
 import UIKit
 import ObjectMapper
-import RealmSwift
 
-class TCompanyMenuPage: Object, Mappable {
-
+class TCompanyMenuPage: Mappable {
     
     dynamic var totalCount = 0
     
@@ -21,9 +19,9 @@ class TCompanyMenuPage: Object, Mappable {
     
     dynamic var pageSize = 0
 
-    var goods = List<TShopGood>()
+    var goods = [TShopGood]()
     
-    var categories = List<TShopCategory>()
+    var categories = [TShopCategory]()
     
     
     required convenience init?(_ map: Map) {
@@ -37,7 +35,7 @@ class TCompanyMenuPage: Object, Mappable {
         pageCount <- map["meta.page_count"]
         currentPage <- map["meta.current_page"]
         pageSize <- map["meta.page_size"]
-        goods <- (map["shop-good"], ListTransform<TShopGood>())
-        categories <- (map["shop-category"], ListTransform<TShopCategory>())
+        goods <- map["shop-good"]
+        categories <- map["shop-category"]
     }
 }

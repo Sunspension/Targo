@@ -7,7 +7,32 @@
 //
 
 import UIKit
+import ObjectMapper
 
-class TCreditCard: NSObject {
+class TCreditCard: NSObject, Mappable {
 
+    var id = 0
+    
+    var userId = 0
+    
+    var mask = ""
+    
+    var type = 0
+    
+    var expireAt = 0
+   
+    
+    required convenience init?(_ map: Map) {
+        
+        self.init()
+    }
+    
+    func mapping(map: Map) {
+        
+        id <- map["id"]
+        userId <- map["user_id"]
+        mask <- map["mask"]
+        type <- map["type"]
+        expireAt <- map["expirated_at"]
+    }
 }

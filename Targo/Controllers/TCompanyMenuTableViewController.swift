@@ -78,7 +78,9 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
             
             self.showWaitOverlay()
             
-            Api.sharedInstance.loadCompanyMenu(1).onSuccess(callback: { menuPage in
+            Api.sharedInstance.loadCompanyMenu(1)
+                
+                .onSuccess(callback: { menuPage in
                 
                 self.removeAllOverlays()
                 

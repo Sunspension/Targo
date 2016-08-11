@@ -32,6 +32,8 @@ enum TargoError: ErrorType {
     
     case TestOrderError
     
+    case CreditCardsLoadingError
+    
     case UndefinedError(message: String)
 
     

@@ -10,41 +10,40 @@ import UIKit
 import ObjectMapper
 import RealmSwift
 
-class TShopGood: Object, Mappable {
+class TShopGood: Mappable {
 
     
-    dynamic var id = 0
+    var id = 0
     
-    dynamic var title = ""
+    var title = ""
     
-    dynamic var goodDescription = ""
+    var goodDescription = ""
     
-    dynamic var companyId = 0
+    var companyId = 0
     
-    dynamic var shopCategoryId = 0
+    var shopCategoryId = 0
     
-    dynamic var price = 0
+    var price = 0
     
-    dynamic var externalId = 0
+    var externalId = 0
     
-    dynamic var persistentId = 0
+    var persistentId = 0
     
-    dynamic var createdAt = ""
+    var createdAt = ""
     
-    dynamic var updatedAt = ""
+    var updatedAt = ""
     
-    dynamic var deleted = false;
+    var deleted = false;
     
-    let deletedAt = RealmOptional<Bool>()
+    var deletedAt: Bool?
     
-    dynamic var parentId = 0
+    var parentId = 0
     
-    dynamic var searchVector = ""
+    var searchVector = ""
     
-    dynamic var history = ""
+    var history = ""
     
-    var imageIds = List<IntObject>()
-    
+    var imageIds = [String]()
     
     required convenience init?(_ map: Map) {
         
@@ -64,10 +63,10 @@ class TShopGood: Object, Mappable {
         createdAt <- map["created_at"]
         updatedAt <- map["updated_at"]
         deleted <- map["deleted"]
-        deletedAt.value <- map["deleted_at"]
+        deletedAt <- map["deleted_at"]
         parentId <- map["parent_id"]
         searchVector <- map["search_vector"]
         history <- map["history"]
-        imageIds <- (map["image_ids"], ListTransform<IntObject>())
+        imageIds <- map["image_ids"]
     }
 }

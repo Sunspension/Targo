@@ -12,14 +12,27 @@ import ObjectMapper
 
 class ListTransform<T:RealmSwift.Object where T:Mappable> : TransformType {
     
-    typealias Object = List<T>
-    
-    typealias JSON = [AnyObject]
-    
     let mapper = Mapper<T>()
+
+    
+//    func transformFromJSON(value: AnyObject?) -> List<T>? {
+//        
+//        let results = List<T>()
+//        
+//        if let tempArray = value as! Array<AnyObject>? {
+//            
+//            for entry in tempArray {
+//                
+//                let model = mapper.map(entry)!
+//                results.append(model)
+//            }
+//        }
+//        
+//        return results
+//    }
     
     
-    func transformFromJSON(value: AnyObject?) -> Object? {
+    func transformFromJSON(value: AnyObject?) -> List<T>? {
         
         let results = List<T>()
         
@@ -37,7 +50,7 @@ class ListTransform<T:RealmSwift.Object where T:Mappable> : TransformType {
         return results
     }
     
-    func transformToJSON(value: Object?) -> JSON? {
+    func transformToJSON(value: List<T>?) -> [AnyObject]? {
         
         var results = [AnyObject]()
         

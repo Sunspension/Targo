@@ -7,64 +7,167 @@
 //
 
 import UIKit
+import WebKit
 
-class TAddCreditCardViewController: UIViewController, UIWebViewDelegate {
-
-    @IBOutlet weak var webView: UIWebView!
+class TAddCreditCardViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, TNSURLHelperResultProtocol {
     
+//    @IBOutlet weak var webView: UIWebView!
+    
+    var webView: WKWebView = WKWebView()
+    
+    var enable: Bool = false
+    
+    let urlHelper = TNSURLProtocolHelper()
+    
+    let classA = ClassA()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.webView.delegate = self
         
-//        let storage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
-//        if let cookies = storage.cookiesForURL(NSURL(string: "https://api.targo.club/api/order")!) {
+        self.view = self.webView
+        self.webView.navigationDelegate = self
+        self.webView.UIDelegate = self
+        
+        
+        TNSURLProtocolHelper.register()
+        
+        self.urlHelper.responseAction = self.onResponseAction
+        self.urlHelper.closure = { (val1, val2) in return val1 + val2 }
+        self.urlHelper.delegate = self
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+            
+            self.urlHelper.callClosure()
+        }
+        
+        Api.sharedInstance.testOrder().onSuccess { result in
+            
+            if let url = NSURL(string: result.url) {
+                
+                self.webView.loadRequest(NSURLRequest(URL: url))
+            }
+        }
+        .onFailure { error in
+            
+            print(error.localizedDescription)
+        }
+    }
+    
+//    
+//    func webView(webView: WKWebView, didCommitNavigation navigation: WKNavigation!) {
+//        
+//        
+//    }
+//    
+//    func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation!) {
+//        
+//        if enable == false {
 //            
-//            let cookieHeaders = NSHTTPCookie.requestHeaderFieldsWithCookies(cookies)
+//            if !webView.loading {
+//                
+//                self.webView.stringByEvaluatingJavaScriptFromString("show()")
+//                enable = true
+//            }
+//        }
+//    }
+//    
+//    func webView(webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+//        
+//        
+//    }
+//    
+//    func webView(webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
+//        
+//        
+//    }
+//    
+//    func webView(webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: (Bool) -> Void) {
+//        
+//        
+//    }
+//    
+    func webView(webView: WKWebView, createWebViewWithConfiguration configuration: WKWebViewConfiguration, forNavigationAction navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+        
+        if navigationAction.targetFrame == nil {
+            
+            if let controller = self.instantiateViewControllerWithIdentifierOrNibName("PopUpController") as? TPopUpWebViewController {
+                
+                controller.url = navigationAction.request.URL
+                self.navigationController?.pushViewController(controller, animated: true)
+            }
+        }
+        
+        return nil
+    }
+    
+    func webView(webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: () -> Void) {
+        
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
+        self.presentViewController(alert, animated: true, completion: completionHandler)
+    }
+    
+    func webViewDidFinishLoad(webView: UIWebView) {
+        
+//        if enable == false {
 //            
-//            Api.sharedInstance.makeTestOrder().onSuccess { result in
+//            if !webView.loading {
 //                
-//                if let urlString = result.order!.url {
-//                    
-//                    if let url = NSURL(string: urlString) {
-//                        
-//                        let request = NSMutableURLRequest(URL: url)
-//                        
-//                        request.allHTTPHeaderFields = cookieHeaders
-//                        
-//                        self.webView.loadRequest(request)
-//                    }
-//                }
-//                
-//                }.onFailure { error in
-//                    
-//                    print(error.localizedSecription)
+//                self.webView.stringByEvaluatingJavaScriptFromString("show()")
+//                enable = true
 //            }
 //        }
     }
     
-    func webViewDidStartLoad(webView: UIWebView) {
+    func onResponseAction(response: NSURLResponse, data: NSMutableData?) -> Void {
         
-       print("webview did start load")
+        if let url = response.URL
+            where url.absoluteString.containsString("https://widget.cloudpayments.ru/Payments/Charge")
+                && data != nil {
+            
+            do {
+                
+                let json = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers)
+                let pretty = try NSJSONSerialization.dataWithJSONObject(json, options: .PrettyPrinted)
+                
+                if let string = NSString(data: pretty, encoding: NSUTF8StringEncoding) {
+                    
+                    print("JSON: \(string)")
+                }
+            }
+            catch {
+                
+                if let string = NSString(data: data!, encoding: NSUTF8StringEncoding) {
+                    
+                    print("Data: \(string)")
+                }
+            }
+        }
     }
     
-    
-    func webViewDidFinishLoad(webView: UIWebView) {
+    func responseResult(response: NSURLResponse, data: NSMutableData?) {
         
-        print("webview did finish load")
-    }
-    
-    
-    func webView(webView: UIWebView, didFailLoadWithError error: NSError?) {
-        
-        print("webview error: \(error)")
-    }
-    
-    func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-        
-        print("webview request: \(request)")
-        
-        return true
+        if let url = response.URL
+            where url.absoluteString.containsString("https://widget.cloudpayments.ru/Payments/Charge")
+                && data != nil {
+            
+            do {
+                
+                let json = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers)
+                let pretty = try NSJSONSerialization.dataWithJSONObject(json, options: .PrettyPrinted)
+                
+                if let string = NSString(data: pretty, encoding: NSUTF8StringEncoding) {
+                    
+                    print("JSON: \(string)")
+                }
+            }
+            catch {
+                
+                if let string = NSString(data: data!, encoding: NSUTF8StringEncoding) {
+                    
+                    print("Data: \(string)")
+                }
+            }
+        }
     }
 }

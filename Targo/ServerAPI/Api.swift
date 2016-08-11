@@ -33,7 +33,7 @@ struct Api {
                 
                 print(response.result.value)
             }
-            .responseObject("data", completionHandler: { (response: Response<AuthorizationResponse, TargoError>) in
+            .responseObject("data", completionHandler: { (response: Response<TAuthorizationResponse, TargoError>) in
                 
                 guard let _ = response.result.value else {
                     
@@ -315,7 +315,7 @@ struct Api {
         return p.future
     }
     
-    func makeTestOrder() -> Future<TTestOrderResponse, TargoError> {
+    func testOrder() -> Future<TTestOrderResponse, TargoError> {
         
         let p = Promise<TTestOrderResponse, TargoError>()
         
@@ -335,6 +335,30 @@ struct Api {
                 
                 p.success(response.result.value!)
             })
+        
+        return p.future
+    }
+    
+    func loadCreditCards() -> Future<[TCreditCard], TargoError> {
+        
+        let p = Promise<[TCreditCard], TargoError>()
+        
+        server.loadCreditCards()
+            
+            .responseJSON { response in
+                
+                print(response.result)
+            }
+            .responseArray { (response: Response<[TCreditCard], TargoError>) in
+        
+                guard let _ = response.result.value else {
+                    
+                    p.failure(.CreditCardsLoadingError)
+                    return
+                }
+                
+                p.success(response.result.value!)
+        }
         
         return p.future
     }
