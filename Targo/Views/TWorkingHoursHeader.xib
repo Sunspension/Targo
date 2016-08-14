@@ -21,9 +21,21 @@
                     <color key="textColor" red="0.41176470588235292" green="0.47843137254901963" blue="0.47843137254901963" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="Mrj-XN-HOi">
+                    <rect key="frame" x="205" y="-45" width="90" height="90"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="90" id="lqn-c3-Zc0"/>
+                        <constraint firstAttribute="height" constant="90" id="prI-LE-VPo"/>
+                    </constraints>
+                    <state key="normal">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="Mrj-XN-HOi" secondAttribute="trailing" constant="16" id="DX1-Ts-03D"/>
+                <constraint firstItem="Mrj-XN-HOi" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="-45" id="Et6-69-7y9"/>
                 <constraint firstItem="S6e-G1-P1M" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="VZW-Ft-aRI"/>
                 <constraint firstItem="ymb-fq-xK6" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="4" id="WLO-kI-O1y"/>
                 <constraint firstAttribute="bottom" secondItem="S6e-G1-P1M" secondAttribute="bottom" id="bu0-qC-Vbc"/>
@@ -36,6 +48,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="background" destination="S6e-G1-P1M" id="1Ba-qs-6iH"/>
+                <outlet property="buttonMakeOrder" destination="Mrj-XN-HOi" id="wAQ-kK-EXG"/>
                 <outlet property="title" destination="ymb-fq-xK6" id="Gak-RV-wyr"/>
             </connections>
             <point key="canvasLocation" x="315.5" y="376.5"/>

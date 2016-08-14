@@ -10,11 +10,11 @@ import UIKit
 
 class TCompanyInfoContactsHeader: UITableViewHeaderFooterView {
 
-    @IBOutlet weak var buttonPhone: UIButton!
+    @IBOutlet weak var buttonPhone: CenteredButton!
     
-    @IBOutlet weak var buttonLocation: UIButton!
+    @IBOutlet weak var buttonLocation: CenteredButton!
     
-    @IBOutlet weak var buttonLink: UIButton!
+    @IBOutlet weak var buttonLink: CenteredButton!
     
     @IBOutlet weak var background: UIView!
     

@@ -12,16 +12,20 @@ import EZLoadingActivity
 import NVActivityIndicatorView
 import SwiftOverlays
 import SignalKit
+import AlamofireImage
 
 class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
 
     var company: TCompany?
     
-    var companyImage: UIImage?
+    var companyImage: TCompanyImage?
     
     var itemsSource = TableViewDataSource()
     
     var menuPage: TCompanyMenuPage?
+    
+    var showButtonInfo: Bool = false
+    
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -56,7 +60,10 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         self.tableView.delegate = self
         self.tableView.dataSource = self.itemsSource
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "icon-info"), style: .Plain, target: self, action: #selector(TCompanyMenuTableViewController.openInfo))
+        if showButtonInfo {
+            
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "icon-info"), style: .Plain, target: self, action: #selector(TCompanyMenuTableViewController.openInfo))
+        }
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         
@@ -120,6 +127,11 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
             controller.company = self.company
             controller.companyImage = self.companyImage
             
+            controller.makeOrderNavigationAction = {
+                
+                self.navigationController?.popViewControllerAnimated(true)
+            }
+            
             self.navigationController?.pushViewController(controller, animated: true)
         }
     }
@@ -131,7 +143,9 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         section.initializeCellWithReusableIdentifierOrNibName("CompanyImageMenu", item: self.companyImage) { (cell, item) in
             
             let viewCell = cell as! TCompanyImageMenuTableViewCell
-            viewCell.companyImage.image = item.item! as? UIImage
+            
+            let filter = AspectScaledToFillSizeFilter(size: viewCell.companyImage.frame.size)
+            viewCell.companyImage.af_setImageWithURL(NSURL(string: (item.item as! TCompanyImage).url)!, filter: filter, imageTransition: .None)
             viewCell.selectionStyle = .None
         }
         

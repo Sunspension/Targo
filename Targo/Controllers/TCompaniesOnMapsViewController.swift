@@ -9,6 +9,7 @@
 import UIKit
 import GoogleMaps
 import SignalKit
+import AlamofireImage
 
 class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
 
@@ -22,11 +23,10 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
     
     @IBOutlet weak var companyInfo: UILabel!
     
-    @IBOutlet weak var buttonInfo: UIButton!
+    @IBOutlet weak var companyImage: UIImageView!
     
     
     var companyImages: [TCompanyImage] = []
-    
     
     var selectedMarker: GMSMarker?
     
@@ -74,24 +74,17 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
             
             for company in companies {
                 
-                weak var wcompany = company
-                
                 let marker = GMSMarker()
                 marker.position = CLLocationCoordinate2D(latitude: company.latitude, longitude: company.longitude)
                 marker.title = company.companyTitle
                 marker.snippet = company.companyDescription
-                marker.userData = wcompany
+                marker.userData = company
                 marker.map = mapView
                 marker.icon = GMSMarker.markerImageWithColor(UIColor.redColor())
             }
         }
         
         self.mapView.bringSubviewToFront(self.companyView)
-        
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-        button.setImage(UIImage(named: "icon-info"), forState: .Normal)
-        button.addTarget(self, action: #selector(TCompaniesOnMapsViewController.openCompanyInfo), forControlEvents: .TouchUpInside)
-        
         self.companyView.alpha = 0
     }
 
@@ -107,9 +100,21 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
         marker.icon = GMSMarker.markerImageWithColor(UIColor(hexString: kHexMainPinkColor))
         let company = marker.userData as! TCompany
         
+        let transition = CATransition()
+        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+        transition.type = kCATransitionFade
+        transition.duration = 0.3
+        self.companyView.layer.addAnimation(transition, forKey: "setInfo")
+        
         self.companyTitle.text = company.companyTitle
         self.companyAddress.text = company.title
         self.companyInfo.text = company.companyCategoryTitle + ", " + company.distance + " m"
+        
+        if let image = self.companyImages.filter({$0.id == company.companyImageId.value}).first {
+            
+            let filter = AspectScaledToFillSizeFilter(size: self.companyImage.frame.size)
+            self.companyImage.af_setImageWithURL(NSURL(string: image.url)!, filter: filter, imageTransition: .CrossDissolve(0.6))
+        }
         
         if (self.companyView.layer.shadowPath == nil) {
             
@@ -141,8 +146,18 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
             
             if let image = self.companyImages.filter({$0.id == company?.companyImageId.value}).first {
                 
-                controller.companyImageUrlString = image.url
-                controller.enableButtonMakeOrder = true
+                controller.companyImage = image
+                
+                controller.makeOrderNavigationAction = {
+                    
+                    if let controller = self.instantiateViewControllerWithIdentifierOrNibName("MenuController") as? TCompanyMenuTableViewController {
+                        
+                        controller.company = company
+                        controller.companyImage = image
+                        
+                        self.navigationController?.pushViewController(controller, animated: true)
+                    }
+                }
             }
             
             self.navigationController?.pushViewController(controller, animated: true)

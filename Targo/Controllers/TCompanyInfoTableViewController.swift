@@ -20,13 +20,9 @@ class TCompanyInfoTableViewController: UITableViewController {
     
     var company: TCompany?
     
-    var companyImage: UIImage?
+    var companyImage: TCompanyImage?
     
     var itemsSource = TableViewDataSource()
-    
-    var companyImageUrlString: String?
-    
-    var enableButtonMakeOrder: Bool = false
     
     let workingHoursIdentifier = "workingHoursHeader"
     
@@ -34,6 +30,7 @@ class TCompanyInfoTableViewController: UITableViewController {
     
     let companyAboutIdentifier = "AboutCompanyCell"
     
+    var makeOrderNavigationAction: (() -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,17 +72,6 @@ class TCompanyInfoTableViewController: UITableViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        
-        if indexPath.section != 0 {
-            
-            return
-        }
-        
-        let viewCell = cell as! TCompanyImageMenuTableViewCell
-        self.view.bringSubviewToFront(viewCell.buttonMakeOrder)
-    }
     
     override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         
@@ -106,6 +92,23 @@ class TCompanyInfoTableViewController: UITableViewController {
             if let header = tableView.dequeueReusableHeaderFooterViewWithIdentifier(self.workingHoursIdentifier) as? TWorkingHoursHeader {
                 
                 header.title.text = self.itemsSource.sections[section].title
+                
+                let button = header.buttonMakeOrder
+                button.hidden = false
+                button.addTarget(self, action: #selector(TCompanyInfoTableViewController.openCompanyMenu),
+                                 forControlEvents: .TouchUpInside)
+                button.setTitle("Make\norder", forState: .Normal)
+                button.layer.borderColor = UIColor.whiteColor().CGColor
+                button.layer.borderWidth = 3
+                
+                let radius = button.layer.bounds.width / 2
+                
+                button.layer.cornerRadius = radius
+                button.layer.shadowPath = UIBezierPath(roundedRect: button.layer.bounds, cornerRadius: radius).CGPath
+                button.layer.shadowOffset = CGSize(width:0, height: 5)
+                button.layer.shadowOpacity = 0.5
+                button.backgroundColor = UIColor(hexString: kHexMainPinkColor)
+                
                 return header
             }
             else {
@@ -142,7 +145,7 @@ class TCompanyInfoTableViewController: UITableViewController {
             
         case 1:
             
-            return 30
+            return 55
             
         case 2:
             
@@ -220,36 +223,10 @@ class TCompanyInfoTableViewController: UITableViewController {
             
             let viewCell = cell as! TCompanyImageMenuTableViewCell
             
-            if self.companyImage == nil {
-                
-                let filter = AspectScaledToFillSizeFilter(size: viewCell.companyImage.bounds.size)
-                viewCell.companyImage.af_setImageWithURL(NSURL(string: self.companyImageUrlString!)!, filter: filter, imageTransition: .CrossDissolve(0.6))
-            }
-            else {
-                
-                viewCell.companyImage.image = item.item! as? UIImage
-            }
+            let filter = AspectScaledToFillSizeFilter(size: viewCell.companyImage.bounds.size)
+            viewCell.companyImage.af_setImageWithURL(NSURL(string: (item.item as! TCompanyImage).url)!, filter: filter, imageTransition: .None)
             
             viewCell.selectionStyle = .None
-            
-            if self.enableButtonMakeOrder {
-                
-                let button = viewCell.buttonMakeOrder
-                button.hidden = false
-                button.addTarget(self, action: #selector(TCompanyInfoTableViewController.openCompanyMenu),
-                                                   forControlEvents: .TouchUpInside)
-                button.setTitle("Make\norder", forState: .Normal)
-                button.layer.borderColor = UIColor.whiteColor().CGColor
-                button.layer.borderWidth = 3
-                
-                let radius = button.layer.bounds.width / 2
-                
-                button.layer.cornerRadius = radius
-                button.layer.shadowPath = UIBezierPath(roundedRect: button.layer.bounds, cornerRadius: radius).CGPath
-                button.layer.shadowOffset = CGSize(width:0, height: 5)
-                button.layer.shadowOpacity = 0.5
-                button.backgroundColor = UIColor(hexString: kHexMainPinkColor)
-            }
         }
         
         self.itemsSource.sections.append(section)
@@ -297,15 +274,7 @@ class TCompanyInfoTableViewController: UITableViewController {
     
     func openCompanyMenu() {
         
-        if let controller = self.instantiateViewControllerWithIdentifierOrNibName("MenuController") as? TCompanyMenuTableViewController {
-            
-            let viewCell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! TCompanyImageMenuTableViewCell
-            
-            controller.company = self.company
-            controller.companyImage = viewCell.companyImage.image
-            
-            self.navigationController?.pushViewController(controller, animated: true)
-        }
+        self.makeOrderNavigationAction?()
     }
     
     func makeFavorite() {

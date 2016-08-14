@@ -81,10 +81,9 @@ class CompanySearchTableViewController: UITableViewController {
         
         if let controller = self.instantiateViewControllerWithIdentifierOrNibName("MenuController") as? TCompanyMenuTableViewController {
             
-            let viewCell = tableView.cellForRowAtIndexPath(indexPath) as! TCompanyTableViewCell
-            
             controller.company = item
-            controller.companyImage = viewCell.companyImage.image
+            controller.companyImage = self.companyImages.filter({$0.id == item.companyImageId.value}).first
+            controller.showButtonInfo = true
                 
             self.navigationController?.pushViewController(controller, animated: true)
         }
@@ -110,7 +109,7 @@ class CompanySearchTableViewController: UITableViewController {
         
         let viewCell = cell as! TCompanyTableViewCell
         let layer = viewCell.shadowView.layer
-        layer.shadowOffset = CGSize(width: 0, height: 3)
+        layer.shadowOffset = CGSize(width: 0, height: 2)
         layer.shadowOpacity = 0.5
         layer.shadowPath = UIBezierPath(rect: layer.bounds).CGPath
     }

@@ -50,6 +50,7 @@
 		D4B96F7B1D244DBA00294A4B /* PRemoteServerV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B96F7A1D244DBA00294A4B /* PRemoteServerV1.swift */; };
 		D4C2A0A91D3422D20090BAFC /* TLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2A0A81D3422D20090BAFC /* TLocationManager.swift */; };
 		D4C2A0AC1D343ED50090BAFC /* CompanySearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2A0AB1D343ED50090BAFC /* CompanySearchTableViewController.swift */; };
+		D4C47FD11D5FE805000D1AA2 /* CenteredButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C47FD01D5FE805000D1AA2 /* CenteredButton.swift */; };
 		D4D0D6D61D2C5B5200B4E01D /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D0D6D51D2C5B5200B4E01D /* Api.swift */; };
 		D4D0D6D91D2C61BA00B4E01D /* TargoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D0D6D81D2C61BA00B4E01D /* TargoError.swift */; };
 		D4D4B68C1D42C67300278E2D /* TMenuItemFullTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D4B68A1D42C67300278E2D /* TMenuItemFullTableViewCell.swift */; };
@@ -130,6 +131,7 @@
 		D4B96F7A1D244DBA00294A4B /* PRemoteServerV1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PRemoteServerV1.swift; path = ServerAPI/RemoteServer/PRemoteServerV1.swift; sourceTree = "<group>"; };
 		D4C2A0A81D3422D20090BAFC /* TLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TLocationManager.swift; sourceTree = "<group>"; };
 		D4C2A0AB1D343ED50090BAFC /* CompanySearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompanySearchTableViewController.swift; sourceTree = "<group>"; };
+		D4C47FD01D5FE805000D1AA2 /* CenteredButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CenteredButton.swift; path = Controls/CenteredButton.swift; sourceTree = "<group>"; };
 		D4D0D6D51D2C5B5200B4E01D /* Api.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Api.swift; path = ServerAPI/Api.swift; sourceTree = "<group>"; };
 		D4D0D6D81D2C61BA00B4E01D /* TargoError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargoError.swift; sourceTree = "<group>"; };
 		D4D4B68A1D42C67300278E2D /* TMenuItemFullTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMenuItemFullTableViewCell.swift; sourceTree = "<group>"; };
@@ -297,6 +299,14 @@
 			path = LocationService;
 			sourceTree = "<group>";
 		};
+		D4C47FCF1D5FE6E4000D1AA2 /* Controls */ = {
+			isa = PBXGroup;
+			children = (
+				D4C47FD01D5FE805000D1AA2 /* CenteredButton.swift */,
+			);
+			name = Controls;
+			sourceTree = "<group>";
+		};
 		D4D0D6D71D2C618800B4E01D /* Errors */ = {
 			isa = PBXGroup;
 			children = (
@@ -386,6 +396,7 @@
 		E5C062D71D2106BF002074C4 /* Targo */ = {
 			isa = PBXGroup;
 			children = (
+				D4C47FCF1D5FE6E4000D1AA2 /* Controls */,
 				D470DFB71D384D44003473E6 /* Views */,
 				D4C2A0A71D3422980090BAFC /* LocationService */,
 				D4D0D6D71D2C618800B4E01D /* Errors */,
@@ -625,6 +636,7 @@
 				D4F464DA1D402EF3009015FC /* TCompanyMenuHeaderView.swift in Sources */,
 				D44930941D495D5100ADF70A /* TAddCreditCardViewController.swift in Sources */,
 				D40E10241D3EC1660012DCF4 /* TableViewDataSource.swift in Sources */,
+				D4C47FD11D5FE805000D1AA2 /* CenteredButton.swift in Sources */,
 				D4036A0F1D36CE8200CA8E38 /* TCompany.swift in Sources */,
 				D4D4B68C1D42C67300278E2D /* TMenuItemFullTableViewCell.swift in Sources */,
 				D4F84B491D24668400263D1A /* User.swift in Sources */,

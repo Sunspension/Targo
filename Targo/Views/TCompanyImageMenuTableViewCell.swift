@@ -12,8 +12,6 @@ class TCompanyImageMenuTableViewCell: UITableViewCell {
 
     @IBOutlet weak var companyImage: UIImageView!
     
-    @IBOutlet weak var buttonMakeOrder: UIButton!
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

@@ -53,6 +53,8 @@ extension UIButton {
     
     func alignImageAndTitleVertically(padding: CGFloat = 6.0) {
         
+        self.titleLabel?.sizeToFit()
+        
         let imageSize = self.imageView!.frame.size
         let titleSize = self.titleLabel!.frame.size
         let totalHeight = imageSize.height + titleSize.height + padding
