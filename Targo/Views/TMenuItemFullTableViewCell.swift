@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import SignalKit
+import Bond
 
 class TMenuItemFullTableViewCell: TBaseTableViewCell {
 
@@ -29,12 +29,13 @@ class TMenuItemFullTableViewCell: TBaseTableViewCell {
     
     @IBOutlet weak var quantity: UILabel!
     
-    let bag = DisposableBag()
+    var count: Int = 1
     
     
     override func prepareForReuse() {
         
-        self.quantity.text = "1"
+        self.count = 1
+        self.quantity.text = "\(self.count)"
     }
     
     override func awakeFromNib() {
@@ -45,33 +46,24 @@ class TMenuItemFullTableViewCell: TBaseTableViewCell {
         buttonPlus.imageView?.contentMode = .ScaleAspectFit
         buttonMore.setTitleColor(UIColor(hexString: kHexMainPinkColor), forState: .Normal)
         
-        buttonPlus.observe().tapEvent.next({ _ in
+        buttonPlus.bnd_tap.observe {
             
             let text = self.quantity.text!
-            var quantity = Int(text)!
-            quantity += 1
-            
-            self.quantity.text = "\(quantity)"
-            
-        }).disposeWith(bag)
+            self.count = Int(text)!
+            self.count += 1
+            self.quantity.text = "\(self.count)"
+        }
         
-        buttonMinus.observe().tapEvent.next({ _ in
+        buttonMinus.bnd_tap.observe {
             
             let text = self.quantity.text!
-            var quantity = Int(text)!
-            if quantity > 1 {
-                
-                quantity -= 1
-                self.quantity.text = "\(quantity)"
-            }
             
-        }).disposeWith(bag)
+            self.count = Int(text)!
+            if self.count > 1 {
+                
+                self.count -= 1
+                self.quantity.text = "\(self.count)"
+            }
+        }
     }
-
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-    
 }

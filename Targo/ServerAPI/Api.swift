@@ -315,9 +315,9 @@ struct Api {
         return p.future
     }
     
-    func testOrder() -> Future<TTestOrderResponse, TargoError> {
+    func testOrder() -> Future<TOrderResponse, TargoError> {
         
-        let p = Promise<TTestOrderResponse, TargoError>()
+        let p = Promise<TOrderResponse, TargoError>()
         
         server.makeTestOrder()
 
@@ -325,7 +325,32 @@ struct Api {
                 
                 print(response.result)
             }
-            .responseObject("data", completionHandler: { (response: Response<TTestOrderResponse, TargoError>) in
+            .responseObject("data", completionHandler: { (response: Response<TOrderResponse, TargoError>) in
+                
+                guard let _ = response.result.value else {
+                    
+                    p.failure(.TestOrderError)
+                    return
+                }
+                
+                p.success(response.result.value!)
+            })
+        
+        return p.future
+    }
+    
+    func checkTestOrder(orderId: Int) -> Future<TOrderResponse, TargoError> {
+        
+        let p = Promise<TOrderResponse, TargoError>()
+        
+        server.checkTestOrder(orderId)
+            
+            .responseJSON { response in
+            
+            print(response.result)
+                
+            }
+            .responseObject("data", completionHandler: { (response: Response<TOrderResponse, TargoError>) in
                 
                 guard let _ = response.result.value else {
                     

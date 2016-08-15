@@ -11,7 +11,6 @@ import DynamicColor
 import EZLoadingActivity
 import NVActivityIndicatorView
 import SwiftOverlays
-import SignalKit
 import AlamofireImage
 
 class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
@@ -48,12 +47,6 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         self.buttonMakeOrder.enabled = false
         self.buttonMakeOrder.alpha = 0.5
         
-//        let frame = self.view.bounds
-//        let toolBarHeigth: CGFloat = 44
-//        let busyIndicator = NVActivityIndicatorView(frame: CGRect(x: frame.width / 2 - 35, y: frame.height / 2 - 35 - toolBarHeigth , width: 70, height: 70), type: .BallClipRotateMultiple, color: UIColor(hexString: kHexMainPinkColor), padding:0)
-//        
-//        self.view.addSubview(busyIndicator)
-        
         self.title = company?.companyTitle
         
         self.tableView.setup()
@@ -87,17 +80,17 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
             
             Api.sharedInstance.loadCompanyMenu(1)
                 
-                .onSuccess(callback: { menuPage in
+                .onSuccess(callback: { [weak self] menuPage in
                 
-                self.removeAllOverlays()
+                self?.removeAllOverlays()
                 
-                self.menuPage = menuPage
-                self.createDataSource()
-                self.tableView.reloadData()
+                self?.menuPage = menuPage
+                self?.createDataSource()
+                self?.tableView.reloadData()
                 
-            }).onFailure(callback: { error in
+            }).onFailure(callback: { [weak self] error in
                 
-                self.removeAllOverlays()
+                self?.removeAllOverlays()
             })
         }
         
@@ -144,8 +137,12 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
             
             let viewCell = cell as! TCompanyImageMenuTableViewCell
             
-            let filter = AspectScaledToFillSizeFilter(size: viewCell.companyImage.frame.size)
-            viewCell.companyImage.af_setImageWithURL(NSURL(string: (item.item as! TCompanyImage).url)!, filter: filter, imageTransition: .None)
+            if let companyImage = item.item as? TCompanyImage {
+                
+                let filter = AspectScaledToFillSizeFilter(size: viewCell.companyImage.frame.size)
+                viewCell.companyImage.af_setImageWithURL(NSURL(string: companyImage.url)!, filter: filter, imageTransition: .None)
+            }
+            
             viewCell.selectionStyle = .None
         }
         
@@ -170,33 +167,36 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
                 self.itemsSource.sections.append(section!)
             }
             
-            section!.initializeSwappableCellWithReusableIdentifierOrNibName("MenuItemSmallCell", secondIdentifierOrNibName: "MenuItemFullCell", item: good, bindingAction: { (cell, item) in
-                
-                if item.swappable {
-                    
-                    if !item.selected {
-                        
-                        let itemGood = item.item as! TShopGood
-                        let viewCell = cell as! TMenuItemSmallTableViewCell
-                        
-                        viewCell.addSeparator()
-                        viewCell.goodTitle.text = itemGood.title
-                        viewCell.goodDescription.text = itemGood.goodDescription
-                        viewCell.price.text = String(format: "%li \u{20BD}", itemGood.price)
-                        viewCell.selectionStyle = .None
-                    }
-                    else {
-                        
-                        let itemGood = item.item as! TShopGood
-                        let viewCell = cell as! TMenuItemFullTableViewCell
-                        
-                        viewCell.addSeparator()
-                        viewCell.goodTitle.text = itemGood.title
-                        viewCell.goodDescription.text = itemGood.goodDescription
-                        viewCell.price.text = String(format: "%li \u{20BD}", itemGood.price)
-                        viewCell.selectionStyle = .None
-                    }
-                }
+            section!.initializeSwappableCellWithReusableIdentifierOrNibName("MenuItemSmallCell",
+                                                                            secondIdentifierOrNibName: "MenuItemFullCell",
+                                                                            item: good,
+                                                                            bindingAction: { (cell, item) in
+                                                                                
+                                                                                if item.swappable {
+                                                                                    
+                                                                                    if !item.selected {
+                                                                                        
+                                                                                        let itemGood = item.item as! TShopGood
+                                                                                        let viewCell = cell as! TMenuItemSmallTableViewCell
+                                                                                        
+                                                                                        viewCell.addSeparator()
+                                                                                        viewCell.goodTitle.text = itemGood.title
+                                                                                        viewCell.goodDescription.text = itemGood.goodDescription
+                                                                                        viewCell.price.text = String(format: "%li \u{20BD}", itemGood.price)
+                                                                                        viewCell.selectionStyle = .None
+                                                                                    }
+                                                                                    else {
+                                                                                        
+                                                                                        let itemGood = item.item as! TShopGood
+                                                                                        let viewCell = cell as! TMenuItemFullTableViewCell
+                                                                                        
+                                                                                        viewCell.addSeparator()
+                                                                                        viewCell.goodTitle.text = itemGood.title
+                                                                                        viewCell.goodDescription.text = itemGood.goodDescription
+                                                                                        viewCell.price.text = String(format: "%li \u{20BD}", itemGood.price)
+                                                                                        viewCell.selectionStyle = .None
+                                                                                    }
+                                                                                }
             })
         }
     }
@@ -236,8 +236,18 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        let item = self.itemsSource.sections[indexPath.section].items[indexPath.row]
+        let section = self.itemsSource.sections[indexPath.section]
+        let item = section.items[indexPath.row]
         item.selected = !item.selected
+        
+        if item.selected {
+            
+            section.selectedItems.append(item)
+        }
+        else {
+            
+            section.selectedItems.remove(item)
+        }
         
         tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
     }

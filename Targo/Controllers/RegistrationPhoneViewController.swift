@@ -87,9 +87,9 @@ class RegistrationPhoneViewController: UIViewController {
         
         Api.sharedInstance.userRegistration(phoneNumber)
             
-            .onSuccess { response in
+            .onSuccess {[weak self] response in
                 
-                self.removeAllOverlays()
+                self?.removeAllOverlays()
                 
                 AppSettings.sharedInstance.lastSessionPhoneNumber = phoneNumber
                 
@@ -97,21 +97,21 @@ class RegistrationPhoneViewController: UIViewController {
                 defaults.setBool(true, forKey: kTargoCodeSent)
                 defaults.synchronize()
                 
-                let controller = self.instantiateViewControllerWithIdentifierOrNibName("RegistrationCode")
+                let controller = self?.instantiateViewControllerWithIdentifierOrNibName("RegistrationCode")
                 
                 if let phoneRegistration = controller {
                     
-                    self.navigationController?.pushViewController(phoneRegistration, animated: true)
+                    self?.navigationController?.pushViewController(phoneRegistration, animated: true)
                 }
                 
-            }.onFailure { error in
+            }.onFailure {[weak self] error in
                 
-                self.removeAllOverlays()
+                self?.removeAllOverlays()
                 
                 let alert = UIAlertController(title: "Error", message: error.message, preferredStyle: .Alert)
                 let action = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
                 alert.addAction(action)
-                self.presentViewController(alert, animated: true, completion: nil)
+                self?.presentViewController(alert, animated: true, completion: nil)
                 print(error)
         }
     }

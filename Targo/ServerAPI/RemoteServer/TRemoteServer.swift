@@ -93,6 +93,11 @@ struct TRemoteServer: PRemoteServerV1 {
         return self.request(.POST, remotePath: baseURLString + "/order", parameters: params)
     }
     
+    func checkTestOrder(orderId: Int) -> Request {
+        
+        return self.request(.GET, remotePath: baseURLString + "/order/" + String(orderId))
+    }
+    
     func loadCreditCards() -> Request {
         
         return self.request(.GET, remotePath: baseURLString + "/card")

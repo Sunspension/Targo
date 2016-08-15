@@ -124,15 +124,17 @@ class CompanySearchTableViewController: UITableViewController {
                 
                 self.showWaitOverlay()
                 
-                Api.sharedInstance.loadCompanies(self.userLocation!).onSuccess(callback: { companyPage in
+                Api.sharedInstance.loadCompanies(self.userLocation!)
                     
-                    self.removeAllOverlays()
-                    self.companiesPage = companyPage
-                    self.createDataSource()
+                    .onSuccess(callback: { [weak self] companyPage in
                     
-                }).onFailure(callback: { error in
+                    self?.removeAllOverlays()
+                    self?.companiesPage = companyPage
+                    self?.createDataSource()
                     
-                    self.removeAllOverlays()
+                }).onFailure(callback: { [weak self] error in
+                    
+                    self?.removeAllOverlays()
                     print(error)
                 })
             }

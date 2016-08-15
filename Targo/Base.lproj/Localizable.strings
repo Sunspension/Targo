@@ -29,3 +29,9 @@
 "authorization_blank_device_token" = "Device token cannot be blank";
 
 "authorization_uknown_code" = "Wrong code";
+
+"test_order_success_message" = "Your card is accepted";
+
+"success_title" = "Success";
+
+"basket_title" = "Basket";

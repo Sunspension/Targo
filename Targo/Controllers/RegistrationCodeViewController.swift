@@ -84,19 +84,19 @@ class RegistrationCodeViewController: UIViewController {
             
             Api.sharedInstance.userLogin(phoneNumber, code: self.code.phoneNumber())
                 
-                .onSuccess { user in
+                .onSuccess { [weak self] user in
                     
-                    self.removeAllOverlays()
+                    self?.removeAllOverlays()
                     
                     NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: kTargoUserLoggedInSuccessfully, object: nil))
                     
                     print("User with user id: \(user.id) successfully logged in")
                     
-                }.onFailure { error in
+                }.onFailure { [weak self] error in
                     
-                    self.removeAllOverlays()
+                    self?.removeAllOverlays()
                     
-                    self.showError(error.message)
+                    self?.showError(error.message)
             }
         }
     }
@@ -109,15 +109,15 @@ class RegistrationCodeViewController: UIViewController {
             
             Api.sharedInstance.userRegistration(phoneNumber)
                 
-                .onSuccess { response in
+                .onSuccess { [weak self] response in
                     
-                    self.removeAllOverlays()
+                    self?.removeAllOverlays()
                     
-                }.onFailure { error in
+                }.onFailure { [weak self] error in
                     
-                    self.removeAllOverlays()
+                    self?.removeAllOverlays()
                     
-                    self.showError(error.message)
+                    self?.showError(error.message)
             }
         }
     }

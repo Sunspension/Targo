@@ -30,6 +30,7 @@ class UserProfileTableViewController: UITableViewController {
         let section = GenericCollectionSection<String>(title: nil)
         section.items.append("Logout")
         section.items.append("Add credit card")
+        section.items.append("Get info about my cards")
         
         self.itemsSource?.sections.append(section)
         
@@ -58,7 +59,9 @@ class UserProfileTableViewController: UITableViewController {
             
         case 0:
          
-            Api.sharedInstance.userLogut().onSuccess(callback: { success in
+            Api.sharedInstance.userLogut()
+                
+                .onSuccess(callback: { success in
                 
                 NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: kTargoUserLoggedOutSuccessfully, object: nil))
                 

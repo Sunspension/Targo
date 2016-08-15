@@ -32,12 +32,13 @@
 		D41F59CA1D32C6F00075568D /* GenericCollectionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41F59C91D32C6F00075568D /* GenericCollectionSection.swift */; };
 		D41F59CC1D32CDA80075568D /* UserProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41F59CB1D32CDA80075568D /* UserProfileTableViewController.swift */; };
 		D420B2CB1D293748003FDC83 /* RegistrationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D420B2CA1D293748003FDC83 /* RegistrationCodeViewController.swift */; };
-		D4230E111D5D0C1B003F32B0 /* ClassA.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4230E101D5D0C1B003F32B0 /* ClassA.swift */; };
-		D4230E131D5D0C45003F32B0 /* ClassB.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4230E121D5D0C45003F32B0 /* ClassB.swift */; };
-		D4230E151D5D3D81003F32B0 /* TPopUpWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4230E141D5D3D81003F32B0 /* TPopUpWebViewController.swift */; };
-		D44930921D49494800ADF70A /* TTestOrderResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44930911D49494800ADF70A /* TTestOrderResponse.swift */; };
+		D44930921D49494800ADF70A /* TOrderResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44930911D49494800ADF70A /* TOrderResponse.swift */; };
 		D44930941D495D5100ADF70A /* TAddCreditCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44930931D495D5100ADF70A /* TAddCreditCardViewController.swift */; };
 		D45391D11D2DBE0900669669 /* UserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45391D01D2DBE0900669669 /* UserSession.swift */; };
+		D45F9FAA1D6101FD00623A34 /* TBasketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45F9FA91D6101FD00623A34 /* TBasketViewController.swift */; };
+		D45F9FAC1D61055E00623A34 /* TBasketItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45F9FAB1D61055E00623A34 /* TBasketItemTableViewCell.swift */; };
+		D45F9FAE1D61064D00623A34 /* TBasketTotalPriceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45F9FAD1D61064D00623A34 /* TBasketTotalPriceTableViewCell.swift */; };
+		D45F9FB01D610CBD00623A34 /* TPaymentMethodTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45F9FAF1D610CBD00623A34 /* TPaymentMethodTableViewCell.swift */; };
 		D467AED61D2B0F7100319966 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D467AED51D2B0F7100319966 /* AppSettings.swift */; };
 		D46AC7341D43DB1F009C08D4 /* TCompaniesOnMapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46AC7331D43DB1F009C08D4 /* TCompaniesOnMapsViewController.swift */; };
 		D470DFB91D384D74003473E6 /* TCompanyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D470DFB81D384D74003473E6 /* TCompanyTableViewCell.swift */; };
@@ -112,12 +113,13 @@
 		D41F59C91D32C6F00075568D /* GenericCollectionSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GenericCollectionSection.swift; path = Models/GenericCollectionSection.swift; sourceTree = "<group>"; };
 		D41F59CB1D32CDA80075568D /* UserProfileTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileTableViewController.swift; sourceTree = "<group>"; };
 		D420B2CA1D293748003FDC83 /* RegistrationCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationCodeViewController.swift; sourceTree = "<group>"; };
-		D4230E101D5D0C1B003F32B0 /* ClassA.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassA.swift; sourceTree = "<group>"; };
-		D4230E121D5D0C45003F32B0 /* ClassB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassB.swift; sourceTree = "<group>"; };
-		D4230E141D5D3D81003F32B0 /* TPopUpWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TPopUpWebViewController.swift; sourceTree = "<group>"; };
-		D44930911D49494800ADF70A /* TTestOrderResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TTestOrderResponse.swift; path = Models/Response/TTestOrderResponse.swift; sourceTree = "<group>"; };
+		D44930911D49494800ADF70A /* TOrderResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TOrderResponse.swift; path = Models/Response/TOrderResponse.swift; sourceTree = "<group>"; };
 		D44930931D495D5100ADF70A /* TAddCreditCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TAddCreditCardViewController.swift; sourceTree = "<group>"; };
 		D45391D01D2DBE0900669669 /* UserSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSession.swift; sourceTree = "<group>"; };
+		D45F9FA91D6101FD00623A34 /* TBasketViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TBasketViewController.swift; sourceTree = "<group>"; };
+		D45F9FAB1D61055E00623A34 /* TBasketItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TBasketItemTableViewCell.swift; sourceTree = "<group>"; };
+		D45F9FAD1D61064D00623A34 /* TBasketTotalPriceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TBasketTotalPriceTableViewCell.swift; sourceTree = "<group>"; };
+		D45F9FAF1D610CBD00623A34 /* TPaymentMethodTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TPaymentMethodTableViewCell.swift; sourceTree = "<group>"; };
 		D467AED51D2B0F7100319966 /* AppSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppSettings.swift; path = Targo/AppSettings.swift; sourceTree = SOURCE_ROOT; };
 		D46AC7331D43DB1F009C08D4 /* TCompaniesOnMapsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCompaniesOnMapsViewController.swift; sourceTree = "<group>"; };
 		D470DFB81D384D74003473E6 /* TCompanyTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCompanyTableViewCell.swift; sourceTree = "<group>"; };
@@ -258,6 +260,9 @@
 				D41D9D951D46BA2500358961 /* TCompanyInfoContactsHeader.swift */,
 				D41D9D971D46BA3600358961 /* TCompanyInfoContactsHeader.xib */,
 				D41D9D991D46C4F400358961 /* TCompanyAboutTableViewCell.swift */,
+				D45F9FAB1D61055E00623A34 /* TBasketItemTableViewCell.swift */,
+				D45F9FAD1D61064D00623A34 /* TBasketTotalPriceTableViewCell.swift */,
+				D45F9FAF1D610CBD00623A34 /* TPaymentMethodTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -277,7 +282,7 @@
 				D46AC7331D43DB1F009C08D4 /* TCompaniesOnMapsViewController.swift */,
 				D41D9D8D1D46A1AB00358961 /* TCompanyInfoTableViewController.swift */,
 				D44930931D495D5100ADF70A /* TAddCreditCardViewController.swift */,
-				D4230E141D5D3D81003F32B0 /* TPopUpWebViewController.swift */,
+				D45F9FA91D6101FD00623A34 /* TBasketViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -340,8 +345,6 @@
 				D40301731D397F5100B7B610 /* HTTPManager.swift */,
 				D40301751D39839C00B7B610 /* ListTransform.swift */,
 				D4F1888B1D5BC9AB005EB9E5 /* TNSURLProtocolHelper.swift */,
-				D4230E101D5D0C1B003F32B0 /* ClassA.swift */,
-				D4230E121D5D0C45003F32B0 /* ClassB.swift */,
 			);
 			name = AppHelpers;
 			sourceTree = "<group>";
@@ -366,7 +369,7 @@
 		E57C7E8C1D22B85400F9A0FC /* Response */ = {
 			isa = PBXGroup;
 			children = (
-				D44930911D49494800ADF70A /* TTestOrderResponse.swift */,
+				D44930911D49494800ADF70A /* TOrderResponse.swift */,
 				D4B05FBD1D4FE202000E494E /* TAuthorizationResponse.swift */,
 				D4B81B391D4FE8AE00F9103C /* TServerError.swift */,
 				D4B81B3B1D4FF22300F9103C /* TBadRequest.swift */,
@@ -608,14 +611,12 @@
 				D467AED61D2B0F7100319966 /* AppSettings.swift in Sources */,
 				D41F36071D2855C8001896A2 /* LoginViewController.swift in Sources */,
 				D41F59C81D3294D00075568D /* CollectionSectionItem.swift in Sources */,
-				D4230E131D5D0C45003F32B0 /* ClassB.swift in Sources */,
 				D4F464D31D40096A009015FC /* TCompanyMenuPage.swift in Sources */,
 				D41D9D961D46BA2500358961 /* TCompanyInfoContactsHeader.swift in Sources */,
 				D41F59C61D32910A0075568D /* GenericTableViewDataSource.swift in Sources */,
 				D41D9D921D46B46300358961 /* TWorkingHoursHeader.swift in Sources */,
 				D4C2A0AC1D343ED50090BAFC /* CompanySearchTableViewController.swift in Sources */,
 				D4E0B1CD1D2F061F00B65B96 /* UserRegistrationError.swift in Sources */,
-				D4230E111D5D0C1B003F32B0 /* ClassA.swift in Sources */,
 				D4EE59671D3AFE1E0002022F /* TFeedTableViewController.swift in Sources */,
 				D4FDE67A1D3C007E003EF2CC /* TWorkingTimeTableViewCell.swift in Sources */,
 				D41D9D901D46AD4000358961 /* TWorkingHoursTableViewCell.swift in Sources */,
@@ -630,6 +631,7 @@
 				D40301761D39839C00B7B610 /* ListTransform.swift in Sources */,
 				D4B81B3C1D4FF22300F9103C /* TBadRequest.swift in Sources */,
 				D4D0D6D61D2C5B5200B4E01D /* Api.swift in Sources */,
+				D45F9FAC1D61055E00623A34 /* TBasketItemTableViewCell.swift in Sources */,
 				D4F464D51D400A17009015FC /* TShopCategory.swift in Sources */,
 				D49C7E891D281DB1004408AF /* RegistrationPhoneViewController.swift in Sources */,
 				E5C062D91D2106BF002074C4 /* AppDelegate.swift in Sources */,
@@ -639,6 +641,7 @@
 				D4C47FD11D5FE805000D1AA2 /* CenteredButton.swift in Sources */,
 				D4036A0F1D36CE8200CA8E38 /* TCompany.swift in Sources */,
 				D4D4B68C1D42C67300278E2D /* TMenuItemFullTableViewCell.swift in Sources */,
+				D45F9FB01D610CBD00623A34 /* TPaymentMethodTableViewCell.swift in Sources */,
 				D4F84B491D24668400263D1A /* User.swift in Sources */,
 				D4DD9DDC1D418DC9009C28D5 /* TBaseTableViewCell.swift in Sources */,
 				D4EE59691D3AFEE90002022F /* TCompanyMenuTableViewController.swift in Sources */,
@@ -647,18 +650,18 @@
 				E57C7E8A1D22B60D00F9A0FC /* Constants.swift in Sources */,
 				D4D0D6D91D2C61BA00B4E01D /* TargoError.swift in Sources */,
 				D40E10281D3ECE260012DCF4 /* TCompanySearchTableViewCell.swift in Sources */,
-				D44930921D49494800ADF70A /* TTestOrderResponse.swift in Sources */,
+				D44930921D49494800ADF70A /* TOrderResponse.swift in Sources */,
 				D41F59CC1D32CDA80075568D /* UserProfileTableViewController.swift in Sources */,
 				D46AC7341D43DB1F009C08D4 /* TCompaniesOnMapsViewController.swift in Sources */,
 				D4C2A0A91D3422D20090BAFC /* TLocationManager.swift in Sources */,
 				D4DD9DD91D41830A009C28D5 /* TMenuItemSmallTableViewCell.swift in Sources */,
+				D45F9FAE1D61064D00623A34 /* TBasketTotalPriceTableViewCell.swift in Sources */,
 				D4B96F761D244CAA00294A4B /* TRemoteServer.swift in Sources */,
 				D4F6E2A71D560FF20067F9BA /* TCreditCard.swift in Sources */,
 				D4B96F7B1D244DBA00294A4B /* PRemoteServerV1.swift in Sources */,
 				D40301741D397F5100B7B610 /* HTTPManager.swift in Sources */,
 				D4EE59601D3AC98A0002022F /* TCompanyImage.swift in Sources */,
 				D4F1888C1D5BC9AB005EB9E5 /* TNSURLProtocolHelper.swift in Sources */,
-				D4230E151D5D3D81003F32B0 /* TPopUpWebViewController.swift in Sources */,
 				D41F59CA1D32C6F00075568D /* GenericCollectionSection.swift in Sources */,
 				D4FD14041D441BD300AC9722 /* TShortCompanyOnMapInfo.swift in Sources */,
 				D4F464D81D400E14009015FC /* IntObject.swift in Sources */,
@@ -667,6 +670,7 @@
 				D403017A1D39936A00B7B610 /* TShopGood.swift in Sources */,
 				D4B05FBE1D4FE202000E494E /* TAuthorizationResponse.swift in Sources */,
 				D41F59C41D32902F0075568D /* CollectionSection.swift in Sources */,
+				D45F9FAA1D6101FD00623A34 /* TBasketViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

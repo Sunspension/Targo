@@ -14,7 +14,7 @@ class CollectionSection: NSObject {
     
     var items: [CollectionSectionItem] = []
     
-    var selectedItems: [Any] = []
+    var selectedItems: [CollectionSectionItem] = []
     
     var sectionType: Any?
     

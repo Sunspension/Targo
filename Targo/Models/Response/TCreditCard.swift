@@ -33,6 +33,6 @@ class TCreditCard: NSObject, Mappable {
         userId <- map["user_id"]
         mask <- map["mask"]
         type <- map["type"]
-        expireAt <- map["expirated_at"]
+        expireAt <- map["expired_at"]
     }
 }

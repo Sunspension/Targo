@@ -223,15 +223,17 @@ class TCompanyInfoTableViewController: UITableViewController {
             
             let viewCell = cell as! TCompanyImageMenuTableViewCell
             
-            let filter = AspectScaledToFillSizeFilter(size: viewCell.companyImage.bounds.size)
-            viewCell.companyImage.af_setImageWithURL(NSURL(string: (item.item as! TCompanyImage).url)!, filter: filter, imageTransition: .None)
+            if let companyImage = item.item as? TCompanyImage {
+                
+                let filter = AspectScaledToFillSizeFilter(size: viewCell.companyImage.bounds.size)
+                viewCell.companyImage.af_setImageWithURL(NSURL(string: companyImage.url)!, filter: filter, imageTransition: .None)
+            }
             
             viewCell.selectionStyle = .None
         }
         
         self.itemsSource.sections.append(section)
 
-//        let workingHoursSection = CollectionSection()
         let workingHoursSection = CollectionSection(title: "company_info_working_hours".localized)
         
         let formatter = NSDateFormatter()

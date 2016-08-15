@@ -8,11 +8,11 @@
 
 import UIKit
 import GoogleMaps
-import SignalKit
 import AlamofireImage
+import Bond
 
 class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
-
+    
     @IBOutlet var mapView: GMSMapView!
     
     @IBOutlet weak var companyView: UIView!
@@ -25,7 +25,6 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
     
     @IBOutlet weak var companyImage: UIImageView!
     
-    
     var companyImages: [TCompanyImage] = []
     
     var selectedMarker: GMSMarker?
@@ -34,41 +33,17 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
     
     var companiesPage: TCompaniesPage?
     
-    let bag = DisposableBag()
-    
-    
-    deinit {
-        
-        bag.dispose()
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        mapView.delegate = self
+        mapView.myLocationEnabled = true
+        mapView.addObserver(self, forKeyPath: "myLocation", options: .New, context: nil)
+        
         self.title = "maps_title".localized
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-        
-        mapView.delegate = self
-        
-        mapView.observe().keyPath("myLocation", value: mapView.myLocation).next { myLocation in
-            
-            if let location = myLocation {
-                
-                if self.didsetLocation {
-                    
-                    return
-                }
-                
-                self.didsetLocation = true
-                self.mapView.camera = GMSCameraPosition.cameraWithTarget(location.coordinate, zoom: 12)
-            }
-            
-        }.disposeWith(bag)
-        
-        mapView.myLocationEnabled = true
-        
-        self.view = mapView
         
         if let companies = self.companiesPage?.companies {
             
@@ -134,6 +109,17 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
         self.companyView.alpha = 0
         self.selectedMarker?.icon = GMSMarker.markerImageWithColor(UIColor.redColor())
         self.selectedMarker = nil
+    }
+    
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+        
+        if let newValue = change {
+            
+            let location: CLLocation = newValue[NSKeyValueChangeNewKey] as! CLLocation
+            self.mapView.camera = GMSCameraPosition.cameraWithTarget(location.coordinate, zoom: 12)
+            
+            self.mapView.removeObserver(self, forKeyPath: "myLocation")
+        }
     }
     
     @IBAction func openCompanyInfo(sender: AnyObject) {

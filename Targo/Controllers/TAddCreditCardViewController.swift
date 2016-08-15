@@ -8,166 +8,140 @@
 
 import UIKit
 import WebKit
+import SwiftOverlays
 
-class TAddCreditCardViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, TNSURLHelperResultProtocol {
+class TAddCreditCardViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     
-//    @IBOutlet weak var webView: UIWebView!
+    var webView: WKWebView!
     
-    var webView: WKWebView = WKWebView()
+    var navigation: WKNavigation?
     
-    var enable: Bool = false
+    var orderId = 0
     
-    let urlHelper = TNSURLProtocolHelper()
+    var stopToCheckOrderStatus = false
     
-    let classA = ClassA()
+    
+    override func loadView() {
+        
+        super.loadView()
+    
+        self.webView = WKWebView()
+        self.webView.UIDelegate = self
+        self.webView.navigationDelegate = self
+        self.view = self.webView
+    }
     
     override func viewDidLoad() {
-        super.viewDidLoad()
+        super.viewDidLoad();
         
-        self.view = self.webView
-        self.webView.navigationDelegate = self
-        self.webView.UIDelegate = self
+        showWaitOverlay()
         
-        
-        TNSURLProtocolHelper.register()
-        
-        self.urlHelper.responseAction = self.onResponseAction
-        self.urlHelper.closure = { (val1, val2) in return val1 + val2 }
-        self.urlHelper.delegate = self
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+        Api.sharedInstance.testOrder()
             
-            self.urlHelper.callClosure()
-        }
-        
-        Api.sharedInstance.testOrder().onSuccess { result in
+            .onSuccess {[weak self] result in
+            
+            self?.removeAllOverlays()
+            
+            self?.orderId = result.id
             
             if let url = NSURL(string: result.url) {
                 
-                self.webView.loadRequest(NSURLRequest(URL: url))
+                self?.webView.loadRequest(NSURLRequest(URL: url))
             }
-        }
-        .onFailure { error in
+            }
+            .onFailure {[weak self] error in
             
-            print(error.localizedDescription)
+                self?.removeAllOverlays()
+                print(error.localizedDescription)
         }
     }
     
-//    
-//    func webView(webView: WKWebView, didCommitNavigation navigation: WKNavigation!) {
-//        
-//        
-//    }
-//    
-//    func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation!) {
-//        
-//        if enable == false {
-//            
-//            if !webView.loading {
-//                
-//                self.webView.stringByEvaluatingJavaScriptFromString("show()")
-//                enable = true
-//            }
-//        }
-//    }
-//    
-//    func webView(webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-//        
-//        
-//    }
-//    
-//    func webView(webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
-//        
-//        
-//    }
-//    
-//    func webView(webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: (Bool) -> Void) {
-//        
-//        
-//    }
-//    
+    func webView(webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        
+        showWaitOverlay()
+        
+        if self.navigation == nil {
+            
+            self.navigation = navigation
+        }
+    }
+    
+    func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation!) {
+        
+        removeAllOverlays()
+        
+        if !self.webView.loading && self.navigation == navigation {
+            
+            self.webView.evaluateJavaScript("show()", completionHandler: { (result, error) in
+                
+                if error != nil {
+                    
+                    return
+                }
+                
+                self.checkOrderStatus()
+            })
+        }
+    }
+    
     func webView(webView: WKWebView, createWebViewWithConfiguration configuration: WKWebViewConfiguration, forNavigationAction navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
         
         if navigationAction.targetFrame == nil {
             
-            if let controller = self.instantiateViewControllerWithIdentifierOrNibName("PopUpController") as? TPopUpWebViewController {
-                
-                controller.url = navigationAction.request.URL
-                self.navigationController?.pushViewController(controller, animated: true)
-            }
+            self.webView.loadRequest(navigationAction.request)
         }
         
         return nil
     }
     
-    func webView(webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: () -> Void) {
+    func checkOrderStatus() {
         
-        let alert = UIAlertController(title: nil, message: message, preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
-        self.presentViewController(alert, animated: true, completion: completionHandler)
-    }
-    
-    func webViewDidFinishLoad(webView: UIWebView) {
-        
-//        if enable == false {
-//            
-//            if !webView.loading {
-//                
-//                self.webView.stringByEvaluatingJavaScriptFromString("show()")
-//                enable = true
-//            }
-//        }
-    }
-    
-    func onResponseAction(response: NSURLResponse, data: NSMutableData?) -> Void {
-        
-        if let url = response.URL
-            where url.absoluteString.containsString("https://widget.cloudpayments.ru/Payments/Charge")
-                && data != nil {
+        Api.sharedInstance.checkTestOrder(self.orderId)
             
-            do {
-                
-                let json = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers)
-                let pretty = try NSJSONSerialization.dataWithJSONObject(json, options: .PrettyPrinted)
-                
-                if let string = NSString(data: pretty, encoding: NSUTF8StringEncoding) {
-                    
-                    print("JSON: \(string)")
-                }
-            }
-            catch {
-                
-                if let string = NSString(data: data!, encoding: NSUTF8StringEncoding) {
-                    
-                    print("Data: \(string)")
-                }
-            }
-        }
-    }
-    
-    func responseResult(response: NSURLResponse, data: NSMutableData?) {
-        
-        if let url = response.URL
-            where url.absoluteString.containsString("https://widget.cloudpayments.ru/Payments/Charge")
-                && data != nil {
+            .onSuccess {[weak self] order in
             
-            do {
+            switch PaymentStatus(rawValue: order.paymentStatus)! {
                 
-                let json = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers)
-                let pretty = try NSJSONSerialization.dataWithJSONObject(json, options: .PrettyPrinted)
+            case .Error:
                 
-                if let string = NSString(data: pretty, encoding: NSUTF8StringEncoding) {
+                let alert = UIAlertController(title: "", message: order.message, preferredStyle: .Alert)
+                let action = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                alert.addAction(action)
+                
+                self?.presentViewController(alert, animated: true, completion: nil)
+                
+                break
+                
+            case .Complete:
+                
+                let alert = UIAlertController(title: "success_title".localized, message: "test_order_success_message".localized, preferredStyle: .Alert)
+                let action = UIAlertAction(title: "Ok", style: .Cancel, handler: { action in
                     
-                    print("JSON: \(string)")
-                }
-            }
-            catch {
+                    self?.navigationController?.popViewControllerAnimated(true)
+                })
                 
-                if let string = NSString(data: data!, encoding: NSUTF8StringEncoding) {
-                    
-                    print("Data: \(string)")
-                }
+                alert.addAction(action)
+                
+                self?.presentViewController(alert, animated: true, completion: nil)
+                
+            default:
+                
+                self?.performSelector(#selector(TAddCreditCardViewController.checkOrderStatus), withObject: nil, afterDelay: 1)
+                
+                break
             }
+                
+        }.onFailure {[weak self] error in
+            
+            let alert = UIAlertController(title: "", message: error.localizedDescription, preferredStyle: .Alert)
+            let action = UIAlertAction(title: "Ok", style: .Cancel, handler: { action in
+                
+                self?.navigationController?.popViewControllerAnimated(true)
+            })
+            
+            alert.addAction(action)
+            
+            self?.presentViewController(alert, animated: true, completion: nil)
         }
     }
 }

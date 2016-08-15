@@ -9,7 +9,16 @@
 import UIKit
 import ObjectMapper
 
-class TTestOrderResponse: NSObject, Mappable {
+enum PaymentStatus: Int {
+    
+    case New = 1
+    case Ready
+    case Processing
+    case Complete
+    case Error
+}
+
+class TOrderResponse: NSObject, Mappable {
     
     var id = 0
     
@@ -17,7 +26,7 @@ class TTestOrderResponse: NSObject, Mappable {
     
     var responseDescription = ""
     
-    var errorMessage = ""
+    var message = ""
     
     var paymentStatus = 0
     
@@ -40,11 +49,11 @@ class TTestOrderResponse: NSObject, Mappable {
         
         userId <- map["user_id"]
         responseDescription <- map["description"]
-        errorMessage <- map["error_message"]
-        paymentStatus <- map["paymant_status"]
+        message <- map["message"]
+        paymentStatus <- map["payment_status"]
         type <- map["type"]
         cardId <- map["card_id"]
-        amount <- map["card_id"]
+        amount <- map["amount"]
         id <- map["id"]
         url <- map["url"]
     }
