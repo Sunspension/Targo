@@ -5,7 +5,7 @@ target 'Targo' do
 
 #Localization
 
-pod 'SwiftGen'
+#pod 'SwiftGen'
 
 #Network
 pod 'Alamofire', '~> 3.4'
@@ -29,18 +29,18 @@ pod 'AlamofireImage', '~> 2.0'
 pod 'RealmSwift'
 
 #UI
-pod 'EZLoadingActivity'
-pod 'JLToast', '~> 1.4'
+#pod 'EZLoadingActivity'
+#pod 'JLToast', '~> 1.4'
 #pod 'LiquidLoader'
-pod 'NVActivityIndicatorView'
+#pod 'NVActivityIndicatorView'
 pod 'SwiftOverlays', '~> 2.0.0'
-pod 'GaugeKit'
+#pod 'GaugeKit'
 
 #Text
 pod 'SwiftString'
 
 #UITextField
-pod 'MaterialTextField', '~> 0.2'
+#pod 'MaterialTextField', '~> 0.2'
 pod 'BSErrorMessageView', :git => 'https://github.com/BenjaminSarkisyan/BSErrorMessageView.git'
 
 #Keychain

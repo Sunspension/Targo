@@ -8,8 +8,6 @@
 
 import UIKit
 import DynamicColor
-import EZLoadingActivity
-import NVActivityIndicatorView
 import SwiftOverlays
 import AlamofireImage
 import Bond

@@ -468,7 +468,7 @@
 				TargetAttributes = {
 					E5C062D41D2106BF002074C4 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = MHNJ942FZ9;
+						DevelopmentTeam = HUZ4W96296;
 					};
 				};
 			};
@@ -807,7 +807,7 @@
 				INFOPLIST_FILE = Targo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = targo.com.Targo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.targo.Targo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
@@ -830,7 +830,7 @@
 				INFOPLIST_FILE = Targo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = targo.com.Targo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.targo.Targo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";

@@ -13,7 +13,6 @@ import SHSPhoneComponent
 import BSErrorMessageView
 import AlamofireObjectMapper
 import RealmSwift
-import EZLoadingActivity
 import BrightFutures
 import Result
 

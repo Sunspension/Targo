@@ -9,7 +9,6 @@
 import UIKit
 import RealmSwift
 import Timberjack
-import EZLoadingActivity
 import GoogleMaps
 
 @UIApplicationMain
