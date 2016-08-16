@@ -12,7 +12,6 @@ import RealmSwift
 
 class TShopGood: Mappable {
 
-    
     var id = 0
     
     var title = ""

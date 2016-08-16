@@ -220,6 +220,12 @@ struct Api {
                 defaults.removeObjectForKey(kTargoCodeSent)
                 defaults.synchronize()
                 
+                if let phone = AppSettings.sharedInstance.lastSessionPhoneNumber {
+                    
+                    let keyChain = KeychainSwift()
+                    keyChain.delete(phone)
+                }
+                
                 p.success(true)
             })
         

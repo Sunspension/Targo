@@ -27,7 +27,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // register google maps
         GMSServices.provideAPIKey("AIzaSyBj0pr7Cxm3b4tsM9O1gyIXdguRHvMmeW0")
         
-        
         //Loggin
         Timberjack.register()
         
@@ -140,6 +139,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         
+        
+        let token = deviceToken.description.componentsSeparatedByCharactersInSet(NSCharacterSet.alphanumericCharacterSet().invertedSet).joinWithSeparator("")
+        
         let defaults = NSUserDefaults.standardUserDefaults()
         
         if (defaults.objectForKey(kTargoDeviceToken) as? String) != nil {
@@ -147,14 +149,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return
         }
         
-        defaults.setObject(deviceToken.description, forKey: kTargoDeviceToken)
+        defaults.setObject(token, forKey: kTargoDeviceToken)
         defaults.synchronize()
     }
     
     func logoutAction() {
         
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-        
         let controller = storyBoard.instantiateViewControllerWithIdentifier("RegistrationPhone")
         let navigation = UINavigationController(rootViewController: controller)
         self.changeRootViewController(navigation)
@@ -178,6 +179,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                     self.window?.rootViewController = viewController
                                     
             }, completion: nil)
+    }
+    
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        
+        
     }
 }
 

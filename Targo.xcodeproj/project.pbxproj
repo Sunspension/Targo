@@ -40,6 +40,9 @@
 		D45F9FAE1D61064D00623A34 /* TOrderTotalPriceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45F9FAD1D61064D00623A34 /* TOrderTotalPriceTableViewCell.swift */; };
 		D45F9FB01D610CBD00623A34 /* TPaymentMethodTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45F9FAF1D610CBD00623A34 /* TPaymentMethodTableViewCell.swift */; };
 		D467AED61D2B0F7100319966 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D467AED51D2B0F7100319966 /* AppSettings.swift */; };
+		D46A4C591D63B363003CF2F9 /* TDeliveryMethodTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46A4C581D63B363003CF2F9 /* TDeliveryMethodTableViewCell.swift */; };
+		D46A4C5B1D63BF6D003CF2F9 /* TUserCreditCardsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46A4C5A1D63BF6D003CF2F9 /* TUserCreditCardsTableViewController.swift */; };
+		D46A4C5D1D63BFA3003CF2F9 /* TUserCreditCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46A4C5C1D63BFA3003CF2F9 /* TUserCreditCardTableViewCell.swift */; };
 		D46AC7341D43DB1F009C08D4 /* TCompaniesOnMapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46AC7331D43DB1F009C08D4 /* TCompaniesOnMapsViewController.swift */; };
 		D46DEC771D62582000B4716B /* GenericCollectionSectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46DEC761D62582000B4716B /* GenericCollectionSectionItem.swift */; };
 		D470DFB91D384D74003473E6 /* TCompanyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D470DFB81D384D74003473E6 /* TCompanyTableViewCell.swift */; };
@@ -67,7 +70,6 @@
 		D4EE59671D3AFE1E0002022F /* TFeedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EE59661D3AFE1E0002022F /* TFeedTableViewController.swift */; };
 		D4EE59691D3AFEE90002022F /* TCompanyMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EE59681D3AFEE90002022F /* TCompanyMenuTableViewController.swift */; };
 		D4EE596B1D3AFFA60002022F /* AlamofireExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EE596A1D3AFFA60002022F /* AlamofireExtensions.swift */; };
-		D4F1888C1D5BC9AB005EB9E5 /* TNSURLProtocolHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F1888B1D5BC9AB005EB9E5 /* TNSURLProtocolHelper.swift */; };
 		D4F464D31D40096A009015FC /* TCompanyMenuPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F464D21D40096A009015FC /* TCompanyMenuPage.swift */; };
 		D4F464D51D400A17009015FC /* TShopCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F464D41D400A17009015FC /* TShopCategory.swift */; };
 		D4F464D81D400E14009015FC /* IntObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F464D71D400E14009015FC /* IntObject.swift */; };
@@ -122,6 +124,9 @@
 		D45F9FAD1D61064D00623A34 /* TOrderTotalPriceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TOrderTotalPriceTableViewCell.swift; sourceTree = "<group>"; };
 		D45F9FAF1D610CBD00623A34 /* TPaymentMethodTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TPaymentMethodTableViewCell.swift; sourceTree = "<group>"; };
 		D467AED51D2B0F7100319966 /* AppSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppSettings.swift; path = Targo/AppSettings.swift; sourceTree = SOURCE_ROOT; };
+		D46A4C581D63B363003CF2F9 /* TDeliveryMethodTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TDeliveryMethodTableViewCell.swift; sourceTree = "<group>"; };
+		D46A4C5A1D63BF6D003CF2F9 /* TUserCreditCardsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TUserCreditCardsTableViewController.swift; sourceTree = "<group>"; };
+		D46A4C5C1D63BFA3003CF2F9 /* TUserCreditCardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TUserCreditCardTableViewCell.swift; sourceTree = "<group>"; };
 		D46AC7331D43DB1F009C08D4 /* TCompaniesOnMapsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCompaniesOnMapsViewController.swift; sourceTree = "<group>"; };
 		D46DEC761D62582000B4716B /* GenericCollectionSectionItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GenericCollectionSectionItem.swift; path = Models/GenericCollectionSectionItem.swift; sourceTree = "<group>"; };
 		D470DFB81D384D74003473E6 /* TCompanyTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCompanyTableViewCell.swift; sourceTree = "<group>"; };
@@ -150,7 +155,6 @@
 		D4EE59661D3AFE1E0002022F /* TFeedTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFeedTableViewController.swift; sourceTree = "<group>"; };
 		D4EE59681D3AFEE90002022F /* TCompanyMenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCompanyMenuTableViewController.swift; sourceTree = "<group>"; };
 		D4EE596A1D3AFFA60002022F /* AlamofireExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlamofireExtensions.swift; sourceTree = "<group>"; };
-		D4F1888B1D5BC9AB005EB9E5 /* TNSURLProtocolHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TNSURLProtocolHelper.swift; sourceTree = "<group>"; };
 		D4F464D21D40096A009015FC /* TCompanyMenuPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TCompanyMenuPage.swift; path = Targo/Models/Menu/TCompanyMenuPage.swift; sourceTree = SOURCE_ROOT; };
 		D4F464D41D400A17009015FC /* TShopCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TShopCategory.swift; path = Targo/Models/Menu/TShopCategory.swift; sourceTree = SOURCE_ROOT; };
 		D4F464D71D400E14009015FC /* IntObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IntObject.swift; path = Models/Realm/IntObject.swift; sourceTree = "<group>"; };
@@ -265,6 +269,8 @@
 				D45F9FAB1D61055E00623A34 /* TOrderItemTableViewCell.swift */,
 				D45F9FAD1D61064D00623A34 /* TOrderTotalPriceTableViewCell.swift */,
 				D45F9FAF1D610CBD00623A34 /* TPaymentMethodTableViewCell.swift */,
+				D46A4C581D63B363003CF2F9 /* TDeliveryMethodTableViewCell.swift */,
+				D46A4C5C1D63BFA3003CF2F9 /* TUserCreditCardTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -285,6 +291,7 @@
 				D41D9D8D1D46A1AB00358961 /* TCompanyInfoTableViewController.swift */,
 				D44930931D495D5100ADF70A /* TAddCreditCardViewController.swift */,
 				D45F9FA91D6101FD00623A34 /* TOrderReviewViewController.swift */,
+				D46A4C5A1D63BF6D003CF2F9 /* TUserCreditCardsTableViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -346,7 +353,6 @@
 				E57C7E891D22B60D00F9A0FC /* Constants.swift */,
 				D40301731D397F5100B7B610 /* HTTPManager.swift */,
 				D40301751D39839C00B7B610 /* ListTransform.swift */,
-				D4F1888B1D5BC9AB005EB9E5 /* TNSURLProtocolHelper.swift */,
 			);
 			name = AppHelpers;
 			sourceTree = "<group>";
@@ -617,6 +623,7 @@
 				D4F464D31D40096A009015FC /* TCompanyMenuPage.swift in Sources */,
 				D41D9D961D46BA2500358961 /* TCompanyInfoContactsHeader.swift in Sources */,
 				D41F59C61D32910A0075568D /* GenericTableViewDataSource.swift in Sources */,
+				D46A4C5D1D63BFA3003CF2F9 /* TUserCreditCardTableViewCell.swift in Sources */,
 				D41D9D921D46B46300358961 /* TWorkingHoursHeader.swift in Sources */,
 				D4C2A0AC1D343ED50090BAFC /* CompanySearchTableViewController.swift in Sources */,
 				D4E0B1CD1D2F061F00B65B96 /* UserRegistrationError.swift in Sources */,
@@ -640,6 +647,7 @@
 				D49C7E891D281DB1004408AF /* RegistrationPhoneViewController.swift in Sources */,
 				E5C062D91D2106BF002074C4 /* AppDelegate.swift in Sources */,
 				D4F464DA1D402EF3009015FC /* TCompanyMenuHeaderView.swift in Sources */,
+				D46A4C591D63B363003CF2F9 /* TDeliveryMethodTableViewCell.swift in Sources */,
 				D44930941D495D5100ADF70A /* TAddCreditCardViewController.swift in Sources */,
 				D40E10241D3EC1660012DCF4 /* TableViewDataSource.swift in Sources */,
 				D4C47FD11D5FE805000D1AA2 /* CenteredButton.swift in Sources */,
@@ -659,13 +667,13 @@
 				D46AC7341D43DB1F009C08D4 /* TCompaniesOnMapsViewController.swift in Sources */,
 				D4C2A0A91D3422D20090BAFC /* TLocationManager.swift in Sources */,
 				D4DD9DD91D41830A009C28D5 /* TMenuItemSmallTableViewCell.swift in Sources */,
+				D46A4C5B1D63BF6D003CF2F9 /* TUserCreditCardsTableViewController.swift in Sources */,
 				D45F9FAE1D61064D00623A34 /* TOrderTotalPriceTableViewCell.swift in Sources */,
 				D4B96F761D244CAA00294A4B /* TRemoteServer.swift in Sources */,
 				D4F6E2A71D560FF20067F9BA /* TCreditCard.swift in Sources */,
 				D4B96F7B1D244DBA00294A4B /* PRemoteServerV1.swift in Sources */,
 				D40301741D397F5100B7B610 /* HTTPManager.swift in Sources */,
 				D4EE59601D3AC98A0002022F /* TCompanyImage.swift in Sources */,
-				D4F1888C1D5BC9AB005EB9E5 /* TNSURLProtocolHelper.swift in Sources */,
 				D41F59CA1D32C6F00075568D /* GenericCollectionSection.swift in Sources */,
 				D4FD14041D441BD300AC9722 /* TShortCompanyOnMapInfo.swift in Sources */,
 				D4F464D81D400E14009015FC /* IntObject.swift in Sources */,

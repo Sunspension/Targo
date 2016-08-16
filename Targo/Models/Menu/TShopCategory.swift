@@ -10,7 +10,6 @@ import UIKit
 import ObjectMapper
 
 class TShopCategory: Mappable {
-
     
     var id = 0
     
@@ -31,6 +30,7 @@ class TShopCategory: Mappable {
     var deleted = false
     
     var deletedAt: Bool?
+    
     
     required convenience init?(_ map: Map) {
         

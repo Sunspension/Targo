@@ -10,7 +10,7 @@ import UIKit
 import SwiftOverlays
 
 class TOrderReviewViewController: UIViewController, UITableViewDelegate {
-
+    
     @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var makeOrder: UIButton!
@@ -21,16 +21,20 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate {
     
     var cards: [TCreditCard]?
     
+    var deliverySelectedIndex = 0
+    
+    var selectedCardIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.title = "order_review_title".localized
-
+        
         tableView.setup()
         tableView.dataSource = self.dataSource
         tableView.delegate = self
         tableView.tableFooterView = UIView()
+        tableView.contentInset = UIEdgeInsetsMake(0, 0, 20, 0)
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         
@@ -49,6 +53,7 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate {
         button.layer.shadowOffset = CGSize(width:0, height: 2)
         button.layer.shadowOpacity = 0.5
         button.backgroundColor = UIColor(hexString: kHexMainPinkColor)
+        button.hidden = true
         
         self.showWaitOverlay()
         
@@ -69,10 +74,12 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate {
     
     private func createDataSource() {
         
+        self.makeOrder.hidden = false
+        
         let section = CollectionSection()
         
         if let items = self.itemSource {
-           
+            
             var totalPrice = 0
             
             for item in items {
@@ -105,8 +112,11 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate {
             
             if let cards = self.cards where cards.count > 0 {
                 
+                self.selectedCardIndex = cards.count - 1
+                
                 section.initializeCellWithReusableIdentifierOrNibName("PaymentMethodCell",
                                                                       item: cards.last,
+                                                                      itemType: 1,
                                                                       bindingAction: { (cell, item) in
                                                                         
                                                                         let viewCell = cell as! TPaymentMethodTableViewCell
@@ -135,9 +145,71 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate {
                                                                         }
                 })
             }
+            
+            section.initializeCellWithReusableIdentifierOrNibName("DeliveryCell",
+                                                                  item: nil,
+                                                                  bindingAction: { (cell, item) in
+                                                                    
+                                                                    let viewCell = cell as! TDeliveryMethodTableViewCell
+                                                                    
+                                                                    viewCell.deliveryMethod.tintColor = UIColor(hexString: kHexMainPinkColor)
+                                                                    viewCell.selectionStyle = .None
+                                                                    
+                                                                    viewCell.deliveryMethod.bnd_selectedSegmentIndex.observe({ index in
+                                                                        
+                                                                        self.deliverySelectedIndex = index
+                                                                    })
+            })
         }
         
         dataSource.sections.append(section)
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        let item = self.dataSource.sections[indexPath.section].items[indexPath.row]
+        
+        guard item.itemType != nil else {
+            
+            return
+        }
+        
+        if let controller = self.instantiateViewControllerWithIdentifierOrNibName("UserCreditCards")
+            as? TUserCreditCardsTableViewController {
+            
+            controller.cards = self.cards
+            controller.selectedAction = { cardIndex in
+            
+                self.selectedCardIndex = cardIndex
+                
+                let viewCell = tableView.cellForRowAtIndexPath(indexPath) as! TPaymentMethodTableViewCell
+                let card = self.cards![cardIndex]
+                viewCell.details.text = card.mask
+                
+                switch card.type {
+                    
+                case "Visa":
+                    
+                    viewCell.icon.image = UIImage(named: "visa")
+                    
+                    break
+                    
+                case "MasterCard":
+                    
+                    viewCell.icon.image = UIImage(named: "mastercard")
+                    
+                    break
+                    
+                default:
+                    
+                    break
+                }
+            }
+            
+            self.navigationController?.pushViewController(controller, animated: true)
+        }
     }
     
     func sendOrder(sender: AnyObject) {

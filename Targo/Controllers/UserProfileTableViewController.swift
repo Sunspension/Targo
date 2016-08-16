@@ -29,7 +29,7 @@ class UserProfileTableViewController: UITableViewController {
         
         let section = GenericCollectionSection<String>(title: nil)
         
-        let menuItems = ["Lgout", "Add new card", "Get info about my cards"]
+        let menuItems = ["Logout", "Add new card", "Get info about my cards"]
         
         for item in menuItems {
             

@@ -69,18 +69,29 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         self.tableView.delegate = self
         self.tableView.dataSource = self.itemsSource
         
+        self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 20, 0)
+        
         self.orderItems.observe { event in
             
-            if event.sequence.count == 0 {
+            UIView.beginAnimations("buton", context: nil)
+            
+            UIView.animateWithDuration(0.2, animations: {
                 
-                self.buttonMakeOrder.enabled = false
-                self.buttonMakeOrder.alpha = 0.5
-            }
-            else {
-                
-                self.buttonMakeOrder.enabled = true
-                self.buttonMakeOrder.alpha = 1
-            }
+                if event.sequence.count == 0 {
+                    
+                    
+                    
+                    self.buttonMakeOrder.enabled = false
+                    self.buttonMakeOrder.alpha = 0.5
+                }
+                else {
+                    
+                    self.buttonMakeOrder.enabled = true
+                    self.buttonMakeOrder.alpha = 1
+                }
+            })
+            
+            UIView.commitAnimations()
         }
         
         if showButtonInfo {
