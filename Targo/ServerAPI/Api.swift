@@ -323,7 +323,7 @@ struct Api {
 
             .responseJSON { response in
                 
-                print(response.result)
+                print(response.result.value)
             }
             .responseObject("data", completionHandler: { (response: Response<TOrderResponse, TargoError>) in
                 
@@ -346,9 +346,8 @@ struct Api {
         server.checkTestOrder(orderId)
             
             .responseJSON { response in
-            
-            print(response.result)
                 
+                print(response.result.value)
             }
             .responseObject("data", completionHandler: { (response: Response<TOrderResponse, TargoError>) in
                 
@@ -372,18 +371,18 @@ struct Api {
             
             .responseJSON { response in
                 
-                print(response.result)
+                print(response.result.value)
             }
-            .responseArray { (response: Response<[TCreditCard], TargoError>) in
-        
+            .responseArray("data.card", completionHandler: { (response: Response<[TCreditCard], TargoError>) in
+                
                 guard let _ = response.result.value else {
                     
-                    p.failure(.CreditCardsLoadingError)
+                    p.failure(response.result.error!)
                     return
                 }
                 
                 p.success(response.result.value!)
-        }
+            })
         
         return p.future
     }

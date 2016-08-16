@@ -12,7 +12,7 @@ class GenericCollectionSection<TItem>: NSObject {
 
     var title: String
     
-    var items: [TItem] = []
+    var items: [GenericCollectionSectionItem<TItem>] = []
     
     
     init(title: String? = nil) {

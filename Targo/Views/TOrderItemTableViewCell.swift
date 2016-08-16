@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import DynamicColor
 
-class TBasketItemTableViewCell: UITableViewCell {
+class TOrderItemTableViewCell: UITableViewCell {
 
     @IBOutlet weak var icon: UIImageView!
     
@@ -21,7 +22,8 @@ class TBasketItemTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        icon.tintColor = UIColor(hexString: kHexMainPinkColor)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

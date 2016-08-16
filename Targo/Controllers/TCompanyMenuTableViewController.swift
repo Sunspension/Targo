@@ -12,6 +12,7 @@ import EZLoadingActivity
 import NVActivityIndicatorView
 import SwiftOverlays
 import AlamofireImage
+import Bond
 
 class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
 
@@ -25,6 +26,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
     
     var showButtonInfo: Bool = false
     
+    let orderItems = ObservableArray<CollectionSectionItem>()
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -33,7 +35,23 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
     
     @IBAction func makeOrderAction(sender: AnyObject) {
     
+        var goods = Array<(item: TShopGood, count: Int)>()
         
+        for item in self.orderItems {
+            
+            let cell = self.tableView.cellForRowAtIndexPath(item.indexPath) as! TMenuItemFullTableViewCell
+            let quantity = cell.count
+            let good = item.item as! TShopGood
+            
+            goods.append((item: good, count: quantity))
+        }
+        
+        if let controller = self.instantiateViewControllerWithIdentifierOrNibName("BasketController") as? TOrderReviewViewController {
+            
+            controller.itemSource = goods
+            
+            self.navigationController?.pushViewController(controller, animated: true)
+        }
     }
     
     
@@ -52,6 +70,20 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         self.tableView.setup()
         self.tableView.delegate = self
         self.tableView.dataSource = self.itemsSource
+        
+        self.orderItems.observe { event in
+            
+            if event.sequence.count == 0 {
+                
+                self.buttonMakeOrder.enabled = false
+                self.buttonMakeOrder.alpha = 0.5
+            }
+            else {
+                
+                self.buttonMakeOrder.enabled = true
+                self.buttonMakeOrder.alpha = 1
+            }
+        }
         
         if showButtonInfo {
             
@@ -182,7 +214,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
                                                                                         viewCell.addSeparator()
                                                                                         viewCell.goodTitle.text = itemGood.title
                                                                                         viewCell.goodDescription.text = itemGood.goodDescription
-                                                                                        viewCell.price.text = String(format: "%li \u{20BD}", itemGood.price)
+                                                                                        viewCell.price.text = String(itemGood.price) + " \u{20BD}"
                                                                                         viewCell.selectionStyle = .None
                                                                                     }
                                                                                     else {
@@ -193,7 +225,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
                                                                                         viewCell.addSeparator()
                                                                                         viewCell.goodTitle.text = itemGood.title
                                                                                         viewCell.goodDescription.text = itemGood.goodDescription
-                                                                                        viewCell.price.text = String(format: "%li \u{20BD}", itemGood.price)
+                                                                                        viewCell.price.text = String(itemGood.price) + " \u{20BD}"
                                                                                         viewCell.selectionStyle = .None
                                                                                     }
                                                                                 }
@@ -242,14 +274,18 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         
         if item.selected {
             
-            section.selectedItems.append(item)
+            self.orderItems.append(item)
         }
         else {
             
-            section.selectedItems.remove(item)
+            if let index = self.orderItems.indexOf(item) {
+                
+                self.orderItems.removeAtIndex(index)
+            }
         }
         
         tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+        tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Bottom, animated: true)
     }
     
     /*

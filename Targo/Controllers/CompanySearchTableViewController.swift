@@ -37,12 +37,14 @@ class CompanySearchTableViewController: UITableViewController {
             GenericTableViewDataSource<TCompanyTableViewCell, TCompany>(reusableIdentifierOrNibName: "CompanyTableCell",
                                                                                        bindingAction: { (cell, item) in
                                                                                         
-                                                                                        cell.companyTitle.text = item.companyTitle
-                                                                                        cell.additionalInfo.text = item.companyCategoryTitle + ", " + item.distance + " m"
+                                                                                        let company = item.item!
+                                                                                        
+                                                                                        cell.companyTitle.text = company.companyTitle
+                                                                                        cell.additionalInfo.text = company.companyCategoryTitle + ", " + company.distance + " m"
                                                                                         
                                                                                         let imageSize = cell.companyImage.bounds.size
                                                                                         
-                                                                                        if let image = self.companyImages.filter({$0.id == item.companyImageId.value}).first {
+                                                                                        if let image = self.companyImages.filter({$0.id == company.companyImageId.value}).first {
                                                                                         
                                                                                             let filter = AspectScaledToFillSizeFilter(size: imageSize)
                                                                                             cell.companyImage.af_setImageWithURL(NSURL(string: image.url)!, filter: filter, imageTransition: .CrossDissolve(0.6))
@@ -81,8 +83,8 @@ class CompanySearchTableViewController: UITableViewController {
         
         if let controller = self.instantiateViewControllerWithIdentifierOrNibName("MenuController") as? TCompanyMenuTableViewController {
             
-            controller.company = item
-            controller.companyImage = self.companyImages.filter({$0.id == item.companyImageId.value}).first
+            controller.company = item.item
+            controller.companyImage = self.companyImages.filter({$0.id == item.item!.companyImageId.value}).first
             controller.showButtonInfo = true
                 
             self.navigationController?.pushViewController(controller, animated: true)
@@ -149,7 +151,7 @@ class CompanySearchTableViewController: UITableViewController {
             
             for company in page.companies {
                 
-                section.items.append(company)
+                section.items.append(GenericCollectionSectionItem(item: company))
             }
             
             self.companyImages.removeAll()

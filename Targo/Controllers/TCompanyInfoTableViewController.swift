@@ -105,7 +105,7 @@ class TCompanyInfoTableViewController: UITableViewController {
                 
                 button.layer.cornerRadius = radius
                 button.layer.shadowPath = UIBezierPath(roundedRect: button.layer.bounds, cornerRadius: radius).CGPath
-                button.layer.shadowOffset = CGSize(width:0, height: 5)
+                button.layer.shadowOffset = CGSize(width:0, height: 2)
                 button.layer.shadowOpacity = 0.5
                 button.backgroundColor = UIColor(hexString: kHexMainPinkColor)
                 

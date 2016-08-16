@@ -24,13 +24,17 @@ class UserProfileTableViewController: UITableViewController {
         
         self.itemsSource = GenericTableViewDataSource<UITableViewCell, String>(reusableIdentifierOrNibName: nil, bindingAction: { (cell, item ) in
         
-            cell.textLabel?.text = item
+            cell.textLabel?.text = item.item
         })
         
         let section = GenericCollectionSection<String>(title: nil)
-        section.items.append("Logout")
-        section.items.append("Add credit card")
-        section.items.append("Get info about my cards")
+        
+        let menuItems = ["Lgout", "Add new card", "Get info about my cards"]
+        
+        for item in menuItems {
+            
+            section.items.append(GenericCollectionSectionItem(item: item))
+        }
         
         self.itemsSource?.sections.append(section)
         

@@ -17,9 +17,9 @@ class TCreditCard: NSObject, Mappable {
     
     var mask = ""
     
-    var type = 0
+    var type = ""
     
-    var expireAt = 0
+    var expireAt: String?
    
     
     required convenience init?(_ map: Map) {

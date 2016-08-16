@@ -25,6 +25,7 @@ class TableViewDataSource: NSObject, UITableViewDataSource {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let item = self.sections[indexPath.section].items[indexPath.row]
+        item.indexPath = indexPath
         
         if item.defaultcell == true {
             

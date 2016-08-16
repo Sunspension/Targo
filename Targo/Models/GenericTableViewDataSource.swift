@@ -12,11 +12,11 @@ class GenericTableViewDataSource<TTableViewCell: UITableViewCell, TTableItem: An
 
     var sections: [GenericCollectionSection<TTableItem>] = []
     
-    var bindingAction: (cell: TTableViewCell, item: TTableItem) -> Void
+    var bindingAction: (cell: TTableViewCell, item: GenericCollectionSectionItem<TTableItem>) -> Void
     
     var reusableIdentifierOrNibName: String?
     
-    init(reusableIdentifierOrNibName: String? = nil, bindingAction: (cell: TTableViewCell, item: TTableItem) -> Void) {
+    init(reusableIdentifierOrNibName: String? = nil, bindingAction: (cell: TTableViewCell, item: GenericCollectionSectionItem<TTableItem>) -> Void) {
         
         self.bindingAction = bindingAction
         self.reusableIdentifierOrNibName = reusableIdentifierOrNibName
@@ -37,6 +37,7 @@ class GenericTableViewDataSource<TTableViewCell: UITableViewCell, TTableItem: An
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let item = self.sections[indexPath.section].items[indexPath.row]
+        item.indexPath = indexPath
         
         if let identifier = self.reusableIdentifierOrNibName {
             

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TBasketTotalPriceTableViewCell: UITableViewCell {
+class TOrderTotalPriceTableViewCell: UITableViewCell {
 
     @IBOutlet weak var price: UILabel!
     

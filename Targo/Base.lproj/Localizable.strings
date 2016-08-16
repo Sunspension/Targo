@@ -34,4 +34,8 @@
 
 "success_title" = "Success";
 
-"basket_title" = "Basket";
+"order_review_title" = "Order review";
+
+"order_review_total_price" = "Total price";
+
+"credit_card_payment_method" = "Payment method";
