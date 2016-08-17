@@ -103,16 +103,26 @@ struct TRemoteServer: PRemoteServerV1 {
         return self.request(.GET, remotePath: baseURLString + "/card")
     }
     
-    func makeShopOrder(cardId: Int, items: [String: Int], addressId: Int) -> Request {
+    func makeShopOrder(cardId: Int, items: [Int : Int], addressId: Int, serviceId: Int, date: NSDate) -> Request {
         
         let formatter = NSDateFormatter()
         
+        formatter.dateFormat = "MM-dd-yyyy HH:mm"
+        let dateString = formatter.stringFromDate(date)
         
+        var goods: [[String : Int]] = [[:]]
         
-        let params: [String : AnyObject] = [ "service_id" : 1,
-                                             "items" : items,
+        for item in items {
+            
+            goods.append(["id" : item.0, "count" : item.1])
+        }
+        
+        let params: [String : AnyObject] = [ "items" : goods,
                                              "address_id" : addressId,
-                                             "card_id" : cardId, "prepared_at" : NSDate() ]
+                                             "card_id" : cardId,
+                                             "service_id" : serviceId,
+                                             "prepared_at" : dateString ]
+        
         return self.request(.POST, remotePath: baseURLString + "/shop-order", parameters: params)
     }
     

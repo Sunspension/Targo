@@ -112,7 +112,6 @@ class RegistrationPhoneViewController: UIViewController {
                 let action = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
                 alert.addAction(action)
                 self?.presentViewController(alert, animated: true, completion: nil)
-                print(error)
         }
     }
 }

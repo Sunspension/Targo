@@ -22,6 +22,8 @@ class CollectionSectionItem: NSObject {
     
     var itemType: Any?
     
+    var userData: Any?
+    
     var reusableIdentifierOrNibName: String? {
         
         get {

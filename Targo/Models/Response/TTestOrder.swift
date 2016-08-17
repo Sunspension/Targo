@@ -18,7 +18,7 @@ enum PaymentStatus: Int {
     case Error
 }
 
-class TOrderResponse: NSObject, Mappable {
+class TTestOrder: NSObject, Mappable {
     
     var id = 0
     

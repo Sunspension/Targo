@@ -29,13 +29,11 @@ class TMenuItemFullTableViewCell: TBaseTableViewCell {
     
     @IBOutlet weak var quantity: UILabel!
     
-    var count: Int = 1
-    
+    var bag = DisposeBag()
     
     override func prepareForReuse() {
         
-        self.count = 1
-        self.quantity.text = "\(self.count)"
+        bag.dispose()
     }
     
     override func awakeFromNib() {
@@ -45,25 +43,5 @@ class TMenuItemFullTableViewCell: TBaseTableViewCell {
         buttonMinus.imageView?.contentMode = .ScaleAspectFit
         buttonPlus.imageView?.contentMode = .ScaleAspectFit
         buttonMore.setTitleColor(UIColor(hexString: kHexMainPinkColor), forState: .Normal)
-        
-        buttonPlus.bnd_tap.observe {
-            
-            let text = self.quantity.text!
-            self.count = Int(text)!
-            self.count += 1
-            self.quantity.text = "\(self.count)"
-        }
-        
-        buttonMinus.bnd_tap.observe {
-            
-            let text = self.quantity.text!
-            
-            self.count = Int(text)!
-            if self.count > 1 {
-                
-                self.count -= 1
-                self.quantity.text = "\(self.count)"
-            }
-        }
     }
 }

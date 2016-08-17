@@ -36,6 +36,8 @@ enum TargoError: ErrorType {
     
     case UndefinedError(message: String)
 
+    case ShopOrderError
+    
     
     var message: String {
         

@@ -13,6 +13,7 @@
 		D403017A1D39936A00B7B610 /* TShopGood.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40301791D39936A00B7B610 /* TShopGood.swift */; };
 		D4036A0F1D36CE8200CA8E38 /* TCompany.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4036A0E1D36CE8200CA8E38 /* TCompany.swift */; };
 		D4036A111D36D08900CA8E38 /* TCompaniesPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4036A101D36D08900CA8E38 /* TCompaniesPage.swift */; };
+		D40CC4DB1D65034D003A1487 /* TShopOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40CC4DA1D65034D003A1487 /* TShopOrder.swift */; };
 		D40E10211D3EAEE60012DCF4 /* TCompanyImageMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40E101F1D3EAEE60012DCF4 /* TCompanyImageMenuTableViewCell.swift */; };
 		D40E10221D3EAEE60012DCF4 /* TCompanyImageMenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D40E10201D3EAEE60012DCF4 /* TCompanyImageMenuTableViewCell.xib */; };
 		D40E10241D3EC1660012DCF4 /* TableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40E10231D3EC1660012DCF4 /* TableViewDataSource.swift */; };
@@ -32,7 +33,7 @@
 		D41F59CA1D32C6F00075568D /* GenericCollectionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41F59C91D32C6F00075568D /* GenericCollectionSection.swift */; };
 		D41F59CC1D32CDA80075568D /* UserProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41F59CB1D32CDA80075568D /* UserProfileTableViewController.swift */; };
 		D420B2CB1D293748003FDC83 /* RegistrationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D420B2CA1D293748003FDC83 /* RegistrationCodeViewController.swift */; };
-		D44930921D49494800ADF70A /* TOrderResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44930911D49494800ADF70A /* TOrderResponse.swift */; };
+		D44930921D49494800ADF70A /* TTestOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44930911D49494800ADF70A /* TTestOrder.swift */; };
 		D44930941D495D5100ADF70A /* TAddCreditCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44930931D495D5100ADF70A /* TAddCreditCardViewController.swift */; };
 		D45391D11D2DBE0900669669 /* UserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45391D01D2DBE0900669669 /* UserSession.swift */; };
 		D45F9FAA1D6101FD00623A34 /* TOrderReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45F9FA91D6101FD00623A34 /* TOrderReviewViewController.swift */; };
@@ -97,6 +98,7 @@
 		D40301791D39936A00B7B610 /* TShopGood.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TShopGood.swift; path = Targo/Models/Menu/TShopGood.swift; sourceTree = SOURCE_ROOT; };
 		D4036A0E1D36CE8200CA8E38 /* TCompany.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TCompany.swift; path = Models/Company/TCompany.swift; sourceTree = "<group>"; };
 		D4036A101D36D08900CA8E38 /* TCompaniesPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TCompaniesPage.swift; path = Models/Company/TCompaniesPage.swift; sourceTree = "<group>"; };
+		D40CC4DA1D65034D003A1487 /* TShopOrder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TShopOrder.swift; path = Models/Response/TShopOrder.swift; sourceTree = "<group>"; };
 		D40E101F1D3EAEE60012DCF4 /* TCompanyImageMenuTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCompanyImageMenuTableViewCell.swift; sourceTree = "<group>"; };
 		D40E10201D3EAEE60012DCF4 /* TCompanyImageMenuTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCompanyImageMenuTableViewCell.xib; sourceTree = "<group>"; };
 		D40E10231D3EC1660012DCF4 /* TableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TableViewDataSource.swift; path = Models/TableViewDataSource.swift; sourceTree = "<group>"; };
@@ -116,7 +118,7 @@
 		D41F59C91D32C6F00075568D /* GenericCollectionSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GenericCollectionSection.swift; path = Models/GenericCollectionSection.swift; sourceTree = "<group>"; };
 		D41F59CB1D32CDA80075568D /* UserProfileTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileTableViewController.swift; sourceTree = "<group>"; };
 		D420B2CA1D293748003FDC83 /* RegistrationCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationCodeViewController.swift; sourceTree = "<group>"; };
-		D44930911D49494800ADF70A /* TOrderResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TOrderResponse.swift; path = Models/Response/TOrderResponse.swift; sourceTree = "<group>"; };
+		D44930911D49494800ADF70A /* TTestOrder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TTestOrder.swift; path = Models/Response/TTestOrder.swift; sourceTree = "<group>"; };
 		D44930931D495D5100ADF70A /* TAddCreditCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TAddCreditCardViewController.swift; sourceTree = "<group>"; };
 		D45391D01D2DBE0900669669 /* UserSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSession.swift; sourceTree = "<group>"; };
 		D45F9FA91D6101FD00623A34 /* TOrderReviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TOrderReviewViewController.swift; sourceTree = "<group>"; };
@@ -378,11 +380,12 @@
 		E57C7E8C1D22B85400F9A0FC /* Response */ = {
 			isa = PBXGroup;
 			children = (
-				D44930911D49494800ADF70A /* TOrderResponse.swift */,
+				D44930911D49494800ADF70A /* TTestOrder.swift */,
 				D4B05FBD1D4FE202000E494E /* TAuthorizationResponse.swift */,
 				D4B81B391D4FE8AE00F9103C /* TServerError.swift */,
 				D4B81B3B1D4FF22300F9103C /* TBadRequest.swift */,
 				D4F6E2A61D560FF20067F9BA /* TCreditCard.swift */,
+				D40CC4DA1D65034D003A1487 /* TShopOrder.swift */,
 			);
 			name = Response;
 			sourceTree = "<group>";
@@ -642,6 +645,7 @@
 				D40301761D39839C00B7B610 /* ListTransform.swift in Sources */,
 				D4B81B3C1D4FF22300F9103C /* TBadRequest.swift in Sources */,
 				D4D0D6D61D2C5B5200B4E01D /* Api.swift in Sources */,
+				D40CC4DB1D65034D003A1487 /* TShopOrder.swift in Sources */,
 				D45F9FAC1D61055E00623A34 /* TOrderItemTableViewCell.swift in Sources */,
 				D4F464D51D400A17009015FC /* TShopCategory.swift in Sources */,
 				D49C7E891D281DB1004408AF /* RegistrationPhoneViewController.swift in Sources */,
@@ -662,7 +666,7 @@
 				E57C7E8A1D22B60D00F9A0FC /* Constants.swift in Sources */,
 				D4D0D6D91D2C61BA00B4E01D /* TargoError.swift in Sources */,
 				D40E10281D3ECE260012DCF4 /* TCompanySearchTableViewCell.swift in Sources */,
-				D44930921D49494800ADF70A /* TOrderResponse.swift in Sources */,
+				D44930921D49494800ADF70A /* TTestOrder.swift in Sources */,
 				D41F59CC1D32CDA80075568D /* UserProfileTableViewController.swift in Sources */,
 				D46AC7341D43DB1F009C08D4 /* TCompaniesOnMapsViewController.swift in Sources */,
 				D4C2A0A91D3422D20090BAFC /* TLocationManager.swift in Sources */,

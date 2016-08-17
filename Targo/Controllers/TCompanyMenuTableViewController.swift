@@ -37,8 +37,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         
         for item in self.orderItems {
             
-            let cell = self.tableView.cellForRowAtIndexPath(item.indexPath) as! TMenuItemFullTableViewCell
-            let quantity = cell.count
+            let quantity = item.userData as! Int
             let good = item.item as! TShopGood
             
             goods.append((item: good, count: quantity))
@@ -47,6 +46,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         if let controller = self.instantiateViewControllerWithIdentifierOrNibName("BasketController") as? TOrderReviewViewController {
             
             controller.itemSource = goods
+            controller.company = self.company
             
             self.navigationController?.pushViewController(controller, animated: true)
         }
@@ -78,8 +78,6 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
             UIView.animateWithDuration(0.2, animations: {
                 
                 if event.sequence.count == 0 {
-                    
-                    
                     
                     self.buttonMakeOrder.enabled = false
                     self.buttonMakeOrder.alpha = 0.5
@@ -236,6 +234,34 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
                                                                                         viewCell.goodDescription.text = itemGood.goodDescription
                                                                                         viewCell.price.text = String(itemGood.price) + " \u{20BD}"
                                                                                         viewCell.selectionStyle = .None
+                                                                                        
+                                                                                        if item.userData == nil {
+                                                                                            
+                                                                                            item.userData = 1
+                                                                                        }
+                                                                                        
+                                                                                        viewCell.quantity.text = String(item.userData as! Int)
+                                                                                        
+                                                                                        viewCell.buttonPlus.bnd_tap.observe({
+                                                                                            
+                                                                                            var count = item.userData as! Int
+                                                                                            count += 1
+                                                                                            item.userData = count
+                                                                                            viewCell.quantity.text = String(count)
+                                                                                            
+                                                                                        }).disposeIn(viewCell.bag)
+                                                                                        
+                                                                                        viewCell.buttonMinus.bnd_tap.observe({
+                                                                                            
+                                                                                            if let count = item.userData as? Int where count > 1 {
+                                                                                                
+                                                                                                var quantity = count
+                                                                                                quantity -= 1
+                                                                                                item.userData = quantity
+                                                                                                viewCell.quantity.text = String(quantity)
+                                                                                            }
+                                                                                            
+                                                                                        }).disposeIn(viewCell.bag)
                                                                                     }
                                                                                 }
             })

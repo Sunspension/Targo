@@ -25,6 +25,9 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate {
     
     var selectedCardIndex = 0
     
+    var company: TCompany?
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -214,6 +217,41 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate {
     
     func sendOrder(sender: AnyObject) {
         
+        guard self.cards != nil && self.company != nil else {
+            
+            return
+        }
         
+        let card = self.cards![self.selectedCardIndex]
+        var items: [Int : Int] = [:]
+        
+        for item in self.itemSource! {
+            
+            items[item.item.id] = item.count
+        }
+        
+        let components = NSDateComponents()
+        
+        components.setValue(30, forComponent: .Minute)
+        let expirationDate = NSCalendar.currentCalendar().dateByAddingComponents(components, toDate: NSDate(), options: NSCalendarOptions(rawValue: 0))
+        
+        Api.sharedInstance.makeShopOrder(card.id,
+            items: items,
+            addressId: 1, //self.company!.id
+            serviceId: deliverySelectedIndex + 1,
+            date: expirationDate!)
+            
+            .onSuccess { shopOrder in
+            
+            print("success order id: \(shopOrder.id)")
+                
+        }.onFailure {[weak self] error in
+            
+            let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .Alert)
+            let action = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+            alert.addAction(action)
+            self?.presentViewController(alert, animated: true, completion: nil)
+
+        }
     }
 }
