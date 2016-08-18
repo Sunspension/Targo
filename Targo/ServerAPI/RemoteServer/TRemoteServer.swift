@@ -107,10 +107,10 @@ struct TRemoteServer: PRemoteServerV1 {
         
         let formatter = NSDateFormatter()
         
-        formatter.dateFormat = "MM-dd-yyyy HH:mm"
+        formatter.dateFormat = "yyyy-MM-dd HH:mm"
         let dateString = formatter.stringFromDate(date)
         
-        var goods: [[String : Int]] = [[:]]
+        var goods: [[String : Int]] = []
         
         for item in items {
             

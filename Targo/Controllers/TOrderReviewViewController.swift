@@ -184,7 +184,7 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate {
             
             controller.cards = self.cards
             controller.selectedAction = { cardIndex in
-            
+                
                 self.selectedCardIndex = cardIndex
                 
                 let viewCell = tableView.cellForRowAtIndexPath(indexPath) as! TPaymentMethodTableViewCell
@@ -241,17 +241,22 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate {
             serviceId: deliverySelectedIndex + 1,
             date: expirationDate!)
             
-            .onSuccess { shopOrder in
-            
-            print("success order id: \(shopOrder.id)")
+            .onSuccess {[weak self] shopOrder in
                 
-        }.onFailure {[weak self] error in
-            
-            let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .Alert)
-            let action = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
-            alert.addAction(action)
-            self?.presentViewController(alert, animated: true, completion: nil)
-
+                let alert = UIAlertController(title: "Success", message: "The order with id: \(shopOrder.id) was successfully created.", preferredStyle: .Alert)
+                let action = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                alert.addAction(action)
+                self?.presentViewController(alert, animated: true, completion: nil)
+                
+                print("success order id: \(shopOrder.id)")
+                
+            }.onFailure {[weak self] error in
+                
+                let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .Alert)
+                let action = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                alert.addAction(action)
+                self?.presentViewController(alert, animated: true, completion: nil)
+                
         }
     }
 }

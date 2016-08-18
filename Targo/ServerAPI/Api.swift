@@ -114,7 +114,7 @@ struct Api {
                 
                 .responseJSON { response in
                     
-                    print(response.result.value)
+                    print("login request:\(response.request?.HTTPBody)\n login response:\(response.result.value)")
                 }
                 .responseObject("data", completionHandler: { (response: Response<UserSession, TargoError>) in
                     
@@ -401,9 +401,11 @@ struct Api {
             
             .responseJSON { response in
                 
-                print(response.result.value)
+                let request = String(data: response.request!.HTTPBody!, encoding: NSUTF8StringEncoding)
                 
-            }.responseObject { (response: Response<TShopOrder, TargoError>) in
+                print("order request:\(request)\n order response:\(response.result.value)")
+                
+            }.responseObject("data", completionHandler: { (response: Response<TShopOrder, TargoError>) in
                 
                 guard let _ = response.result.value else {
                     
@@ -412,7 +414,7 @@ struct Api {
                 }
                 
                 p.success(response.result.value!)
-        }
+        })
         
         return p.future
     }
