@@ -1,8 +1,8 @@
 //
-//  IntObject.swift
+//  StringObject.swift
 //  Targo
 //
-//  Created by Vladimir Kokhanevich on 20/07/16.
+//  Created by Vladimir Kokhanevich on 20/08/16.
 //  Copyright © 2016 Targo. All rights reserved.
 //
 
@@ -10,9 +10,9 @@ import UIKit
 import RealmSwift
 import ObjectMapper
 
-class IntObject: Object, Mappable {
+class RealmString: Object, Mappable {
 
-    dynamic var value = 0
+    dynamic var value = ""
     
     required convenience init?(_ map: Map) {
         

@@ -83,7 +83,7 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
         
         self.companyTitle.text = company.companyTitle
         self.companyAddress.text = company.title
-        self.companyInfo.text = company.companyCategoryTitle + ", " + company.distance + " m"
+        self.companyInfo.text = company.companyCategoryTitle + ", " + String(company.distance) + " m"
         
         if let image = self.companyImages.filter({$0.id == company.companyImageId.value}).first {
             

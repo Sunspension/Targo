@@ -27,6 +27,8 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate {
     
     var company: TCompany?
     
+    var companyImage: TCompanyImage?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -233,7 +235,10 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate {
         let components = NSDateComponents()
         
         components.setValue(30, forComponent: .Minute)
-        let expirationDate = NSCalendar.currentCalendar().dateByAddingComponents(components, toDate: NSDate(), options: NSCalendarOptions(rawValue: 0))
+        let expirationDate = NSCalendar.currentCalendar().dateByAddingComponents(components, toDate: NSDate(),
+                                                                                 options: NSCalendarOptions(rawValue: 0))
+        
+        self.showWaitOverlay()
         
         Api.sharedInstance.makeShopOrder(card.id,
             items: items,
@@ -243,14 +248,20 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate {
             
             .onSuccess {[weak self] shopOrder in
                 
-                let alert = UIAlertController(title: "Success", message: "The order with id: \(shopOrder.id) was successfully created.", preferredStyle: .Alert)
-                let action = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
-                alert.addAction(action)
-                self?.presentViewController(alert, animated: true, completion: nil)
+                self?.removeAllOverlays()
                 
-                print("success order id: \(shopOrder.id)")
+                if let controller = self?.instantiateViewControllerWithIdentifierOrNibName("OrderStatus") as? TOrderStatusViewController {
+                    
+                    controller.company = self?.company
+                    controller.shopOrder = shopOrder
+                    controller.companyImage = self?.companyImage
+                    
+                    self?.navigationController?.pushViewController(controller, animated: true)
+                }
                 
             }.onFailure {[weak self] error in
+                
+                self?.removeAllOverlays()
                 
                 let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .Alert)
                 let action = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)

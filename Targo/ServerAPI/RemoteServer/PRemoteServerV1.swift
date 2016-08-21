@@ -31,4 +31,6 @@ protocol PRemoteServerV1 {
     func loadCreditCards() -> Request
     
     func makeShopOrder(cardId: Int, items: [Int : Int], addressId: Int, serviceId: Int, date: NSDate) -> Request
+    
+    func checkShopOrderStatus(orderStatus: Int) -> Request
 }

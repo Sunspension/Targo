@@ -10,39 +10,54 @@ import UIKit
 import ObjectMapper
 import RealmSwift
 
-class TShopGood: Mappable {
+class TShopGood: Object, Mappable {
 
-    var id = 0
+    dynamic var id = 0
     
-    var title = ""
+    dynamic var title = ""
     
-    var goodDescription = ""
+    dynamic var goodDescription = ""
     
-    var companyId = 0
+    dynamic var companyId = 0
     
-    var shopCategoryId = 0
+    dynamic var shopCategoryId = 0
     
-    var price = 0
+    dynamic var price = 0
     
-    var externalId = 0
+    dynamic var externalId = 0
     
-    var persistentId = 0
+    dynamic var persistentId = 0
     
-    var createdAt = ""
+    dynamic var createdAt = ""
     
-    var updatedAt = ""
+    dynamic var updatedAt = ""
     
-    var deleted = false;
+    dynamic var deleted = false;
     
-    var deletedAt: Bool?
+    dynamic var parentId = 0
     
-    var parentId = 0
+    dynamic var history = ""
     
-    var searchVector = ""
+    var imageIds: [Int] {
+        
+        get {
+            
+            return backingImageIds.map { $0.value }
+        }
+    }
     
-    var history = ""
+    let backingImageIds = List<RealmInt>()
     
-    var imageIds = [String]()
+    
+    override static func primaryKey() -> String? {
+        
+        return "id"
+    }
+    
+    override static func ignoredProperties() -> [String] {
+        
+        return ["imageIds"]
+    }
     
     required convenience init?(_ map: Map) {
         
@@ -54,18 +69,17 @@ class TShopGood: Mappable {
         id <- map["id"]
         title <- map["title"]
         goodDescription <- map["description"]
-        companyId <- map["comapny_id"]
+        companyId <- map["company_id"]
         shopCategoryId <- map["shop_category_id"]
         price <- map["price"]
-        externalId <- map["external_id"]
-        persistentId <- map["repsistent_id"]
+        persistentId <- map["persistent_id"]
         createdAt <- map["created_at"]
         updatedAt <- map["updated_at"]
         deleted <- map["deleted"]
-        deletedAt <- map["deleted_at"]
         parentId <- map["parent_id"]
-        searchVector <- map["search_vector"]
-        history <- map["history"]
+        
+        var imageIds = [Int]()
         imageIds <- map["image_ids"]
+        self.backingImageIds.appendContentsOf(imageIds.map({ RealmInt(value: [$0]) }))
     }
 }

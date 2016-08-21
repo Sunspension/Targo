@@ -34,9 +34,23 @@
 
 "success_title" = "Success";
 
+"order_title" = "Order";
+
 "order_review_title" = "Order review";
 
 "order_review_total_price" = "Total price";
+
+"order_cancel_order" = "Cancel order";
+
+"order_status_new" = "Order was sent";
+
+"order_status_seen" = "Order have been seen";
+
+"order_status_processing" = "Order is ready in %i minutes";
+
+"order_status_canceled" = "Order is canceled";
+
+"order_status_ready" = "Order is ready";
 
 "credit_card_payment_method" = "Payment method";
 

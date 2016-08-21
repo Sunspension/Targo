@@ -40,7 +40,7 @@ class CompanySearchTableViewController: UITableViewController {
                                                                                         let company = item.item!
                                                                                         
                                                                                         cell.companyTitle.text = company.companyTitle
-                                                                                        cell.additionalInfo.text = company.companyCategoryTitle + ", " + company.distance + " m"
+                                                                                        cell.additionalInfo.text = company.companyCategoryTitle + ", " + String(company.distance) + " m"
                                                                                         
                                                                                         let imageSize = cell.companyImage.bounds.size
                                                                                         

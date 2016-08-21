@@ -57,6 +57,9 @@ pod 'Timberjack', '~> 0.0'
 #pod 'EmitterKit'
 #pod 'SignalKit'
 
+#Menu
+#pod 'SideMenu'
+
 #Maps
 source 'https://github.com/CocoaPods/Specs.git'
 pod 'GoogleMaps'

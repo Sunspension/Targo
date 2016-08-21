@@ -47,6 +47,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
             
             controller.itemSource = goods
             controller.company = self.company
+            controller.companyImage = self.companyImage
             
             self.navigationController?.pushViewController(controller, animated: true)
         }
@@ -200,8 +201,8 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
             
             if (section == nil) {
                 
-                let category = menuPage!.categories.filter({ $0.id == good.shopCategoryId }).first
-                section = CollectionSection(title: category!.title)
+                let category = menuPage!.categories.filter({ $0.id == good.shopCategoryId && $0.id != 0 }).first
+                section = CollectionSection(title: category?.title ?? "Акция")
                 section?.sectionType = good.shopCategoryId
                 self.itemsSource.sections.append(section!)
             }
@@ -304,6 +305,12 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         let section = self.itemsSource.sections[indexPath.section]
+        
+        if section.sectionType == nil {
+            
+            return
+        }
+        
         let item = section.items[indexPath.row]
         item.selected = !item.selected
         
@@ -320,7 +327,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         }
         
         tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Bottom, animated: true)
+        tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .None, animated: true)
     }
     
     /*

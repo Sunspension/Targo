@@ -11,13 +11,13 @@ import ObjectMapper
 
 class TCompanyMenuPage: Mappable {
     
-    dynamic var totalCount = 0
+    var totalCount = 0
     
-    dynamic var pageCount = 0
+    var pageCount = 0
     
-    dynamic var currentPage = 0
+    var currentPage = 0
     
-    dynamic var pageSize = 0
+    var pageSize = 0
 
     var goods = [TShopGood]()
     

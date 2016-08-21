@@ -126,6 +126,12 @@ struct TRemoteServer: PRemoteServerV1 {
         return self.request(.POST, remotePath: baseURLString + "/shop-order", parameters: params)
     }
     
+    func checkShopOrderStatus(orderStatus: Int) -> Request {
+        
+        return self.request(.GET, remotePath: baseURLString + "/shop-order/" + String(orderStatus))
+    }
+    
+    
     // mark - private methods
     
     private func request(method: Alamofire.Method, remotePath: URLStringConvertible) -> Request {

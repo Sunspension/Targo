@@ -418,4 +418,28 @@ struct Api {
         
         return p.future
     }
+    
+    func checkShopOrderStatus(orderStatus: Int) -> Future<TShopOrder, TargoError> {
+        
+        let p = Promise<TShopOrder, TargoError>()
+        
+        server.checkShopOrderStatus(orderStatus)
+            
+            .responseJSON { response in
+            
+            print(response.result.value)
+
+            }.responseObject("data", completionHandler: { (response: Response<TShopOrder, TargoError>) in
+                
+                guard let _ = response.result.value else {
+                    
+                    p.failure(response.result.error!)
+                    return
+                }
+                
+                p.success(response.result.value!)
+            })
+
+        return p.future
+    }
 }

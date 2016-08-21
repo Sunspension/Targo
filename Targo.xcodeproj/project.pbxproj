@@ -19,6 +19,8 @@
 		D40E10241D3EC1660012DCF4 /* TableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40E10231D3EC1660012DCF4 /* TableViewDataSource.swift */; };
 		D40E10281D3ECE260012DCF4 /* TCompanySearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40E10261D3ECE260012DCF4 /* TCompanySearchTableViewCell.swift */; };
 		D40E10291D3ECE260012DCF4 /* TCompanySearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D40E10271D3ECE260012DCF4 /* TCompanySearchTableViewCell.xib */; };
+		D4151E121D688D0B00DB26C0 /* TOrderStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4151E111D688D0B00DB26C0 /* TOrderStatusViewController.swift */; };
+		D4151E191D689F5900DB26C0 /* RealmString.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4151E181D689F5900DB26C0 /* RealmString.swift */; };
 		D41D9D8E1D46A1AB00358961 /* TCompanyInfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41D9D8D1D46A1AB00358961 /* TCompanyInfoTableViewController.swift */; };
 		D41D9D901D46AD4000358961 /* TWorkingHoursTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41D9D8F1D46AD4000358961 /* TWorkingHoursTableViewCell.swift */; };
 		D41D9D921D46B46300358961 /* TWorkingHoursHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41D9D911D46B46300358961 /* TWorkingHoursHeader.swift */; };
@@ -73,7 +75,7 @@
 		D4EE596B1D3AFFA60002022F /* AlamofireExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EE596A1D3AFFA60002022F /* AlamofireExtensions.swift */; };
 		D4F464D31D40096A009015FC /* TCompanyMenuPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F464D21D40096A009015FC /* TCompanyMenuPage.swift */; };
 		D4F464D51D400A17009015FC /* TShopCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F464D41D400A17009015FC /* TShopCategory.swift */; };
-		D4F464D81D400E14009015FC /* IntObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F464D71D400E14009015FC /* IntObject.swift */; };
+		D4F464D81D400E14009015FC /* RealmInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F464D71D400E14009015FC /* RealmInt.swift */; };
 		D4F464DA1D402EF3009015FC /* TCompanyMenuHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F464D91D402EF3009015FC /* TCompanyMenuHeaderView.swift */; };
 		D4F464DC1D402F08009015FC /* TCompanyMenuHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4F464DB1D402F08009015FC /* TCompanyMenuHeaderView.xib */; };
 		D4F6E2A71D560FF20067F9BA /* TCreditCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F6E2A61D560FF20067F9BA /* TCreditCard.swift */; };
@@ -104,6 +106,8 @@
 		D40E10231D3EC1660012DCF4 /* TableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TableViewDataSource.swift; path = Models/TableViewDataSource.swift; sourceTree = "<group>"; };
 		D40E10261D3ECE260012DCF4 /* TCompanySearchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCompanySearchTableViewCell.swift; sourceTree = "<group>"; };
 		D40E10271D3ECE260012DCF4 /* TCompanySearchTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCompanySearchTableViewCell.xib; sourceTree = "<group>"; };
+		D4151E111D688D0B00DB26C0 /* TOrderStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TOrderStatusViewController.swift; sourceTree = "<group>"; };
+		D4151E181D689F5900DB26C0 /* RealmString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RealmString.swift; path = Models/Realm/RealmString.swift; sourceTree = "<group>"; };
 		D41D9D8D1D46A1AB00358961 /* TCompanyInfoTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCompanyInfoTableViewController.swift; sourceTree = "<group>"; };
 		D41D9D8F1D46AD4000358961 /* TWorkingHoursTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TWorkingHoursTableViewCell.swift; sourceTree = "<group>"; };
 		D41D9D911D46B46300358961 /* TWorkingHoursHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TWorkingHoursHeader.swift; sourceTree = "<group>"; };
@@ -159,7 +163,7 @@
 		D4EE596A1D3AFFA60002022F /* AlamofireExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlamofireExtensions.swift; sourceTree = "<group>"; };
 		D4F464D21D40096A009015FC /* TCompanyMenuPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TCompanyMenuPage.swift; path = Targo/Models/Menu/TCompanyMenuPage.swift; sourceTree = SOURCE_ROOT; };
 		D4F464D41D400A17009015FC /* TShopCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TShopCategory.swift; path = Targo/Models/Menu/TShopCategory.swift; sourceTree = SOURCE_ROOT; };
-		D4F464D71D400E14009015FC /* IntObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IntObject.swift; path = Models/Realm/IntObject.swift; sourceTree = "<group>"; };
+		D4F464D71D400E14009015FC /* RealmInt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RealmInt.swift; path = Models/Realm/RealmInt.swift; sourceTree = "<group>"; };
 		D4F464D91D402EF3009015FC /* TCompanyMenuHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCompanyMenuHeaderView.swift; sourceTree = "<group>"; };
 		D4F464DB1D402F08009015FC /* TCompanyMenuHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCompanyMenuHeaderView.xib; sourceTree = "<group>"; };
 		D4F6E2A61D560FF20067F9BA /* TCreditCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TCreditCard.swift; path = Models/Response/TCreditCard.swift; sourceTree = "<group>"; };
@@ -226,6 +230,13 @@
 			name = Company;
 			sourceTree = "<group>";
 		};
+		D4151E131D688DF200DB26C0 /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = CustomViews;
+			sourceTree = "<group>";
+		};
 		D464027C1D21CBE200644463 /* ServerAPI */ = {
 			isa = PBXGroup;
 			children = (
@@ -247,6 +258,7 @@
 		D470DFB71D384D44003473E6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D4151E131D688DF200DB26C0 /* CustomViews */,
 				D470DFB81D384D74003473E6 /* TCompanyTableViewCell.swift */,
 				D4FDE6791D3C007E003EF2CC /* TWorkingTimeTableViewCell.swift */,
 				D40E101F1D3EAEE60012DCF4 /* TCompanyImageMenuTableViewCell.swift */,
@@ -294,6 +306,7 @@
 				D44930931D495D5100ADF70A /* TAddCreditCardViewController.swift */,
 				D45F9FA91D6101FD00623A34 /* TOrderReviewViewController.swift */,
 				D46A4C5A1D63BF6D003CF2F9 /* TUserCreditCardsTableViewController.swift */,
+				D4151E111D688D0B00DB26C0 /* TOrderStatusViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -335,7 +348,8 @@
 		D4F464D61D400DEF009015FC /* Realm */ = {
 			isa = PBXGroup;
 			children = (
-				D4F464D71D400E14009015FC /* IntObject.swift */,
+				D4F464D71D400E14009015FC /* RealmInt.swift */,
+				D4151E181D689F5900DB26C0 /* RealmString.swift */,
 			);
 			name = Realm;
 			sourceTree = "<group>";
@@ -478,6 +492,14 @@
 					E5C062D41D2106BF002074C4 = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = HUZ4W96296;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -679,11 +701,13 @@
 				D40301741D397F5100B7B610 /* HTTPManager.swift in Sources */,
 				D4EE59601D3AC98A0002022F /* TCompanyImage.swift in Sources */,
 				D41F59CA1D32C6F00075568D /* GenericCollectionSection.swift in Sources */,
+				D4151E191D689F5900DB26C0 /* RealmString.swift in Sources */,
 				D4FD14041D441BD300AC9722 /* TShortCompanyOnMapInfo.swift in Sources */,
-				D4F464D81D400E14009015FC /* IntObject.swift in Sources */,
+				D4F464D81D400E14009015FC /* RealmInt.swift in Sources */,
 				D4036A111D36D08900CA8E38 /* TCompaniesPage.swift in Sources */,
 				D45391D11D2DBE0900669669 /* UserSession.swift in Sources */,
 				D403017A1D39936A00B7B610 /* TShopGood.swift in Sources */,
+				D4151E121D688D0B00DB26C0 /* TOrderStatusViewController.swift in Sources */,
 				D4B05FBE1D4FE202000E494E /* TAuthorizationResponse.swift in Sources */,
 				D41F59C41D32902F0075568D /* CollectionSection.swift in Sources */,
 				D45F9FAA1D6101FD00623A34 /* TOrderReviewViewController.swift in Sources */,
