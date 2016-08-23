@@ -52,6 +52,10 @@
 
 "order_status_ready" = "Order is ready";
 
+"order_history_order_title" = "History orders";
+
+"order_in_progress_order_title" = "In Progress";
+
 "credit_card_payment_method" = "Payment method";
 
 "credit_card_add_new_one" = "Add the card";

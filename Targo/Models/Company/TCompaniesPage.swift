@@ -20,7 +20,7 @@ class TCompaniesPage: Object, Mappable {
     
     dynamic var pageSize = 0
     
-    var companies = List<TCompany>()
+    var companies = List<TCompanyAddress>()
     
     var images = List<TCompanyImage>()
     
@@ -36,7 +36,7 @@ class TCompaniesPage: Object, Mappable {
         pageCount <- map["meta.page_count"]
         currentPage <- map["meta.current_page"]
         pageSize <- map["meta.page_size"]
-        companies <- (map["company-address"], ListTransform<TCompany>())
+        companies <- (map["company-address"], ListTransform<TCompanyAddress>())
         images <- (map["image"], ListTransform<TCompanyImage>())
     }
 }

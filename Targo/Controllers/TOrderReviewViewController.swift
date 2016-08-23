@@ -25,7 +25,7 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate {
     
     var selectedCardIndex = 0
     
-    var company: TCompany?
+    var company: TCompanyAddress?
     
     var companyImage: TCompanyImage?
     
@@ -258,6 +258,8 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate {
                     
                     self?.navigationController?.pushViewController(controller, animated: true)
                 }
+                
+                
                 
             }.onFailure {[weak self] error in
                 

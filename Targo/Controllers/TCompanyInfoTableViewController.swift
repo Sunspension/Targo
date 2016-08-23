@@ -18,7 +18,7 @@ enum InfoSectionEnum {
 
 class TCompanyInfoTableViewController: UITableViewController {
     
-    var company: TCompany?
+    var company: TCompanyAddress?
     
     var companyImage: TCompanyImage?
     
@@ -31,6 +31,7 @@ class TCompanyInfoTableViewController: UITableViewController {
     let companyAboutIdentifier = "AboutCompanyCell"
     
     var makeOrderNavigationAction: (() -> Void)?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -14,7 +14,7 @@ import Bond
 
 class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
 
-    var company: TCompany?
+    var company: TCompanyAddress?
     
     var companyImage: TCompanyImage?
     

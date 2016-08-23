@@ -73,7 +73,7 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
         self.selectedMarker?.icon = GMSMarker.markerImageWithColor(UIColor.redColor())
         
         marker.icon = GMSMarker.markerImageWithColor(UIColor(hexString: kHexMainPinkColor))
-        let company = marker.userData as! TCompany
+        let company = marker.userData as! TCompanyAddress
         
         let transition = CATransition()
         transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
@@ -126,7 +126,7 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
         
         if let controller =  self.instantiateViewControllerWithIdentifierOrNibName("CompanyInfoController") as? TCompanyInfoTableViewController {
             
-            let company = self.selectedMarker?.userData as? TCompany
+            let company = self.selectedMarker?.userData as? TCompanyAddress
             
             controller.company = company
             

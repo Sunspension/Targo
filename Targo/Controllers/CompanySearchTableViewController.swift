@@ -17,7 +17,7 @@ class CompanySearchTableViewController: UITableViewController {
     
     var userLocation: CLLocation?
     
-    var itemsSource: GenericTableViewDataSource<TCompanyTableViewCell, TCompany>?
+    var itemsSource: GenericTableViewDataSource<TCompanyTableViewCell, TCompanyAddress>?
     
     var companyImages: [TCompanyImage] = []
     
@@ -33,22 +33,24 @@ class CompanySearchTableViewController: UITableViewController {
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         
-        self.itemsSource =
-            GenericTableViewDataSource<TCompanyTableViewCell, TCompany>(reusableIdentifierOrNibName: "CompanyTableCell",
-                                                                                       bindingAction: { (cell, item) in
-                                                                                        
-                                                                                        let company = item.item!
-                                                                                        
-                                                                                        cell.companyTitle.text = company.companyTitle
-                                                                                        cell.additionalInfo.text = company.companyCategoryTitle + ", " + String(company.distance) + " m"
-                                                                                        
-                                                                                        let imageSize = cell.companyImage.bounds.size
-                                                                                        
-                                                                                        if let image = self.companyImages.filter({$0.id == company.companyImageId.value}).first {
-                                                                                        
-                                                                                            let filter = AspectScaledToFillSizeFilter(size: imageSize)
-                                                                                            cell.companyImage.af_setImageWithURL(NSURL(string: image.url)!, filter: filter, imageTransition: .CrossDissolve(0.6))
-                                                                                        }
+        self.itemsSource = GenericTableViewDataSource(reusableIdentifierOrNibName: "CompanyTableCell",
+                                                      bindingAction: { (cell, item) in
+                                                        
+                                                        let company = item.item!
+                                                        
+                                                        cell.companyTitle.text = company.companyTitle
+                                                        cell.additionalInfo.text = company.companyCategoryTitle
+                                                            + ", "
+                                                            + String(company.distance)
+                                                            + " m"
+                                                        
+                                                        let imageSize = cell.companyImage.bounds.size
+                                                        
+                                                        if let image = self.companyImages.filter({$0.id == company.companyImageId.value}).first {
+                                                            
+                                                            let filter = AspectScaledToFillSizeFilter(size: imageSize)
+                                                            cell.companyImage.af_setImageWithURL(NSURL(string: image.url)!, placeholderImage: UIImage(named: "blank"), filter: filter, imageTransition: .CrossDissolve(0.6))
+                                                        }
         })
         
 //        let background = UIImageView(image: UIImage(named: "background"))
@@ -126,7 +128,7 @@ class CompanySearchTableViewController: UITableViewController {
                 
                 self.showWaitOverlay()
                 
-                Api.sharedInstance.loadCompanies(self.userLocation!)
+                Api.sharedInstance.loadCompanyAddressesByLocation(self.userLocation!)
                     
                     .onSuccess(callback: { [weak self] companyPage in
                     
@@ -145,7 +147,7 @@ class CompanySearchTableViewController: UITableViewController {
     
     func createDataSource() {
         
-        let section = GenericCollectionSection<TCompany>()
+        let section = GenericCollectionSection<TCompanyAddress>()
         
         if let page = self.companiesPage {
             

@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Timberjack.register()
         
         var config = Realm.Configuration()
-        config.schemaVersion = 26
+        config.schemaVersion = 28
         config.migrationBlock = { (migration: Migration, oldSchemaVersion: UInt64) in
         
             if oldSchemaVersion < 1 {

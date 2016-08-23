@@ -121,7 +121,7 @@ struct Api {
                     guard let _ = response.result.value else {
                         
                         switch response.result.error! {
-                        
+                            
                         case .BadRequest:
                             
                             let error = response.result.error?.userData as! TBadRequest
@@ -270,15 +270,15 @@ struct Api {
         return p.future
     }
     
-    func loadCompanies(location: CLLocation) -> Future<TCompaniesPage, TargoError> {
+    func loadCompanyAddressesByLocation(location: CLLocation) -> Future<TCompaniesPage, TargoError> {
         
         let p = Promise<TCompaniesPage, TargoError>()
         
-        server.loadCompaniesByLocation(location)
+        server.loadCompanyAddressesByLocation(location)
             
             .responseJSON { response in
                 
-//                print(response.result.value)
+                //                print(response.result.value)
             }
             .responseObject("data", completionHandler: { (response: Response<TCompaniesPage, TargoError>) in
                 
@@ -289,7 +289,7 @@ struct Api {
                 }
                 
                 let page = response.result.value!
-//                print(page)
+                //                print(page)
                 p.success(page)
             })
         
@@ -326,7 +326,7 @@ struct Api {
         let p = Promise<TTestOrder, TargoError>()
         
         server.makeTestOrder()
-
+            
             .responseJSON { response in
                 
                 print(response.result.value)
@@ -413,8 +413,15 @@ struct Api {
                     return
                 }
                 
+                let realm = try! Realm()
+                
+                try! realm.write({
+                    
+                    realm.add(response.result.value!, update: true)
+                })
+                
                 p.success(response.result.value!)
-        })
+            })
         
         return p.future
     }
@@ -426,9 +433,9 @@ struct Api {
         server.checkShopOrderStatus(orderStatus)
             
             .responseJSON { response in
-            
-            print(response.result.value)
-
+                
+                print(response.result.value)
+                
             }.responseObject("data", completionHandler: { (response: Response<TShopOrder, TargoError>) in
                 
                 guard let _ = response.result.value else {
@@ -439,7 +446,55 @@ struct Api {
                 
                 p.success(response.result.value!)
             })
-
+        
+        return p.future
+    }
+    
+    func loadCompanyById(companyId: Int) -> Future<TCompany, TargoError> {
+        
+        let p = Promise<TCompany, TargoError>()
+        
+        server.loadCompanyById(companyId)
+            
+            .responseJSON { response in
+                
+                print(response.result.value)
+                
+            }.responseObject("data", completionHandler: { (response: Response<TCompany, TargoError>) in
+                
+                guard let _ = response.result.value else {
+                    
+                    p.failure(response.result.error!)
+                    return
+                }
+                
+                p.success(response.result.value!)
+            })
+        
+        return p.future
+    }
+    
+    func loadCompaniesByIds(companiesIds: [Int]) -> Future<[TCompany], TargoError> {
+        
+        let p = Promise<[TCompany], TargoError>()
+        
+        server.loadCompaniesByIds(companiesIds)
+            
+            .responseJSON { response in
+                
+                print(response.result.value)
+                
+            }.responseArray("data.company", completionHandler: { (response: Response<[TCompany], TargoError>) in
+                
+                guard let _ = response.result.value else {
+                    
+                    p.failure(response.result.error!)
+                    return
+                }
+                
+                p.success(response.result.value!)
+            })
+        
         return p.future
     }
 }

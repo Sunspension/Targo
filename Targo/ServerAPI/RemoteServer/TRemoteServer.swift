@@ -64,7 +64,7 @@ struct TRemoteServer: PRemoteServerV1 {
         return self.request(.GET, remotePath: baseURLString + "/user/\(userId)")
     }
     
-    func loadCompaniesByLocation(location: CLLocation) -> Request {
+    func loadCompanyAddressesByLocation(location: CLLocation) -> Request {
         //
         //        let params: [String: AnyObject] = ["lat" : location.coordinate.latitude,
         //                                           "lon" : location.coordinate.longitude,
@@ -107,7 +107,7 @@ struct TRemoteServer: PRemoteServerV1 {
         
         let formatter = NSDateFormatter()
         
-        formatter.dateFormat = "yyyy-MM-dd HH:mm"
+        formatter.dateFormat = kDateTimeFormat
         let dateString = formatter.stringFromDate(date)
         
         var goods: [[String : Int]] = []
@@ -129,6 +129,17 @@ struct TRemoteServer: PRemoteServerV1 {
     func checkShopOrderStatus(orderStatus: Int) -> Request {
         
         return self.request(.GET, remotePath: baseURLString + "/shop-order/" + String(orderStatus))
+    }
+    
+    func loadCompanyById(companyId: Int) -> Request {
+        
+        return self.request(.GET, remotePath: baseURLString + "/company/" + String(companyId))
+    }
+    
+    func loadCompaniesByIds(companiesIds: [Int]) -> Request {
+        
+        let params: [String : AnyObject] = ["filters" : [ "id" : companiesIds ]]
+        return self.request(.GET, remotePath: baseURLString + "/company", parameters: params)
     }
     
     

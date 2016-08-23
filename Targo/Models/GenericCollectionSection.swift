@@ -14,6 +14,8 @@ class GenericCollectionSection<TItem>: NSObject {
     
     var items: [GenericCollectionSectionItem<TItem>] = []
     
+    var sectionType: Any?
+    
     
     init(title: String? = nil) {
         

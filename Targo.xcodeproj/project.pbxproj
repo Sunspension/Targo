@@ -51,6 +51,8 @@
 		D470DFB91D384D74003473E6 /* TCompanyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D470DFB81D384D74003473E6 /* TCompanyTableViewCell.swift */; };
 		D498D49B1D2825EC002F0E88 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D498D49D1D2825EC002F0E88 /* Localizable.strings */; };
 		D49C7E891D281DB1004408AF /* RegistrationPhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49C7E881D281DB1004408AF /* RegistrationPhoneViewController.swift */; };
+		D4A392081D6BBBC9005B2047 /* TCompanyAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A392071D6BBBC9005B2047 /* TCompanyAddress.swift */; };
+		D4A3920A1D6BBBF2005B2047 /* THistoryOrderItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A392091D6BBBF2005B2047 /* THistoryOrderItemTableViewCell.swift */; };
 		D4B05FBE1D4FE202000E494E /* TAuthorizationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B05FBD1D4FE202000E494E /* TAuthorizationResponse.swift */; };
 		D4B81B3A1D4FE8AE00F9103C /* TServerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B81B391D4FE8AE00F9103C /* TServerError.swift */; };
 		D4B81B3C1D4FF22300F9103C /* TBadRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B81B3B1D4FF22300F9103C /* TBadRequest.swift */; };
@@ -139,6 +141,8 @@
 		D498D4981D282480002F0E88 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
 		D498D49C1D2825EC002F0E88 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D49C7E881D281DB1004408AF /* RegistrationPhoneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationPhoneViewController.swift; sourceTree = "<group>"; };
+		D4A392071D6BBBC9005B2047 /* TCompanyAddress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TCompanyAddress.swift; path = Models/Company/TCompanyAddress.swift; sourceTree = "<group>"; };
+		D4A392091D6BBBF2005B2047 /* THistoryOrderItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = THistoryOrderItemTableViewCell.swift; sourceTree = "<group>"; };
 		D4B05FBD1D4FE202000E494E /* TAuthorizationResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TAuthorizationResponse.swift; path = Models/Response/TAuthorizationResponse.swift; sourceTree = "<group>"; };
 		D4B81B391D4FE8AE00F9103C /* TServerError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TServerError.swift; path = Models/Response/TServerError.swift; sourceTree = "<group>"; };
 		D4B81B3B1D4FF22300F9103C /* TBadRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TBadRequest.swift; path = Models/Response/TBadRequest.swift; sourceTree = "<group>"; };
@@ -223,6 +227,7 @@
 		D4036A0D1D36CE5E00CA8E38 /* Company */ = {
 			isa = PBXGroup;
 			children = (
+				D4A392071D6BBBC9005B2047 /* TCompanyAddress.swift */,
 				D4036A0E1D36CE8200CA8E38 /* TCompany.swift */,
 				D4036A101D36D08900CA8E38 /* TCompaniesPage.swift */,
 				D4EE595F1D3AC98A0002022F /* TCompanyImage.swift */,
@@ -258,6 +263,7 @@
 		D470DFB71D384D44003473E6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D4A392091D6BBBF2005B2047 /* THistoryOrderItemTableViewCell.swift */,
 				D4151E131D688DF200DB26C0 /* CustomViews */,
 				D470DFB81D384D74003473E6 /* TCompanyTableViewCell.swift */,
 				D4FDE6791D3C007E003EF2CC /* TWorkingTimeTableViewCell.swift */,
@@ -679,6 +685,7 @@
 				D4C47FD11D5FE805000D1AA2 /* CenteredButton.swift in Sources */,
 				D4036A0F1D36CE8200CA8E38 /* TCompany.swift in Sources */,
 				D4D4B68C1D42C67300278E2D /* TMenuItemFullTableViewCell.swift in Sources */,
+				D4A392081D6BBBC9005B2047 /* TCompanyAddress.swift in Sources */,
 				D45F9FB01D610CBD00623A34 /* TPaymentMethodTableViewCell.swift in Sources */,
 				D4F84B491D24668400263D1A /* User.swift in Sources */,
 				D4DD9DDC1D418DC9009C28D5 /* TBaseTableViewCell.swift in Sources */,
@@ -697,6 +704,7 @@
 				D45F9FAE1D61064D00623A34 /* TOrderTotalPriceTableViewCell.swift in Sources */,
 				D4B96F761D244CAA00294A4B /* TRemoteServer.swift in Sources */,
 				D4F6E2A71D560FF20067F9BA /* TCreditCard.swift in Sources */,
+				D4A3920A1D6BBBF2005B2047 /* THistoryOrderItemTableViewCell.swift in Sources */,
 				D4B96F7B1D244DBA00294A4B /* PRemoteServerV1.swift in Sources */,
 				D40301741D397F5100B7B610 /* HTTPManager.swift in Sources */,
 				D4EE59601D3AC98A0002022F /* TCompanyImage.swift in Sources */,

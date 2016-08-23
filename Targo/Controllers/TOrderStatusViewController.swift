@@ -9,26 +9,6 @@
 import UIKit
 import AlamofireImage
 
-enum ShopOrderStatusEnum: Int {
-    
-    case New = 1
-    
-    case View = 3
-    
-    case Cancel
-    
-    case Processing
-    
-    case Complete
-    
-    case Finish
-    
-    case PayError
-    
-    case PaySuccess
-}
-
-
 class TOrderStatusViewController: UIViewController {
     
     
@@ -52,7 +32,7 @@ class TOrderStatusViewController: UIViewController {
     
     var shopOrder: TShopOrder?
     
-    var company: TCompany?
+    var company: TCompanyAddress?
     
     var companyImage: TCompanyImage?
     
@@ -118,7 +98,7 @@ class TOrderStatusViewController: UIViewController {
                     self?.setOrderStatus(shopOrder.orderStatus)
                     
                     if let status = ShopOrderStatusEnum(rawValue: shopOrder.orderStatus)
-                        where status != .Cancel && status != .Finish {
+                        where status != .Canceled && status != .Finished {
                         
                         self?.performSelector(#selector(TOrderStatusViewController.checkOrderStatus),
                             withObject: nil,
@@ -161,7 +141,7 @@ class TOrderStatusViewController: UIViewController {
             
             break
             
-        case .Cancel:
+        case .Canceled:
             
             orderStatusImage.image = UIImage(named: "icon-canceled")
             orderStatusDescription.text = "order_status_canceled".localized

@@ -258,7 +258,7 @@
                                             <rect key="frame" x="8" y="8" width="304" height="266"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2eD-HU-hZF">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2eD-HU-hZF">
                                             <rect key="frame" x="8" y="8" width="304" height="171"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
@@ -525,18 +525,54 @@
         <scene sceneID="czz-lq-AIE">
             <objects>
                 <tableViewController id="h2V-yg-Se3" customClass="TOrdersTableViewController" customModule="Targo" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="xGg-oH-q0a">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="86" sectionHeaderHeight="28" sectionFooterHeight="28" id="xGg-oH-q0a">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="WaQ-JV-HeC">
-                                <rect key="frame" x="0.0" y="92" width="320" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="HistoryOrderItemCell" rowHeight="86" id="WaQ-JV-HeC" customClass="THistoryOrderItemTableViewCell" customModule="Targo" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="92" width="320" height="86"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WaQ-JV-HeC" id="8J5-ym-2DM">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="287" height="85"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Company name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ORc-uf-Yw5">
+                                            <rect key="frame" x="16" y="12" width="198" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Order description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YOb-I2-G3k">
+                                            <rect key="frame" x="16" y="33" width="198" height="40"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="28 May" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u5X-ZO-C1W">
+                                            <rect key="frame" x="222" y="16" width="57" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="u5X-ZO-C1W" firstAttribute="top" secondItem="8J5-ym-2DM" secondAttribute="topMargin" constant="8" id="0Ol-H7-IIZ"/>
+                                        <constraint firstItem="YOb-I2-G3k" firstAttribute="leading" secondItem="ORc-uf-Yw5" secondAttribute="leading" id="9qv-VD-cV8"/>
+                                        <constraint firstItem="ORc-uf-Yw5" firstAttribute="leading" secondItem="8J5-ym-2DM" secondAttribute="leadingMargin" constant="8" id="APn-Af-PAq"/>
+                                        <constraint firstItem="ORc-uf-Yw5" firstAttribute="top" secondItem="8J5-ym-2DM" secondAttribute="topMargin" constant="4" id="CRS-yA-Ei8"/>
+                                        <constraint firstItem="u5X-ZO-C1W" firstAttribute="trailing" secondItem="8J5-ym-2DM" secondAttribute="trailingMargin" id="I6D-PL-tUz"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="YOb-I2-G3k" secondAttribute="bottom" priority="999" constant="4" id="Rl3-pD-DRt"/>
+                                        <constraint firstItem="YOb-I2-G3k" firstAttribute="top" secondItem="ORc-uf-Yw5" secondAttribute="bottom" id="T9a-nk-FAm"/>
+                                        <constraint firstItem="u5X-ZO-C1W" firstAttribute="leading" secondItem="ORc-uf-Yw5" secondAttribute="trailing" constant="8" id="eX7-Rv-4KG"/>
+                                        <constraint firstItem="YOb-I2-G3k" firstAttribute="trailing" secondItem="ORc-uf-Yw5" secondAttribute="trailing" id="tAj-9W-Ml1"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="companyName" destination="ORc-uf-Yw5" id="Ykb-NQ-owJ"/>
+                                    <outlet property="orderDate" destination="u5X-ZO-C1W" id="rDy-Ad-4rk"/>
+                                    <outlet property="orderDescription" destination="YOb-I2-G3k" id="6ec-Nf-mPO"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

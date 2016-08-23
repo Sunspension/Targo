@@ -21,3 +21,5 @@ let kTargodidChangeAuthorizationStatus = "kTargodidChangeAuthorizationStatus"
 // Colors
 let kHexLoginTextColor = "#625375"
 let kHexMainPinkColor = "#CD0079"
+
+let kDateTimeFormat = "yyyy-MM-dd HH:mm:ss"

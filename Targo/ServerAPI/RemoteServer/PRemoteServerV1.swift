@@ -20,7 +20,7 @@ protocol PRemoteServerV1 {
     
     func loadUserById(userId: Int) -> Request
     
-    func loadCompaniesByLocation(location: CLLocation) -> Request
+    func loadCompanyAddressesByLocation(location: CLLocation) -> Request
     
     func loadCompanyMenu(companyId: Int) -> Request
     
@@ -33,4 +33,8 @@ protocol PRemoteServerV1 {
     func makeShopOrder(cardId: Int, items: [Int : Int], addressId: Int, serviceId: Int, date: NSDate) -> Request
     
     func checkShopOrderStatus(orderStatus: Int) -> Request
+    
+    func loadCompanyById(companyId: Int) -> Request
+    
+    func loadCompaniesByIds(companiesIds: [Int]) -> Request
 }
