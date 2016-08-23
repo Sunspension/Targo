@@ -26,6 +26,9 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
     
     let orderItems = ObservableArray<CollectionSectionItem>()
 
+    var cellHeightDictionary = [NSIndexPath : CGFloat]()
+    
+    
     @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var buttonMakeOrder: UIButton!
@@ -282,6 +285,23 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         return header;
     }
     
+    // Here is a magic to save height of current cell, otherwise you will get scrolling of table view content when cell will expand
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        self.cellHeightDictionary[indexPath] = cell.frame.size.height
+    }
+    
+    // Here is a magic to save height of current cell, otherwise you will get scrolling of table view content when cell will expand
+    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        if let height = self.cellHeightDictionary[indexPath] {
+            
+            return height
+        }
+        
+        return UITableViewAutomaticDimension
+    }
+    
     func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         
         if section == 0 {
@@ -325,9 +345,8 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
                 self.orderItems.removeAtIndex(index)
             }
         }
-        
+
         tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .None, animated: true)
     }
     
     /*
