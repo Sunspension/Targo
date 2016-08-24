@@ -32,9 +32,10 @@ class TOrderStatusViewController: UIViewController {
     
     var shopOrder: TShopOrder?
     
-    var company: TCompanyAddress?
+    var companyName: String?
     
     var companyImage: TCompanyImage?
+    
     
     
     override func viewDidLoad() {
@@ -59,10 +60,7 @@ class TOrderStatusViewController: UIViewController {
             self.setOrderStatus(order.orderStatus)
         }
         
-        if let company = self.company {
-            
-            self.title = company.companyTitle
-        }
+        self.title = companyName
         
         if let companyImage =  self.companyImage {
             
@@ -89,6 +87,12 @@ class TOrderStatusViewController: UIViewController {
     func checkOrderStatus() {
         
         if let order = self.shopOrder {
+            
+            guard let status = ShopOrderStatusEnum(rawValue: order.orderStatus)
+                where status != .Canceled && status != .Finished else {
+                    
+                    return
+            }
             
             Api.sharedInstance.checkShopOrderStatus(order.id)
                 
@@ -149,6 +153,8 @@ class TOrderStatusViewController: UIViewController {
             statusIndicator2.backgroundColor = UIColor.lightGrayColor()
             statusIndicator3.backgroundColor = UIColor.lightGrayColor()
             statusIndicator4.backgroundColor = UIColor.lightGrayColor()
+            
+            
             
             break
             

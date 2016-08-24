@@ -41,7 +41,7 @@ class CompanySearchTableViewController: UITableViewController {
                                                         cell.companyTitle.text = company.companyTitle
                                                         cell.additionalInfo.text = company.companyCategoryTitle
                                                             + ", "
-                                                            + String(company.distance)
+                                                            + String(Int(company.distance))
                                                             + " m"
                                                         
                                                         let imageSize = cell.companyImage.bounds.size
@@ -58,7 +58,10 @@ class CompanySearchTableViewController: UITableViewController {
 //        self.tableView.backgroundView = background
         self.tableView.dataSource = self.itemsSource
         
-        TLocationManager.sharedInstance.subscribeObjectForLocationChange(self, selector: #selector(CompanySearchTableViewController.userLocationChanged))
+        TLocationManager.sharedInstance.subscribeObjectForLocationChange(self,
+                                                                         selector: #selector(CompanySearchTableViewController.userLocationChanged))
+        
+        self.navigationItem.titleView = UIImageView(image: UIImage(named: "icon-logo"))
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -105,12 +108,6 @@ class CompanySearchTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         
-        // This code is here because of strange bug with the size of a shadow
-//        if cell.layer.shadowPath != nil {
-//            
-//            return
-//        }
-        
         let viewCell = cell as! TCompanyTableViewCell
         let layer = viewCell.shadowView.layer
         layer.shadowOffset = CGSize(width: 0, height: 2)
@@ -134,7 +131,9 @@ class CompanySearchTableViewController: UITableViewController {
                     
                     self?.removeAllOverlays()
                     self?.companiesPage = companyPage
+                    
                     self?.createDataSource()
+                    self?.tableView.reloadData()
                     
                 }).onFailure(callback: { [weak self] error in
                     

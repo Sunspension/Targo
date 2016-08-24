@@ -444,6 +444,13 @@ struct Api {
                     return
                 }
                 
+                let realm = try! Realm()
+                
+                try! realm.write({
+                    
+                    realm.add(response.result.value!, update: true)
+                })
+                
                 p.success(response.result.value!)
             })
         
@@ -485,6 +492,55 @@ struct Api {
                 print(response.result.value)
                 
             }.responseArray("data.company", completionHandler: { (response: Response<[TCompany], TargoError>) in
+                
+                guard let _ = response.result.value else {
+                    
+                    p.failure(response.result.error!)
+                    return
+                }
+                
+                p.success(response.result.value!)
+                
+            })
+        
+        return p.future
+    }
+    
+    func loadImageById(imageId: Int) -> Future<TCompanyImage, TargoError> {
+        
+        let p = Promise<TCompanyImage, TargoError>()
+        
+        server.loadImageById(imageId)
+            
+            .responseJSON { response in
+                
+                print(response.result.value)
+                
+            }.responseObject("data.image", completionHandler: { (response: Response<TCompanyImage, TargoError>) in
+                
+                guard let _ = response.result.value else {
+                    
+                    p.failure(response.result.error!)
+                    return
+                }
+                
+                p.success(response.result.value!)
+            })
+        
+        return p.future
+    }
+    
+    func loadImagesByIds(imageIds: [Int]) -> Future<[TCompanyImage], TargoError> {
+        
+        let p = Promise<[TCompanyImage], TargoError>()
+        
+        server.loadImagesByIds(imageIds)
+            
+            .responseJSON { response in
+            
+                print(response.result.value)
+                
+            }.responseArray("data.image", completionHandler: { (response: Response<[TCompanyImage], TargoError>) in
                 
                 guard let _ = response.result.value else {
                     

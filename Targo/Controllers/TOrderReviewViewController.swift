@@ -252,14 +252,12 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate {
                 
                 if let controller = self?.instantiateViewControllerWithIdentifierOrNibName("OrderStatus") as? TOrderStatusViewController {
                     
-                    controller.company = self?.company
+                    controller.companyName = self?.company?.companyTitle
                     controller.shopOrder = shopOrder
                     controller.companyImage = self?.companyImage
                     
                     self?.navigationController?.pushViewController(controller, animated: true)
                 }
-                
-                
                 
             }.onFailure {[weak self] error in
                 

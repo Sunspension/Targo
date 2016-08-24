@@ -142,6 +142,16 @@ struct TRemoteServer: PRemoteServerV1 {
         return self.request(.GET, remotePath: baseURLString + "/company", parameters: params)
     }
     
+    func loadImageById(imageId: Int) -> Request {
+        
+        return self.request(.GET, remotePath: baseURLString + "/image/" + String(imageId))
+    }
+    
+    func loadImagesByIds(imageIds: [Int]) -> Request {
+        
+        let params: [String : AnyObject] = ["filters" : [ "id" : imageIds ]]
+        return self.request(.GET, remotePath: baseURLString + "/image", parameters: params)
+    }
     
     // mark - private methods
     

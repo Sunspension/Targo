@@ -43,6 +43,7 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
         
         self.title = "maps_title".localized
         
+        self.navigationItem.titleView = UIImageView(image: UIImage(named: "icon-logo"))
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         
         if let companies = self.companiesPage?.companies {

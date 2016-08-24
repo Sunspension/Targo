@@ -37,4 +37,8 @@ protocol PRemoteServerV1 {
     func loadCompanyById(companyId: Int) -> Request
     
     func loadCompaniesByIds(companiesIds: [Int]) -> Request
+    
+    func loadImageById(imageId: Int) -> Request
+    
+    func loadImagesByIds(imageIds: [Int]) -> Request
 }

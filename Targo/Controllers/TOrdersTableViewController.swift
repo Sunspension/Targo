@@ -11,7 +11,7 @@ import DynamicColor
 import RealmSwift
 import SwiftOverlays
 
-enum ShopOrdersSectionEnum {
+enum ShopOrdersSectionEnum: Int {
     
     case History
     
@@ -26,6 +26,8 @@ class TOrdersTableViewController: UITableViewController {
     var companies: [TCompany]?
     
     var orders: [TShopOrder]?
+    
+    var companyImages: [TCompanyImage]?
     
     
     override func viewDidLoad() {
@@ -77,6 +79,9 @@ class TOrdersTableViewController: UITableViewController {
         self.tableView.tableFooterView = UIView()
         self.tableView.setup()
         
+        self.tableView.registerNib(UINib(nibName: "TCompanyMenuHeaderView", bundle: nil),
+                                   forHeaderFooterViewReuseIdentifier: "sectionHeader")
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -96,27 +101,38 @@ class TOrdersTableViewController: UITableViewController {
         
         if let orders = self.orders {
             
-            let companyId = orders.map({ $0.companyId })
-            let set = Set<Int>(companyId)
+            let companyIds = orders.map({ $0.companyId })
+            let set = Set<Int>(companyIds)
             let ids = Array(set)
             
             self.showWaitOverlay()
             
-            Api.sharedInstance.loadCompaniesByIds(ids).onSuccess(callback: {[weak self] companies in
+            Api.sharedInstance.loadCompaniesByIds(ids)
                 
-                self?.removeAllOverlays()
-                
-                self?.companies = companies
-                self?.createDataSource()
-                self?.tableView.reloadData()
-                
-                }).onFailure(callback: { error in
+                .onSuccess(callback: {[weak self] companies in
                     
-                    self.removeAllOverlays()
-                })
+                    let imageIds = companies.map({ $0.imageId })
+                    let set = Set<Int>(imageIds)
+                    let ids = Array(set)
+                    
+                    Api.sharedInstance.loadImagesByIds(ids).onSuccess(callback: { images in
+                        
+                        self?.removeAllOverlays()
+                        
+                        self?.companies = companies
+                        self?.companyImages = images
+                        
+                        self?.createDataSource()
+                        self?.tableView.reloadData()
+                    })
+                    
+                    }).onFailure(callback: { error in
+                        
+                        self.removeAllOverlays()
+                    })
         }
     }
-
+    
     private func createDataSource() {
         
         self.dataSource?.sections.removeAll()
@@ -133,6 +149,7 @@ class TOrdersTableViewController: UITableViewController {
                 if sectionHistory == nil {
                     
                     sectionHistory = GenericCollectionSection<TShopOrder>(title: "order_history_order_title".localized)
+                    sectionHistory!.sectionType = ShopOrdersSectionEnum.History
                     self.dataSource?.sections.append(sectionHistory!)
                 }
                 
@@ -146,11 +163,56 @@ class TOrdersTableViewController: UITableViewController {
                 if inProgress == nil {
                     
                     inProgress = GenericCollectionSection<TShopOrder>(title: "order_in_progress_order_title".localized)
+                    inProgress!.sectionType = ShopOrdersSectionEnum.InProgress
                     self.dataSource?.sections.append(inProgress!)
                 }
                 
                 inProgress!.items.append(GenericCollectionSectionItem(item: order))
             }
+        }
+        
+        self.dataSource?.sections.sortInPlace({ ($0.sectionType as! ShopOrdersSectionEnum).rawValue > ($1.sectionType as! ShopOrdersSectionEnum).rawValue })
+    }
+    
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        let header = tableView.dequeueReusableHeaderFooterViewWithIdentifier("sectionHeader") as! TCompanyMenuHeaderView
+        header.title.text = self.dataSource!.sections[section].title
+        
+        return header;
+    }
+    
+    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        
+        let header = view as! TCompanyMenuHeaderView
+        
+        header.background.backgroundColor = UIColor(hexString: kHexMainPinkColor)
+        header.layer.shadowPath = UIBezierPath(rect: header.layer.bounds).CGPath
+        header.layer.shadowOffset = CGSize(width: 0, height: 2)
+        header.layer.shadowOpacity = 0.5
+    }
+
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        if let controller = self.instantiateViewControllerWithIdentifierOrNibName("OrderStatus") as? TOrderStatusViewController {
+            
+            let item = self.dataSource!.sections[indexPath.section].items[indexPath.row]
+            
+            if let company = self.companies?.filter({ $0.id == item.item!.companyId }).first {
+                
+                controller.companyName = company.title
+                
+                if let image = self.companyImages?.filter({ $0.id == company.imageId }).first {
+                    
+                    controller.companyImage = image
+                }
+            }
+            
+            controller.shopOrder = item.item
+            
+            self.navigationController?.pushViewController(controller, animated: true)
         }
     }
     

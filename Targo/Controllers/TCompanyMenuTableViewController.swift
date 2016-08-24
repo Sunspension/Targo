@@ -117,11 +117,9 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         
         if let company = company {
             
-//            self.startActivityAnimating(type: .BallClipRotateMultiple, color: UIColor(hexString: kHexMainPinkColor))
-            
             self.showWaitOverlay()
             
-            Api.sharedInstance.loadCompanyMenu(1)
+            Api.sharedInstance.loadCompanyMenu(company.id)
                 
                 .onSuccess(callback: { [weak self] menuPage in
                 
@@ -142,11 +140,6 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     override func viewWillAppear(animated: Bool) {
