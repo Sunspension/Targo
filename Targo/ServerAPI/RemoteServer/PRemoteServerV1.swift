@@ -41,4 +41,6 @@ protocol PRemoteServerV1 {
     func loadImageById(imageId: Int) -> Request
     
     func loadImagesByIds(imageIds: [Int]) -> Request
+    
+    func loadShopOrders(updatedDate: String, limit: Int) -> Request
 }

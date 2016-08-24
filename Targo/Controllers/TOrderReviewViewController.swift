@@ -41,7 +41,10 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate {
         tableView.tableFooterView = UIView()
         tableView.contentInset = UIEdgeInsetsMake(0, 0, 20, 0)
         
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "",
+                                                                style: .Plain,
+                                                                target: nil,
+                                                                action: nil)
         
         let button = self.makeOrder
         
@@ -76,6 +79,7 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate {
                 print(error)
         }
     }
+    
     
     private func createDataSource() {
         
@@ -242,7 +246,7 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate {
         
         Api.sharedInstance.makeShopOrder(card.id,
             items: items,
-            addressId: 1, //self.company!.id
+            addressId: self.company!.id,
             serviceId: deliverySelectedIndex + 1,
             date: expirationDate!)
             
@@ -255,6 +259,7 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate {
                     controller.companyName = self?.company?.companyTitle
                     controller.shopOrder = shopOrder
                     controller.companyImage = self?.companyImage
+                    controller.reason = .AfterOrder
                     
                     self?.navigationController?.pushViewController(controller, animated: true)
                 }

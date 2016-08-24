@@ -33,6 +33,8 @@ class TOrdersTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        
         self.dataSource = GenericTableViewDataSource(reusableIdentifierOrNibName: "HistoryOrderItemCell",
                                                      bindingAction: { (cell, item) in
                                                         
@@ -82,6 +84,14 @@ class TOrdersTableViewController: UITableViewController {
         self.tableView.registerNib(UINib(nibName: "TCompanyMenuHeaderView", bundle: nil),
                                    forHeaderFooterViewReuseIdentifier: "sectionHeader")
         
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = kDateTimeFormat
+        
+        Api.sharedInstance.loadShopOrders( formatter.stringFromDate(NSDate()), limit: 5).onSuccess { orders in
+            
+            print("orders: \(orders)")
+        }
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -96,7 +106,7 @@ class TOrdersTableViewController: UITableViewController {
         self.setup()
         
         let realm = try! Realm()
-        let orders = realm.objects(TShopOrder)
+        let orders = realm.objects(TShopOrder).sorted("id", ascending: false)
         self.orders = Array<TShopOrder>(orders)
         
         if let orders = self.orders {
@@ -105,7 +115,7 @@ class TOrdersTableViewController: UITableViewController {
             let set = Set<Int>(companyIds)
             let ids = Array(set)
             
-            self.showWaitOverlay()
+//            self.showWaitOverlay()
             
             Api.sharedInstance.loadCompaniesByIds(ids)
                 
@@ -117,7 +127,7 @@ class TOrdersTableViewController: UITableViewController {
                     
                     Api.sharedInstance.loadImagesByIds(ids).onSuccess(callback: { images in
                         
-                        self?.removeAllOverlays()
+//                        self?.removeAllOverlays()
                         
                         self?.companies = companies
                         self?.companyImages = images
@@ -128,7 +138,7 @@ class TOrdersTableViewController: UITableViewController {
                     
                     }).onFailure(callback: { error in
                         
-                        self.removeAllOverlays()
+//                        self.removeAllOverlays()
                     })
         }
     }

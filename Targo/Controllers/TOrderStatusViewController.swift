@@ -9,6 +9,16 @@
 import UIKit
 import AlamofireImage
 
+enum OrderStatusOpenReasonEnum {
+    
+    case Undefined
+    
+    case AfterOrder
+    
+    case OpenOrderDetails
+}
+
+
 class TOrderStatusViewController: UIViewController {
     
     
@@ -36,6 +46,7 @@ class TOrderStatusViewController: UIViewController {
     
     var companyImage: TCompanyImage?
     
+    var reason: OrderStatusOpenReasonEnum = .Undefined
     
     
     override func viewDidLoad() {
@@ -52,7 +63,14 @@ class TOrderStatusViewController: UIViewController {
         
         self.cancelOrder.setTitle("order_cancel_order".localized, forState: .Normal)
         
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "icon-bill"), style: .Plain, target: self, action: #selector(TOrderStatusViewController.openBill))
+        
+        if self.reason == .AfterOrder {
+            
+            self.navigationItem.setHidesBackButton(true, animated: false)
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "action_close".localized, style: .Plain, target: self, action: #selector(TOrderStatusViewController.backAction))
+        }
         
         if let order = self.shopOrder {
             
@@ -79,9 +97,20 @@ class TOrderStatusViewController: UIViewController {
         self.checkOrderStatus()
     }
     
+    func backAction() {
+        
+        self.navigationController?.popToRootViewControllerAnimated(true)
+    }
+    
     func openBill() {
         
-        
+        if let controller = self.instantiateViewControllerWithIdentifierOrNibName("OrderBill") as? TOrderBillTableViewController {
+            
+            controller.companyName = self.companyName
+            controller.shopOrder = self.shopOrder
+            
+            self.navigationController?.pushViewController(controller, animated: true)
+        }
     }
     
     func checkOrderStatus() {
@@ -153,9 +182,7 @@ class TOrderStatusViewController: UIViewController {
             statusIndicator2.backgroundColor = UIColor.lightGrayColor()
             statusIndicator3.backgroundColor = UIColor.lightGrayColor()
             statusIndicator4.backgroundColor = UIColor.lightGrayColor()
-            
-            
-            
+                
             break
             
         default:

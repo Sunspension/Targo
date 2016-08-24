@@ -19,6 +19,7 @@
 		D40E10241D3EC1660012DCF4 /* TableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40E10231D3EC1660012DCF4 /* TableViewDataSource.swift */; };
 		D40E10281D3ECE260012DCF4 /* TCompanySearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40E10261D3ECE260012DCF4 /* TCompanySearchTableViewCell.swift */; };
 		D40E10291D3ECE260012DCF4 /* TCompanySearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D40E10271D3ECE260012DCF4 /* TCompanySearchTableViewCell.xib */; };
+		D413357D1D6E4FCE00542BA1 /* TOrderBillTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D413357C1D6E4FCE00542BA1 /* TOrderBillTableViewController.swift */; };
 		D4151E121D688D0B00DB26C0 /* TOrderStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4151E111D688D0B00DB26C0 /* TOrderStatusViewController.swift */; };
 		D4151E191D689F5900DB26C0 /* RealmString.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4151E181D689F5900DB26C0 /* RealmString.swift */; };
 		D41D9D8E1D46A1AB00358961 /* TCompanyInfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41D9D8D1D46A1AB00358961 /* TCompanyInfoTableViewController.swift */; };
@@ -75,6 +76,8 @@
 		D4EE59671D3AFE1E0002022F /* TFeedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EE59661D3AFE1E0002022F /* TFeedTableViewController.swift */; };
 		D4EE59691D3AFEE90002022F /* TCompanyMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EE59681D3AFEE90002022F /* TCompanyMenuTableViewController.swift */; };
 		D4EE596B1D3AFFA60002022F /* AlamofireExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EE596A1D3AFFA60002022F /* AlamofireExtensions.swift */; };
+		D4F2136E1D6E55D000D94B62 /* TBillCompanyNameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F2136D1D6E55D000D94B62 /* TBillCompanyNameTableViewCell.swift */; };
+		D4F213701D6E570100D94B62 /* TBillMenuItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F2136F1D6E570100D94B62 /* TBillMenuItemTableViewCell.swift */; };
 		D4F464D31D40096A009015FC /* TCompanyMenuPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F464D21D40096A009015FC /* TCompanyMenuPage.swift */; };
 		D4F464D51D400A17009015FC /* TShopCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F464D41D400A17009015FC /* TShopCategory.swift */; };
 		D4F464D81D400E14009015FC /* RealmInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F464D71D400E14009015FC /* RealmInt.swift */; };
@@ -108,6 +111,7 @@
 		D40E10231D3EC1660012DCF4 /* TableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TableViewDataSource.swift; path = Models/TableViewDataSource.swift; sourceTree = "<group>"; };
 		D40E10261D3ECE260012DCF4 /* TCompanySearchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCompanySearchTableViewCell.swift; sourceTree = "<group>"; };
 		D40E10271D3ECE260012DCF4 /* TCompanySearchTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCompanySearchTableViewCell.xib; sourceTree = "<group>"; };
+		D413357C1D6E4FCE00542BA1 /* TOrderBillTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TOrderBillTableViewController.swift; sourceTree = "<group>"; };
 		D4151E111D688D0B00DB26C0 /* TOrderStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TOrderStatusViewController.swift; sourceTree = "<group>"; };
 		D4151E181D689F5900DB26C0 /* RealmString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RealmString.swift; path = Models/Realm/RealmString.swift; sourceTree = "<group>"; };
 		D41D9D8D1D46A1AB00358961 /* TCompanyInfoTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCompanyInfoTableViewController.swift; sourceTree = "<group>"; };
@@ -165,6 +169,8 @@
 		D4EE59661D3AFE1E0002022F /* TFeedTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFeedTableViewController.swift; sourceTree = "<group>"; };
 		D4EE59681D3AFEE90002022F /* TCompanyMenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCompanyMenuTableViewController.swift; sourceTree = "<group>"; };
 		D4EE596A1D3AFFA60002022F /* AlamofireExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlamofireExtensions.swift; sourceTree = "<group>"; };
+		D4F2136D1D6E55D000D94B62 /* TBillCompanyNameTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TBillCompanyNameTableViewCell.swift; sourceTree = "<group>"; };
+		D4F2136F1D6E570100D94B62 /* TBillMenuItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TBillMenuItemTableViewCell.swift; sourceTree = "<group>"; };
 		D4F464D21D40096A009015FC /* TCompanyMenuPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TCompanyMenuPage.swift; path = Targo/Models/Menu/TCompanyMenuPage.swift; sourceTree = SOURCE_ROOT; };
 		D4F464D41D400A17009015FC /* TShopCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TShopCategory.swift; path = Targo/Models/Menu/TShopCategory.swift; sourceTree = SOURCE_ROOT; };
 		D4F464D71D400E14009015FC /* RealmInt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RealmInt.swift; path = Models/Realm/RealmInt.swift; sourceTree = "<group>"; };
@@ -235,13 +241,6 @@
 			name = Company;
 			sourceTree = "<group>";
 		};
-		D4151E131D688DF200DB26C0 /* CustomViews */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = CustomViews;
-			sourceTree = "<group>";
-		};
 		D464027C1D21CBE200644463 /* ServerAPI */ = {
 			isa = PBXGroup;
 			children = (
@@ -264,7 +263,6 @@
 			isa = PBXGroup;
 			children = (
 				D4A392091D6BBBF2005B2047 /* THistoryOrderItemTableViewCell.swift */,
-				D4151E131D688DF200DB26C0 /* CustomViews */,
 				D470DFB81D384D74003473E6 /* TCompanyTableViewCell.swift */,
 				D4FDE6791D3C007E003EF2CC /* TWorkingTimeTableViewCell.swift */,
 				D40E101F1D3EAEE60012DCF4 /* TCompanyImageMenuTableViewCell.swift */,
@@ -291,6 +289,8 @@
 				D45F9FAF1D610CBD00623A34 /* TPaymentMethodTableViewCell.swift */,
 				D46A4C581D63B363003CF2F9 /* TDeliveryMethodTableViewCell.swift */,
 				D46A4C5C1D63BFA3003CF2F9 /* TUserCreditCardTableViewCell.swift */,
+				D4F2136D1D6E55D000D94B62 /* TBillCompanyNameTableViewCell.swift */,
+				D4F2136F1D6E570100D94B62 /* TBillMenuItemTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -313,6 +313,7 @@
 				D45F9FA91D6101FD00623A34 /* TOrderReviewViewController.swift */,
 				D46A4C5A1D63BF6D003CF2F9 /* TUserCreditCardsTableViewController.swift */,
 				D4151E111D688D0B00DB26C0 /* TOrderStatusViewController.swift */,
+				D413357C1D6E4FCE00542BA1 /* TOrderBillTableViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -667,17 +668,20 @@
 				D470DFB91D384D74003473E6 /* TCompanyTableViewCell.swift in Sources */,
 				D4F84B431D24591300263D1A /* AppExtensions.swift in Sources */,
 				D41D9D8E1D46A1AB00358961 /* TCompanyInfoTableViewController.swift in Sources */,
+				D4F2136E1D6E55D000D94B62 /* TBillCompanyNameTableViewCell.swift in Sources */,
 				D46DEC771D62582000B4716B /* GenericCollectionSectionItem.swift in Sources */,
 				D4EE59651D3AFDE30002022F /* TOrdersTableViewController.swift in Sources */,
 				D4EE596B1D3AFFA60002022F /* AlamofireExtensions.swift in Sources */,
 				D40301761D39839C00B7B610 /* ListTransform.swift in Sources */,
 				D4B81B3C1D4FF22300F9103C /* TBadRequest.swift in Sources */,
+				D413357D1D6E4FCE00542BA1 /* TOrderBillTableViewController.swift in Sources */,
 				D4D0D6D61D2C5B5200B4E01D /* Api.swift in Sources */,
 				D40CC4DB1D65034D003A1487 /* TShopOrder.swift in Sources */,
 				D45F9FAC1D61055E00623A34 /* TOrderItemTableViewCell.swift in Sources */,
 				D4F464D51D400A17009015FC /* TShopCategory.swift in Sources */,
 				D49C7E891D281DB1004408AF /* RegistrationPhoneViewController.swift in Sources */,
 				E5C062D91D2106BF002074C4 /* AppDelegate.swift in Sources */,
+				D4F213701D6E570100D94B62 /* TBillMenuItemTableViewCell.swift in Sources */,
 				D4F464DA1D402EF3009015FC /* TCompanyMenuHeaderView.swift in Sources */,
 				D46A4C591D63B363003CF2F9 /* TDeliveryMethodTableViewCell.swift in Sources */,
 				D44930941D495D5100ADF70A /* TAddCreditCardViewController.swift in Sources */,

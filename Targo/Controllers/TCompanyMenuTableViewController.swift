@@ -119,7 +119,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
             
             self.showWaitOverlay()
             
-            Api.sharedInstance.loadCompanyMenu(company.id)
+            Api.sharedInstance.loadCompanyMenu(company.companyId)
                 
                 .onSuccess(callback: { [weak self] menuPage in
                 

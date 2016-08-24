@@ -36,6 +36,8 @@ pod 'RealmSwift'
 pod 'SwiftOverlays', '~> 2.0.0'
 #pod 'GaugeKit'
 
+pod 'M13ProgressSuite'
+
 #Text
 pod 'SwiftString'
 

@@ -153,6 +153,19 @@ struct TRemoteServer: PRemoteServerV1 {
         return self.request(.GET, remotePath: baseURLString + "/image", parameters: params)
     }
     
+    func loadShopOrders(updatedDate: String, limit: Int) -> Request {
+        
+        var params: [String : AnyObject] = [:]
+        
+        params["extend"] = "company"
+        params["merge"] = "true"
+        params["conditions"] = ["updated_at" : ["<" : updatedDate]]
+        params["limit"] = limit
+        params["order"] = ["id" : "desc"]
+        
+        return self.request(.GET, remotePath: baseURLString + "/shop-order", parameters: params)
+    }
+    
     // mark - private methods
     
     private func request(method: Alamofire.Method, remotePath: URLStringConvertible) -> Request {
