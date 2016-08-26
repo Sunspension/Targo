@@ -64,7 +64,7 @@ struct TRemoteServer: PRemoteServerV1 {
         return self.request(.GET, remotePath: baseURLString + "/user/\(userId)")
     }
     
-    func loadCompanyAddressesByLocation(location: CLLocation) -> Request {
+    func loadCompanyAddresses(location: CLLocation, pageNumber: Int, pageSize: Int) -> Request {
         //
         //        let params: [String: AnyObject] = ["lat" : location.coordinate.latitude,
         //                                           "lon" : location.coordinate.longitude,
@@ -74,7 +74,9 @@ struct TRemoteServer: PRemoteServerV1 {
         let params: [String: AnyObject] = ["lat" : location.coordinate.latitude,
                                            "lon" : location.coordinate.longitude,
                                            "order" : ["dist" : "asc"],
-                                           "extend" : "image"]
+                                           "extend" : "image",
+                                           "page_size" : pageSize,
+                                           "page" : pageNumber]
         
         return self.request(.GET, remotePath: baseURLString + "/company-address", parameters: params)
     }

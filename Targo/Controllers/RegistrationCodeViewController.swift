@@ -23,7 +23,7 @@ class RegistrationCodeViewController: UIViewController {
         
         super.viewDidLoad()
         
-        self.setup()
+//        self.setup()
         
         buttonNext.tintColor = DynamicColor(hexString: kHexMainPinkColor)
         self.title = "registration_phone_title".localized

@@ -20,7 +20,7 @@ protocol PRemoteServerV1 {
     
     func loadUserById(userId: Int) -> Request
     
-    func loadCompanyAddressesByLocation(location: CLLocation) -> Request
+    func loadCompanyAddresses(location: CLLocation, pageNumber: Int, pageSize: Int) -> Request
     
     func loadCompanyMenu(companyId: Int) -> Request
     

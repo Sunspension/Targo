@@ -10,19 +10,20 @@ import UIKit
 import ObjectMapper
 import RealmSwift
 
-class TCompaniesPage: Object, Mappable {
+class TCompanyAddressesPage: Mappable {
 
-    dynamic var totalCount = 0
+    var totalCount = 0
     
-    dynamic var pageCount = 0
+    var pageCount = 0
     
-    dynamic var currentPage = 0
+    var currentPage = 0
     
-    dynamic var pageSize = 0
+    var pageSize = 0
     
-    var companies = List<TCompanyAddress>()
+    var companies = [TCompanyAddress]()
     
-    var images = List<TCompanyImage>()
+    var images = [TCompanyImage]()
+    
     
     required convenience init?(_ map: Map) {
         
@@ -36,7 +37,7 @@ class TCompaniesPage: Object, Mappable {
         pageCount <- map["meta.page_count"]
         currentPage <- map["meta.current_page"]
         pageSize <- map["meta.page_size"]
-        companies <- (map["company-address"], ListTransform<TCompanyAddress>())
-        images <- (map["image"], ListTransform<TCompanyImage>())
+        companies <- map["company-address"]
+        images <- map["image"]
     }
 }

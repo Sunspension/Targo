@@ -270,17 +270,17 @@ struct Api {
         return p.future
     }
     
-    func loadCompanyAddressesByLocation(location: CLLocation) -> Future<TCompaniesPage, TargoError> {
+    func loadCompanyAddresses(location: CLLocation, pageNumber: Int, pageSize: Int = 20) -> Future<TCompanyAddressesPage, TargoError> {
         
-        let p = Promise<TCompaniesPage, TargoError>()
+        let p = Promise<TCompanyAddressesPage, TargoError>()
         
-        server.loadCompanyAddressesByLocation(location)
+        server.loadCompanyAddresses(location, pageNumber: pageNumber, pageSize: pageSize)
             
             .responseJSON { response in
                 
-                //                print(response.result.value)
+                print(response.result.value)
             }
-            .responseObject("data", completionHandler: { (response: Response<TCompaniesPage, TargoError>) in
+            .responseObject("data", completionHandler: { (response: Response<TCompanyAddressesPage, TargoError>) in
                 
                 guard let _ = response.result.value else {
                     
@@ -289,7 +289,6 @@ struct Api {
                 }
                 
                 let page = response.result.value!
-                //                print(page)
                 p.success(page)
             })
         

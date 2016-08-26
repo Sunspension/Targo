@@ -32,11 +32,11 @@ pod 'RealmSwift'
 #pod 'EZLoadingActivity'
 #pod 'JLToast', '~> 1.4'
 #pod 'LiquidLoader'
-#pod 'NVActivityIndicatorView'
+pod 'NVActivityIndicatorView'
 pod 'SwiftOverlays', '~> 2.0.0'
 #pod 'GaugeKit'
 pod 'M13ProgressSuite'
-pod 'KDCircularProgress'
+#pod 'KDCircularProgress'
 
 #Text
 pod 'SwiftString'

@@ -26,13 +26,13 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
     @IBOutlet weak var companyImage: UIImageView!
     
     
-    var companyImages: [TCompanyImage] = []
+    var companyImages: Set<TCompanyImage>?
     
     var selectedMarker: GMSMarker?
     
     var didsetLocation = false
     
-    var companiesPage: TCompaniesPage?
+    var companiesPage: TCompanyAddressesPage?
     
     
     override func viewDidLoad() {
@@ -87,7 +87,7 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
         self.companyAddress.text = company.title
         self.companyInfo.text = company.companyCategoryTitle + ", " + String(company.distance) + " m"
         
-        if let image = self.companyImages.filter({$0.id == company.companyImageId.value}).first {
+        if let image = self.companyImages?.filter({$0.id == company.companyImageId.value}).first {
             
             let filter = AspectScaledToFillSizeFilter(size: self.companyImage.frame.size)
             self.companyImage.af_setImageWithURL(NSURL(string: image.url)!, filter: filter, imageTransition: .CrossDissolve(0.6))
@@ -132,7 +132,7 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
             
             controller.company = company
             
-            if let image = self.companyImages.filter({$0.id == company?.companyImageId.value}).first {
+            if let image = self.companyImages?.filter({$0.id == company?.companyImageId.value}).first {
                 
                 controller.companyImage = image
                 

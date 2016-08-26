@@ -15,26 +15,52 @@ import SwiftOverlays
 
 class CompanySearchTableViewController: UITableViewController {
     
+    let section = GenericCollectionSection<TCompanyAddress>()
+    
+    var companyImages = Set<TCompanyImage>()
+    
     var userLocation: CLLocation?
     
-    var itemsSource: GenericTableViewDataSource<TCompanyTableViewCell, TCompanyAddress>?
+    var dataSource: GenericTableViewDataSource<TCompanyTableViewCell, TCompanyAddress>?
     
-    var companyImages: [TCompanyImage] = []
+    var companiesPage: TCompanyAddressesPage?
     
-    var companiesPage: TCompaniesPage?
+    var pageNumer: Int = 1
+    
+    var pageSize: Int = 20
+    
+    var loading = false
+    
+    var canLoadNext = true
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.tableView.setup()
+        self.setup()
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "icon-map"), style: .Plain, target: self, action: #selector(CompanySearchTableViewController.openMap))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "icon-map"),
+                                                                 style: .Plain,
+                                                                 target: self,
+                                                                 action: #selector(CompanySearchTableViewController.openMap))
         
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "",
+                                                                style: .Plain,
+                                                                target: nil,
+                                                                action: nil)
         
-        self.itemsSource = GenericTableViewDataSource(reusableIdentifierOrNibName: "CompanyTableCell",
+        self.dataSource = GenericTableViewDataSource(reusableIdentifierOrNibName: "CompanyTableCell",
                                                       bindingAction: { (cell, item) in
+                                                        
+                                                        let indexPath = item.indexPath
+                                                        
+                                                        if indexPath.row
+                                                            == self.dataSource!.sections[indexPath.section].items.count - 2
+                                                            && self.canLoadNext {
+                                                            
+                                                            self.loadCompanyAddress()
+                                                        }
                                                         
                                                         let company = item.item!
                                                         
@@ -56,7 +82,9 @@ class CompanySearchTableViewController: UITableViewController {
 //        let background = UIImageView(image: UIImage(named: "background"))
 //        background.frame = self.tableView.frame
 //        self.tableView.backgroundView = background
-        self.tableView.dataSource = self.itemsSource
+        
+        self.dataSource?.sections.append(self.section)
+        self.tableView.dataSource = self.dataSource
         
         TLocationManager.sharedInstance.subscribeObjectForLocationChange(self,
                                                                          selector: #selector(CompanySearchTableViewController.userLocationChanged))
@@ -70,21 +98,16 @@ class CompanySearchTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     override func viewWillAppear(animated: Bool) {
         
         super.viewWillAppear(animated)
         
-        self.setup()
+        self.tableView.reloadData()
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        let item = self.itemsSource!.sections[indexPath.section].items[indexPath.row]
+        let item = self.dataSource!.sections[indexPath.section].items[indexPath.row]
         
         if let controller = self.instantiateViewControllerWithIdentifierOrNibName("MenuController") as? TCompanyMenuTableViewController {
             
@@ -102,6 +125,7 @@ class CompanySearchTableViewController: UITableViewController {
             
             mapViewController.companiesPage = self.companiesPage
             mapViewController.companyImages = self.companyImages
+            
             self.navigationController?.pushViewController(mapViewController, animated: true)
         }
     }
@@ -125,40 +149,80 @@ class CompanySearchTableViewController: UITableViewController {
                 
                 self.showWaitOverlay()
                 
-                Api.sharedInstance.loadCompanyAddressesByLocation(self.userLocation!)
+                // Try to load only first several companies related to user location and limit
+                Api.sharedInstance.loadCompanyAddresses(self.userLocation!,
+                    pageNumber: 1, pageSize: self.pageSize)
                     
                     .onSuccess(callback: { [weak self] companyPage in
+                        
+                        if self?.pageSize == companyPage.companies.count {
+                            
+                            self?.canLoadNext = true
+                            self?.pageNumer += 1
+                        }
+                        
+                        self?.removeAllOverlays()
+                        self?.companiesPage = companyPage
+                        
+                        self?.createDataSource()
+                        self?.tableView.reloadData()
+                        
+                        }).onFailure(callback: { [weak self] error in
+                            
+                            self?.removeAllOverlays()
+                            print(error)
+                        })
+            }
+        }
+    }
+    
+    func loadCompanyAddress() {
+        
+        self.loading = true
+        self.showWaitOverlay()
+        
+        Api.sharedInstance.loadCompanyAddresses(self.userLocation!,
+            pageNumber: self.pageNumer, pageSize: self.pageSize)
+            
+            .onSuccess(callback: { [weak self] companyPage in
+                
+                self?.removeAllOverlays()
+                self?.companiesPage = companyPage
+                
+                self?.createDataSource()
+                self?.tableView.reloadData()
+                
+                if self?.pageSize == companyPage.companies.count {
                     
-                    self?.removeAllOverlays()
-                    self?.companiesPage = companyPage
+                    self?.pageNumer += 1
+                }
+                else {
                     
-                    self?.createDataSource()
-                    self?.tableView.reloadData()
-                    
+                    // reset counter
+                    self?.pageNumer = 1
+                    self?.canLoadNext = false
+                }
+                
                 }).onFailure(callback: { [weak self] error in
                     
                     self?.removeAllOverlays()
                     print(error)
                 })
-            }
-        }
     }
     
     func createDataSource() {
-        
-        let section = GenericCollectionSection<TCompanyAddress>()
         
         if let page = self.companiesPage {
             
             for company in page.companies {
                 
-                section.items.append(GenericCollectionSectionItem(item: company))
+                self.section.items.append(GenericCollectionSectionItem(item: company))
             }
             
-            self.companyImages.removeAll()
-            self.companyImages.appendContentsOf(page.images)
-            self.itemsSource?.sections.append(section)
-            self.tableView.reloadData()
+            for image in page.images {
+                
+                self.companyImages.insert(image)
+            }
         }
     }
     
