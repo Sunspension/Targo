@@ -22,6 +22,7 @@
 		D413357D1D6E4FCE00542BA1 /* TOrderBillTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D413357C1D6E4FCE00542BA1 /* TOrderBillTableViewController.swift */; };
 		D4151E121D688D0B00DB26C0 /* TOrderStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4151E111D688D0B00DB26C0 /* TOrderStatusViewController.swift */; };
 		D4151E191D689F5900DB26C0 /* RealmString.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4151E181D689F5900DB26C0 /* RealmString.swift */; };
+		D41C3A251D6F87FE00539ABD /* TOrderLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41C3A241D6F87FE00539ABD /* TOrderLoader.swift */; };
 		D41D9D8E1D46A1AB00358961 /* TCompanyInfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41D9D8D1D46A1AB00358961 /* TCompanyInfoTableViewController.swift */; };
 		D41D9D901D46AD4000358961 /* TWorkingHoursTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41D9D8F1D46AD4000358961 /* TWorkingHoursTableViewCell.swift */; };
 		D41D9D921D46B46300358961 /* TWorkingHoursHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41D9D911D46B46300358961 /* TWorkingHoursHeader.swift */; };
@@ -114,6 +115,7 @@
 		D413357C1D6E4FCE00542BA1 /* TOrderBillTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TOrderBillTableViewController.swift; sourceTree = "<group>"; };
 		D4151E111D688D0B00DB26C0 /* TOrderStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TOrderStatusViewController.swift; sourceTree = "<group>"; };
 		D4151E181D689F5900DB26C0 /* RealmString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RealmString.swift; path = Models/Realm/RealmString.swift; sourceTree = "<group>"; };
+		D41C3A241D6F87FE00539ABD /* TOrderLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TOrderLoader.swift; path = Services/TOrderLoader.swift; sourceTree = "<group>"; };
 		D41D9D8D1D46A1AB00358961 /* TCompanyInfoTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCompanyInfoTableViewController.swift; sourceTree = "<group>"; };
 		D41D9D8F1D46AD4000358961 /* TWorkingHoursTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TWorkingHoursTableViewCell.swift; sourceTree = "<group>"; };
 		D41D9D911D46B46300358961 /* TWorkingHoursHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TWorkingHoursHeader.swift; sourceTree = "<group>"; };
@@ -239,6 +241,14 @@
 				D4EE595F1D3AC98A0002022F /* TCompanyImage.swift */,
 			);
 			name = Company;
+			sourceTree = "<group>";
+		};
+		D41C3A261D6F880900539ABD /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				D41C3A241D6F87FE00539ABD /* TOrderLoader.swift */,
+			);
+			name = Services;
 			sourceTree = "<group>";
 		};
 		D464027C1D21CBE200644463 /* ServerAPI */ = {
@@ -432,6 +442,7 @@
 		E5C062D71D2106BF002074C4 /* Targo */ = {
 			isa = PBXGroup;
 			children = (
+				D41C3A261D6F880900539ABD /* Services */,
 				D4C47FCF1D5FE6E4000D1AA2 /* Controls */,
 				D470DFB71D384D44003473E6 /* Views */,
 				D4C2A0A71D3422980090BAFC /* LocationService */,
@@ -693,6 +704,7 @@
 				D45F9FB01D610CBD00623A34 /* TPaymentMethodTableViewCell.swift in Sources */,
 				D4F84B491D24668400263D1A /* User.swift in Sources */,
 				D4DD9DDC1D418DC9009C28D5 /* TBaseTableViewCell.swift in Sources */,
+				D41C3A251D6F87FE00539ABD /* TOrderLoader.swift in Sources */,
 				D4EE59691D3AFEE90002022F /* TCompanyMenuTableViewController.swift in Sources */,
 				D41D9D9A1D46C4F400358961 /* TCompanyAboutTableViewCell.swift in Sources */,
 				D4EE59631D3AFAF40002022F /* TTabBarController.swift in Sources */,

@@ -360,7 +360,6 @@
                     <connections>
                         <segue destination="n0M-K0-YnC" kind="relationship" relationship="viewControllers" id="sik-FR-bMB"/>
                         <segue destination="bhM-5p-kh8" kind="relationship" relationship="viewControllers" id="DUS-ik-brr"/>
-                        <segue destination="Xr2-NY-mcf" kind="relationship" relationship="viewControllers" id="veh-If-0e0"/>
                         <segue destination="0Zn-4m-UjR" kind="relationship" relationship="viewControllers" id="KIp-HH-tLc"/>
                     </connections>
                 </tabBarController>
@@ -702,8 +701,8 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rOw-2S-RcQ">
-                                            <rect key="frame" x="16" y="12" width="238" height="19"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <rect key="frame" x="16" y="16" width="238" height="11"/>
+                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oeY-N8-BBg">
@@ -717,9 +716,9 @@
                                         <constraint firstItem="rOw-2S-RcQ" firstAttribute="leading" secondItem="rkj-oj-17Y" secondAttribute="leadingMargin" constant="8" id="JLk-bT-I5Z"/>
                                         <constraint firstItem="oeY-N8-BBg" firstAttribute="trailing" secondItem="rkj-oj-17Y" secondAttribute="trailingMargin" constant="-8" id="Q5T-Oy-6fv"/>
                                         <constraint firstItem="oeY-N8-BBg" firstAttribute="centerY" secondItem="rOw-2S-RcQ" secondAttribute="centerY" id="QnE-8A-cKC"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="rOw-2S-RcQ" secondAttribute="bottom" constant="4" id="d5w-Qd-frS"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="rOw-2S-RcQ" secondAttribute="bottom" constant="8" id="d5w-Qd-frS"/>
                                         <constraint firstItem="oeY-N8-BBg" firstAttribute="leading" secondItem="rOw-2S-RcQ" secondAttribute="trailing" constant="8" id="pQP-Ta-Wdy"/>
-                                        <constraint firstItem="rOw-2S-RcQ" firstAttribute="top" secondItem="rkj-oj-17Y" secondAttribute="topMargin" constant="4" id="vsf-IC-Gfv"/>
+                                        <constraint firstItem="rOw-2S-RcQ" firstAttribute="top" secondItem="rkj-oj-17Y" secondAttribute="topMargin" constant="8" id="vsf-IC-Gfv"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -737,7 +736,6 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3hg-KN-RL9">
                                             <rect key="frame" x="16" y="12" width="242" height="19"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uS3-Bh-GCk">

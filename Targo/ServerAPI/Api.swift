@@ -197,24 +197,24 @@ struct Api {
                     p.failure(response.result.error!)
                     return
                 }
-                
-                let realm = try! Realm()
-                
-                let sessions = realm.objects(UserSession)
-                let users = realm.objects(User)
-                
-                realm.beginWrite()
-                realm.delete(sessions)
-                realm.delete(users)
-                
-                do {
-                    
-                    try realm.commitWrite()
-                }
-                catch {
-                    
-                    print("Caught an error when was trying to make commit to Realm")
-                }
+//                
+//                let realm = try! Realm()
+//                
+//                let sessions = realm.objects(UserSession)
+//                let users = realm.objects(User)
+//                
+//                realm.beginWrite()
+//                realm.delete(sessions)
+//                realm.delete(users)
+//                
+//                do {
+//                    
+//                    try realm.commitWrite()
+//                }
+//                catch {
+//                    
+//                    print("Caught an error when was trying to make commit to Realm")
+//                }
                 
                 let defaults = NSUserDefaults.standardUserDefaults()
                 defaults.removeObjectForKey(kTargoCodeSent)
@@ -554,16 +554,40 @@ struct Api {
         return p.future
     }
     
-    func loadShopOrders(updatedDate: String, limit: Int) -> Future<[TShopOrder], TargoError> {
+    func loadShopOrders(updatedDate: String, pageSize: Int) -> Future<[TShopOrder], TargoError> {
         
         let p = Promise<[TShopOrder], TargoError>()
         
-        server.loadShopOrders(updatedDate, limit: limit)
+        server.loadShopOrders(updatedDate, pageSize: pageSize)
             
             .responseJSON { response in
             
                 print(response.result.value)
             
+            }.responseArray("data.shop-order", completionHandler: { (response: Response<[TShopOrder], TargoError>) in
+                
+                guard let _ = response.result.value else {
+                    
+                    p.failure(response.result.error!)
+                    return
+                }
+                
+                p.success(response.result.value!)
+            })
+        
+        return p.future
+    }
+    
+    func loadShopOrders(pageNumber: Int, pageSize: Int = 20) -> Future<[TShopOrder], TargoError> {
+        
+        let p = Promise<[TShopOrder], TargoError>()
+        
+        server.loadShopOrders(pageNumber, pageSize: pageSize)
+            
+            .responseJSON { response in
+                
+                print(response.result.value)
+                
             }.responseArray("data.shop-order", completionHandler: { (response: Response<[TShopOrder], TargoError>) in
                 
                 guard let _ = response.result.value else {

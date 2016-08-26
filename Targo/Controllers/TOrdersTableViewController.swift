@@ -30,10 +30,22 @@ class TOrdersTableViewController: UITableViewController {
     var companyImages: [TCompanyImage]?
     
     
+    deinit {
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector: #selector(TOrdersTableViewController.onOrdersLoadNotification(_:)),
+                                                         name: kTargoDidLoadOrdersNotification,
+                                                         object: nil)
+        
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        
+        self.navigationItem.titleView = UIImageView(image: UIImage(named: "icon-logo"))
         
         self.dataSource = GenericTableViewDataSource(reusableIdentifierOrNibName: "HistoryOrderItemCell",
                                                      bindingAction: { (cell, item) in
@@ -68,7 +80,7 @@ class TOrdersTableViewController: UITableViewController {
                                                                 if let date = formatter.dateFromString(item.item!.created) {
                                                                     
                                                                     let formatter = NSDateFormatter()
-                                                                    formatter.dateStyle = .MediumStyle
+                                                                    formatter.dateStyle = .ShortStyle
                                                                     formatter.timeStyle = .NoStyle
                                                                     
                                                                     cell.orderDate.text = formatter.stringFromDate(date)
@@ -84,12 +96,14 @@ class TOrdersTableViewController: UITableViewController {
         self.tableView.registerNib(UINib(nibName: "TCompanyMenuHeaderView", bundle: nil),
                                    forHeaderFooterViewReuseIdentifier: "sectionHeader")
         
-        let formatter = NSDateFormatter()
-        formatter.dateFormat = kDateTimeFormat
+        let realm = try! Realm()
         
-        Api.sharedInstance.loadShopOrders( formatter.stringFromDate(NSDate()), limit: 5).onSuccess { orders in
+        if let _ = realm.objects(TOrderLoaderCookie).first {
             
-            print("orders: \(orders)")
+            let orders = realm.objects(TShopOrder).sorted("id", ascending: false)
+            self.orders = Array<TShopOrder>(orders)
+            
+            loadCompaniesAndImages()
         }
         
         // Uncomment the following line to preserve selection between presentations
@@ -102,20 +116,25 @@ class TOrdersTableViewController: UITableViewController {
     override func viewWillAppear(animated: Bool) {
         
         super.viewWillAppear(animated)
-        
         self.setup()
+    }
+    
+    func onOrdersLoadNotification(notification: NSNotification) {
         
         let realm = try! Realm()
         let orders = realm.objects(TShopOrder).sorted("id", ascending: false)
         self.orders = Array<TShopOrder>(orders)
+        
+        loadCompaniesAndImages()
+    }
+    
+    private func loadCompaniesAndImages() {
         
         if let orders = self.orders {
             
             let companyIds = orders.map({ $0.companyId })
             let set = Set<Int>(companyIds)
             let ids = Array(set)
-            
-//            self.showWaitOverlay()
             
             Api.sharedInstance.loadCompaniesByIds(ids)
                 
@@ -127,8 +146,6 @@ class TOrdersTableViewController: UITableViewController {
                     
                     Api.sharedInstance.loadImagesByIds(ids).onSuccess(callback: { images in
                         
-//                        self?.removeAllOverlays()
-                        
                         self?.companies = companies
                         self?.companyImages = images
                         
@@ -138,7 +155,7 @@ class TOrdersTableViewController: UITableViewController {
                     
                     }).onFailure(callback: { error in
                         
-//                        self.removeAllOverlays()
+                        print("loading images error: \(error)")
                     })
         }
     }
@@ -151,7 +168,9 @@ class TOrdersTableViewController: UITableViewController {
             
             let orderStatus = ShopOrderStatusEnum(rawValue: order.orderStatus)
             
-            if orderStatus == .Canceled || orderStatus == .Finished {
+            if orderStatus == .Canceled
+                || orderStatus == .Finished
+                || orderStatus == .Completed  {
                 
                 var sectionHistory =
                     self.dataSource!.sections.filter({ $0.sectionType as? ShopOrdersSectionEnum == .History }).first

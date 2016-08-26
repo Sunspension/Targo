@@ -254,6 +254,8 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate {
                 
                 self?.removeAllOverlays()
                 
+                NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: kTargoDidLoadOrdersNotification, object: nil))
+                
                 if let controller = self?.instantiateViewControllerWithIdentifierOrNibName("OrderStatus") as? TOrderStatusViewController {
                     
                     controller.companyName = self?.company?.companyTitle

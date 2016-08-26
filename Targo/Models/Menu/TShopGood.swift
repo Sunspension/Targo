@@ -24,6 +24,8 @@ class TShopGood: Object, Mappable {
     
     dynamic var price = 0
     
+    dynamic var count = 0
+    
     dynamic var externalId = 0
     
     dynamic var persistentId = 0
@@ -32,7 +34,7 @@ class TShopGood: Object, Mappable {
     
     dynamic var updatedAt = ""
     
-    dynamic var deleted = false;
+    dynamic var deleted = false
     
     dynamic var parentId = 0
     
@@ -77,6 +79,7 @@ class TShopGood: Object, Mappable {
         updatedAt <- map["updated_at"]
         deleted <- map["deleted"]
         parentId <- map["parent_id"]
+        count <- map["count"]
         
         var imageIds = [Int]()
         imageIds <- map["image_ids"]

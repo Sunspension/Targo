@@ -118,8 +118,11 @@ class TOrderStatusViewController: UIViewController {
         if let order = self.shopOrder {
             
             guard let status = ShopOrderStatusEnum(rawValue: order.orderStatus)
-                where status != .Canceled && status != .Finished else {
+                where status != .Canceled
+                    && status != .Finished
+                    && status != .Completed else {
                     
+                    self.setOrderStatus(order.orderStatus)
                     return
             }
             
@@ -129,6 +132,8 @@ class TOrderStatusViewController: UIViewController {
                     
                     self?.shopOrder = shopOrder
                     self?.setOrderStatus(shopOrder.orderStatus)
+                    
+                    NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: kTargoDidLoadOrdersNotification, object: nil))
                     
                     if let status = ShopOrderStatusEnum(rawValue: shopOrder.orderStatus)
                         where status != .Canceled && status != .Finished {
@@ -155,6 +160,10 @@ class TOrderStatusViewController: UIViewController {
             
             orderStatusDescription.text = "order_status_new".localized
             statusIndicator1.backgroundColor = UIColor.whiteColor()
+            statusIndicator2.backgroundColor = UIColor.lightGrayColor()
+            statusIndicator3.backgroundColor = UIColor.lightGrayColor()
+            statusIndicator4.backgroundColor = UIColor.lightGrayColor()
+
             
             break
             
@@ -162,7 +171,10 @@ class TOrderStatusViewController: UIViewController {
             
             orderStatusImage.image = UIImage(named: "icon-success")
             orderStatusDescription.text = "order_status_seen".localized
+            statusIndicator1.backgroundColor = UIColor.whiteColor()
             statusIndicator2.backgroundColor = UIColor.whiteColor()
+            statusIndicator3.backgroundColor = UIColor.lightGrayColor()
+            statusIndicator4.backgroundColor = UIColor.lightGrayColor()
             
             break
             
@@ -170,7 +182,10 @@ class TOrderStatusViewController: UIViewController {
             
             orderStatusImage.image = UIImage(named: "icon-clock")
             orderStatusDescription.text = "order_status_processing".localized
+            statusIndicator1.backgroundColor = UIColor.whiteColor()
+            statusIndicator2.backgroundColor = UIColor.whiteColor()
             statusIndicator3.backgroundColor = UIColor.whiteColor()
+            statusIndicator4.backgroundColor = UIColor.lightGrayColor()
             
             break
             
@@ -184,6 +199,17 @@ class TOrderStatusViewController: UIViewController {
             statusIndicator4.backgroundColor = UIColor.lightGrayColor()
                 
             break
+            
+        case .Completed:
+            
+            orderStatusImage.image = UIImage(named: "icon-cutlery")
+            orderStatusDescription.text = "order_status_ready".localized
+            statusIndicator1.backgroundColor = UIColor.whiteColor()
+            statusIndicator2.backgroundColor = UIColor.whiteColor()
+            statusIndicator3.backgroundColor = UIColor.whiteColor()
+            statusIndicator4.backgroundColor = UIColor.whiteColor()
+            
+            break;
             
         default:
             break

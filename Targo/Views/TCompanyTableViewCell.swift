@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KDCircularProgress
 
 class TCompanyTableViewCell: UITableViewCell {
 
@@ -18,9 +19,9 @@ class TCompanyTableViewCell: UITableViewCell {
     
     @IBOutlet weak var shadowView: UIView!
     
-    
     override func awakeFromNib() {
         super.awakeFromNib()
+        
         // Initialization code
     }
     

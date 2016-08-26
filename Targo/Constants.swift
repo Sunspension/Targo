@@ -17,6 +17,7 @@ let kTargoUserLoggedOutSuccessfully = "kTargoUserLoggedOutSuccessfully"
 let kTargoUserLoggedInSuccessfully = "kTargoUserLoggedInSuccessfully"
 let kTargoLocationDidUpdateNotification = "kTargoLocationDidUpdateNotification"
 let kTargodidChangeAuthorizationStatus = "kTargodidChangeAuthorizationStatus"
+let kTargoDidLoadOrdersNotification = "kTargoDidLoadOrdersNotification"
 
 // Colors
 let kHexLoginTextColor = "#625375"

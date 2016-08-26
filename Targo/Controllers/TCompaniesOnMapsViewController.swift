@@ -25,6 +25,7 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
     
     @IBOutlet weak var companyImage: UIImageView!
     
+    
     var companyImages: [TCompanyImage] = []
     
     var selectedMarker: GMSMarker?

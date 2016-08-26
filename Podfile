@@ -35,8 +35,8 @@ pod 'RealmSwift'
 #pod 'NVActivityIndicatorView'
 pod 'SwiftOverlays', '~> 2.0.0'
 #pod 'GaugeKit'
-
 pod 'M13ProgressSuite'
+pod 'KDCircularProgress'
 
 #Text
 pod 'SwiftString'

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import DynamicColor
 
 class TOrderBillTableViewController: UITableViewController {
 
@@ -23,8 +24,14 @@ class TOrderBillTableViewController: UITableViewController {
         self.tableView.setup()
         self.tableView.tableFooterView = UIView()
         self.tableView.dataSource = self.dataSource
+        self.tableView.allowsSelection = false
         
-        let section = CollectionSection(title: "bill_details_your_bill".localized)
+        self.tableView.registerNib(UINib(nibName: "TCompanyMenuHeaderView", bundle: nil),
+                                   forHeaderFooterViewReuseIdentifier: "sectionHeader")
+        
+        self.title = "bill_details_your_bill".localized
+        
+        let section = CollectionSection()
         
         section.initializeCellWithReusableIdentifierOrNibName("BillCompanyNameCell",
                                                               item: self.shopOrder) { (cell, item) in
@@ -46,10 +53,13 @@ class TOrderBillTableViewController: UITableViewController {
                                                                 }
         }
         
+        var totalPrice = 0
+        
         if let order = self.shopOrder {
             
             for item in order.items {
                 
+                totalPrice += item.count * item.price
                 section.initializeCellWithReusableIdentifierOrNibName("BillMenuItemCell",
                                                                       item: item) { (cell, item) in
                                                                         
@@ -57,11 +67,23 @@ class TOrderBillTableViewController: UITableViewController {
                                                                         let good = item.item as? TShopGood
                                                                         
                                                                         viewCell.itemName.text = good!.title
-                                                                        viewCell.itemPrice.text = String(good!.price) + " \u{20BD}"
+                                                                        viewCell.itemPrice.text = String(good!.count)
+                                                                            + " x " + String(good!.price) + " \u{20BD}"
                 }
             }
         }
         
+        section.initializeCellWithReusableIdentifierOrNibName("BillCompanyNameCell",
+                                                              item: nil, itemType: 1) { (cell, item) in
+                                                                
+                                                                let viewCell = cell as! TBillCompanyNameTableViewCell
+                                                                
+                                                                viewCell.companyName.text = "order_review_total_price".localized
+                                                                viewCell.companyName.textAlignment = .Right
+                                                                viewCell.orderDate.text = String(totalPrice) + " \u{20BD}"
+                                                                let color = DynamicColor(hexString: "F0F0F0")
+                                                                viewCell.contentView.backgroundColor = color
+        }
         
         self.dataSource.sections.append(section)
         
@@ -72,16 +94,45 @@ class TOrderBillTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
-    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        
-        let header = UILabel()
-        
-        header.textColor = UIColor(hexString: kHexMainPinkColor)
-        header.font = UIFont.systemFontOfSize(20)
-        header.text = self.dataSource.sections[section].title
-        header.sizeToFit()
-        return header
-    }
+//    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+//        
+//        guard self.dataSource.sections[indexPath.section].items[indexPath.row].itemType != nil else {
+//            
+//            return
+//        }
+//        
+//        
+//    }
+
+//    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        
+//        let header = tableView.dequeueReusableHeaderFooterViewWithIdentifier("sectionHeader") as! TCompanyMenuHeaderView
+//        header.title.text = self.dataSource.sections[section].title
+//        header.title.textColor = UIColor(hexString: kHexMainPinkColor)
+//        
+//        return header;
+//    }
+//    
+//    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+//        
+//        let header = view as! TCompanyMenuHeaderView
+//        
+//        header.background.backgroundColor = UIColor.lightGrayColor()
+//        header.layer.shadowPath = UIBezierPath(rect: header.layer.bounds).CGPath
+//        header.layer.shadowOffset = CGSize(width: 0, height: 2)
+//        header.layer.shadowOpacity = 0.5
+//    }
+    
+//    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        
+//        let header = UILabel()
+//        
+//        header.textColor = UIColor(hexString: kHexMainPinkColor)
+//        header.font = UIFont.systemFontOfSize(20)
+//        header.text = self.dataSource.sections[section].title
+//        header.sizeToFit()
+//        return header
+//    }
     
     /*
      override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

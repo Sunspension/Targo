@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Timberjack.register()
         
         var config = Realm.Configuration()
-        config.schemaVersion = 28
+        config.schemaVersion = 1
         config.migrationBlock = { (migration: Migration, oldSchemaVersion: UInt64) in
         
             if oldSchemaVersion < 1 {
@@ -155,6 +155,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func logoutAction() {
         
+        let realm = try! Realm()
+        
+        try! realm.write({ 
+            
+            realm.deleteAll()
+        })
+        
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         let controller = storyBoard.instantiateViewControllerWithIdentifier("RegistrationPhone")
         let navigation = UINavigationController(rootViewController: controller)
@@ -162,6 +169,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func loginAction() {
+        
+        let realm = try! Realm()
+        
+        if realm.objects(TOrderLoaderCookie).first == nil {
+            
+            TOrderLoader().loadOrders()
+        }
         
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         
@@ -172,11 +186,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func changeRootViewController(viewController: UIViewController) {
         
         UIView.transitionWithView(self.window!,
-                                  duration: 0.5,
+                                  duration: 0.4,
                                   options: .TransitionCrossDissolve,
                                   animations: {
                                     
+                                    let oldState = UIView.areAnimationsEnabled()
+                                    UIView.setAnimationsEnabled(false)
                                     self.window?.rootViewController = viewController
+                                    UIView.setAnimationsEnabled(oldState)
                                     
             }, completion: nil)
     }
