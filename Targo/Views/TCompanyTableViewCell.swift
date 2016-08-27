@@ -26,7 +26,7 @@ class TCompanyTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         
-        companyImage.image = nil
+        companyImage.image = UIImage(named: "blank")
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

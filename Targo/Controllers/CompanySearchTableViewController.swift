@@ -15,23 +15,25 @@ import SwiftOverlays
 
 class CompanySearchTableViewController: UITableViewController {
     
-    let section = GenericCollectionSection<TCompanyAddress>()
+    private let section = GenericCollectionSection<TCompanyAddress>()
     
-    var companyImages = Set<TCompanyImage>()
+    private var companyImages = Set<TCompanyImage>()
     
-    var userLocation: CLLocation?
+    private var userLocation: CLLocation?
     
-    var dataSource: GenericTableViewDataSource<TCompanyTableViewCell, TCompanyAddress>?
+    private var dataSource: GenericTableViewDataSource<TCompanyTableViewCell, TCompanyAddress>?
     
-    var companiesPage: TCompanyAddressesPage?
+    private var itemsSource = [TCompanyAddress]()
     
-    var pageNumer: Int = 1
+    private var companiesPage: TCompanyAddressesPage?
     
-    var pageSize: Int = 20
+    private var pageNumer: Int = 1
     
-    var loading = false
+    private var pageSize: Int = 20
     
-    var canLoadNext = true
+    private var loading = false
+    
+    private var canLoadNext = true
     
     
     override func viewDidLoad() {
@@ -55,15 +57,15 @@ class CompanySearchTableViewController: UITableViewController {
                                                         
                                                         let indexPath = item.indexPath
                                                         
-                                                        if indexPath.row
-                                                            == self.dataSource!.sections[indexPath.section].items.count - 2
-                                                            && self.canLoadNext {
+                                                        if indexPath.row + 10
+                                                            >= self.dataSource!.sections[indexPath.section].items.count
+                                                            && self.canLoadNext
+                                                            && !self.loading {
                                                             
                                                             self.loadCompanyAddress()
                                                         }
                                                         
                                                         let company = item.item!
-                                                        
                                                         cell.companyTitle.text = company.companyTitle
                                                         cell.additionalInfo.text = company.companyCategoryTitle
                                                             + ", "
@@ -72,16 +74,14 @@ class CompanySearchTableViewController: UITableViewController {
                                                         
                                                         let imageSize = cell.companyImage.bounds.size
                                                         
-                                                        if let image = self.companyImages.filter({$0.id == company.companyImageId.value}).first {
+                                                        if let image =
+                                                            self.companyImages.filter({$0.id == company.companyImageId.value}).first {
                                                             
                                                             let filter = AspectScaledToFillSizeFilter(size: imageSize)
-                                                            cell.companyImage.af_setImageWithURL(NSURL(string: image.url)!, placeholderImage: UIImage(named: "blank"), filter: filter, imageTransition: .CrossDissolve(0.6))
+                                                            cell.companyImage.af_setImageWithURL(NSURL(string: image.url)!,
+                                                                filter: filter, imageTransition: .CrossDissolve(0.6))
                                                         }
         })
-        
-//        let background = UIImageView(image: UIImage(named: "background"))
-//        background.frame = self.tableView.frame
-//        self.tableView.backgroundView = background
         
         self.dataSource?.sections.append(self.section)
         self.tableView.dataSource = self.dataSource
@@ -130,7 +130,20 @@ class CompanySearchTableViewController: UITableViewController {
         }
     }
     
+    // Here is a magic to save height of current cell, otherwise you will get scrolling of table view content when cell will expand
+    override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        if let height = self.dataSource?.sections[indexPath.section].items[indexPath.row].cellHeight {
+            
+            return height
+        }
+        
+        return UITableViewAutomaticDimension
+    }
+    
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        self.dataSource?.sections[indexPath.section].items[indexPath.row].cellHeight = cell.frame.height
         
         let viewCell = cell as! TCompanyTableViewCell
         let layer = viewCell.shadowView.layer
@@ -153,23 +166,23 @@ class CompanySearchTableViewController: UITableViewController {
                 Api.sharedInstance.loadCompanyAddresses(self.userLocation!,
                     pageNumber: 1, pageSize: self.pageSize)
                     
-                    .onSuccess(callback: { [weak self] companyPage in
+                    .onSuccess(callback: { [unowned self] companyPage in
                         
-                        if self?.pageSize == companyPage.companies.count {
+                        if self.pageSize == companyPage.companies.count {
                             
-                            self?.canLoadNext = true
-                            self?.pageNumer += 1
+                            self.canLoadNext = true
+                            self.pageNumer += 1
                         }
                         
-                        self?.removeAllOverlays()
-                        self?.companiesPage = companyPage
+                        self.removeAllOverlays()
+                        self.companiesPage = companyPage
                         
-                        self?.createDataSource()
-                        self?.tableView.reloadData()
+                        self.createDataSource()
+                        self.tableView.reloadData()
                         
-                        }).onFailure(callback: { [weak self] error in
+                        }).onFailure(callback: { [unowned self] error in
                             
-                            self?.removeAllOverlays()
+                            self.removeAllOverlays()
                             print(error)
                         })
             }
@@ -179,33 +192,32 @@ class CompanySearchTableViewController: UITableViewController {
     func loadCompanyAddress() {
         
         self.loading = true
-        self.showWaitOverlay()
         
         Api.sharedInstance.loadCompanyAddresses(self.userLocation!,
             pageNumber: self.pageNumer, pageSize: self.pageSize)
             
-            .onSuccess(callback: { [weak self] companyPage in
+            .onSuccess(callback: { [unowned self] companyPage in
                 
-                self?.removeAllOverlays()
-                self?.companiesPage = companyPage
+                self.loading = false
                 
-                self?.createDataSource()
-                self?.tableView.reloadData()
+                self.companiesPage = companyPage
+                self.createDataSource()
+                self.tableView.reloadData()
                 
-                if self?.pageSize == companyPage.companies.count {
+                if self.pageSize == companyPage.companies.count {
                     
-                    self?.pageNumer += 1
+                    self.pageNumer += 1
                 }
                 else {
                     
                     // reset counter
-                    self?.pageNumer = 1
-                    self?.canLoadNext = false
+                    self.pageNumer = 1
+                    self.canLoadNext = false
                 }
                 
-                }).onFailure(callback: { [weak self] error in
-                    
-                    self?.removeAllOverlays()
+                }).onFailure(callback: { error in
+                
+                    self.loading = false
                     print(error)
                 })
     }

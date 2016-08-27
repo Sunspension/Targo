@@ -20,6 +20,8 @@ class GenericCollectionSectionItem<TItem>: NSObject {
     
     var indexPath: NSIndexPath!
     
+    var cellHeight: CGFloat?
+    
     
     init(item: TItem?) {
         

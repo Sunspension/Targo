@@ -42,6 +42,8 @@ class CollectionSectionItem: NSObject {
     
     var swappable = false
     
+    var cellHeight: CGFloat?
+    
     
     init(reusableIdentifierOrNibName: String? = nil, item: Any?) {
         

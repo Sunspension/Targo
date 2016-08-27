@@ -219,3 +219,15 @@ extension Array where Element: Equatable {
         }
     }
 }
+
+extension NSObject {
+    
+    func lock(@noescape closure: () -> ()) {
+        
+        objc_sync_enter(self)
+        
+        defer { objc_sync_exit(self) }
+        
+        closure()
+    }
+}
