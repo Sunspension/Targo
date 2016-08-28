@@ -23,8 +23,6 @@ class CompanySearchTableViewController: UITableViewController {
     
     private var dataSource: GenericTableViewDataSource<TCompanyTableViewCell, TCompanyAddress>?
     
-    private var itemsSource = [TCompanyAddress]()
-    
     private var companiesPage: TCompanyAddressesPage?
     
     private var pageNumer: Int = 1
@@ -123,7 +121,7 @@ class CompanySearchTableViewController: UITableViewController {
         
         if let mapViewController = self.instantiateViewControllerWithIdentifierOrNibName("CompaniesOnMaps") as? TCompaniesOnMapsViewController {
             
-            mapViewController.companiesPage = self.companiesPage
+            mapViewController.companies = self.dataSource?.sections[0].items.map({ $0.item! })
             mapViewController.companyImages = self.companyImages
             
             self.navigationController?.pushViewController(mapViewController, animated: true)
@@ -158,9 +156,14 @@ class CompanySearchTableViewController: UITableViewController {
             
             self.userLocation = TLocationManager.sharedInstance.lastLocation
             
-            if self.userLocation != nil {
+            if self.userLocation != nil && !self.loading {
                 
-                self.showWaitOverlay()
+                if let superview = self.view.superview {
+                    
+                    SwiftOverlays.showCenteredWaitOverlay(superview)
+                }
+                
+                self.loading = true
                 
                 // Try to load only first several companies related to user location and limit
                 Api.sharedInstance.loadCompanyAddresses(self.userLocation!,
@@ -168,21 +171,34 @@ class CompanySearchTableViewController: UITableViewController {
                     
                     .onSuccess(callback: { [unowned self] companyPage in
                         
+                        self.loading = false
+                        
                         if self.pageSize == companyPage.companies.count {
                             
                             self.canLoadNext = true
                             self.pageNumer += 1
                         }
                         
-                        self.removeAllOverlays()
+                        if let superview = self.view.superview {
+                            
+                            SwiftOverlays.removeAllOverlaysFromView(superview)
+                        }
+                        
                         self.companiesPage = companyPage
                         
+                        self.section.items.removeAll()
                         self.createDataSource()
                         self.tableView.reloadData()
                         
                         }).onFailure(callback: { [unowned self] error in
                             
-                            self.removeAllOverlays()
+                            self.loading = false
+                            
+                            if let superview = self.view.superview {
+                                
+                                SwiftOverlays.removeAllOverlaysFromView(superview)
+                            }
+                            
                             print(error)
                         })
             }

@@ -33,7 +33,7 @@ struct Api {
                 
                 print(response.result.value)
             }
-            .responseObject("data", completionHandler: { (response: Response<TAuthorizationResponse, TargoError>) in
+            .responseObject("data") { (response: Response<TAuthorizationResponse, TargoError>) in
                 
                 guard let _ = response.result.value else {
                     
@@ -97,7 +97,7 @@ struct Api {
                 }
                 
                 p.success(true)
-            })
+            }
         
         return p.future
     }
@@ -116,7 +116,7 @@ struct Api {
                     
                     print("login request:\(response.request?.HTTPBody)\n login response:\(response.result.value)")
                 }
-                .responseObject("data", completionHandler: { (response: Response<UserSession, TargoError>) in
+                .responseObject("data") { (response: Response<UserSession, TargoError>) in
                     
                     guard let _ = response.result.value else {
                         
@@ -154,8 +154,8 @@ struct Api {
                         
                         realm.add(userSession, update: true)
                     })
-                })
-                .responseObject("data.user", completionHandler: { (response: Response<User, TargoError>) in
+                }
+                .responseObject("data.user") { (response: Response<User, TargoError>) in
                     
                     if let user = response.result.value {
                         
@@ -174,7 +174,7 @@ struct Api {
                         
                         p.success(user)
                     }
-                })
+                }
         }
         
         return p.future
@@ -190,7 +190,7 @@ struct Api {
                 
                 print(response.result.value)
             }
-            .responseObject("data", completionHandler: { (response: Response<UserSession, TargoError>) in
+            .responseObject("data") { (response: Response<UserSession, TargoError>) in
                 
                 guard let _ = response.result.value else {
                     
@@ -227,7 +227,7 @@ struct Api {
                 }
                 
                 p.success(true)
-            })
+            }
         
         return p.future
     }
@@ -246,7 +246,7 @@ struct Api {
                     
                     print(response.result.value)
                 }
-                .responseObject("data.user", completionHandler: { (response: Response<User, TargoError>) in
+                .responseObject("data.user") { (response: Response<User, TargoError>) in
                     
                     guard let _ = response.result.value else {
                         
@@ -264,7 +264,7 @@ struct Api {
                     })
                     
                     p.success(user)
-                })
+                }
         }
         
         return p.future
@@ -280,7 +280,7 @@ struct Api {
                 
                 print(response.result.value)
             }
-            .responseObject("data", completionHandler: { (response: Response<TCompanyAddressesPage, TargoError>) in
+            .responseObject("data") { (response: Response<TCompanyAddressesPage, TargoError>) in
                 
                 guard let _ = response.result.value else {
                     
@@ -290,7 +290,7 @@ struct Api {
                 
                 let page = response.result.value!
                 p.success(page)
-            })
+            }
         
         return p.future
     }
@@ -305,7 +305,7 @@ struct Api {
                 
                 print(response.result.value)
             }
-            .responseObject("data", completionHandler: { (response: Response<TCompanyMenuPage, TargoError>) in
+            .responseObject("data") { (response: Response<TCompanyMenuPage, TargoError>) in
                 
                 guard let _ = response.result.value else {
                     
@@ -315,7 +315,7 @@ struct Api {
                 
                 let page = response.result.value!
                 p.success(page)
-            })
+            }
         
         return p.future
     }
@@ -330,7 +330,7 @@ struct Api {
                 
                 print(response.result.value)
             }
-            .responseObject("data", completionHandler: { (response: Response<TTestOrder, TargoError>) in
+            .responseObject("data") { (response: Response<TTestOrder, TargoError>) in
                 
                 guard let _ = response.result.value else {
                     
@@ -339,7 +339,7 @@ struct Api {
                 }
                 
                 p.success(response.result.value!)
-            })
+            }
         
         return p.future
     }
@@ -354,7 +354,7 @@ struct Api {
                 
                 print(response.result.value)
             }
-            .responseObject("data", completionHandler: { (response: Response<TTestOrder, TargoError>) in
+            .responseObject("data") { (response: Response<TTestOrder, TargoError>) in
                 
                 guard let _ = response.result.value else {
                     
@@ -363,7 +363,7 @@ struct Api {
                 }
                 
                 p.success(response.result.value!)
-            })
+            }
         
         return p.future
     }
@@ -378,7 +378,7 @@ struct Api {
                 
                 print(response.result.value)
             }
-            .responseArray("data.card", completionHandler: { (response: Response<[TCreditCard], TargoError>) in
+            .responseArray("data.card") { (response: Response<[TCreditCard], TargoError>) in
                 
                 guard let _ = response.result.value else {
                     
@@ -387,7 +387,7 @@ struct Api {
                 }
                 
                 p.success(response.result.value!)
-            })
+            }
         
         return p.future
     }
@@ -404,7 +404,7 @@ struct Api {
                 
                 print("order request:\(request)\n order response:\(response.result.value)")
                 
-            }.responseObject("data", completionHandler: { (response: Response<TShopOrder, TargoError>) in
+            }.responseObject("data") { (response: Response<TShopOrder, TargoError>) in
                 
                 guard let _ = response.result.value else {
                     
@@ -420,7 +420,7 @@ struct Api {
                 })
                 
                 p.success(response.result.value!)
-            })
+            }
         
         return p.future
     }
@@ -435,7 +435,7 @@ struct Api {
                 
                 print(response.result.value)
                 
-            }.responseObject("data", completionHandler: { (response: Response<TShopOrder, TargoError>) in
+            }.responseObject("data") { (response: Response<TShopOrder, TargoError>) in
                 
                 guard let _ = response.result.value else {
                     
@@ -451,7 +451,7 @@ struct Api {
                 })
                 
                 p.success(response.result.value!)
-            })
+            }
         
         return p.future
     }
@@ -466,7 +466,7 @@ struct Api {
                 
                 print(response.result.value)
                 
-            }.responseObject("data", completionHandler: { (response: Response<TCompany, TargoError>) in
+            }.responseObject("data") { (response: Response<TCompany, TargoError>) in
                 
                 guard let _ = response.result.value else {
                     
@@ -475,7 +475,7 @@ struct Api {
                 }
                 
                 p.success(response.result.value!)
-            })
+            }
         
         return p.future
     }
@@ -490,7 +490,7 @@ struct Api {
                 
                 print(response.result.value)
                 
-            }.responseArray("data.company", completionHandler: { (response: Response<[TCompany], TargoError>) in
+            }.responseArray("data.company") { (response: Response<[TCompany], TargoError>) in
                 
                 guard let _ = response.result.value else {
                     
@@ -500,7 +500,7 @@ struct Api {
                 
                 p.success(response.result.value!)
                 
-            })
+            }
         
         return p.future
     }
@@ -515,7 +515,7 @@ struct Api {
                 
                 print(response.result.value)
                 
-            }.responseObject("data.image", completionHandler: { (response: Response<TCompanyImage, TargoError>) in
+            }.responseObject("data.image") { (response: Response<TCompanyImage, TargoError>) in
                 
                 guard let _ = response.result.value else {
                     
@@ -524,7 +524,7 @@ struct Api {
                 }
                 
                 p.success(response.result.value!)
-            })
+            }
         
         return p.future
     }
@@ -539,7 +539,7 @@ struct Api {
             
                 print(response.result.value)
                 
-            }.responseArray("data.image", completionHandler: { (response: Response<[TCompanyImage], TargoError>) in
+            }.responseArray("data.image") { (response: Response<[TCompanyImage], TargoError>) in
                 
                 guard let _ = response.result.value else {
                     
@@ -548,7 +548,7 @@ struct Api {
                 }
                 
                 p.success(response.result.value!)
-            })
+            }
         
         return p.future
     }
@@ -563,7 +563,7 @@ struct Api {
             
                 print(response.result.value)
             
-            }.responseArray("data.shop-order", completionHandler: { (response: Response<[TShopOrder], TargoError>) in
+            }.responseArray("data.shop-order") { (response: Response<[TShopOrder], TargoError>) in
                 
                 guard let _ = response.result.value else {
                     
@@ -572,7 +572,7 @@ struct Api {
                 }
                 
                 p.success(response.result.value!)
-            })
+            }
         
         return p.future
     }
@@ -587,7 +587,7 @@ struct Api {
                 
                 print(response.result.value)
                 
-            }.responseArray("data.shop-order", completionHandler: { (response: Response<[TShopOrder], TargoError>) in
+            }.responseArray("data.shop-order") { (response: Response<[TShopOrder], TargoError>) in
                 
                 guard let _ = response.result.value else {
                     
@@ -596,7 +596,38 @@ struct Api {
                 }
                 
                 p.success(response.result.value!)
-            })
+            }
+        
+        return p.future
+    }
+    
+    func cancelOrderByUser(orderId: Int) -> Future<TShopOrder, TargoError> {
+        
+        let p = Promise<TShopOrder, TargoError>()
+        
+        server.updateOrderStatus(orderId, orderStatus: 2)
+            
+            .responseJSON { response in
+            
+                print(response.result.value)
+                
+            }.responseObject("data") { (response:Response<TShopOrder, TargoError>) in
+                
+                guard let _ = response.result.value else {
+                    
+                    p.failure(response.result.error!)
+                    return
+                }
+                
+                let realm = try! Realm()
+                
+                try! realm.write({
+                    
+                    realm.add(response.result.value!, update: true)
+                })
+                
+                p.success(response.result.value!)
+        }
         
         return p.future
     }

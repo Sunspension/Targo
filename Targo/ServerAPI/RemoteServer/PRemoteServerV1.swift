@@ -45,4 +45,6 @@ protocol PRemoteServerV1 {
     func loadShopOrders(updatedDate: String, pageSize: Int) -> Request
     
     func loadShopOrders(pageNumber: Int, pageSize: Int) -> Request
+    
+    func updateOrderStatus(orderId: Int, orderStatus: Int) -> Request
 }

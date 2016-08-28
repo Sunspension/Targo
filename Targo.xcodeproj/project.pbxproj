@@ -60,6 +60,7 @@
 		D4B81B3C1D4FF22300F9103C /* TBadRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B81B3B1D4FF22300F9103C /* TBadRequest.swift */; };
 		D4B96F761D244CAA00294A4B /* TRemoteServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B96F751D244CAA00294A4B /* TRemoteServer.swift */; };
 		D4B96F7B1D244DBA00294A4B /* PRemoteServerV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B96F7A1D244DBA00294A4B /* PRemoteServerV1.swift */; };
+		D4B9C1EB1D723D6400BC4571 /* InterOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B9C1EA1D723D6400BC4571 /* InterOperation.swift */; };
 		D4C2A0A91D3422D20090BAFC /* TLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2A0A81D3422D20090BAFC /* TLocationManager.swift */; };
 		D4C2A0AC1D343ED50090BAFC /* CompanySearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2A0AB1D343ED50090BAFC /* CompanySearchTableViewController.swift */; };
 		D4C47FD11D5FE805000D1AA2 /* CenteredButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C47FD01D5FE805000D1AA2 /* CenteredButton.swift */; };
@@ -154,6 +155,7 @@
 		D4B81B3B1D4FF22300F9103C /* TBadRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TBadRequest.swift; path = Models/Response/TBadRequest.swift; sourceTree = "<group>"; };
 		D4B96F751D244CAA00294A4B /* TRemoteServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TRemoteServer.swift; path = ServerAPI/RemoteServer/TRemoteServer.swift; sourceTree = "<group>"; };
 		D4B96F7A1D244DBA00294A4B /* PRemoteServerV1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PRemoteServerV1.swift; path = ServerAPI/RemoteServer/PRemoteServerV1.swift; sourceTree = "<group>"; };
+		D4B9C1EA1D723D6400BC4571 /* InterOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InterOperation.swift; path = App/InterOperation.swift; sourceTree = "<group>"; };
 		D4C2A0A81D3422D20090BAFC /* TLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TLocationManager.swift; sourceTree = "<group>"; };
 		D4C2A0AB1D343ED50090BAFC /* CompanySearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompanySearchTableViewController.swift; sourceTree = "<group>"; };
 		D4C47FD01D5FE805000D1AA2 /* CenteredButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CenteredButton.swift; path = Controls/CenteredButton.swift; sourceTree = "<group>"; };
@@ -386,6 +388,7 @@
 				E57C7E891D22B60D00F9A0FC /* Constants.swift */,
 				D40301731D397F5100B7B610 /* HTTPManager.swift */,
 				D40301751D39839C00B7B610 /* ListTransform.swift */,
+				D4B9C1EA1D723D6400BC4571 /* InterOperation.swift */,
 			);
 			name = AppHelpers;
 			sourceTree = "<group>";
@@ -666,6 +669,7 @@
 				D4F464D31D40096A009015FC /* TCompanyMenuPage.swift in Sources */,
 				D41D9D961D46BA2500358961 /* TCompanyInfoContactsHeader.swift in Sources */,
 				D41F59C61D32910A0075568D /* GenericTableViewDataSource.swift in Sources */,
+				D4B9C1EB1D723D6400BC4571 /* InterOperation.swift in Sources */,
 				D46A4C5D1D63BFA3003CF2F9 /* TUserCreditCardTableViewCell.swift in Sources */,
 				D41D9D921D46B46300358961 /* TWorkingHoursHeader.swift in Sources */,
 				D4C2A0AC1D343ED50090BAFC /* CompanySearchTableViewController.swift in Sources */,

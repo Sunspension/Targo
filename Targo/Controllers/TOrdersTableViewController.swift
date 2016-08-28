@@ -43,6 +43,11 @@ class TOrdersTableViewController: UITableViewController {
                                                          name: kTargoDidLoadOrdersNotification,
                                                          object: nil)
         
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector: #selector(TOrdersTableViewController.onOrdersLoadNotification(_:)),
+                                                         name: kTargoUserDidCancelOrderNotification,
+                                                         object: nil)
+        
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         
         self.navigationItem.titleView = UIImageView(image: UIImage(named: "icon-logo"))
@@ -138,24 +143,24 @@ class TOrdersTableViewController: UITableViewController {
             
             Api.sharedInstance.loadCompaniesByIds(ids)
                 
-                .onSuccess(callback: {[weak self] companies in
+                .onSuccess(callback: {[unowned self] companies in
                     
                     let imageIds = companies.map({ $0.imageId })
                     let set = Set<Int>(imageIds)
                     let ids = Array(set)
                     
-                    Api.sharedInstance.loadImagesByIds(ids).onSuccess(callback: { images in
+                    Api.sharedInstance.loadImagesByIds(ids)
                         
-                        self?.companies = companies
-                        self?.companyImages = images
-                        
-                        self?.createDataSource()
-                        self?.tableView.reloadData()
-                    })
+                        .onSuccess(callback: { images in
+                            
+                            self.companies = companies
+                            self.companyImages = images
+                            
+                            self.createDataSource()
+                            self.tableView.reloadData()
+                            
+                        })
                     
-                    }).onFailure(callback: { error in
-                        
-                        print("loading images error: \(error)")
                     })
         }
     }
@@ -170,7 +175,8 @@ class TOrdersTableViewController: UITableViewController {
             
             if orderStatus == .Canceled
                 || orderStatus == .Finished
-                || orderStatus == .Completed  {
+                || orderStatus == .Complete
+                || orderStatus == .CanceledByUser {
                 
                 var sectionHistory =
                     self.dataSource!.sections.filter({ $0.sectionType as? ShopOrdersSectionEnum == .History }).first

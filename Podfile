@@ -11,7 +11,7 @@ target 'Targo' do
 pod 'Alamofire', '~> 3.4'
 
 #PhoneNumbers
-#pod 'PhoneNumberKit', '~> 0.8'
+pod 'PhoneNumberKit', '~> 0.8'
 pod 'SHSPhoneComponent'
 
 #Colors
@@ -37,6 +37,10 @@ pod 'SwiftOverlays', '~> 2.0.0'
 #pod 'GaugeKit'
 pod 'M13ProgressSuite'
 #pod 'KDCircularProgress'
+pod 'BusyNavigationBar'
+pod 'MZFormSheetPresentationController'
+pod 'GSMessages'
+pod 'SCLAlertView'
 
 #Text
 pod 'SwiftString'

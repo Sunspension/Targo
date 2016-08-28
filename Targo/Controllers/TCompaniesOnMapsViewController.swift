@@ -32,8 +32,10 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
     
     var didsetLocation = false
     
-    var companiesPage: TCompanyAddressesPage?
+    var companies: [TCompanyAddress]?
     
+    var letOpenInfo = true
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,7 +49,7 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
         self.navigationItem.titleView = UIImageView(image: UIImage(named: "icon-logo"))
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         
-        if let companies = self.companiesPage?.companies {
+        if let companies = self.companies {
             
             for company in companies {
                 
@@ -125,6 +127,11 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
     }
     
     @IBAction func openCompanyInfo(sender: AnyObject) {
+
+        guard self.letOpenInfo == true else {
+            
+            return
+        }
         
         if let controller =  self.instantiateViewControllerWithIdentifierOrNibName("CompanyInfoController") as? TCompanyInfoTableViewController {
             
@@ -145,6 +152,11 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
                         
                         self.navigationController?.pushViewController(controller, animated: true)
                     }
+                }
+                
+                controller.openMapNavigationAction = {
+                    
+                    self.navigationController?.popViewControllerAnimated(true)
                 }
             }
             

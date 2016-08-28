@@ -14,13 +14,15 @@ enum ShopOrderStatusEnum: Int {
     
     case New = 1
     
-    case View = 3
+    case CanceledByUser
+    
+    case View
     
     case Canceled
     
     case Processing
     
-    case Completed
+    case Complete
     
     case Finished
     
@@ -28,6 +30,7 @@ enum ShopOrderStatusEnum: Int {
     
     case PaySuccess
 }
+
 
 class TShopOrder: Object, Mappable {
 

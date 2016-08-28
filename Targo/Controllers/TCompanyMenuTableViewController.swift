@@ -117,21 +117,30 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         
         if let company = company {
             
-            self.showWaitOverlay()
+            if let superview = self.view.superview {
+                
+                SwiftOverlays.showCenteredWaitOverlay(superview)
+            }
             
             Api.sharedInstance.loadCompanyMenu(company.companyId)
                 
-                .onSuccess(callback: { [weak self] menuPage in
+                .onSuccess(callback: { [unowned self] menuPage in
                 
-                self?.removeAllOverlays()
+                    if let superview = self.view.superview {
+                        
+                        SwiftOverlays.removeAllOverlaysFromView(superview)
+                    }
                 
-                self?.menuPage = menuPage
-                self?.createDataSource()
-                self?.tableView.reloadData()
+                self.menuPage = menuPage
+                self.createDataSource()
+                self.tableView.reloadData()
                 
-            }).onFailure(callback: { [weak self] error in
+            }).onFailure(callback: { [unowned self] error in
                 
-                self?.removeAllOverlays()
+                if let superview = self.view.superview {
+                    
+                    SwiftOverlays.removeAllOverlaysFromView(superview)
+                }
             })
         }
         
@@ -159,6 +168,26 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
             controller.makeOrderNavigationAction = {
                 
                 self.navigationController?.popViewControllerAnimated(true)
+            }
+            
+            controller.openMapNavigationAction = {
+                
+                if let company = self.company {
+                    
+                    if let mapViewController = self.instantiateViewControllerWithIdentifierOrNibName("CompaniesOnMaps") as? TCompaniesOnMapsViewController {
+                        
+                        mapViewController.companies = [company]
+                        
+                        if let image = self.companyImage {
+                            
+                            mapViewController.companyImages = [image]
+                        }
+                        
+                        mapViewController.letOpenInfo = false
+                        
+                        self.navigationController?.pushViewController(mapViewController, animated: true)
+                    }
+                }
             }
             
             self.navigationController?.pushViewController(controller, animated: true)

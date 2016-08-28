@@ -8,6 +8,8 @@
 
 import UIKit
 import AlamofireImage
+import SwiftOverlays
+import Bond
 
 enum OrderStatusOpenReasonEnum {
     
@@ -63,13 +65,21 @@ class TOrderStatusViewController: UIViewController {
         
         self.cancelOrder.setTitle("order_cancel_order".localized, forState: .Normal)
         
+        self.cancelOrder.addTarget(self, action: #selector(TOrderStatusViewController.cancelOrderAction), forControlEvents: .TouchUpInside)
+        
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "icon-bill"), style: .Plain, target: self, action: #selector(TOrderStatusViewController.openBill))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "icon-bill"),
+                                                                 style: .Plain,
+                                                                 target: self,
+                                                                 action: #selector(TOrderStatusViewController.openBill))
         
         if self.reason == .AfterOrder {
             
             self.navigationItem.setHidesBackButton(true, animated: false)
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "action_close".localized, style: .Plain, target: self, action: #selector(TOrderStatusViewController.backAction))
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "action_close".localized,
+                                                                    style: .Plain,
+                                                                    target: self,
+                                                                    action: #selector(TOrderStatusViewController.backAction))
         }
         
         if let order = self.shopOrder {
@@ -87,7 +97,6 @@ class TOrderStatusViewController: UIViewController {
                                                    filter: filter,
                                                    imageTransition: .None)
         }
-
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -97,12 +106,53 @@ class TOrderStatusViewController: UIViewController {
         self.checkOrderStatus()
     }
     
+    func cancelOrderAction() {
+        
+        if let order = self.shopOrder
+            where order.orderStatus != ShopOrderStatusEnum.CanceledByUser.rawValue {
+            
+            if let superview = self.view.superview {
+                
+                SwiftOverlays.showCenteredWaitOverlay(superview)
+            }
+            
+            Api.sharedInstance.cancelOrderByUser(order.id)
+                
+                .onSuccess(callback: {[weak self] order in
+                    
+                    self?.setOrderStatus(order.orderStatus)
+                    
+                    NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: kTargoUserDidCancelOrderNotification, object: nil))
+                    
+                    if let superview = self?.view.superview {
+                        
+                        SwiftOverlays.removeAllOverlaysFromView(superview)
+                    }
+                    
+                    }).onFailure(callback: {[weak self] error in
+                        
+                        if let superview = self?.view.superview {
+                            
+                            SwiftOverlays.removeAllOverlaysFromView(superview)
+                        }
+                        
+                        print(error)
+                    })
+        }
+    }
+    
     func backAction() {
         
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
     func openBill() {
+        
+        guard self.shopOrder?.orderStatus != ShopOrderStatusEnum.Canceled.rawValue
+            && self.shopOrder?.orderStatus != ShopOrderStatusEnum.CanceledByUser.rawValue else {
+            
+            return
+        }
         
         if let controller = self.instantiateViewControllerWithIdentifierOrNibName("OrderBill") as? TOrderBillTableViewController {
             
@@ -120,7 +170,8 @@ class TOrderStatusViewController: UIViewController {
             guard let status = ShopOrderStatusEnum(rawValue: order.orderStatus)
                 where status != .Canceled
                     && status != .Finished
-                    && status != .Completed else {
+                    && status != .Complete
+                    && status != .CanceledByUser else {
                     
                     self.setOrderStatus(order.orderStatus)
                     return
@@ -156,6 +207,7 @@ class TOrderStatusViewController: UIViewController {
         
         switch status {
             
+            // 1
         case .New:
             
             orderStatusDescription.text = "order_status_new".localized
@@ -167,6 +219,19 @@ class TOrderStatusViewController: UIViewController {
             
             break
             
+            // 2
+        case .CanceledByUser:
+            
+            orderStatusImage.image = UIImage(named: "icon-canceled")
+            orderStatusDescription.text = "order_status_canceled_by_user".localized
+            statusIndicator1.backgroundColor = UIColor.lightGrayColor()
+            statusIndicator2.backgroundColor = UIColor.lightGrayColor()
+            statusIndicator3.backgroundColor = UIColor.lightGrayColor()
+            statusIndicator4.backgroundColor = UIColor.lightGrayColor()
+            
+            break
+            
+            // 3
         case .View:
             
             orderStatusImage.image = UIImage(named: "icon-success")
@@ -177,7 +242,20 @@ class TOrderStatusViewController: UIViewController {
             statusIndicator4.backgroundColor = UIColor.lightGrayColor()
             
             break
+
+            // 4
+        case .Canceled:
             
+            orderStatusImage.image = UIImage(named: "icon-canceled")
+            orderStatusDescription.text = "order_status_canceled".localized
+            statusIndicator1.backgroundColor = UIColor.lightGrayColor()
+            statusIndicator2.backgroundColor = UIColor.lightGrayColor()
+            statusIndicator3.backgroundColor = UIColor.lightGrayColor()
+            statusIndicator4.backgroundColor = UIColor.lightGrayColor()
+            
+            break
+
+            // 5
         case .Processing:
             
             orderStatusImage.image = UIImage(named: "icon-clock")
@@ -189,18 +267,8 @@ class TOrderStatusViewController: UIViewController {
             
             break
             
-        case .Canceled:
-            
-            orderStatusImage.image = UIImage(named: "icon-canceled")
-            orderStatusDescription.text = "order_status_canceled".localized
-            statusIndicator1.backgroundColor = UIColor.lightGrayColor()
-            statusIndicator2.backgroundColor = UIColor.lightGrayColor()
-            statusIndicator3.backgroundColor = UIColor.lightGrayColor()
-            statusIndicator4.backgroundColor = UIColor.lightGrayColor()
-                
-            break
-            
-        case .Completed:
+            // 6
+        case .Complete:
             
             orderStatusImage.image = UIImage(named: "icon-cutlery")
             orderStatusDescription.text = "order_status_ready".localized
@@ -210,6 +278,17 @@ class TOrderStatusViewController: UIViewController {
             statusIndicator4.backgroundColor = UIColor.whiteColor()
             
             break;
+            
+        case .Finished:
+            
+            orderStatusImage.image = UIImage(named: "icon-cutlery")
+            orderStatusDescription.text = "order_status_finished".localized
+            statusIndicator1.backgroundColor = UIColor.whiteColor()
+            statusIndicator2.backgroundColor = UIColor.whiteColor()
+            statusIndicator3.backgroundColor = UIColor.whiteColor()
+            statusIndicator4.backgroundColor = UIColor.whiteColor()
+            
+            break
             
         default:
             break

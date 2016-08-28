@@ -186,7 +186,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func changeRootViewController(viewController: UIViewController) {
         
         UIView.transitionWithView(self.window!,
-                                  duration: 0.4,
+                                  duration: 0.5,
                                   options: .TransitionCrossDissolve,
                                   animations: {
                                     
@@ -198,25 +198,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }, completion: nil)
     }
     
-    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-        
-        print(userInfo["id"])
-        print(userInfo["payment_status"])
-    }
-    
-    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
-        
-        print(userInfo)
-    }
-    
-    func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forRemoteNotification userInfo: [NSObject : AnyObject], completionHandler: () -> Void) {
-        
-        
-    }
-    
-    func application(application: UIApplication, willFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
-        
-        return true
-    }
+//    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+//        
+//        print(userInfo["id"])
+//        print(userInfo["payment_status"])
+//    }
+//    
+//    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+//        
+//        print(userInfo)
+//    }
+//    
+//    func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forRemoteNotification userInfo: [NSObject : AnyObject], completionHandler: () -> Void) {
+//        
+//        
+//    }
+//    
+//    func application(application: UIApplication, willFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
+//        
+//        return true
+//    }
 }
 

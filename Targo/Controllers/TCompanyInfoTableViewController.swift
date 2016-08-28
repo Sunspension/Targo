@@ -8,6 +8,7 @@
 
 import UIKit
 import AlamofireImage
+import PhoneNumberKit
 
 enum InfoSectionEnum {
     
@@ -31,6 +32,8 @@ class TCompanyInfoTableViewController: UITableViewController {
     let companyAboutIdentifier = "AboutCompanyCell"
     
     var makeOrderNavigationAction: (() -> Void)?
+    
+    var openMapNavigationAction:(()-> Void)?
     
     
     override func viewDidLoad() {
@@ -123,10 +126,16 @@ class TCompanyInfoTableViewController: UITableViewController {
                 
                 header.buttonPhone.setTitle("+7 812 345 6789", forState: .Normal)
                 header.buttonPhone.alignImageAndTitleVertically()
+                header.buttonPhone.addTarget(self, action: #selector(TCompanyInfoTableViewController.makeCall), forControlEvents: .TouchUpInside)
+                
                 header.buttonLocation.setTitle(self.title, forState: .Normal)
                 header.buttonLocation.alignImageAndTitleVertically()
-                header.buttonLink.setTitle("www.your-company.com", forState: .Normal)
+                header.buttonLocation.addTarget(self, action: #selector(TCompanyInfoTableViewController.openMapAction), forControlEvents: .TouchUpInside)
+                
+                header.buttonLink.setTitle("www.google.com", forState: .Normal)
                 header.buttonLink.alignImageAndTitleVertically()
+                header.buttonLink.addTarget(self, action: #selector(TCompanyInfoTableViewController.openURL), forControlEvents: .TouchUpInside)
+                
                 header.background.backgroundColor = UIColor(hexString: kHexMainPinkColor)
                 return header
             }
@@ -154,6 +163,53 @@ class TCompanyInfoTableViewController: UITableViewController {
             
         default:
              return 0.01
+        }
+    }
+    
+    func openURL() {
+        
+        if let company = self.company {
+            
+            let urlString = company.companySite.isEmpty ? "http://www.google.com" : company.companySite
+            InterOperation.openBrowser(urlString)
+        }
+    }
+    
+    func openMapAction() {
+        
+        self.openMapNavigationAction?()
+    }
+    
+    func makeCall() {
+        
+        if let company = self.company {
+            
+            let phone = company.phone.isEmpty ? "79111111111" : company.phone
+            
+            do {
+                
+                let phoneNumber = try PhoneNumber(rawNumber: phone)
+                
+                let alertController = UIAlertController(title: "company_info_make_call_title".localized,
+                                                        message: String(format:"company_info_make_call_confirmation".localized, phoneNumber.toInternational(true)),
+                                                        preferredStyle: .Alert)
+                
+                let okAction = UIAlertAction(title: "action_ok".localized, style: .Default, handler: { action in
+                    
+                    InterOperation.makeCall(phone)
+                })
+                
+                let cancelAction = UIAlertAction(title: "action_cancel".localized, style: .Cancel, handler: nil)
+                
+                alertController.addAction(okAction)
+                alertController.addAction(cancelAction)
+                
+                self.presentViewController(alertController, animated: true, completion: nil)
+            }
+            catch {
+                
+                print("Parsing of phone number error")
+            }
         }
     }
     

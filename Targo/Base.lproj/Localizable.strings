@@ -50,7 +50,11 @@
 
 "order_status_canceled" = "Order is canceled";
 
+"order_status_canceled_by_user" = "You have canceled the order";
+
 "order_status_ready" = "Order is ready";
+
+"order_status_finished" = "Order has been finished";
 
 "order_history_order_title" = "History orders";
 
@@ -63,3 +67,11 @@
 "bill_details_your_bill" = "Your bill";
 
 "action_close" = "Close";
+
+"action_ok" = "Ok";
+
+"action_cancel" = "Cancel";
+
+"company_info_make_call_title" = "Make call";
+
+"company_info_make_call_confirmation" = "Do you want to make call to number %@";
