@@ -70,6 +70,11 @@ class CompanySearchTableViewController: UITableViewController {
                                                             + String(Int(company.distance))
                                                             + " m"
                                                         
+                                                        cell.ratingText.text = "4.7"
+                                                        cell.ratingProgress.setProgress(1 / 5 * 4.7, animated: false)
+                                                        cell.ratingProgress.trackFillColor = UIColor(hexString: kHexMainPinkColor)
+                                                        cell.ratingProgress.hidden = false
+                                                        
                                                         let imageSize = cell.companyImage.bounds.size
                                                         
                                                         if let image =
@@ -77,7 +82,7 @@ class CompanySearchTableViewController: UITableViewController {
                                                             
                                                             let filter = AspectScaledToFillSizeFilter(size: imageSize)
                                                             cell.companyImage.af_setImageWithURL(NSURL(string: image.url)!,
-                                                                filter: filter, imageTransition: .CrossDissolve(0.6))
+                                                                filter: filter, imageTransition: .CrossDissolve(0.5))
                                                         }
         })
         

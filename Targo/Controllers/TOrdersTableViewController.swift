@@ -29,6 +29,8 @@ class TOrdersTableViewController: UITableViewController {
     
     var companyImages: [TCompanyImage]?
     
+    var loading = false
+    
     
     deinit {
         
@@ -124,6 +126,21 @@ class TOrdersTableViewController: UITableViewController {
         self.setup()
     }
     
+    override func viewDidAppear(animated: Bool) {
+        
+        super.viewDidAppear(animated)
+        
+        if let superview = self.view.superview {
+            
+            if !self.loading {
+                
+                return
+            }
+            
+            SwiftOverlays.showCenteredWaitOverlay(superview)
+        }
+    }
+    
     func onOrdersLoadNotification(notification: NSNotification) {
         
         let realm = try! Realm()
@@ -141,9 +158,11 @@ class TOrdersTableViewController: UITableViewController {
             let set = Set<Int>(companyIds)
             let ids = Array(set)
             
+            self.loading = true
+            
             Api.sharedInstance.loadCompaniesByIds(ids)
                 
-                .onSuccess(callback: {[unowned self] companies in
+                .onSuccess(callback: {[weak self] companies in
                     
                     let imageIds = companies.map({ $0.imageId })
                     let set = Set<Int>(imageIds)
@@ -151,16 +170,39 @@ class TOrdersTableViewController: UITableViewController {
                     
                     Api.sharedInstance.loadImagesByIds(ids)
                         
-                        .onSuccess(callback: { images in
+                        .onSuccess(callback: {[weak self] images in
                             
-                            self.companies = companies
-                            self.companyImages = images
+                            self?.loading = false
                             
-                            self.createDataSource()
-                            self.tableView.reloadData()
+                            if let superview = self?.view.superview {
+                                
+                                SwiftOverlays.removeAllOverlaysFromView(superview)
+                            }
                             
+                            self?.companies = companies
+                            self?.companyImages = images
+                            
+                            self?.createDataSource()
+                            self?.tableView.reloadData()
+                            
+                        }).onFailure(callback: {[weak self] error in
+                            
+                            self?.loading = false
+                            
+                            if let superview = self?.view.superview {
+                                
+                                SwiftOverlays.removeAllOverlaysFromView(superview)
+                            }
                         })
                     
+                    }).onFailure(callback: {[weak self] error in
+                        
+                        self?.loading = false
+                        
+                        if let superview = self?.view.superview {
+                            
+                            SwiftOverlays.removeAllOverlaysFromView(superview)
+                        }
                     })
         }
     }

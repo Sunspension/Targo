@@ -28,6 +28,8 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
 
     var cellHeightDictionary = [NSIndexPath : CGFloat]()
     
+    var loading = false
+    
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -117,15 +119,14 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         
         if let company = company {
             
-            if let superview = self.view.superview {
-                
-                SwiftOverlays.showCenteredWaitOverlay(superview)
-            }
+            self.loading = true
             
             Api.sharedInstance.loadCompanyMenu(company.companyId)
                 
                 .onSuccess(callback: { [unowned self] menuPage in
                 
+                    self.loading = false
+                    
                     if let superview = self.view.superview {
                         
                         SwiftOverlays.removeAllOverlaysFromView(superview)
@@ -136,6 +137,8 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
                 self.tableView.reloadData()
                 
             }).onFailure(callback: { [unowned self] error in
+                
+                self.loading = false
                 
                 if let superview = self.view.superview {
                     
@@ -156,6 +159,21 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         super.viewWillAppear(animated)
         
         self.setup()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        
+        super.viewDidAppear(animated)
+        
+        if let superview = self.view.superview {
+            
+            if !self.loading {
+                
+                return
+            }
+            
+            SwiftOverlays.showCenteredWaitOverlay(superview)
+        }
     }
     
     func openInfo() {

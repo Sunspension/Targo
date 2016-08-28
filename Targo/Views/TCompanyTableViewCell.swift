@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CircleProgressView
 
 class TCompanyTableViewCell: UITableViewCell {
 
@@ -18,6 +19,10 @@ class TCompanyTableViewCell: UITableViewCell {
     
     @IBOutlet weak var shadowView: UIView!
     
+    @IBOutlet weak var ratingProgress: CircleProgressView!
+    
+    @IBOutlet weak var ratingText: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -27,6 +32,7 @@ class TCompanyTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         
         companyImage.image = UIImage(named: "blank")
+        ratingProgress.hidden = true
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

@@ -92,7 +92,7 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
         if let image = self.companyImages?.filter({$0.id == company.companyImageId.value}).first {
             
             let filter = AspectScaledToFillSizeFilter(size: self.companyImage.frame.size)
-            self.companyImage.af_setImageWithURL(NSURL(string: image.url)!, filter: filter, imageTransition: .CrossDissolve(0.6))
+            self.companyImage.af_setImageWithURL(NSURL(string: image.url)!, filter: filter, imageTransition: .CrossDissolve(0.5))
         }
         
         if (self.companyView.layer.shadowPath == nil) {
