@@ -65,13 +65,15 @@ class TUserCreditCardsTableViewController: UITableViewController {
             }
             
             section.initializeCellWithReusableIdentifierOrNibName("UserCardCell",
-                                                                  item: nil, itemType: 1,
+                                                                  item: nil,
+                                                                  itemType: 1,
                                                                   bindingAction: { (cell, item) in
                                                                     
                                                                     let viewCell = cell as! TUserCreditCardTableViewCell
-                                                                    viewCell.icon.layer.borderWidth = 1
-                                                                    viewCell.icon.layer.borderColor = UIColor.grayColor().CGColor
                                                                     viewCell.title.text = "credit_card_add_new_one".localized
+                                                                    viewCell.icon.image = UIImage(named: "icon-new-card")
+                                                                    viewCell.icon.tintColor = UIColor(hexString: kHexMainPinkColor)
+                                                                    viewCell.accessoryType = .DisclosureIndicator
                                                                     
             })
             

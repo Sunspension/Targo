@@ -21,13 +21,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Nuv-sn-Tei">
-                        <rect key="frame" x="8" y="8" width="304" height="171"/>
+                        <rect key="frame" x="8" y="8" width="304" height="114"/>
                         <constraints>
-                            <constraint firstAttribute="width" secondItem="Nuv-sn-Tei" secondAttribute="height" multiplier="16:9" id="5hr-Bo-f5l"/>
+                            <constraint firstAttribute="width" secondItem="Nuv-sn-Tei" secondAttribute="height" multiplier="16:6" id="5hr-Bo-f5l"/>
                         </constraints>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hQv-jb-76C">
-                        <rect key="frame" x="8" y="184" width="304" height="60"/>
+                        <rect key="frame" x="8" y="127" width="304" height="60"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Company Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wJc-Ve-nlV">
                                 <rect key="frame" x="8" y="8" width="206" height="21"/>

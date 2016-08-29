@@ -265,7 +265,7 @@ class TOrdersTableViewController: UITableViewController {
         
         header.background.backgroundColor = UIColor(hexString: kHexMainPinkColor)
         header.layer.shadowPath = UIBezierPath(rect: header.layer.bounds).CGPath
-        header.layer.shadowOffset = CGSize(width: 0, height: 2)
+        header.layer.shadowOffset = CGSize(width: 0, height: 1)
         header.layer.shadowOpacity = 0.5
     }
 

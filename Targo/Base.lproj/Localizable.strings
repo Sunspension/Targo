@@ -16,7 +16,7 @@
 
 "maps_title" = "Maps";
 
-"company_info_working_hours" = "WE ARE OPEND";
+"company_info_working_hours" = "WE ARE OPENED";
 
 "company_info_about_us" = "ABOUT US";
 
@@ -62,7 +62,7 @@
 
 "credit_card_payment_method" = "Payment method";
 
-"credit_card_add_new_one" = "Add the card";
+"credit_card_add_new_one" = "Add new card";
 
 "bill_details_your_bill" = "Your bill";
 
@@ -75,3 +75,7 @@
 "company_info_make_call_title" = "Make call";
 
 "company_info_make_call_confirmation" = "Do you want to make call to number %@";
+
+"have_no_cards_alert_message" = "Please, choose a payment method";
+
+"company_info_opened_text" = "Today we are opened\n%@";

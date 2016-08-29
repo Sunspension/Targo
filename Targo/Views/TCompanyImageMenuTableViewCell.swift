@@ -12,8 +12,15 @@ class TCompanyImageMenuTableViewCell: UITableViewCell {
 
     @IBOutlet weak var companyImage: UIImageView!
     
+    @IBOutlet weak var title: UILabel!
+    
+    @IBOutlet weak var point: UIView!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        self.point.makeCircular()
         // Initialization code
     }
 

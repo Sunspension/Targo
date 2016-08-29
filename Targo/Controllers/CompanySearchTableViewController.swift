@@ -127,7 +127,7 @@ class CompanySearchTableViewController: UITableViewController {
         if let mapViewController = self.instantiateViewControllerWithIdentifierOrNibName("CompaniesOnMaps") as? TCompaniesOnMapsViewController {
             
             mapViewController.companies = self.dataSource?.sections[0].items.map({ $0.item! })
-            mapViewController.companyImages = self.companyImages
+            mapViewController.images = Array(self.companyImages)
             
             self.navigationController?.pushViewController(mapViewController, animated: true)
         }
@@ -150,7 +150,7 @@ class CompanySearchTableViewController: UITableViewController {
         
         let viewCell = cell as! TCompanyTableViewCell
         let layer = viewCell.shadowView.layer
-        layer.shadowOffset = CGSize(width: 0, height: 2)
+        layer.shadowOffset = CGSize(width: 0, height: 1)
         layer.shadowOpacity = 0.5
         layer.shadowPath = UIBezierPath(rect: layer.bounds).CGPath
     }

@@ -29,6 +29,13 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate {
     
     var companyImage: TCompanyImage?
     
+    var loading = false
+    
+    
+    deinit {
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,28 +65,75 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate {
         
         button.layer.cornerRadius = radius
         button.layer.shadowPath = UIBezierPath(roundedRect: button.layer.bounds, cornerRadius: radius).CGPath
-        button.layer.shadowOffset = CGSize(width:0, height: 2)
+        button.layer.shadowOffset = CGSize(width:0, height: 1)
         button.layer.shadowOpacity = 0.5
         button.backgroundColor = UIColor(hexString: kHexMainPinkColor)
         button.hidden = true
         
-        self.showWaitOverlay()
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector: #selector(TOrderReviewViewController.onDidAddCardNotification),
+                                                         name: kTargoDidAddNewCardNotification,
+                                                         object: nil)
+        
+        self.loadCards()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        
+        super.viewDidAppear(animated)
+        
+        if !self.loading {
+            
+            return
+        }
+        
+        if let superView = self.view.superview {
+            
+            SwiftOverlays.showCenteredWaitOverlay(superView)
+        }
+    }
+    
+    func onDidAddCardNotification() {
+        
+        if let superView = self.view.superview {
+            
+            SwiftOverlays.showCenteredWaitOverlay(superView)
+        }
+        
+        self.dataSource.sections.removeAll()
+        self.loadCards()
+    }
+    
+    func loadCards() {
+        
+        self.loading = true
         
         Api.sharedInstance.loadCreditCards()
             .onSuccess { [weak self] cards in
                 
-                self?.removeAllOverlays()
+                self?.loading = false
+                
+                if let superView = self?.view.superview {
+                    
+                    SwiftOverlays.removeAllOverlaysFromView(superView)
+                }
+                
                 self?.cards = cards
                 self?.createDataSource()
                 self?.tableView.reloadData()
                 
             }.onFailure { [weak self] error in
                 
-                self?.removeAllOverlays()
+                self?.loading = false
+                
+                if let superView = self?.view.superview {
+                    
+                    SwiftOverlays.removeAllOverlaysFromView(superView)
+                }
+                
                 print(error)
         }
     }
-    
     
     private func createDataSource() {
         
@@ -154,6 +208,21 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate {
                                                                         }
                 })
             }
+            else {
+                
+                section.initializeCellWithReusableIdentifierOrNibName("PaymentMethodCell",
+                                                                      item: nil,
+                                                                      itemType: 2,
+                                                                      bindingAction: { (cell, item) in
+                                                                        
+                                                                        let viewCell = cell as! TPaymentMethodTableViewCell
+                                                                        
+                                                                        viewCell.title.text = "credit_card_payment_method".localized
+                                                                        viewCell.details.text = "credit_card_add_new_one".localized
+                                                                        viewCell.icon.image = UIImage(named: "icon-new-card")
+                                                                        viewCell.icon.tintColor = UIColor(hexString: kHexMainPinkColor)
+                })
+            }
             
             section.initializeCellWithReusableIdentifierOrNibName("DeliveryCell",
                                                                   item: nil,
@@ -185,39 +254,49 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate {
             return
         }
         
-        if let controller = self.instantiateViewControllerWithIdentifierOrNibName("UserCreditCards")
-            as? TUserCreditCardsTableViewController {
+        if item.itemType as! Int == 1 {
             
-            controller.cards = self.cards
-            controller.selectedAction = { cardIndex in
+            if let controller = self.instantiateViewControllerWithIdentifierOrNibName("UserCreditCards")
+                as? TUserCreditCardsTableViewController {
                 
-                self.selectedCardIndex = cardIndex
-                
-                let viewCell = tableView.cellForRowAtIndexPath(indexPath) as! TPaymentMethodTableViewCell
-                let card = self.cards![cardIndex]
-                viewCell.details.text = card.mask
-                
-                switch card.type {
+                controller.cards = self.cards
+                controller.selectedAction = { cardIndex in
                     
-                case "Visa":
+                    self.selectedCardIndex = cardIndex
                     
-                    viewCell.icon.image = UIImage(named: "visa")
+                    let viewCell = tableView.cellForRowAtIndexPath(indexPath) as! TPaymentMethodTableViewCell
+                    let card = self.cards![cardIndex]
+                    viewCell.details.text = card.mask
                     
-                    break
-                    
-                case "MasterCard":
-                    
-                    viewCell.icon.image = UIImage(named: "mastercard")
-                    
-                    break
-                    
-                default:
-                    
-                    break
+                    switch card.type {
+                        
+                    case "Visa":
+                        
+                        viewCell.icon.image = UIImage(named: "visa")
+                        
+                        break
+                        
+                    case "MasterCard":
+                        
+                        viewCell.icon.image = UIImage(named: "mastercard")
+                        
+                        break
+                        
+                    default:
+                        
+                        break
+                    }
                 }
+                
+                self.navigationController?.pushViewController(controller, animated: true)
             }
+        }
+        else if item.itemType as! Int == 2 {
             
-            self.navigationController?.pushViewController(controller, animated: true)
+            if let controller = self.instantiateViewControllerWithIdentifierOrNibName("AddCreditCard") {
+                
+                self.navigationController?.pushViewController(controller, animated: true)
+            }
         }
     }
     
@@ -225,6 +304,18 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate {
         
         guard self.cards != nil && self.company != nil else {
             
+            return
+        }
+        
+        
+        guard self.cards!.count > 0 else {
+            
+            let alert = UIAlertController(title: "Error",
+                                          message: "have_no_cards_alert_message".localized,
+                                          preferredStyle: .Alert)
+            let action = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+            alert.addAction(action)
+            self.presentViewController(alert, animated: true, completion: nil)
             return
         }
         

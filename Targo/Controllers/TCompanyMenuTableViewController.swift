@@ -198,10 +198,10 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
                         
                         if let image = self.companyImage {
                             
-                            mapViewController.companyImages = [image]
+                            mapViewController.images = [image]
                         }
                         
-                        mapViewController.letOpenInfo = false
+                        mapViewController.reason = OpenMapsReasonEnum.OneCompany
                         
                         self.navigationController?.pushViewController(mapViewController, animated: true)
                     }
@@ -353,7 +353,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         
         header.background.backgroundColor = UIColor(hexString: kHexMainPinkColor)
         header.layer.shadowPath = UIBezierPath(rect: header.layer.bounds).CGPath
-        header.layer.shadowOffset = CGSize(width: 0, height: 2)
+        header.layer.shadowOffset = CGSize(width: 0, height: 1)
         header.layer.shadowOpacity = 0.5
     }
     

@@ -40,6 +40,7 @@
 		D44930921D49494800ADF70A /* TTestOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44930911D49494800ADF70A /* TTestOrder.swift */; };
 		D44930941D495D5100ADF70A /* TAddCreditCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44930931D495D5100ADF70A /* TAddCreditCardViewController.swift */; };
 		D45391D11D2DBE0900669669 /* UserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45391D01D2DBE0900669669 /* UserSession.swift */; };
+		D45AC7141D74E83F001BF90B /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = D45AC7131D74E83F001BF90B /* UIImage+ImageEffects.m */; };
 		D45F9FAA1D6101FD00623A34 /* TOrderReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45F9FA91D6101FD00623A34 /* TOrderReviewViewController.swift */; };
 		D45F9FAC1D61055E00623A34 /* TOrderItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45F9FAB1D61055E00623A34 /* TOrderItemTableViewCell.swift */; };
 		D45F9FAE1D61064D00623A34 /* TOrderTotalPriceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45F9FAD1D61064D00623A34 /* TOrderTotalPriceTableViewCell.swift */; };
@@ -134,6 +135,9 @@
 		D44930911D49494800ADF70A /* TTestOrder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TTestOrder.swift; path = Models/Response/TTestOrder.swift; sourceTree = "<group>"; };
 		D44930931D495D5100ADF70A /* TAddCreditCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TAddCreditCardViewController.swift; sourceTree = "<group>"; };
 		D45391D01D2DBE0900669669 /* UserSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSession.swift; sourceTree = "<group>"; };
+		D45AC70E1D74E6BF001BF90B /* Targo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Targo-Bridging-Header.h"; sourceTree = "<group>"; };
+		D45AC7121D74E83F001BF90B /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
+		D45AC7131D74E83F001BF90B /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		D45F9FA91D6101FD00623A34 /* TOrderReviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TOrderReviewViewController.swift; sourceTree = "<group>"; };
 		D45F9FAB1D61055E00623A34 /* TOrderItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TOrderItemTableViewCell.swift; sourceTree = "<group>"; };
 		D45F9FAD1D61064D00623A34 /* TOrderTotalPriceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TOrderTotalPriceTableViewCell.swift; sourceTree = "<group>"; };
@@ -333,8 +337,8 @@
 		D4B96F741D244C2100294A4B /* RemoteServer */ = {
 			isa = PBXGroup;
 			children = (
-				D4B96F751D244CAA00294A4B /* TRemoteServer.swift */,
 				D4B96F7A1D244DBA00294A4B /* PRemoteServerV1.swift */,
+				D4B96F751D244CAA00294A4B /* TRemoteServer.swift */,
 			);
 			name = RemoteServer;
 			sourceTree = "<group>";
@@ -385,10 +389,13 @@
 		E57C7E881D22B5BD00F9A0FC /* AppHelpers */ = {
 			isa = PBXGroup;
 			children = (
+				D45AC7121D74E83F001BF90B /* UIImage+ImageEffects.h */,
+				D45AC7131D74E83F001BF90B /* UIImage+ImageEffects.m */,
 				E57C7E891D22B60D00F9A0FC /* Constants.swift */,
 				D40301731D397F5100B7B610 /* HTTPManager.swift */,
 				D40301751D39839C00B7B610 /* ListTransform.swift */,
 				D4B9C1EA1D723D6400BC4571 /* InterOperation.swift */,
+				D45AC70E1D74E6BF001BF90B /* Targo-Bridging-Header.h */,
 			);
 			name = AppHelpers;
 			sourceTree = "<group>";
@@ -676,6 +683,7 @@
 				D4E0B1CD1D2F061F00B65B96 /* UserRegistrationError.swift in Sources */,
 				D4EE59671D3AFE1E0002022F /* TFeedTableViewController.swift in Sources */,
 				D4FDE67A1D3C007E003EF2CC /* TWorkingTimeTableViewCell.swift in Sources */,
+				D45AC7141D74E83F001BF90B /* UIImage+ImageEffects.m in Sources */,
 				D41D9D901D46AD4000358961 /* TWorkingHoursTableViewCell.swift in Sources */,
 				D4B81B3A1D4FE8AE00F9103C /* TServerError.swift in Sources */,
 				D40E10211D3EAEE60012DCF4 /* TCompanyImageMenuTableViewCell.swift in Sources */,
@@ -874,7 +882,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.targo.Targo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Targo/Targo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -897,7 +905,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.targo.Targo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Targo/Targo-Bridging-Header.h";
 			};
 			name = Release;
 		};

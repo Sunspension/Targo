@@ -114,6 +114,8 @@ class TAddCreditCardViewController: UIViewController, WKUIDelegate, WKNavigation
                 
             case .Complete:
                 
+                NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: kTargoDidAddNewCardNotification, object: nil))
+                
                 let alert = UIAlertController(title: "success_title".localized, message: "test_order_success_message".localized, preferredStyle: .Alert)
                 let action = UIAlertAction(title: "Ok", style: .Cancel, handler: { action in
                     

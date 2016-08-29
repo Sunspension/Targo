@@ -16,24 +16,48 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="179"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Qhf-ky-rES">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="180"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="blank" translatesAutoresizingMaskIntoConstraints="NO" id="Qhf-ky-rES">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="120"/>
                         <constraints>
-                            <constraint firstAttribute="width" secondItem="Qhf-ky-rES" secondAttribute="height" multiplier="16:9" id="Uap-gk-9EN"/>
+                            <constraint firstAttribute="width" secondItem="Qhf-ky-rES" secondAttribute="height" multiplier="16:6" id="Uap-gk-9EN"/>
                         </constraints>
                     </imageView>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Today we are opened" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="el2-ko-jRE">
+                        <rect key="frame" x="8" y="51" width="304" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5M4-xM-BrN">
+                        <rect key="frame" x="153" y="28" width="15" height="15"/>
+                        <color key="backgroundColor" red="0.13333333333333333" green="0.5607843137254902" blue="0.23921568627450981" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="Gkg-7E-fr2"/>
+                            <constraint firstAttribute="width" constant="15" id="fZg-mD-uOA"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="5M4-xM-BrN" firstAttribute="centerX" secondItem="Qhf-ky-rES" secondAttribute="centerX" id="1ME-ND-NWa"/>
+                    <constraint firstItem="el2-ko-jRE" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="2IP-AH-CwQ"/>
+                    <constraint firstItem="el2-ko-jRE" firstAttribute="top" secondItem="5M4-xM-BrN" secondAttribute="bottom" constant="8" id="FMu-0T-HAB"/>
                     <constraint firstItem="Qhf-ky-rES" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="Pt7-rw-ZIJ"/>
                     <constraint firstAttribute="bottomMargin" secondItem="Qhf-ky-rES" secondAttribute="bottom" priority="999" constant="-8" id="ZkZ-lM-EpD"/>
+                    <constraint firstItem="el2-ko-jRE" firstAttribute="centerY" secondItem="Qhf-ky-rES" secondAttribute="centerY" id="fY5-Lu-vpL"/>
                     <constraint firstAttribute="trailingMargin" secondItem="Qhf-ky-rES" secondAttribute="trailing" constant="-8" id="gYB-6T-Ft1"/>
                     <constraint firstItem="Qhf-ky-rES" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="sK6-fb-94A"/>
+                    <constraint firstItem="el2-ko-jRE" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="x0y-rz-ncd"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="companyImage" destination="Qhf-ky-rES" id="4D6-oE-Lk5"/>
+                <outlet property="point" destination="5M4-xM-BrN" id="wZT-75-4HE"/>
+                <outlet property="title" destination="el2-ko-jRE" id="N0D-ig-NGR"/>
             </connections>
             <point key="canvasLocation" x="328" y="394"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="blank" width="400" height="300"/>
+    </resources>
 </document>

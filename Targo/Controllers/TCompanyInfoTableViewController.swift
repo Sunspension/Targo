@@ -82,7 +82,7 @@ class TCompanyInfoTableViewController: UITableViewController {
         if section == 2 {
             
             view.layer.shadowPath = UIBezierPath(rect: view.layer.bounds).CGPath
-            view.layer.shadowOffset = CGSize(width: 0, height: 2)
+            view.layer.shadowOffset = CGSize(width: 0, height: 1)
             view.layer.shadowOpacity = 0.5
         }
     }
@@ -109,7 +109,7 @@ class TCompanyInfoTableViewController: UITableViewController {
                 
                 button.layer.cornerRadius = radius
                 button.layer.shadowPath = UIBezierPath(roundedRect: button.layer.bounds, cornerRadius: radius).CGPath
-                button.layer.shadowOffset = CGSize(width:0, height: 2)
+                button.layer.shadowOffset = CGSize(width:0, height: 1)
                 button.layer.shadowOpacity = 0.5
                 button.backgroundColor = UIColor(hexString: kHexMainPinkColor)
                 
@@ -283,7 +283,21 @@ class TCompanyInfoTableViewController: UITableViewController {
             if let companyImage = item.item as? TCompanyImage {
                 
                 let filter = AspectScaledToFillSizeFilter(size: viewCell.companyImage.bounds.size)
-                viewCell.companyImage.af_setImageWithURL(NSURL(string: companyImage.url)!, filter: filter, imageTransition: .None)
+                viewCell.companyImage.af_setImageWithURL(NSURL(string: companyImage.url)!, filter: filter, imageTransition: .None, completion: { response in
+                
+                    if let image = response.result.value {
+                        
+                        let blurredImage = image.applyBlurWithRadius(4, tintColor: UIColor(red: 33 / 255, green: 21 / 255, blue: 100 / 255, alpha: 0.65), saturationDeltaFactor: 1, maskImage: nil)
+                        
+                        let blurredView = UIImageView(image: blurredImage)
+                        blurredView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+                        viewCell.companyImage.addSubview(blurredView)
+                    }
+                })
+                
+                viewCell.title.hidden = false
+                viewCell.title.text = String(format: "company_info_opened_text".localized, "8:00 - 23:00")
+                viewCell.point.hidden = false
             }
             
             viewCell.selectionStyle = .None
@@ -305,7 +319,7 @@ class TCompanyInfoTableViewController: UITableViewController {
                                                                                 
                                                                                 let viewCell = cell as! TWorkingHoursTableViewCell
                                                                                 viewCell.weekday.text = item.item as? String
-                                                                                viewCell.hours.text = "8:00 - 00:00"
+                                                                                viewCell.hours.text = "8:00 - 23:00"
                                                                                 viewCell.selectionStyle = .None
             })
         }
