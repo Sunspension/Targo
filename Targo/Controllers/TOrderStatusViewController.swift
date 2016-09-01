@@ -279,6 +279,7 @@ class TOrderStatusViewController: UIViewController {
             
             break;
             
+            // 7
         case .Finished:
             
             orderStatusImage.image = UIImage(named: "icon-cutlery")
@@ -290,7 +291,28 @@ class TOrderStatusViewController: UIViewController {
             
             break
             
-        default:
+            // 8
+        case .PaySuccess:
+            
+            orderStatusImage.image = nil
+            orderStatusDescription.text = "order_status_pay_success".localized
+            statusIndicator1.backgroundColor = UIColor.whiteColor()
+            statusIndicator2.backgroundColor = UIColor.whiteColor()
+            statusIndicator3.backgroundColor = UIColor.lightGrayColor()
+            statusIndicator4.backgroundColor = UIColor.lightGrayColor()
+            
+            break
+            
+            // 9
+        case .PayError:
+            
+            orderStatusImage.image = nil
+            orderStatusDescription.text = "order_status_pay_error".localized
+            statusIndicator1.backgroundColor = UIColor.lightGrayColor()
+            statusIndicator2.backgroundColor = UIColor.lightGrayColor()
+            statusIndicator3.backgroundColor = UIColor.lightGrayColor()
+            statusIndicator4.backgroundColor = UIColor.lightGrayColor()
+            
             break
         }
     }

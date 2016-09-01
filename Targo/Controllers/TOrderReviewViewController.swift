@@ -8,8 +8,23 @@
 
 import UIKit
 import SwiftOverlays
+import ActionSheetPicker_3_0
+import Timepiece
+import Bond
 
-class TOrderReviewViewController: UIViewController, UITableViewDelegate {
+private enum ItemTypeEnum : Int {
+    
+    case PaymentMetod = 1
+    
+    case AddNewCard
+    
+    case OrderTime
+    
+    case OrderDescription
+}
+
+
+class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -31,6 +46,14 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate {
     
     var loading = false
     
+    var preparedDate: NSDate?
+    
+    var bag = DisposeBag()
+    
+    var keyboardListener: KeyboardNotificationListener?
+    
+    var orderDescription: String?
+    
     
     deinit {
         
@@ -47,6 +70,12 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate {
         tableView.delegate = self
         tableView.tableFooterView = UIView()
         tableView.contentInset = UIEdgeInsetsMake(0, 0, 20, 0)
+        
+        tableView.registerNib(UINib(nibName: "TDetailsTableViewCell", bundle: nil),
+                              forCellReuseIdentifier: "DetailsCell")
+        
+        tableView.registerNib(UINib(nibName: "TOrderDescriptionTableViewCell", bundle: nil),
+                              forCellReuseIdentifier: "OrderDescriptionCell")
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "",
                                                                 style: .Plain,
@@ -78,9 +107,17 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate {
         self.loadCards()
     }
     
+    
+    override func viewWillAppear(animated: Bool) {
+        
+        super.viewWillAppear(animated)
+    }
+    
     override func viewDidAppear(animated: Bool) {
         
         super.viewDidAppear(animated)
+        
+        self.keyboardListener = KeyboardNotificationListener(tableView: self.tableView)
         
         if !self.loading {
             
@@ -91,6 +128,20 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate {
             
             SwiftOverlays.showCenteredWaitOverlay(superView)
         }
+    }
+    
+    //MARK: - UITextView delegate implementation
+    
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        
+        guard text != "\n" else {
+            
+            textView.resignFirstResponder()
+            self.orderDescription = textView.text
+            return false
+        }
+        
+        return true
     }
     
     func onDidAddCardNotification() {
@@ -179,7 +230,7 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate {
                 
                 section.initializeCellWithReusableIdentifierOrNibName("PaymentMethodCell",
                                                                       item: cards.last,
-                                                                      itemType: 1,
+                                                                      itemType: ItemTypeEnum.PaymentMetod,
                                                                       bindingAction: { (cell, item) in
                                                                         
                                                                         let viewCell = cell as! TPaymentMethodTableViewCell
@@ -212,7 +263,7 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate {
                 
                 section.initializeCellWithReusableIdentifierOrNibName("PaymentMethodCell",
                                                                       item: nil,
-                                                                      itemType: 2,
+                                                                      itemType: ItemTypeEnum.AddNewCard,
                                                                       bindingAction: { (cell, item) in
                                                                         
                                                                         let viewCell = cell as! TPaymentMethodTableViewCell
@@ -224,9 +275,20 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate {
                 })
             }
             
+            section.initializeCellWithReusableIdentifierOrNibName("DetailsCell",
+                                                                  item: nil,
+                                                                  itemType: ItemTypeEnum.OrderTime,
+                                                                  bindingAction: { (cell, item) in
+                                                                    
+                                                                    let viewCell = cell as! TDetailsTableViewCell
+                                                                    
+                                                                    viewCell.title.text = "order_time_title".localized
+                                                                    viewCell.details.text = "order_time_place_holder".localized
+            })
+            
             section.initializeCellWithReusableIdentifierOrNibName("DeliveryCell",
                                                                   item: nil,
-                                                                  bindingAction: { (cell, item) in
+                                                                  bindingAction: {[unowned self] (cell, item) in
                                                                     
                                                                     let viewCell = cell as! TDeliveryMethodTableViewCell
                                                                     
@@ -238,6 +300,24 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate {
                                                                         self.deliverySelectedIndex = index
                                                                     })
             })
+            
+            section.initializeCellWithReusableIdentifierOrNibName("OrderDescriptionCell",
+                                                                  item: nil,
+                                                                  itemType: ItemTypeEnum.OrderDescription,
+                                                                  bindingAction: {[unowned self] (cell, item) in
+                                                                    
+                                                                    let viewCell = cell as! TOrderDescriptionTableViewCell
+                                                                    
+                                                                    viewCell.title.text = "order_description_title".localized
+                                                                    let layer = viewCell.textView.layer
+                                                                    layer.borderWidth = 1
+                                                                    layer.borderColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 0.8).CGColor
+                                                                    
+                                                                    viewCell.textView.tintColor = UIColor(hexString: kHexMainPinkColor)
+                                                                    viewCell.textView.userInteractionEnabled = false
+                                                                    viewCell.textView.delegate = self
+            })
+
         }
         
         dataSource.sections.append(section)
@@ -254,7 +334,11 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate {
             return
         }
         
-        if item.itemType as! Int == 1 {
+        let type = item.itemType as! ItemTypeEnum
+        
+        switch type {
+            
+        case .PaymentMetod:
             
             if let controller = self.instantiateViewControllerWithIdentifierOrNibName("UserCreditCards")
                 as? TUserCreditCardsTableViewController {
@@ -290,13 +374,57 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate {
                 
                 self.navigationController?.pushViewController(controller, animated: true)
             }
-        }
-        else if item.itemType as! Int == 2 {
+            
+            break
+            
+        case .AddNewCard:
             
             if let controller = self.instantiateViewControllerWithIdentifierOrNibName("AddCreditCard") {
                 
                 self.navigationController?.pushViewController(controller, animated: true)
             }
+            
+            break
+            
+        case .OrderTime:
+            
+            let components = NSDateComponents()
+            components.setValue(1, forComponent: .Hour)
+            
+            let expirationDate = NSCalendar.currentCalendar().dateByAddingComponents(components, toDate: NSDate(),
+                                                                                     options: NSCalendarOptions(rawValue: 0))
+            
+            let viewCell = tableView.cellForRowAtIndexPath(item.indexPath) as! TDetailsTableViewCell
+            
+            ActionSheetDatePicker.showPickerWithTitle("order_time_title".localized,
+                                                      datePickerMode: .Time,
+                                                      selectedDate: self.preparedDate ?? expirationDate,
+                                                      minimumDate: expirationDate,
+                                                      maximumDate: expirationDate?.endOfDay,
+                                                      doneBlock: {[weak self] (picker, selectedDate, view) in
+                                                        
+                                                        self?.preparedDate = selectedDate as? NSDate;
+                                                        
+                                                        if let date = selectedDate {
+                                                            
+                                                            viewCell.details.text = date.stringFromFormat("HH:mm")
+                                                            viewCell.details.textColor = UIColor.blackColor()
+                                                        }
+                                                        
+                }, cancelBlock: { picker in
+                    
+                    
+                }, origin: self.view.superview)
+            
+            break
+            
+        case .OrderDescription:
+            
+            let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! TOrderDescriptionTableViewCell
+            cell.textView.becomeFirstResponder()
+            self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Middle, animated: true)
+            
+            break
         }
     }
     
@@ -307,15 +435,15 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate {
             return
         }
         
-        
         guard self.cards!.count > 0 else {
             
-            let alert = UIAlertController(title: "Error",
-                                          message: "have_no_cards_alert_message".localized,
-                                          preferredStyle: .Alert)
-            let action = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
-            alert.addAction(action)
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.showOkAlert("error".localized, message: "have_no_cards_alert_message".localized)
+            return
+        }
+        
+        guard self.preparedDate != nil else {
+            
+            self.showOkAlert("error".localized, message: "oder_time_to_prepare_empty".localized)
             return
         }
         
@@ -327,19 +455,14 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate {
             items[item.item.id] = item.count
         }
         
-        let components = NSDateComponents()
-        
-        components.setValue(30, forComponent: .Minute)
-        let expirationDate = NSCalendar.currentCalendar().dateByAddingComponents(components, toDate: NSDate(),
-                                                                                 options: NSCalendarOptions(rawValue: 0))
-        
         self.showWaitOverlay()
         
         Api.sharedInstance.makeShopOrder(card.id,
             items: items,
             addressId: self.company!.id,
             serviceId: deliverySelectedIndex + 1,
-            date: expirationDate!)
+            date: self.preparedDate!,
+            description: self.orderDescription)
             
             .onSuccess {[weak self] shopOrder in
                 

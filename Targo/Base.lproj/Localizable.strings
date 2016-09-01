@@ -56,9 +56,14 @@
 
 "order_status_finished" = "Order has been finished";
 
+"order_status_pay_success" = "You have successfully paid the order";
+
+"order_status_pay_error" = "Payment error";
+
 "order_history_order_title" = "History orders";
 
 "order_in_progress_order_title" = "In Progress";
+
 
 "credit_card_payment_method" = "Payment method";
 
@@ -79,3 +84,13 @@
 "have_no_cards_alert_message" = "Please, choose a payment method";
 
 "company_info_opened_text" = "Today we are opened\n%@";
+
+"order_time_title" = "Time to prepare the order";
+
+"order_time_place_holder" = "Please, choose time";
+
+"error" = "Error";
+
+"oder_time_to_prepare_empty" = "You haven't chosen the order preparation time";
+
+"order_description_title" = "Order description";

@@ -104,6 +104,17 @@ extension UIViewController {
         self.navigationController?.navigationBar.titleTextAttributes = [ NSForegroundColorAttributeName : UIColor.whiteColor() ]
     }
     
+    func showOkAlert(title: String?, message: String?) {
+        
+        let alert = UIAlertController(title: title,
+                                      message: message,
+                                      preferredStyle: .Alert)
+        let action = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+        alert.addAction(action)
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
     private var activityRestorationIdentifier: String {
         return "NVActivityIndicatorViewContainer"
     }
@@ -229,5 +240,22 @@ extension NSObject {
         defer { objc_sync_exit(self) }
         
         closure()
+    }
+}
+
+extension NSDate {
+    
+    var startOfDay: NSDate {
+        
+        return NSCalendar.currentCalendar().startOfDayForDate(self)
+    }
+    
+    var endOfDay: NSDate? {
+        
+        let components = NSDateComponents()
+        components.day = 1
+        components.second = -1
+        
+        return NSCalendar.currentCalendar().dateByAddingComponents(components, toDate: startOfDay, options: NSCalendarOptions())
     }
 }

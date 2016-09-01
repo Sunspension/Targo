@@ -77,6 +77,8 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         
         self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 20, 0)
         
+        self.buttonMakeOrder.hidden = true
+        
         self.orderItems.observe { event in
             
             UIView.beginAnimations("buton", context: nil)
@@ -126,6 +128,8 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
                 .onSuccess(callback: { [unowned self] menuPage in
                 
                     self.loading = false
+                    
+                    self.buttonMakeOrder.hidden = false
                     
                     if let superview = self.view.superview {
                         

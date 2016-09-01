@@ -18,11 +18,14 @@ class CollectionSectionItem: NSObject {
     
     private (set) var secondReusableIdentifierOrNibName: String?
     
+    
     var item: Any?
     
     var itemType: Any?
     
     var userData: Any?
+    
+    var validation: (() -> Bool)?
     
     var reusableIdentifierOrNibName: String? {
         

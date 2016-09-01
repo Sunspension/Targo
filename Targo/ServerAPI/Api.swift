@@ -392,11 +392,21 @@ struct Api {
         return p.future
     }
     
-    func makeShopOrder(cardId: Int, items: [Int : Int], addressId: Int, serviceId: Int, date: NSDate) -> Future<TShopOrder, TargoError> {
+    func makeShopOrder(cardId: Int,
+                       items: [Int : Int],
+                       addressId: Int,
+                       serviceId: Int,
+                       date: NSDate,
+                       description: String?) -> Future<TShopOrder, TargoError> {
         
         let p = Promise<TShopOrder, TargoError>()
         
-        server.makeShopOrder(cardId, items: items, addressId: addressId, serviceId: serviceId, date: date)
+        server.makeShopOrder(cardId,
+            items: items,
+            addressId: addressId,
+            serviceId: serviceId,
+            date: date,
+            description: description)
             
             .responseJSON { response in
                 

@@ -29,26 +29,29 @@ pod 'AlamofireImage', '~> 2.0'
 pod 'RealmSwift'
 
 #UI
-#pod 'EZLoadingActivity'
 #pod 'JLToast', '~> 1.4'
 #pod 'LiquidLoader'
-pod 'NVActivityIndicatorView'
+#pod 'NVActivityIndicatorView'
 pod 'SwiftOverlays', '~> 2.0.0'
 #pod 'GaugeKit'
 #pod 'M13ProgressSuite'
-#pod 'KDCircularProgress'
-pod 'BusyNavigationBar'
-pod 'MZFormSheetPresentationController'
+#pod 'BusyNavigationBar'
+#pod 'MZFormSheetPresentationController'
 pod 'GSMessages'
 pod 'SCLAlertView'
 pod 'CircleProgressView', :git => 'https://github.com/CardinalNow/iOS-CircleProgressView.git'
+pod 'ActionSheetPicker-3.0'
+
+#Date
+#pod 'AFDateHelper'
+pod 'Timepiece'
 
 #Text
 pod 'SwiftString'
 
 #UITextField
 #pod 'MaterialTextField', '~> 0.2'
-pod 'BSErrorMessageView', :git => 'https://github.com/BenjaminSarkisyan/BSErrorMessageView.git'
+#pod 'BSErrorMessageView', :git => 'https://github.com/BenjaminSarkisyan/BSErrorMessageView.git'
 
 #Keychain
 pod 'KeychainSwift', '~> 3.0'

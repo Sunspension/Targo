@@ -10,7 +10,7 @@ import UIKit
 
 import DynamicColor
 import SHSPhoneComponent
-import BSErrorMessageView
+//import BSErrorMessageView
 import AlamofireObjectMapper
 import RealmSwift
 import BrightFutures
@@ -96,12 +96,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let phoneNumber = self.phoneNumber.phoneNumber()
         let code = self.password.text
         
-        if ((code?.isEmpty) == nil) {
-            
-            self.password.bs_setupErrorMessageViewWithMessage("login_empty_code".localized)
-            self.password.bs_showError()
-            return
-        }
+//        if ((code?.isEmpty) == nil) {
+//            
+//            self.password.bs_setupErrorMessageViewWithMessage("login_empty_code".localized)
+//            self.password.bs_showError()
+//            return
+//        }
         
         Api.sharedInstance.userLogin(phoneNumber, code: code!)
             
@@ -119,7 +119,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         
-        textField.bs_hideError()
+//        textField.bs_hideError()
         return true
     }
 }
