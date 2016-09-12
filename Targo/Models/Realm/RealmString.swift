@@ -8,19 +8,8 @@
 
 import UIKit
 import RealmSwift
-import ObjectMapper
 
-class RealmString: Object, Mappable {
+class RealmString: Object {
 
     dynamic var value = ""
-    
-    required convenience init?(_ map: Map) {
-        
-        self.init()
-    }
-    
-    func mapping(map: Map) {
-        
-        value <- map["value"]
-    }
 }

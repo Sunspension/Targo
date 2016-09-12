@@ -54,6 +54,22 @@ class TCompanyAddress: Object, Mappable {
     
     dynamic var distance = 0.0
     
+    var wokingTime: [[String]] {
+        
+        get {
+            
+            return backingWorkingTime.map({ day in
+                
+                var workingDay = [String]()
+                workingDay.append(day.begin)
+                workingDay.append(day.end)
+                return workingDay
+            })
+        }
+    }
+    
+    let backingWorkingTime = List<TCompanyWorkingDay>()
+    
     
     required convenience init?(_ map: Map) {
         
@@ -64,7 +80,13 @@ class TCompanyAddress: Object, Mappable {
         
         return "id"
     }
+    
+    override static func ignoredProperties() -> [String] {
+        
+        return ["workingTime"]
+    }
 
+    
     func mapping(map: Map) {
         
         id <- map["id"]
@@ -88,5 +110,11 @@ class TCompanyAddress: Object, Mappable {
         companyDescription <- map["company_category_description"]
         companyCategoryImageId <- map["company_category_image_id"]
         distance <- map["dist"]
+        
+        var workingTime = [[String]]()
+        workingTime <- map["work_time"]
+        
+        self.backingWorkingTime.appendContentsOf(workingTime.map({ value in
+            TCompanyWorkingDay(begin: value[0], end: value[1]) }))
     }
 }

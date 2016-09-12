@@ -124,7 +124,7 @@ class TCompanyInfoTableViewController: UITableViewController {
             
             if let header = tableView.dequeueReusableHeaderFooterViewWithIdentifier(self.companyContactsIdentifier) as? TCompanyInfoContactsHeader {
                 
-                header.buttonPhone.setTitle("+7 812 345 6789", forState: .Normal)
+                header.buttonPhone.setTitle(!self.company!.companyPhone.isEmpty ? self.company!.companyPhone : "+7 812 345 6789", forState: .Normal)
                 header.buttonPhone.alignImageAndTitleVertically()
                 header.buttonPhone.addTarget(self, action: #selector(TCompanyInfoTableViewController.makeCall), forControlEvents: .TouchUpInside)
                 
@@ -132,7 +132,7 @@ class TCompanyInfoTableViewController: UITableViewController {
                 header.buttonLocation.alignImageAndTitleVertically()
                 header.buttonLocation.addTarget(self, action: #selector(TCompanyInfoTableViewController.openMapAction), forControlEvents: .TouchUpInside)
                 
-                header.buttonLink.setTitle("www.google.com", forState: .Normal)
+                header.buttonLink.setTitle(!self.company!.companySite.isEmpty ? self.company!.companySite : "www.google.com", forState: .Normal)
                 header.buttonLink.alignImageAndTitleVertically()
                 header.buttonLink.addTarget(self, action: #selector(TCompanyInfoTableViewController.openURL), forControlEvents: .TouchUpInside)
                 
@@ -319,7 +319,12 @@ class TCompanyInfoTableViewController: UITableViewController {
                                                                                 
                                                                                 let viewCell = cell as! TWorkingHoursTableViewCell
                                                                                 viewCell.weekday.text = item.item as? String
-                                                                                viewCell.hours.text = "8:00 - 23:00"
+                                                                                
+                                                                                if let day = self.company?.backingWorkingTime[weekDay] {
+                                                                                    
+                                                                                    viewCell.hours.text = "\(day.begin) - \(day.end)"
+                                                                                }
+                                                                                
                                                                                 viewCell.selectionStyle = .None
             })
         }

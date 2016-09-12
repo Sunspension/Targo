@@ -72,6 +72,7 @@
 		D4D0D6D91D2C61BA00B4E01D /* TargoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D0D6D81D2C61BA00B4E01D /* TargoError.swift */; };
 		D4D4B68C1D42C67300278E2D /* TMenuItemFullTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D4B68A1D42C67300278E2D /* TMenuItemFullTableViewCell.swift */; };
 		D4D4B68D1D42C67300278E2D /* TMenuItemFullTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4D4B68B1D42C67300278E2D /* TMenuItemFullTableViewCell.xib */; };
+		D4D567AB1D8758C700679F53 /* TCompanyWorkingDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D567AA1D8758C700679F53 /* TCompanyWorkingDay.swift */; };
 		D4DD9DD91D41830A009C28D5 /* TMenuItemSmallTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4DD9DD71D41830A009C28D5 /* TMenuItemSmallTableViewCell.swift */; };
 		D4DD9DDA1D41830A009C28D5 /* TMenuItemSmallTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4DD9DD81D41830A009C28D5 /* TMenuItemSmallTableViewCell.xib */; };
 		D4DD9DDC1D418DC9009C28D5 /* TBaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4DD9DDB1D418DC9009C28D5 /* TBaseTableViewCell.swift */; };
@@ -175,6 +176,7 @@
 		D4D0D6D81D2C61BA00B4E01D /* TargoError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargoError.swift; sourceTree = "<group>"; };
 		D4D4B68A1D42C67300278E2D /* TMenuItemFullTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMenuItemFullTableViewCell.swift; sourceTree = "<group>"; };
 		D4D4B68B1D42C67300278E2D /* TMenuItemFullTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TMenuItemFullTableViewCell.xib; sourceTree = "<group>"; };
+		D4D567AA1D8758C700679F53 /* TCompanyWorkingDay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TCompanyWorkingDay.swift; path = Models/Company/TCompanyWorkingDay.swift; sourceTree = "<group>"; };
 		D4DD9DD71D41830A009C28D5 /* TMenuItemSmallTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMenuItemSmallTableViewCell.swift; sourceTree = "<group>"; };
 		D4DD9DD81D41830A009C28D5 /* TMenuItemSmallTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TMenuItemSmallTableViewCell.xib; sourceTree = "<group>"; };
 		D4DD9DDB1D418DC9009C28D5 /* TBaseTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TBaseTableViewCell.swift; sourceTree = "<group>"; };
@@ -255,6 +257,7 @@
 				D4036A0E1D36CE8200CA8E38 /* TCompany.swift */,
 				D4036A101D36D08900CA8E38 /* TCompaniesPage.swift */,
 				D4EE595F1D3AC98A0002022F /* TCompanyImage.swift */,
+				D4D567AA1D8758C700679F53 /* TCompanyWorkingDay.swift */,
 			);
 			name = Company;
 			sourceTree = "<group>";
@@ -730,6 +733,7 @@
 				D4C47FD11D5FE805000D1AA2 /* CenteredButton.swift in Sources */,
 				D4036A0F1D36CE8200CA8E38 /* TCompany.swift in Sources */,
 				D4D4B68C1D42C67300278E2D /* TMenuItemFullTableViewCell.swift in Sources */,
+				D4D567AB1D8758C700679F53 /* TCompanyWorkingDay.swift in Sources */,
 				D4A392081D6BBBC9005B2047 /* TCompanyAddress.swift in Sources */,
 				D45F9FB01D610CBD00623A34 /* TPaymentMethodTableViewCell.swift in Sources */,
 				D4F84B491D24668400263D1A /* User.swift in Sources */,
