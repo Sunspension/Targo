@@ -89,8 +89,18 @@
 
 "order_time_place_holder" = "Please, choose time";
 
+"order_how_to_eat" = "How to eat";
+
+"order_take_away" = "Take away";
+
+"order_take_inside" = "Eat inside";
+
+"order_how_to_eat_place_holder" = "Please, choose one";
+
 "error" = "Error";
 
 "oder_time_to_prepare_empty" = "You haven't chosen the order preparation time";
+
+"oder_delivery_service_empty" = "Please, choose how you are going to eat";
 
 "order_description_title" = "Order description";

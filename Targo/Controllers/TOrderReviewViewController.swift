@@ -20,6 +20,8 @@ private enum ItemTypeEnum : Int {
     
     case OrderTime
     
+    case DeliveryType
+    
     case OrderDescription
 }
 
@@ -36,7 +38,7 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
     
     var cards: [TCreditCard]?
     
-    var deliverySelectedIndex = 0
+    var serviceId = 0
     
     var selectedCardIndex = 0
     
@@ -286,20 +288,31 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
                                                                     viewCell.details.text = "order_time_place_holder".localized
             })
             
-            section.initializeCellWithReusableIdentifierOrNibName("DeliveryCell",
+            section.initializeCellWithReusableIdentifierOrNibName("DetailsCell",
                                                                   item: nil,
-                                                                  bindingAction: {[unowned self] (cell, item) in
+                                                                  itemType: ItemTypeEnum.DeliveryType,
+                                                                  bindingAction: { (cell, item) in
                                                                     
-                                                                    let viewCell = cell as! TDeliveryMethodTableViewCell
+                                                                    let viewCell = cell as! TDetailsTableViewCell
                                                                     
-                                                                    viewCell.deliveryMethod.tintColor = UIColor(hexString: kHexMainPinkColor)
-                                                                    viewCell.selectionStyle = .None
-                                                                    
-                                                                    viewCell.deliveryMethod.bnd_selectedSegmentIndex.observe({ index in
-                                                                        
-                                                                        self.deliverySelectedIndex = index
-                                                                    })
+                                                                    viewCell.title.text = "order_how_to_eat".localized
+                                                                    viewCell.details.text = "order_how_to_eat_place_holder".localized
             })
+            
+//            section.initializeCellWithReusableIdentifierOrNibName("DeliveryCell",
+//                                                                  item: nil,
+//                                                                  bindingAction: {[unowned self] (cell, item) in
+//                                                                    
+//                                                                    let viewCell = cell as! TDeliveryMethodTableViewCell
+//                                                                    
+//                                                                    viewCell.deliveryMethod.tintColor = UIColor(hexString: kHexMainPinkColor)
+//                                                                    viewCell.selectionStyle = .None
+//                                                                    
+//                                                                    viewCell.deliveryMethod.bnd_selectedSegmentIndex.observe({ index in
+//                                                                        
+//                                                                        self.deliverySelectedIndex = index
+//                                                                    })
+//            })
             
             section.initializeCellWithReusableIdentifierOrNibName("OrderDescriptionCell",
                                                                   item: nil,
@@ -418,6 +431,37 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
             
             break
             
+            
+        case .DeliveryType:
+            
+            let alert = UIAlertController(title: "order_how_to_eat".localized, message: "", preferredStyle: .ActionSheet)
+            
+            let takeAwayAction = UIAlertAction(title: "order_take_away".localized, style: .Default, handler: { action in
+                
+                self.serviceId = 1
+                let viewCell = tableView.cellForRowAtIndexPath(item.indexPath) as! TDetailsTableViewCell
+                viewCell.details.text = "order_take_away".localized
+                viewCell.details.textColor = UIColor.blackColor()
+            })
+            
+            let eatInsideAction = UIAlertAction(title: "order_take_inside".localized, style: .Default, handler: { action in
+                
+                self.serviceId = 2
+                let viewCell = tableView.cellForRowAtIndexPath(item.indexPath) as! TDetailsTableViewCell
+                viewCell.details.text = "order_take_inside".localized
+                viewCell.details.textColor = UIColor.blackColor()
+            })
+            
+            let cancel = UIAlertAction(title: "action_cancel".localized, style: .Cancel, handler: nil)
+            
+            alert.addAction(takeAwayAction)
+            alert.addAction(eatInsideAction)
+            alert.addAction(cancel)
+            
+            self.presentViewController(alert, animated: true, completion: nil)
+            
+            break
+            
         case .OrderDescription:
             
             let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! TOrderDescriptionTableViewCell
@@ -447,6 +491,12 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
             return
         }
         
+        guard self.serviceId != 0 else {
+            
+            self.showOkAlert("error".localized, message: "oder_delivery_service_empty".localized)
+            return
+        }
+        
         let card = self.cards![self.selectedCardIndex]
         var items: [Int : Int] = [:]
         
@@ -460,7 +510,7 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
         Api.sharedInstance.makeShopOrder(card.id,
             items: items,
             addressId: self.company!.id,
-            serviceId: deliverySelectedIndex + 1,
+            serviceId: serviceId,
             date: self.preparedDate!,
             description: self.orderDescription)
             
