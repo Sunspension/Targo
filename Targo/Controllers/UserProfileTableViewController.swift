@@ -29,7 +29,7 @@ class UserProfileTableViewController: UITableViewController {
         
         let section = GenericCollectionSection<String>(title: nil)
         
-        let menuItems = ["Logout", "Add new card", "Get info about my cards"]
+        let menuItems = ["Logout", "Add new card"]
         
         for item in menuItems {
             
@@ -46,6 +46,10 @@ class UserProfileTableViewController: UITableViewController {
     override func viewWillAppear(animated: Bool) {
         
         super.viewWillAppear(animated)
+        
+        let frame = self.view.frame
+        
+        self.tableView.contentInset = UIEdgeInsets(top: frame.size.height / 2 - 64 - 44, left: 0, bottom: 0, right: 0)
         
         self.setup()
     }
