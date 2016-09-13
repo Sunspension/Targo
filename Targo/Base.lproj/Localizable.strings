@@ -46,7 +46,7 @@
 
 "order_status_seen" = "Order have been seen";
 
-"order_status_processing" = "Order is ready in %i minutes";
+"order_status_processing" = "Order be ready very soon";
 
 "order_status_canceled" = "Order is canceled";
 
@@ -56,14 +56,13 @@
 
 "order_status_finished" = "Order has been finished";
 
-"order_status_pay_success" = "You have successfully paid the order";
+"order_status_pay_success" = "Your order is in progress";
 
 "order_status_pay_error" = "Payment error";
 
 "order_history_order_title" = "History orders";
 
 "order_in_progress_order_title" = "In Progress";
-
 
 "credit_card_payment_method" = "Payment method";
 
@@ -104,3 +103,5 @@
 "oder_delivery_service_empty" = "Please, choose how you are going to eat";
 
 "order_description_title" = "Order description";
+
+"order_make_order_button_title" = "Make\norder";

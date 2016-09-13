@@ -12,6 +12,19 @@ import CoreLocation
 import RealmSwift
 import AlamofireImage
 import SwiftOverlays
+import Alamofire
+
+private enum TCompanyAddressLoadingStatus : Int {
+    
+    case Idle
+    
+    case Loading
+    
+    case Failed
+    
+    case Loaded
+}
+
 
 class CompanySearchTableViewController: UITableViewController {
     
@@ -29,9 +42,17 @@ class CompanySearchTableViewController: UITableViewController {
     
     private var pageSize: Int = 20
     
-    private var loading = false
-    
     private var canLoadNext = true
+    
+    private var loadingStatus = TCompanyAddressLoadingStatus.Idle
+    
+    private let manager = NetworkReachabilityManager(host: "www.apple.com")
+    
+    
+    deinit {
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
     
     
     override func viewDidLoad() {
@@ -39,6 +60,26 @@ class CompanySearchTableViewController: UITableViewController {
         
         self.tableView.setup()
         self.setup()
+        
+        manager?.listener = { status in
+            
+            switch status {
+                
+            case .Reachable(NetworkReachabilityManager.ConnectionType.EthernetOrWiFi):
+                
+                if self.canLoadNext && self.loadingStatus == .Failed {
+                    
+                    self.loadCompanyAddress()
+                }
+                
+                break
+                
+            default:
+                break
+            }
+        }
+        
+        manager?.startListening()
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "icon-map"),
                                                                  style: .Plain,
@@ -58,7 +99,7 @@ class CompanySearchTableViewController: UITableViewController {
                                                         if indexPath.row + 10
                                                             >= self.dataSource!.sections[indexPath.section].items.count
                                                             && self.canLoadNext
-                                                            && !self.loading {
+                                                            && self.loadingStatus != .Loading {
                                                             
                                                             self.loadCompanyAddress()
                                                         }
@@ -93,6 +134,8 @@ class CompanySearchTableViewController: UITableViewController {
                                                                          selector: #selector(CompanySearchTableViewController.userLocationChanged))
         
         self.navigationItem.titleView = UIImageView(image: UIImage(named: "icon-logo"))
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CompanySearchTableViewController.onUIApplicationWillEnterForegroundNotification), name: UIApplicationWillEnterForegroundNotification, object: nil)
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -161,14 +204,14 @@ class CompanySearchTableViewController: UITableViewController {
             
             self.userLocation = TLocationManager.sharedInstance.lastLocation
             
-            if self.userLocation != nil && !self.loading {
+            if self.userLocation != nil && self.loadingStatus != .Loading {
                 
                 if let superview = self.view.superview {
                     
                     SwiftOverlays.showCenteredWaitOverlay(superview)
                 }
                 
-                self.loading = true
+                self.loadingStatus = .Loading
                 
                 // Try to load only first several companies related to user location and limit
                 Api.sharedInstance.loadCompanyAddresses(self.userLocation!,
@@ -176,7 +219,7 @@ class CompanySearchTableViewController: UITableViewController {
                     
                     .onSuccess(callback: { [unowned self] companyPage in
                         
-                        self.loading = false
+                        self.loadingStatus = .Loaded
                         
                         if self.pageSize == companyPage.companies.count {
                             
@@ -197,7 +240,7 @@ class CompanySearchTableViewController: UITableViewController {
                         
                         }).onFailure(callback: { [unowned self] error in
                             
-                            self.loading = false
+                            self.loadingStatus = .Failed
                             
                             if let superview = self.view.superview {
                                 
@@ -212,14 +255,14 @@ class CompanySearchTableViewController: UITableViewController {
     
     func loadCompanyAddress() {
         
-        self.loading = true
+        self.loadingStatus = .Loading
         
         Api.sharedInstance.loadCompanyAddresses(self.userLocation!,
             pageNumber: self.pageNumer, pageSize: self.pageSize)
             
             .onSuccess(callback: { [unowned self] companyPage in
                 
-                self.loading = false
+                self.loadingStatus = .Loaded
                 
                 self.companiesPage = companyPage
                 self.createDataSource()
@@ -238,7 +281,7 @@ class CompanySearchTableViewController: UITableViewController {
                 
                 }).onFailure(callback: { error in
                 
-                    self.loading = false
+                    self.loadingStatus = .Failed
                     print(error)
                 })
     }
@@ -256,6 +299,14 @@ class CompanySearchTableViewController: UITableViewController {
                 
                 self.companyImages.insert(image)
             }
+        }
+    }
+    
+    func onUIApplicationWillEnterForegroundNotification() {
+        
+        if self.canLoadNext && self.loadingStatus == .Failed {
+            
+            self.loadCompanyAddress()
         }
     }
     
@@ -313,5 +364,4 @@ class CompanySearchTableViewController: UITableViewController {
      // Pass the selected object to the new view controller.
      }
      */
-    
 }

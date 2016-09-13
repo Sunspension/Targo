@@ -1,0 +1,107 @@
+/* 
+  Localizable.strings
+  Targo
+
+  Created by Vladimir Kokhanevich on 02/07/16.
+  Copyright © 2016 Targo. All rights reserved.
+*/
+
+"registration_phone_title" = "Регистрация";
+
+"login_empty_code" = "Это поле не может быть пустым";
+
+"menu_working_time" = "часы работы";
+
+"menu_handling_time" = "обработка заказа";
+
+"maps_title" = "Карта";
+
+"company_info_working_hours" = "МЫ ОТКРЫТЫ";
+
+"company_info_about_us" = "О НАС";
+
+"authorization_to_many_code_request" = "Слишком много поптыток запросить код авторизации";
+
+"authorization_blank_phone" = "Phone cannot be blank";
+
+"authorization_blank_device_type" = "Device type cannot be blank";
+
+"authorization_blank_device_token" = "Device token cannot be blank";
+
+"authorization_uknown_code" = "Неправильный код";
+
+"test_order_success_message" = "Ваша карта принята";
+
+"success_title" = "Успешно";
+
+"order_title" = "Заказ";
+
+"order_review_title" = "Обзор заказа";
+
+"order_review_total_price" = "Итого";
+
+"order_cancel_order" = "Отменить заказ";
+
+"order_status_new" = "Заказ отправлен";
+
+"order_status_seen" = "Заказ просмотрен";
+
+"order_status_processing" = "Заказ будет скоро готов";
+
+"order_status_canceled" = "Заказ отменен";
+
+"order_status_canceled_by_user" = "Вы отменили заказ";
+
+"order_status_ready" = "Заказ готов";
+
+"order_status_finished" = "Заказ выполнен";
+
+"order_status_pay_success" = "Заказ выполняется";
+
+"order_status_pay_error" = "Ошибка оплаты";
+
+"order_history_order_title" = "История заказов";
+
+"order_in_progress_order_title" = "Активные заказы";
+
+"credit_card_payment_method" = "Способ оплаты";
+
+"credit_card_add_new_one" = "Добавить новую карту";
+
+"bill_details_your_bill" = "Ваш чек";
+
+"action_close" = "Закрыть";
+
+"action_ok" = "Ok";
+
+"action_cancel" = "Отменить";
+
+"company_info_make_call_title" = "Позвонить";
+
+"company_info_make_call_confirmation" = "Вы хотите позвонить по номеру %@";
+
+"have_no_cards_alert_message" = "Выберите способ оплаты";
+
+"company_info_opened_text" = "Сегодня открыто\n%@";
+
+"order_time_title" = "К какому времени сделать заказ";
+
+"order_time_place_holder" = "Укажите время";
+
+"order_how_to_eat" = "Подача";
+
+"order_take_away" = "Взять с собой";
+
+"order_take_inside" = "Подать на стол";
+
+"order_how_to_eat_place_holder" = "Укажите подачу";
+
+"error" = "Ошибка";
+
+"oder_time_to_prepare_empty" = "Вы не указали к какому времени сделать заказ";
+
+"oder_delivery_service_empty" = "Вы не указали подачу";
+
+"order_description_title" = "Коментарий к заказу";
+
+"order_make_order_button_title" = "Сделать\nзаказ";

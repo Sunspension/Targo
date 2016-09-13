@@ -88,7 +88,7 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
         
         button.addTarget(self, action: #selector(TOrderReviewViewController.sendOrder),
                          forControlEvents: .TouchUpInside)
-        button.setTitle("Make\norder", forState: .Normal)
+        button.setTitle("order_make_order_button_title".localized, forState: .Normal)
         button.layer.borderColor = UIColor.whiteColor().CGColor
         button.layer.borderWidth = 3
         

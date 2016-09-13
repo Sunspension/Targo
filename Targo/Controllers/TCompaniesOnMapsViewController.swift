@@ -216,7 +216,7 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
     
     @IBAction func openCompanyInfo(sender: AnyObject) {
 
-        guard self.reason == .OneCompany else {
+        guard self.reason != .OneCompany else {
             
             return
         }

@@ -101,7 +101,7 @@ class TCompanyInfoTableViewController: UITableViewController {
                 button.hidden = false
                 button.addTarget(self, action: #selector(TCompanyInfoTableViewController.openCompanyMenu),
                                  forControlEvents: .TouchUpInside)
-                button.setTitle("Make\norder", forState: .Normal)
+                button.setTitle("order_make_order_button_title".localized, forState: .Normal)
                 button.layer.borderColor = UIColor.whiteColor().CGColor
                 button.layer.borderWidth = 3
                 

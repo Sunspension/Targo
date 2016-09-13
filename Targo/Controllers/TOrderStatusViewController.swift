@@ -170,7 +170,6 @@ class TOrderStatusViewController: UIViewController {
             guard let status = ShopOrderStatusEnum(rawValue: order.orderStatus)
                 where status != .Canceled
                     && status != .Finished
-                    && status != .Complete
                     && status != .CanceledByUser else {
                     
                     self.setOrderStatus(order.orderStatus)
@@ -211,11 +210,11 @@ class TOrderStatusViewController: UIViewController {
         case .New:
             
             orderStatusDescription.text = "order_status_new".localized
-            statusIndicator1.backgroundColor = UIColor.whiteColor()
+            statusIndicator1.backgroundColor = UIColor.lightGrayColor()
             statusIndicator2.backgroundColor = UIColor.lightGrayColor()
             statusIndicator3.backgroundColor = UIColor.lightGrayColor()
             statusIndicator4.backgroundColor = UIColor.lightGrayColor()
-
+            self.cancelOrder.hidden = false
             
             break
             
@@ -228,6 +227,7 @@ class TOrderStatusViewController: UIViewController {
             statusIndicator2.backgroundColor = UIColor.lightGrayColor()
             statusIndicator3.backgroundColor = UIColor.lightGrayColor()
             statusIndicator4.backgroundColor = UIColor.lightGrayColor()
+            self.cancelOrder.hidden = true
             
             break
             
@@ -237,9 +237,10 @@ class TOrderStatusViewController: UIViewController {
             orderStatusImage.image = UIImage(named: "icon-success")
             orderStatusDescription.text = "order_status_seen".localized
             statusIndicator1.backgroundColor = UIColor.whiteColor()
-            statusIndicator2.backgroundColor = UIColor.whiteColor()
+            statusIndicator2.backgroundColor = UIColor.lightGrayColor()
             statusIndicator3.backgroundColor = UIColor.lightGrayColor()
             statusIndicator4.backgroundColor = UIColor.lightGrayColor()
+            self.cancelOrder.hidden = false
             
             break
 
@@ -248,10 +249,11 @@ class TOrderStatusViewController: UIViewController {
             
             orderStatusImage.image = UIImage(named: "icon-canceled")
             orderStatusDescription.text = "order_status_canceled".localized
-            statusIndicator1.backgroundColor = UIColor.lightGrayColor()
+            statusIndicator1.backgroundColor = UIColor.whiteColor()
             statusIndicator2.backgroundColor = UIColor.lightGrayColor()
             statusIndicator3.backgroundColor = UIColor.lightGrayColor()
             statusIndicator4.backgroundColor = UIColor.lightGrayColor()
+            self.cancelOrder.hidden = true
             
             break
 
@@ -262,8 +264,9 @@ class TOrderStatusViewController: UIViewController {
             orderStatusDescription.text = "order_status_processing".localized
             statusIndicator1.backgroundColor = UIColor.whiteColor()
             statusIndicator2.backgroundColor = UIColor.whiteColor()
-            statusIndicator3.backgroundColor = UIColor.whiteColor()
+            statusIndicator3.backgroundColor = UIColor.lightGrayColor()
             statusIndicator4.backgroundColor = UIColor.lightGrayColor()
+            self.cancelOrder.hidden = true
             
             break
             
@@ -275,7 +278,8 @@ class TOrderStatusViewController: UIViewController {
             statusIndicator1.backgroundColor = UIColor.whiteColor()
             statusIndicator2.backgroundColor = UIColor.whiteColor()
             statusIndicator3.backgroundColor = UIColor.whiteColor()
-            statusIndicator4.backgroundColor = UIColor.whiteColor()
+            statusIndicator4.backgroundColor = UIColor.lightGrayColor()
+            self.cancelOrder.hidden = true
             
             break;
             
@@ -288,6 +292,7 @@ class TOrderStatusViewController: UIViewController {
             statusIndicator2.backgroundColor = UIColor.whiteColor()
             statusIndicator3.backgroundColor = UIColor.whiteColor()
             statusIndicator4.backgroundColor = UIColor.whiteColor()
+            self.cancelOrder.hidden = true
             
             break
             
@@ -300,6 +305,7 @@ class TOrderStatusViewController: UIViewController {
             statusIndicator2.backgroundColor = UIColor.whiteColor()
             statusIndicator3.backgroundColor = UIColor.lightGrayColor()
             statusIndicator4.backgroundColor = UIColor.lightGrayColor()
+            self.cancelOrder.hidden = true
             
             break
             
@@ -308,10 +314,11 @@ class TOrderStatusViewController: UIViewController {
             
             orderStatusImage.image = nil
             orderStatusDescription.text = "order_status_pay_error".localized
-            statusIndicator1.backgroundColor = UIColor.lightGrayColor()
-            statusIndicator2.backgroundColor = UIColor.lightGrayColor()
+            statusIndicator1.backgroundColor = UIColor.whiteColor()
+            statusIndicator2.backgroundColor = UIColor.whiteColor()
             statusIndicator3.backgroundColor = UIColor.lightGrayColor()
             statusIndicator4.backgroundColor = UIColor.lightGrayColor()
+            self.cancelOrder.hidden = true
             
             break
         }

@@ -217,7 +217,7 @@ class TOrdersTableViewController: UITableViewController {
             
             if orderStatus == .Canceled
                 || orderStatus == .Finished
-                || orderStatus == .Complete
+                || orderStatus == .PayError
                 || orderStatus == .CanceledByUser {
                 
                 var sectionHistory =
