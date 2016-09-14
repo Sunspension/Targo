@@ -42,7 +42,7 @@ class TableViewDataSource: NSObject, UITableViewDataSource {
                 return cell
             }
             
-            if let cell = NSBundle.mainBundle().loadNibNamed(item.reusableIdentifierOrNibName, owner: self, options: nil).last as? UITableViewCell {
+            if let cell = NSBundle.mainBundle().loadNibNamed(item.reusableIdentifierOrNibName!, owner: self, options: nil)!.last as? UITableViewCell {
                 
                 item.bindingAction(cell: cell, item: item)
                 return cell

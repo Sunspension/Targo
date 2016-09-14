@@ -12,7 +12,7 @@ import DynamicColor
 import SHSPhoneComponent
 //import BSErrorMessageView
 import AlamofireObjectMapper
-import RealmSwift
+//import RealmSwift
 import BrightFutures
 import Result
 

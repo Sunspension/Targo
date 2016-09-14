@@ -187,7 +187,7 @@ extension UIImage {
             CGContextSetBlendMode(context, CGBlendMode.Normal)
             
             let rect = CGRectMake(0, 0, self.size.width, self.size.height) as CGRect
-            CGContextClipToMask(context, rect, self.CGImage)
+            CGContextClipToMask(context, rect, self.CGImage!)
             tintColor.setFill()
             CGContextFillRect(context, rect)
             

@@ -48,7 +48,7 @@ class GenericTableViewDataSource<TTableViewCell: UITableViewCell, TTableItem: An
                 return cell
             }
             
-            if let cell = NSBundle.mainBundle().loadNibNamed(self.reusableIdentifierOrNibName, owner: self, options: nil).last as? TTableViewCell {
+            if let cell = NSBundle.mainBundle().loadNibNamed(self.reusableIdentifierOrNibName!, owner: self, options: nil)!.last as? TTableViewCell {
                 
                 self.bindingAction(cell: cell, item: item)
                 return cell
