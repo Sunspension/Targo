@@ -11,6 +11,7 @@ import GoogleMaps
 import AlamofireImage
 import Bond
 import SwiftOverlays
+import BrightFutures
 
 enum OpenMapsReasonEnum {
     
@@ -74,6 +75,7 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
         else {
             
             self.loading = true
+            self.mapView.hidden = true
         }
     }    
     
@@ -90,12 +92,15 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
         }
     }
     
-    func loadCompanies() {
+    func loadCompanies() -> Future<TCompanyAddressesPage, TargoError> {
         
         self.loading = true
         
-        Api.sharedInstance.loadCompanyAddresses(self.userLocation!,
-            pageNumber: 1, pageSize: 1000)
+        return Api.sharedInstance.loadCompanyAddresses(
+            self.userLocation!,
+            query: nil,
+            pageNumber: 1,
+            pageSize: 1000)
             
             .onSuccess(callback: { [unowned self] companyPage in
                 
@@ -200,9 +205,11 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
                     
                     self.userLocation = location
                     
-                    self.mapView.camera = GMSCameraPosition.cameraWithTarget(location.coordinate, zoom: 10)
-                    
-                    self.loadCompanies()
+                    self.loadCompanies().andThen(callback: { _ in
+                        
+                        self.mapView.hidden = false
+                        self.mapView.camera = GMSCameraPosition.cameraWithTarget(location.coordinate, zoom: 12)
+                    })
                 }
                 else {
                     

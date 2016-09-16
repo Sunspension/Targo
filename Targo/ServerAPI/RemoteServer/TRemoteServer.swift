@@ -64,19 +64,24 @@ struct TRemoteServer: PRemoteServerV1 {
         return self.request(.GET, remotePath: baseURLString + "/user/\(userId)")
     }
     
-    func loadCompanyAddresses(location: CLLocation, pageNumber: Int, pageSize: Int) -> Request {
+    func loadCompanyAddresses(location: CLLocation, query: String?, pageNumber: Int, pageSize: Int) -> Request {
         //
         //        let params: [String: AnyObject] = ["lat" : location.coordinate.latitude,
         //                                           "lon" : location.coordinate.longitude,
         //                                           "order" : ["dist" : "asc"],
         //                                           "conditions" : ["dist" : ["<" : 3000]]]
         
-        let params: [String: AnyObject] = ["lat" : location.coordinate.latitude,
+        var params: [String: AnyObject] = ["lat" : location.coordinate.latitude,
                                            "lon" : location.coordinate.longitude,
                                            "order" : ["dist" : "asc"],
                                            "extend" : "image",
                                            "page_size" : pageSize,
                                            "page" : pageNumber]
+        
+        if let query = query {
+            
+            params["query"] = query
+        }
         
         return self.request(.GET, remotePath: baseURLString + "/company-address", parameters: params)
     }

@@ -26,9 +26,11 @@ private enum TCompanyAddressLoadingStatus : Int {
 }
 
 
-class CompanySearchTableViewController: UITableViewController {
+class CompanySearchTableViewController: UITableViewController, UISearchResultsUpdating, UISearchBarDelegate {
     
     private let section = GenericCollectionSection<TCompanyAddress>()
+    
+    private let searchSection = GenericCollectionSection<TCompanyAddress>()
     
     private var companyImages = Set<TCompanyImage>()
     
@@ -36,17 +38,31 @@ class CompanySearchTableViewController: UITableViewController {
     
     private var dataSource: GenericTableViewDataSource<TCompanyTableViewCell, TCompanyAddress>?
     
+    private var searchDataSource: GenericTableViewDataSource<TCompanyTableViewCell, TCompanyAddress>?
+    
     private var companiesPage: TCompanyAddressesPage?
     
+    private var searchCompaniesPage: TCompanyAddressesPage?
+    
     private var pageNumer: Int = 1
+    
+    private var searchPageNumer: Int = 1
     
     private var pageSize: Int = 20
     
     private var canLoadNext = true
     
+    private var searchCanLoadNext = true
+    
     private var loadingStatus = TCompanyAddressLoadingStatus.Idle
     
+    private var searchLoadingStatus = TCompanyAddressLoadingStatus.Idle
+    
     private let manager = NetworkReachabilityManager(host: "www.apple.com")
+    
+    private let searchController = UISearchController(searchResultsController: nil)
+    
+    private var shouldShowSearchResults = false
     
     
     deinit {
@@ -60,6 +76,8 @@ class CompanySearchTableViewController: UITableViewController {
         
         self.tableView.setup()
         self.setup()
+        
+        setupSearchController()
         
         manager?.listener = { status in
             
@@ -91,43 +109,12 @@ class CompanySearchTableViewController: UITableViewController {
                                                                 target: nil,
                                                                 action: nil)
         
-        self.dataSource = GenericTableViewDataSource(reusableIdentifierOrNibName: "CompanyTableCell",
-                                                      bindingAction: { (cell, item) in
-                                                        
-                                                        let indexPath = item.indexPath
-                                                        
-                                                        if indexPath.row + 10
-                                                            >= self.dataSource!.sections[indexPath.section].items.count
-                                                            && self.canLoadNext
-                                                            && self.loadingStatus != .Loading {
-                                                            
-                                                            self.loadCompanyAddress()
-                                                        }
-                                                        
-                                                        let company = item.item!
-                                                        cell.companyTitle.text = company.companyTitle
-                                                        cell.additionalInfo.text = company.companyCategoryTitle
-                                                            + ", "
-                                                            + String(Int(company.distance))
-                                                            + " m"
-                                                        
-                                                        cell.ratingText.text = "4.7"
-                                                        cell.ratingProgress.setProgress(1 / 5 * 4.7, animated: false)
-                                                        cell.ratingProgress.trackFillColor = UIColor(hexString: kHexMainPinkColor)
-                                                        cell.ratingProgress.hidden = false
-                                                        
-                                                        let imageSize = cell.companyImage.bounds.size
-                                                        
-                                                        if let image =
-                                                            self.companyImages.filter({$0.id == company.companyImageId.value}).first {
-                                                            
-                                                            let filter = AspectScaledToFillSizeFilter(size: imageSize)
-                                                            cell.companyImage.af_setImageWithURL(NSURL(string: image.url)!,
-                                                                filter: filter, imageTransition: .CrossDissolve(0.5))
-                                                        }
-        })
+        self.dataSource = GenericTableViewDataSource(reusableIdentifierOrNibName: "CompanyTableCell", bindingAction: binding)
+        self.dataSource?.sections.append(section)
         
-        self.dataSource?.sections.append(self.section)
+        self.searchDataSource = GenericTableViewDataSource(reusableIdentifierOrNibName: "CompanyTableCell", bindingAction: binding)
+        self.searchDataSource?.sections.append(searchSection)
+        
         self.tableView.dataSource = self.dataSource
         
         TLocationManager.sharedInstance.subscribeObjectForLocationChange(self,
@@ -179,9 +166,19 @@ class CompanySearchTableViewController: UITableViewController {
     // Here is a magic to save height of current cell, otherwise you will get scrolling of table view content when cell will expand
     override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
-        if let height = self.dataSource?.sections[indexPath.section].items[indexPath.row].cellHeight {
+        if shouldShowSearchResults {
             
-            return height
+            if let height = self.searchDataSource?.sections[indexPath.section].items[indexPath.row].cellHeight {
+                
+                return height
+            }
+        }
+        else {
+            
+            if let height = self.dataSource?.sections[indexPath.section].items[indexPath.row].cellHeight {
+                
+                return height
+            }
         }
         
         return UITableViewAutomaticDimension
@@ -189,7 +186,14 @@ class CompanySearchTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         
-        self.dataSource?.sections[indexPath.section].items[indexPath.row].cellHeight = cell.frame.height
+        if shouldShowSearchResults {
+            
+            self.searchDataSource?.sections[indexPath.section].items[indexPath.row].cellHeight = cell.frame.height
+        }
+        else {
+            
+            self.dataSource?.sections[indexPath.section].items[indexPath.row].cellHeight = cell.frame.height
+        }
         
         let viewCell = cell as! TCompanyTableViewCell
         let layer = viewCell.shadowView.layer
@@ -214,7 +218,9 @@ class CompanySearchTableViewController: UITableViewController {
                 self.loadingStatus = .Loading
                 
                 // Try to load only first several companies related to user location and limit
-                Api.sharedInstance.loadCompanyAddresses(self.userLocation!,
+                Api.sharedInstance.loadCompanyAddresses(
+                    self.userLocation!,
+                    query: nil,
                     pageNumber: 1, pageSize: self.pageSize)
                     
                     .onSuccess(callback: { [unowned self] companyPage in
@@ -257,8 +263,12 @@ class CompanySearchTableViewController: UITableViewController {
         
         self.loadingStatus = .Loading
         
-        Api.sharedInstance.loadCompanyAddresses(self.userLocation!,
-            pageNumber: self.pageNumer, pageSize: self.pageSize)
+        Api.sharedInstance.loadCompanyAddresses(
+            
+            self.userLocation!,
+            query: nil,
+            pageNumber: self.pageNumer,
+            pageSize: self.pageSize)
             
             .onSuccess(callback: { [unowned self] companyPage in
                 
@@ -270,6 +280,7 @@ class CompanySearchTableViewController: UITableViewController {
                 
                 if self.pageSize == companyPage.companies.count {
                     
+                    self.canLoadNext = true
                     self.pageNumer += 1
                 }
                 else {
@@ -304,10 +315,173 @@ class CompanySearchTableViewController: UITableViewController {
     
     func onUIApplicationWillEnterForegroundNotification() {
         
-        if self.canLoadNext && self.loadingStatus == .Failed {
+        if canLoadNext && loadingStatus == .Failed {
             
-            self.loadCompanyAddress()
+            loadCompanyAddress()
         }
+    }
+    
+    //MARK: - UISearchBar delegate implementation
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        
+        shouldShowSearchResults = true
+        reloadData()
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        
+        shouldShowSearchResults = false
+        reloadData()
+    }
+    
+    //MARK: - UISearchResultUpdating delegate implementation
+    
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        
+        guard let string = searchController.searchBar.text where
+            self.searchLoadingStatus != .Loading else {
+            
+            return
+        }
+        
+        self.searchPageNumer = 1
+        loadCompanyAddress(string)
+    }
+
+    //MARK: - Private methods
+    
+    private func setupSearchController() {
+        
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "search_place_holder".localized
+        searchController.searchBar.delegate = self
+        searchController.searchBar.sizeToFit()
+        searchController.searchBar.tintColor = UIColor(hexString: kHexMainPinkColor)
+        self.definesPresentationContext = true
+        
+        tableView.tableHeaderView = searchController.searchBar
+    }
+
+    
+    private func binding(cell: TCompanyTableViewCell, item: GenericCollectionSectionItem<TCompanyAddress>) {
+        
+        let indexPath = item.indexPath
+        
+        if shouldShowSearchResults {
+            
+            if indexPath.row + 10
+                >= self.searchDataSource!.sections[indexPath.section].items.count
+                && self.searchCanLoadNext
+                && self.searchLoadingStatus != .Loading {
+                
+                guard let string = searchController.searchBar.text else {
+                    
+                    return
+                }
+                
+                self.loadCompanyAddress(string)
+            }
+        }
+        else {
+            
+            if indexPath.row + 10
+                >= self.dataSource!.sections[indexPath.section].items.count
+                && self.canLoadNext
+                && self.loadingStatus != .Loading {
+                
+                self.loadCompanyAddress()
+            }
+        }
+        
+        let company = item.item!
+        cell.companyTitle.text = company.companyTitle
+        cell.additionalInfo.text = company.companyCategoryTitle
+            + ", "
+            + String(Int(company.distance))
+            + " m"
+        
+        cell.ratingText.text = "4.7"
+        cell.ratingProgress.setProgress(1 / 5 * 4.7, animated: false)
+        cell.ratingProgress.trackFillColor = UIColor(hexString: kHexMainPinkColor)
+        cell.ratingProgress.hidden = false
+        
+        let imageSize = cell.companyImage.bounds.size
+        
+        if let image =
+            self.companyImages.filter({$0.id == company.companyImageId.value}).first {
+            
+            let filter = AspectScaledToFillSizeFilter(size: imageSize)
+            cell.companyImage.af_setImageWithURL(NSURL(string: image.url)!,
+                                                 filter: filter, imageTransition: .CrossDissolve(0.5))
+        }
+    }
+    
+    private func loadCompanyAddress(query:String) {
+        
+        self.searchLoadingStatus = .Loading
+        
+        Api.sharedInstance.loadCompanyAddresses(
+            
+            self.userLocation!,
+            query: query,
+            pageNumber: self.searchPageNumer,
+            pageSize: self.pageSize)
+            
+            .onSuccess(callback: { [unowned self] companyPage in
+                
+                self.searchLoadingStatus = .Loaded
+                
+                self.searchCompaniesPage = companyPage
+                
+                if self.searchPageNumer == 1 {
+                    
+                    self.searchSection.items.removeAll()
+                }
+                
+                self.createSearchDataSource()
+                self.tableView.reloadData()
+                
+                if self.pageSize == companyPage.companies.count {
+                    
+                    self.searchCanLoadNext = true
+                    self.searchPageNumer += 1
+                }
+                else {
+                    
+                    // reset counter
+                    self.searchPageNumer = 1
+                    self.searchCanLoadNext = false
+                }
+                
+                }).onFailure(callback: { error in
+                    
+                    self.searchLoadingStatus = .Failed
+                    print(error)
+                })
+    }
+    
+    private func createSearchDataSource() {
+        
+        if let page = self.searchCompaniesPage {
+            
+            for company in page.companies {
+                
+                self.searchSection.items.append(GenericCollectionSectionItem(item: company))
+            }
+            
+            for image in page.images {
+                
+                self.companyImages.insert(image)
+            }
+        }
+    }
+    
+    
+    private func reloadData() {
+        
+        self.tableView.dataSource = shouldShowSearchResults ? searchDataSource : dataSource
+        self.tableView.reloadData()
     }
     
     /*

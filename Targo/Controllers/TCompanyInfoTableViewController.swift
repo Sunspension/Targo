@@ -98,6 +98,7 @@ class TCompanyInfoTableViewController: UITableViewController {
                 header.title.text = self.itemsSource.sections[section].title
                 
                 let button = header.buttonMakeOrder
+                button.titleLabel?.textAlignment = .Center
                 button.hidden = false
                 button.addTarget(self, action: #selector(TCompanyInfoTableViewController.openCompanyMenu),
                                  forControlEvents: .TouchUpInside)
@@ -279,21 +280,12 @@ class TCompanyInfoTableViewController: UITableViewController {
         section.initializeCellWithReusableIdentifierOrNibName("CompanyImageMenu", item: self.companyImage) { (cell, item) in
             
             let viewCell = cell as! TCompanyImageMenuTableViewCell
+            viewCell.addBlurEffect()
             
             if let companyImage = item.item as? TCompanyImage {
                 
                 let filter = AspectScaledToFillSizeFilter(size: viewCell.companyImage.bounds.size)
-                viewCell.companyImage.af_setImageWithURL(NSURL(string: companyImage.url)!, filter: filter, imageTransition: .None, completion: { response in
-                
-                    if let image = response.result.value {
-                        
-                        let blurredImage = image.applyBlurWithRadius(4, tintColor: UIColor(red: 33 / 255, green: 21 / 255, blue: 100 / 255, alpha: 0.65), saturationDeltaFactor: 1, maskImage: nil)
-                        
-                        let blurredView = UIImageView(image: blurredImage)
-                        blurredView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-                        viewCell.companyImage.addSubview(blurredView)
-                    }
-                })
+                viewCell.companyImage.af_setImageWithURL(NSURL(string: companyImage.url)!, filter: filter)
                 
                 viewCell.title.hidden = false
                 viewCell.title.text = String(format: "company_info_opened_text".localized, "8:00 - 23:00")

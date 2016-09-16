@@ -105,3 +105,5 @@
 "order_description_title" = "Коментарий к заказу";
 
 "order_make_order_button_title" = "Сделать\nзаказ";
+
+"search_place_holder" = "Найти любимое место";
