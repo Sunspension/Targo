@@ -48,7 +48,6 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
     
     var reason = OpenMapsReasonEnum.AllCompanies
     
-    
     var loading = false
 
     
@@ -75,7 +74,8 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
         else {
             
             self.loading = true
-            self.mapView.hidden = true
+            showWaitOverlay()
+            self.mapView.alpha = 0
         }
     }    
     
@@ -85,10 +85,11 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
         
         if self.loading {
             
-            if let superview = self.view.superview {
-                
-                SwiftOverlays.showCenteredWaitOverlay(superview)
-            }
+            
+//            if let superview = self.mapView.superview {
+//                
+//                SwiftOverlays.showCenteredWaitOverlay(self.view)
+//            }
         }
     }
     
@@ -119,11 +120,13 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
                 }).onFailure(callback: { [unowned self] error in
                     
                     self.loading = false
+
+                    self.removeAllOverlays()
                     
-                    if let superview = self.view.superview {
-                        
-                        SwiftOverlays.removeAllOverlaysFromView(superview)
-                    }
+//                    if let superview = self.view.superview {
+//                        
+//                        SwiftOverlays.removeAllOverlaysFromView(superview)
+//                    }
                     
                     print(error)
                 })
@@ -207,8 +210,13 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
                     
                     self.loadCompanies().andThen(callback: { _ in
                         
-                        self.mapView.hidden = false
                         self.mapView.camera = GMSCameraPosition.cameraWithTarget(location.coordinate, zoom: 12)
+                        
+                        UIView.animateWithDuration(0.5, delay: 0, options: .CurveEaseInOut, animations: {
+                            
+                            self.mapView.alpha = 1
+                            
+                            }, completion: nil)
                     })
                 }
                 else {

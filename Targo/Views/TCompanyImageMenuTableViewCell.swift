@@ -21,7 +21,6 @@ class TCompanyImageMenuTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.point.makeCircular()
     }
     
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
@@ -48,5 +47,11 @@ class TCompanyImageMenuTableViewCell: UITableViewCell {
     func addBlurEffect() {
         
         self.companyImage.addObserver(self, forKeyPath: "image", options: .New, context: nil)
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        self.point.makeCircular()
     }
 }

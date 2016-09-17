@@ -79,11 +79,34 @@ class TCompanyInfoTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         
-        if section == 2 {
+        switch section {
+            
+        case 1:
+            
+            let header = view as! TWorkingHoursHeader
+            let button = header.buttonMakeOrder
+            
+            button.layer.borderColor = UIColor.whiteColor().CGColor
+            button.layer.borderWidth = 3
+            let radius = button.layer.bounds.width / 2
+            button.layer.cornerRadius = radius
+            button.layer.shadowPath = UIBezierPath(roundedRect: button.layer.bounds, cornerRadius: radius).CGPath
+            button.layer.shadowOffset = CGSize(width:0, height: 1)
+            button.layer.shadowOpacity = 0.5
+            button.backgroundColor = UIColor(hexString: kHexMainPinkColor)
+            
+            break
+            
+        case 2:
             
             view.layer.shadowPath = UIBezierPath(rect: view.layer.bounds).CGPath
             view.layer.shadowOffset = CGSize(width: 0, height: 1)
             view.layer.shadowOpacity = 0.5
+            
+            break;
+            
+        default:
+            break
         }
     }
     
@@ -103,16 +126,6 @@ class TCompanyInfoTableViewController: UITableViewController {
                 button.addTarget(self, action: #selector(TCompanyInfoTableViewController.openCompanyMenu),
                                  forControlEvents: .TouchUpInside)
                 button.setTitle("order_make_order_button_title".localized, forState: .Normal)
-                button.layer.borderColor = UIColor.whiteColor().CGColor
-                button.layer.borderWidth = 3
-                
-                let radius = button.layer.bounds.width / 2
-                
-                button.layer.cornerRadius = radius
-                button.layer.shadowPath = UIBezierPath(roundedRect: button.layer.bounds, cornerRadius: radius).CGPath
-                button.layer.shadowOffset = CGSize(width:0, height: 1)
-                button.layer.shadowOpacity = 0.5
-                button.backgroundColor = UIColor(hexString: kHexMainPinkColor)
                 
                 return header
             }
@@ -270,7 +283,6 @@ class TCompanyInfoTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
     
     func createDataSource() {
     
@@ -280,18 +292,18 @@ class TCompanyInfoTableViewController: UITableViewController {
         section.initializeCellWithReusableIdentifierOrNibName("CompanyImageMenu", item: self.companyImage) { (cell, item) in
             
             let viewCell = cell as! TCompanyImageMenuTableViewCell
+            
+            viewCell.layoutIfNeeded()
+            
             viewCell.addBlurEffect()
             
             if let companyImage = item.item as? TCompanyImage {
                 
                 let filter = AspectScaledToFillSizeFilter(size: viewCell.companyImage.bounds.size)
                 viewCell.companyImage.af_setImageWithURL(NSURL(string: companyImage.url)!, filter: filter)
-                
-                viewCell.title.hidden = false
-                viewCell.title.text = String(format: "company_info_opened_text".localized, "8:00 - 23:00")
-                viewCell.point.hidden = false
             }
             
+            viewCell.title.text = String(format: "company_info_opened_text".localized, "8:00 - 23:00")
             viewCell.selectionStyle = .None
         }
         
@@ -329,7 +341,7 @@ class TCompanyInfoTableViewController: UITableViewController {
         let companyText = "Я добился большого прогресса на начальном этапе своих тренировок, когда служил в австрийской армии и имел много всяких дел. Когда мы в течение шести недель участвовали в манёврах вдоль чехословацкой границы, мне приходилось водить танк по пятнадцать часов в день, закачивать топливо при помощи ручного насоса, «бороться» с огромными топливными бочками и заниматься ремонтом. Мы спали в окопах или под танками и должны были вставать в шесть часов утра. Однако мы с приятелем вставали в пять, залезали в отсек для танковых инструментов, в котором хранили свои штанги, и до общего подъёма тренировались целый час. После окончания дневной части учений мы тренировались ещё один час. Я не могу представить более тяжёлых условий для тренировок и поэтому утверждаю, что найти время и силы для занятий — это вопрос мотивации и заинтересованности. Настоящий атлет всегда, в любой ситуации найдёт время и место для тренировок."
         
         aboutSection.initializeCellWithReusableIdentifierOrNibName(self.companyAboutIdentifier,
-                                                                   item: companyText) { (cell, item) in
+                                                                   item: self.company?.companyDescription) { (cell, item) in
                                                                     
                                                                     let viewCell = cell as! TCompanyAboutTableViewCell
                                                                     let text = item.item as! String

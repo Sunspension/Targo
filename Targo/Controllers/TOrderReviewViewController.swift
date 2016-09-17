@@ -62,6 +62,27 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
+    override func viewWillLayoutSubviews() {
+        
+        super.viewWillLayoutSubviews()
+        
+        let button = self.makeOrder
+        
+        button.addTarget(self, action: #selector(TOrderReviewViewController.sendOrder),
+                         forControlEvents: .TouchUpInside)
+        button.setTitle("order_make_order_button_title".localized, forState: .Normal)
+        button.layer.borderColor = UIColor.whiteColor().CGColor
+        button.layer.borderWidth = 3
+        
+        let radius = button.layer.bounds.width / 2
+        
+        button.layer.cornerRadius = radius
+        button.layer.shadowPath = UIBezierPath(roundedRect: button.layer.bounds, cornerRadius: radius).CGPath
+        button.layer.shadowOffset = CGSize(width:0, height: 1)
+        button.layer.shadowOpacity = 0.5
+        button.backgroundColor = UIColor(hexString: kHexMainPinkColor)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -84,22 +105,7 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
                                                                 target: nil,
                                                                 action: nil)
         
-        let button = self.makeOrder
-        
-        button.addTarget(self, action: #selector(TOrderReviewViewController.sendOrder),
-                         forControlEvents: .TouchUpInside)
-        button.setTitle("order_make_order_button_title".localized, forState: .Normal)
-        button.layer.borderColor = UIColor.whiteColor().CGColor
-        button.layer.borderWidth = 3
-        
-        let radius = button.layer.bounds.width / 2
-        
-        button.layer.cornerRadius = radius
-        button.layer.shadowPath = UIBezierPath(roundedRect: button.layer.bounds, cornerRadius: radius).CGPath
-        button.layer.shadowOffset = CGSize(width:0, height: 1)
-        button.layer.shadowOpacity = 0.5
-        button.backgroundColor = UIColor(hexString: kHexMainPinkColor)
-        button.hidden = true
+        self.makeOrder.hidden = true
         
         NSNotificationCenter.defaultCenter().addObserver(self,
                                                          selector: #selector(TOrderReviewViewController.onDidAddCardNotification),

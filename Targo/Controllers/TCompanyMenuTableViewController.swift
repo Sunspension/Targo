@@ -224,10 +224,15 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
             
             let viewCell = cell as! TCompanyImageMenuTableViewCell
             
+            viewCell.layoutIfNeeded()
+            
+            viewCell.point.hidden = true
+            viewCell.title.hidden = true
+            
             if let companyImage = item.item as? TCompanyImage {
                 
-                let filter = AspectScaledToFillSizeFilter(size: viewCell.companyImage.frame.size)
-                viewCell.companyImage.af_setImageWithURL(NSURL(string: companyImage.url)!, filter: filter, imageTransition: .None)
+                let filter = AspectScaledToFillSizeFilter(size: viewCell.companyImage.bounds.size)
+                viewCell.companyImage.af_setImageWithURL(NSURL(string: companyImage.url)!, filter: filter)
             }
             
             viewCell.selectionStyle = .None
@@ -333,6 +338,17 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         
         self.cellHeightDictionary[indexPath] = cell.frame.size.height
+        
+//        if let viewCell = cell as? TCompanyImageMenuTableViewCell {
+//            
+//            let item = self.itemsSource.sections[indexPath.section].items[indexPath.row]
+//            
+//            if let companyImage = item.item as? TCompanyImage {
+//                
+//                let filter = AspectScaledToFillSizeFilter(size: viewCell.companyImage.bounds.size)
+//                viewCell.companyImage.af_setImageWithURL(NSURL(string: companyImage.url)!, filter: filter)
+//            }
+//        }
     }
     
     // Here is a magic to save height of current cell, otherwise you will get scrolling of table view content when cell will expand

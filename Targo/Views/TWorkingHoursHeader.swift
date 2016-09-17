@@ -12,7 +12,5 @@ class TWorkingHoursHeader: UITableViewHeaderFooterView {
 
     @IBOutlet weak var title: UILabel!
     
-    @IBOutlet weak var background: UIView!
-    
     @IBOutlet weak var buttonMakeOrder: UIButton!
 }

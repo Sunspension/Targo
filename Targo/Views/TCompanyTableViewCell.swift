@@ -40,4 +40,14 @@ class TCompanyTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+//    override func layoutSubviews() {
+//        
+//        super.layoutSubviews()
+//        
+//        let layer = shadowView.layer
+//        layer.shadowOffset = CGSize(width: 0, height: 1)
+//        layer.shadowOpacity = 0.5
+//        layer.shadowPath = UIBezierPath(rect: layer.bounds).CGPath
+//    }
 }

@@ -48,7 +48,7 @@
                 <outlet property="companyInfo" destination="gCh-q9-xiV" id="N91-kO-2Pl"/>
                 <outlet property="companyTitle" destination="X78-aw-3qH" id="Lx6-LI-FhZ"/>
             </connections>
-            <point key="canvasLocation" x="354" y="893"/>
+            <point key="canvasLocation" x="42.5" y="442.5"/>
         </view>
     </objects>
 </document>

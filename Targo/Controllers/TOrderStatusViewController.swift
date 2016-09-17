@@ -51,20 +51,25 @@ class TOrderStatusViewController: UIViewController {
     var reason: OrderStatusOpenReasonEnum = .Undefined
     
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        self.statusIndicator1.makeCircular()
-        self.statusIndicator2.makeCircular()
-        self.statusIndicator3.makeCircular()
-        self.statusIndicator4.makeCircular()
+    override func viewWillLayoutSubviews() {
+        
+        super.viewWillLayoutSubviews()
         
         self.companyUIImage.makeCircular()
         self.companyUIImage.layer.borderColor = UIColor.whiteColor().CGColor
         self.companyUIImage.layer.borderWidth = 4
         
-        self.cancelOrder.setTitle("order_cancel_order".localized, forState: .Normal)
+        self.statusIndicator1.makeCircular()
+        self.statusIndicator2.makeCircular()
+        self.statusIndicator3.makeCircular()
+        self.statusIndicator4.makeCircular()
+    }
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
+        self.cancelOrder.setTitle("order_cancel_order".localized, forState: .Normal)
         self.cancelOrder.addTarget(self, action: #selector(TOrderStatusViewController.cancelOrderAction), forControlEvents: .TouchUpInside)
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
@@ -93,9 +98,7 @@ class TOrderStatusViewController: UIViewController {
         if let companyImage =  self.companyImage {
             
             let filter = AspectScaledToFillSizeFilter(size: self.companyUIImage.frame.size)
-            self.companyUIImage.af_setImageWithURL(NSURL(string: companyImage.url)!,
-                                                   filter: filter,
-                                                   imageTransition: .None)
+            self.companyUIImage.af_setImageWithURL(NSURL(string: companyImage.url)!, filter: filter)
         }
     }
     

@@ -34,6 +34,7 @@
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="Mrj-XN-HOi" secondAttribute="trailing" constant="16" id="DX1-Ts-03D"/>
                 <constraint firstItem="Mrj-XN-HOi" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="-45" id="Et6-69-7y9"/>
+                <constraint firstItem="Mrj-XN-HOi" firstAttribute="leading" secondItem="ymb-fq-xK6" secondAttribute="trailing" constant="4" id="PLT-V8-Ugh"/>
                 <constraint firstItem="S6e-G1-P1M" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="VZW-Ft-aRI"/>
                 <constraint firstItem="ymb-fq-xK6" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="4" id="WLO-kI-O1y"/>
                 <constraint firstAttribute="bottom" secondItem="S6e-G1-P1M" secondAttribute="bottom" id="bu0-qC-Vbc"/>
@@ -41,11 +42,9 @@
                 <constraint firstAttribute="bottom" secondItem="ymb-fq-xK6" secondAttribute="bottom" constant="4" id="g1Z-b9-lxo"/>
                 <constraint firstItem="S6e-G1-P1M" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="t3o-34-rSf"/>
                 <constraint firstAttribute="trailing" secondItem="S6e-G1-P1M" secondAttribute="trailing" id="tvp-Z8-evo"/>
-                <constraint firstAttribute="trailing" secondItem="ymb-fq-xK6" secondAttribute="trailing" constant="8" id="yJZ-fm-pye"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="background" destination="S6e-G1-P1M" id="1Ba-qs-6iH"/>
                 <outlet property="buttonMakeOrder" destination="Mrj-XN-HOi" id="wAQ-kK-EXG"/>
                 <outlet property="title" destination="ymb-fq-xK6" id="Gak-RV-wyr"/>
             </connections>

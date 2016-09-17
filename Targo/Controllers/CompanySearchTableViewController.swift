@@ -163,44 +163,53 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         }
     }
     
-    // Here is a magic to save height of current cell, otherwise you will get scrolling of table view content when cell will expand
-    override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        
-        if shouldShowSearchResults {
-            
-            if let height = self.searchDataSource?.sections[indexPath.section].items[indexPath.row].cellHeight {
-                
-                return height
-            }
-        }
-        else {
-            
-            if let height = self.dataSource?.sections[indexPath.section].items[indexPath.row].cellHeight {
-                
-                return height
-            }
-        }
-        
-        return UITableViewAutomaticDimension
-    }
+//    // Here is a magic to save height of current cell, otherwise you will get scrolling of table view content when cell will expand
+//    override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+//        
+//        if shouldShowSearchResults {
+//            
+//            if let height = self.searchDataSource?.sections[indexPath.section].items[indexPath.row].cellHeight {
+//                
+//                return height
+//            }
+//        }
+//        else {
+//            
+//            if let height = self.dataSource?.sections[indexPath.section].items[indexPath.row].cellHeight {
+//                
+//                return height
+//            }
+//        }
+//        
+//        return UITableViewAutomaticDimension
+//    }
     
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        
-        if shouldShowSearchResults {
-            
-            self.searchDataSource?.sections[indexPath.section].items[indexPath.row].cellHeight = cell.frame.height
-        }
-        else {
-            
-            self.dataSource?.sections[indexPath.section].items[indexPath.row].cellHeight = cell.frame.height
-        }
-        
-        let viewCell = cell as! TCompanyTableViewCell
-        let layer = viewCell.shadowView.layer
-        layer.shadowOffset = CGSize(width: 0, height: 1)
-        layer.shadowOpacity = 0.5
-        layer.shadowPath = UIBezierPath(rect: layer.bounds).CGPath
-    }
+//    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+//        
+//        let viewCell = cell as! TCompanyTableViewCell
+//        
+//        if shouldShowSearchResults {
+//            
+//            if let item = self.searchDataSource?.sections[indexPath.section].items[indexPath.row] {
+//                
+//                item.cellHeight = viewCell.frame.height
+//                getCompanyImage(item, viewCell: viewCell)
+//            }
+//        }
+//        else {
+//            
+//            if let item = self.dataSource?.sections[indexPath.section].items[indexPath.row] {
+//                
+//                item.cellHeight = viewCell.frame.height
+//                getCompanyImage(item, viewCell: viewCell)
+//            }
+//        }
+//        
+////        let layer = viewCell.shadowView.layer
+////        layer.shadowOffset = CGSize(width: 0, height: 1)
+////        layer.shadowOpacity = 0.5
+////        layer.shadowPath = UIBezierPath(rect: layer.bounds).CGPath
+//    }
     
     func userLocationChanged() {
         
@@ -350,6 +359,20 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
 
     //MARK: - Private methods
     
+    private func getCompanyImage(item: GenericCollectionSectionItem<TCompanyAddress>, viewCell: TCompanyTableViewCell) {
+        
+        let company = item.item!
+        
+        if let image =
+            self.companyImages.filter({$0.id == company.companyImageId.value}).first {
+            
+            print("cell size: \(viewCell.companyImage.bounds.size)")
+            let filter = AspectScaledToFillSizeFilter(size: viewCell.companyImage.bounds.size)
+            viewCell.companyImage.af_setImageWithURL(NSURL(string: image.url)!,
+                                                     filter: filter, imageTransition: .CrossDissolve(0.5))
+        }
+    }
+    
     private func setupSearchController() {
         
         searchController.searchResultsUpdater = self
@@ -406,6 +429,14 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         cell.ratingProgress.trackFillColor = UIColor(hexString: kHexMainPinkColor)
         cell.ratingProgress.hidden = false
         
+        // don't let cell's subviews having wrong size
+        cell.layoutIfNeeded()
+        
+        let layer = cell.shadowView.layer
+        layer.shadowOffset = CGSize(width: 0, height: 1)
+        layer.shadowOpacity = 0.5
+        layer.shadowPath = UIBezierPath(rect: layer.bounds).CGPath
+        
         let imageSize = cell.companyImage.bounds.size
         
         if let image =
@@ -421,6 +452,11 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         
         self.searchLoadingStatus = .Loading
         
+        if let superView = self.tableView.superview {
+            
+            SwiftOverlays.showCenteredWaitOverlay(superView)
+        }
+        
         Api.sharedInstance.loadCompanyAddresses(
             
             self.userLocation!,
@@ -431,6 +467,11 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
             .onSuccess(callback: { [unowned self] companyPage in
                 
                 self.searchLoadingStatus = .Loaded
+                
+                if let superView = self.tableView.superview {
+                    
+                    SwiftOverlays.removeAllOverlaysFromView(superView)
+                }
                 
                 self.searchCompaniesPage = companyPage
                 
