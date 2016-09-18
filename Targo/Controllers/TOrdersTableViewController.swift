@@ -11,7 +11,7 @@ import DynamicColor
 import RealmSwift
 import SwiftOverlays
 
-enum ShopOrdersSectionEnum: Int {
+private enum ShopOrdersSectionEnum: Int {
     
     case History
     
@@ -30,6 +30,10 @@ class TOrdersTableViewController: UITableViewController {
     var companyImages: [TCompanyImage]?
     
     var loading = false
+    
+    var checkingOrdersLoadingStatus = TLoadingStatusEnum.Idle
+    
+    var timer: NSTimer?
     
     
     deinit {
@@ -81,6 +85,13 @@ class TOrdersTableViewController: UITableViewController {
                                                                 
                                                                 cell.orderDescription.text = orderDesription
                                                                 
+                                                                if item.item!.isNew {
+                                                                    
+                                                                    let background = UIView(frame: cell.contentView.frame)
+                                                                    background.backgroundColor = UIColor(red: 205 / 255, green: 0 / 255, blue: 121 / 255, alpha: 0.1)
+                                                                    cell.backgroundView = background
+                                                                }
+                                                                
                                                                 let formatter = NSDateFormatter()
                                                                 formatter.dateFormat = kDateTimeFormat
                                                                 
@@ -99,6 +110,7 @@ class TOrdersTableViewController: UITableViewController {
         self.tableView.dataSource = self.dataSource
         self.tableView.tableFooterView = UIView()
         self.tableView.setup()
+        self.setup()
         
         self.tableView.registerNib(UINib(nibName: "TCompanyMenuHeaderView", bundle: nil),
                                    forHeaderFooterViewReuseIdentifier: "sectionHeader")
@@ -114,7 +126,7 @@ class TOrdersTableViewController: UITableViewController {
         }
         
         // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+         self.clearsSelectionOnViewWillAppear = true
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
@@ -123,31 +135,176 @@ class TOrdersTableViewController: UITableViewController {
     override func viewWillAppear(animated: Bool) {
         
         super.viewWillAppear(animated)
-        self.setup()
     }
     
     override func viewDidAppear(animated: Bool) {
         
         super.viewDidAppear(animated)
         
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(10,
+                                                            target: self,
+                                                            selector: #selector(TOrdersTableViewController.checkActiveOrdersStatus),
+                                                            userInfo: nil,
+                                                            repeats: true)
+        
         if let superview = self.view.superview {
             
-            if !self.loading {
+            if self.loading {
                 
-                return
+                SwiftOverlays.showCenteredWaitOverlay(superview)
             }
-            
-            SwiftOverlays.showCenteredWaitOverlay(superview)
         }
     }
     
+    override func viewDidDisappear(animated: Bool) {
+        
+        super.viewDidDisappear(animated)
+        self.timer?.invalidate()
+    }
+    
     func onOrdersLoadNotification(notification: NSNotification) {
+        
+       self.reloadFromDataBase()
+    }
+    
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        
+        return 30
+    }
+    
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        let header = tableView.dequeueReusableHeaderFooterViewWithIdentifier("sectionHeader") as! TCompanyMenuHeaderView
+        header.title.text = self.dataSource!.sections[section].title
+        
+        return header;
+    }
+    
+    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        
+        let header = view as! TCompanyMenuHeaderView
+        
+        header.background.backgroundColor = UIColor(hexString: kHexMainPinkColor)
+        header.layer.shadowPath = UIBezierPath(rect: header.layer.bounds).CGPath
+        header.layer.shadowOffset = CGSize(width: 0, height: 1)
+        header.layer.shadowOpacity = 0.5
+    }
+
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if let controller = self.instantiateViewControllerWithIdentifierOrNibName("OrderStatus") as? TOrderStatusViewController {
+            
+            let item = self.dataSource!.sections[indexPath.section].items[indexPath.row]
+            
+            if let company = self.companies?.filter({ $0.id == item.item!.companyId }).first {
+                
+                controller.companyName = company.title
+                
+                if let image = self.companyImages?.filter({ $0.id == company.imageId }).first {
+                    
+                    controller.companyImage = image
+                }
+            }
+            
+            let order = item.item!
+            let realm = try! Realm()
+            realm.beginWrite()
+            
+            order.isNew = false
+            
+            do {
+                
+                try realm.commitWrite()
+            }
+            catch {
+                
+                print("Caught an error when was trying to make commit to Realm")
+            }
+            
+            // turn off the background
+            let cell = tableView.cellForRowAtIndexPath(indexPath)
+            cell?.backgroundView = nil
+            
+            controller.shopOrder = item.item
+            
+            self.navigationController?.pushViewController(controller, animated: true)
+        }
+    }
+    
+    func checkActiveOrdersStatus() {
+        
+        if self.checkingOrdersLoadingStatus == .Loading {
+            
+            return
+        }
+        
+        if let section = self.dataSource?.sections.filter({ ($0.sectionType as! ShopOrdersSectionEnum) == .InProgress }).first {
+            
+            if let targetItem = section.items.maxElement({self.dateFromString($0.item!.updated)?.compare(self.dateFromString($1.item!.updated)!) == .OrderedDescending }) {
+                
+                self.checkingOrdersLoadingStatus = .Loading
+                
+                Api.sharedInstance.loadShopOrders(targetItem.item!.updated, olderThen: true, pageSize: 1000)
+                    
+                    .onSuccess(callback: {[weak self] orders in
+                        
+                        self?.checkingOrdersLoadingStatus = .Loaded
+                        
+                        let realm = try! Realm()
+                        
+                        for order in orders {
+                            
+                            if let oldOrder = realm.objectForPrimaryKey(TShopOrder.self, key: order.id) {
+                                
+                                if let oldDate = self?.dateFromString(oldOrder.updated) {
+                                    
+                                    if let newDate = self?.dateFromString(order.updated) {
+                                        
+                                        if oldDate.compare(newDate) != .OrderedSame {
+                                            
+                                            order.isNew = true
+                                            
+                                            try! realm.write({
+                                                
+                                                realm.add(order, update: true)
+                                            })
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                        if orders.count > 0 {
+                            
+                            self?.reloadFromDataBase()
+                        }
+                    })
+                    .onFailure(callback: {[weak self] error in
+                        
+                        self?.checkingOrdersLoadingStatus = .Failed
+                    })
+            }
+        }
+    }
+
+    
+    //MARK: - Private methods
+    
+    private func reloadFromDataBase() {
         
         let realm = try! Realm()
         let orders = realm.objects(TShopOrder).sorted("id", ascending: false)
         self.orders = Array<TShopOrder>(orders)
         
         loadCompaniesAndImages()
+    }
+    
+    private func dateFromString(date: String) -> NSDate? {
+        
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = kDateTimeFormat
+        
+        return formatter.dateFromString(date)
     }
     
     private func loadCompaniesAndImages() {
@@ -185,15 +342,15 @@ class TOrdersTableViewController: UITableViewController {
                             self?.createDataSource()
                             self?.tableView.reloadData()
                             
-                        }).onFailure(callback: {[weak self] error in
-                            
-                            self?.loading = false
-                            
-                            if let superview = self?.view.superview {
+                            }).onFailure(callback: {[weak self] error in
                                 
-                                SwiftOverlays.removeAllOverlaysFromView(superview)
-                            }
-                        })
+                                self?.loading = false
+                                
+                                if let superview = self?.view.superview {
+                                    
+                                    SwiftOverlays.removeAllOverlaysFromView(superview)
+                                }
+                                })
                     
                     }).onFailure(callback: {[weak self] error in
                         
@@ -203,7 +360,7 @@ class TOrdersTableViewController: UITableViewController {
                             
                             SwiftOverlays.removeAllOverlaysFromView(superview)
                         }
-                    })
+                        })
         }
     }
     
@@ -250,53 +407,7 @@ class TOrdersTableViewController: UITableViewController {
         
         self.dataSource?.sections.sortInPlace({ ($0.sectionType as! ShopOrdersSectionEnum).rawValue > ($1.sectionType as! ShopOrdersSectionEnum).rawValue })
     }
-    
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        
-        return 30
-    }
-    
-    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        
-        let header = tableView.dequeueReusableHeaderFooterViewWithIdentifier("sectionHeader") as! TCompanyMenuHeaderView
-        header.title.text = self.dataSource!.sections[section].title
-        
-        return header;
-    }
-    
-    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        
-        let header = view as! TCompanyMenuHeaderView
-        
-        header.background.backgroundColor = UIColor(hexString: kHexMainPinkColor)
-        header.layer.shadowPath = UIBezierPath(rect: header.layer.bounds).CGPath
-        header.layer.shadowOffset = CGSize(width: 0, height: 1)
-        header.layer.shadowOpacity = 0.5
-    }
 
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        
-        if let controller = self.instantiateViewControllerWithIdentifierOrNibName("OrderStatus") as? TOrderStatusViewController {
-            
-            let item = self.dataSource!.sections[indexPath.section].items[indexPath.row]
-            
-            if let company = self.companies?.filter({ $0.id == item.item!.companyId }).first {
-                
-                controller.companyName = company.title
-                
-                if let image = self.companyImages?.filter({ $0.id == company.imageId }).first {
-                    
-                    controller.companyImage = image
-                }
-            }
-            
-            controller.shopOrder = item.item
-            
-            self.navigationController?.pushViewController(controller, animated: true)
-        }
-    }
     
     /*
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

@@ -170,13 +170,13 @@ struct TRemoteServer: PRemoteServerV1 {
         return self.request(.GET, remotePath: baseURLString + "/image", parameters: params)
     }
     
-    func loadShopOrders(updatedDate: String, pageSize: Int = 20) -> Request {
+    func loadShopOrders(updatedDate: String, olderThen: Bool, pageSize: Int = 20) -> Request {
         
         var params: [String : AnyObject] = [:]
         
         params["extend"] = "company"
         params["merge"] = "true"
-        params["conditions"] = ["updated_at" : ["<" : updatedDate]]
+        params["conditions"] = ["updated_at" : olderThen ? [">" : updatedDate] : ["<" : updatedDate]]
         params["page_size"] = pageSize
         params["order"] = ["id" : "desc"]
         

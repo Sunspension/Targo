@@ -17,6 +17,7 @@ class THistoryOrderItemTableViewCell: UITableViewCell {
     
     @IBOutlet weak var orderDate: UILabel!
     
+    @IBOutlet weak var bgView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

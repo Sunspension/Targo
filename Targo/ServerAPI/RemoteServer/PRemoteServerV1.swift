@@ -47,7 +47,7 @@ protocol PRemoteServerV1 {
     
     func loadImagesByIds(imageIds: [Int]) -> Request
     
-    func loadShopOrders(updatedDate: String, pageSize: Int) -> Request
+    func loadShopOrders(updatedDate: String, olderThen: Bool, pageSize: Int) -> Request
     
     func loadShopOrders(pageNumber: Int, pageSize: Int) -> Request
     

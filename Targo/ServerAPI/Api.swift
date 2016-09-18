@@ -563,11 +563,11 @@ struct Api {
         return p.future
     }
     
-    func loadShopOrders(updatedDate: String, pageSize: Int) -> Future<[TShopOrder], TargoError> {
+    func loadShopOrders(updatedDate: String, olderThen: Bool, pageSize: Int) -> Future<[TShopOrder], TargoError> {
         
         let p = Promise<[TShopOrder], TargoError>()
         
-        server.loadShopOrders(updatedDate, pageSize: pageSize)
+        server.loadShopOrders(updatedDate, olderThen: olderThen, pageSize: pageSize)
             
             .responseJSON { response in
             

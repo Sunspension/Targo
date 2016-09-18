@@ -60,7 +60,10 @@ class TShopOrder: Object, Mappable {
     
     dynamic var prepared = ""
     
+    dynamic var isNew = false
+    
     var items = List<TShopGood>()
+    
     
     required convenience init?(_ map: Map) {
         

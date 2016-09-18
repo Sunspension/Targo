@@ -75,6 +75,7 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         super.viewDidLoad()
         
         self.tableView.setup()
+        self.tableView.backgroundView = UIImageView(image: UIImage(named: "background"))
         self.setup()
         
         setupSearchController()
