@@ -68,11 +68,14 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
         
         let button = self.makeOrder
         
-        button.addTarget(self, action: #selector(TOrderReviewViewController.sendOrder),
-                         forControlEvents: .TouchUpInside)
-        button.setTitle("order_make_order_button_title".localized, forState: .Normal)
+        if button.hidden {
+            
+            return
+        }
+        
         button.layer.borderColor = UIColor.whiteColor().CGColor
         button.layer.borderWidth = 3
+        button.titleLabel?.textAlignment = .Center
         
         let radius = button.layer.bounds.width / 2
         
@@ -111,15 +114,15 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
                                                          selector: #selector(TOrderReviewViewController.onDidAddCardNotification),
                                                          name: kTargoDidAddNewCardNotification,
                                                          object: nil)
+        let button = self.makeOrder
+        
+        button.addTarget(self, action: #selector(TOrderReviewViewController.sendOrder),
+                         forControlEvents: .TouchUpInside)
+        button.setTitle("order_make_order_button_title".localized, forState: .Normal)
         
         self.loadCards()
     }
     
-    
-    override func viewWillAppear(animated: Bool) {
-        
-        super.viewWillAppear(animated)
-    }
     
     override func viewDidAppear(animated: Bool) {
         
@@ -363,6 +366,7 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
                 as? TUserCreditCardsTableViewController {
                 
                 controller.cards = self.cards
+                controller.title = "credit_card_payment_method".localized
                 controller.selectedAction = { cardIndex in
                     
                     self.selectedCardIndex = cardIndex

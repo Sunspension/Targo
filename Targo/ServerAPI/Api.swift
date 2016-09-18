@@ -637,7 +637,31 @@ struct Api {
                 })
                 
                 p.success(response.result.value!)
-        }
+            }
+        
+        return p.future
+    }
+    
+    func feed(pageNumber: Int, pageSize: Int = 20) -> Future<TFeedPage, TargoError> {
+        
+        let p = Promise<TFeedPage, TargoError>()
+        
+        server.feed(pageNumber, pageSize: pageSize)
+            
+            .responseJSON { response in
+            
+                print(response.result.value)
+            }
+            .responseObject("data") { (response: Response<TFeedPage, TargoError>) in
+             
+                guard let _ = response.result.value else {
+                    
+                    p.failure(response.result.error!)
+                    return
+                }
+                
+                p.success(response.result.value!)
+            }
         
         return p.future
     }

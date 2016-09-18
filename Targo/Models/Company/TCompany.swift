@@ -32,6 +32,9 @@ class TCompany: Object, Mappable {
     
     dynamic var companyCategoryId = 0
     
+    dynamic var alias = ""
+    
+    dynamic var rating = 0.0
     
     required convenience init?(_ map: Map) {
         
@@ -55,5 +58,7 @@ class TCompany: Object, Mappable {
         site <- map["site"]
         phone <- map["phone"]
         companyCategoryId <- map["company_category_id"]
+        alias <- map["alias"]
+        rating <- map["rating"]
     }
 }

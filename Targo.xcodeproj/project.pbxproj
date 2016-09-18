@@ -41,6 +41,9 @@
 		D42F190F1D764A3F0091C3E1 /* TOrderDescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D42F190D1D764A3F0091C3E1 /* TOrderDescriptionTableViewCell.xib */; };
 		D44930921D49494800ADF70A /* TTestOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44930911D49494800ADF70A /* TTestOrder.swift */; };
 		D44930941D495D5100ADF70A /* TAddCreditCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44930931D495D5100ADF70A /* TAddCreditCardViewController.swift */; };
+		D449864B1D8EF48B007C9AF0 /* TFeedPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D449864A1D8EF48B007C9AF0 /* TFeedPage.swift */; };
+		D449864D1D8F0456007C9AF0 /* TFeedCompanyNewsDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D449864C1D8F0456007C9AF0 /* TFeedCompanyNewsDetailsTableViewCell.swift */; };
+		D449864F1D8F099C007C9AF0 /* TFeedTargoNewsDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D449864E1D8F099C007C9AF0 /* TFeedTargoNewsDetailsTableViewCell.swift */; };
 		D449B41B1D777F3C0088CEEB /* KeyboardNotificationListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = D449B41A1D777F3C0088CEEB /* KeyboardNotificationListener.swift */; };
 		D45391D11D2DBE0900669669 /* UserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45391D01D2DBE0900669669 /* UserSession.swift */; };
 		D45AC7141D74E83F001BF90B /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = D45AC7131D74E83F001BF90B /* UIImage+ImageEffects.m */; };
@@ -49,6 +52,10 @@
 		D45F9FAE1D61064D00623A34 /* TOrderTotalPriceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45F9FAD1D61064D00623A34 /* TOrderTotalPriceTableViewCell.swift */; };
 		D45F9FB01D610CBD00623A34 /* TPaymentMethodTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45F9FAF1D610CBD00623A34 /* TPaymentMethodTableViewCell.swift */; };
 		D467AED61D2B0F7100319966 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D467AED51D2B0F7100319966 /* AppSettings.swift */; };
+		D469B2321D8EA2A800D41DC6 /* TFeedCompanyNewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D469B2311D8EA2A800D41DC6 /* TFeedCompanyNewsTableViewCell.swift */; };
+		D469B2341D8EA2C100D41DC6 /* TFeedTargoNewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D469B2331D8EA2C100D41DC6 /* TFeedTargoNewsTableViewCell.swift */; };
+		D469B2361D8EAF2600D41DC6 /* TFeedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D469B2351D8EAF2600D41DC6 /* TFeedItem.swift */; };
+		D469B2381D8EE6E200D41DC6 /* TFeedDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D469B2371D8EE6E200D41DC6 /* TFeedDetailsTableViewController.swift */; };
 		D46A4C591D63B363003CF2F9 /* TDeliveryMethodTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46A4C581D63B363003CF2F9 /* TDeliveryMethodTableViewCell.swift */; };
 		D46A4C5B1D63BF6D003CF2F9 /* TUserCreditCardsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46A4C5A1D63BF6D003CF2F9 /* TUserCreditCardsTableViewController.swift */; };
 		D46A4C5D1D63BFA3003CF2F9 /* TUserCreditCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46A4C5C1D63BFA3003CF2F9 /* TUserCreditCardTableViewCell.swift */; };
@@ -142,6 +149,9 @@
 		D42F190D1D764A3F0091C3E1 /* TOrderDescriptionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TOrderDescriptionTableViewCell.xib; sourceTree = "<group>"; };
 		D44930911D49494800ADF70A /* TTestOrder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TTestOrder.swift; path = Models/Response/TTestOrder.swift; sourceTree = "<group>"; };
 		D44930931D495D5100ADF70A /* TAddCreditCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TAddCreditCardViewController.swift; sourceTree = "<group>"; };
+		D449864A1D8EF48B007C9AF0 /* TFeedPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TFeedPage.swift; path = Models/Response/TFeedPage.swift; sourceTree = "<group>"; };
+		D449864C1D8F0456007C9AF0 /* TFeedCompanyNewsDetailsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFeedCompanyNewsDetailsTableViewCell.swift; sourceTree = "<group>"; };
+		D449864E1D8F099C007C9AF0 /* TFeedTargoNewsDetailsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFeedTargoNewsDetailsTableViewCell.swift; sourceTree = "<group>"; };
 		D449B41A1D777F3C0088CEEB /* KeyboardNotificationListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardNotificationListener.swift; sourceTree = "<group>"; };
 		D45391D01D2DBE0900669669 /* UserSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSession.swift; sourceTree = "<group>"; };
 		D45AC70E1D74E6BF001BF90B /* Targo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Targo-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -152,6 +162,10 @@
 		D45F9FAD1D61064D00623A34 /* TOrderTotalPriceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TOrderTotalPriceTableViewCell.swift; sourceTree = "<group>"; };
 		D45F9FAF1D610CBD00623A34 /* TPaymentMethodTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TPaymentMethodTableViewCell.swift; sourceTree = "<group>"; };
 		D467AED51D2B0F7100319966 /* AppSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppSettings.swift; path = Targo/AppSettings.swift; sourceTree = SOURCE_ROOT; };
+		D469B2311D8EA2A800D41DC6 /* TFeedCompanyNewsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFeedCompanyNewsTableViewCell.swift; sourceTree = "<group>"; };
+		D469B2331D8EA2C100D41DC6 /* TFeedTargoNewsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFeedTargoNewsTableViewCell.swift; sourceTree = "<group>"; };
+		D469B2351D8EAF2600D41DC6 /* TFeedItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TFeedItem.swift; path = Models/Response/TFeedItem.swift; sourceTree = "<group>"; };
+		D469B2371D8EE6E200D41DC6 /* TFeedDetailsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFeedDetailsTableViewController.swift; sourceTree = "<group>"; };
 		D46A4C581D63B363003CF2F9 /* TDeliveryMethodTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TDeliveryMethodTableViewCell.swift; sourceTree = "<group>"; };
 		D46A4C5A1D63BF6D003CF2F9 /* TUserCreditCardsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TUserCreditCardsTableViewController.swift; sourceTree = "<group>"; };
 		D46A4C5C1D63BFA3003CF2F9 /* TUserCreditCardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TUserCreditCardTableViewCell.swift; sourceTree = "<group>"; };
@@ -326,6 +340,10 @@
 				D4FF40031D76362B00019195 /* TDetailsTableViewCell.xib */,
 				D42F190C1D764A3F0091C3E1 /* TOrderDescriptionTableViewCell.swift */,
 				D42F190D1D764A3F0091C3E1 /* TOrderDescriptionTableViewCell.xib */,
+				D469B2311D8EA2A800D41DC6 /* TFeedCompanyNewsTableViewCell.swift */,
+				D469B2331D8EA2C100D41DC6 /* TFeedTargoNewsTableViewCell.swift */,
+				D449864C1D8F0456007C9AF0 /* TFeedCompanyNewsDetailsTableViewCell.swift */,
+				D449864E1D8F099C007C9AF0 /* TFeedTargoNewsDetailsTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -349,6 +367,7 @@
 				D46A4C5A1D63BF6D003CF2F9 /* TUserCreditCardsTableViewController.swift */,
 				D4151E111D688D0B00DB26C0 /* TOrderStatusViewController.swift */,
 				D413357C1D6E4FCE00542BA1 /* TOrderBillTableViewController.swift */,
+				D469B2371D8EE6E200D41DC6 /* TFeedDetailsTableViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -447,6 +466,8 @@
 				D4B81B3B1D4FF22300F9103C /* TBadRequest.swift */,
 				D4F6E2A61D560FF20067F9BA /* TCreditCard.swift */,
 				D40CC4DA1D65034D003A1487 /* TShopOrder.swift */,
+				D469B2351D8EAF2600D41DC6 /* TFeedItem.swift */,
+				D449864A1D8EF48B007C9AF0 /* TFeedPage.swift */,
 			);
 			name = Response;
 			sourceTree = "<group>";
@@ -704,6 +725,7 @@
 				D46A4C5D1D63BFA3003CF2F9 /* TUserCreditCardTableViewCell.swift in Sources */,
 				D41D9D921D46B46300358961 /* TWorkingHoursHeader.swift in Sources */,
 				D4C2A0AC1D343ED50090BAFC /* CompanySearchTableViewController.swift in Sources */,
+				D449864D1D8F0456007C9AF0 /* TFeedCompanyNewsDetailsTableViewCell.swift in Sources */,
 				D4E0B1CD1D2F061F00B65B96 /* UserRegistrationError.swift in Sources */,
 				D4EE59671D3AFE1E0002022F /* TFeedTableViewController.swift in Sources */,
 				D4FDE67A1D3C007E003EF2CC /* TWorkingTimeTableViewCell.swift in Sources */,
@@ -719,8 +741,10 @@
 				D46DEC771D62582000B4716B /* GenericCollectionSectionItem.swift in Sources */,
 				D4EE59651D3AFDE30002022F /* TOrdersTableViewController.swift in Sources */,
 				D4EE596B1D3AFFA60002022F /* AlamofireExtensions.swift in Sources */,
+				D469B2361D8EAF2600D41DC6 /* TFeedItem.swift in Sources */,
 				D40301761D39839C00B7B610 /* ListTransform.swift in Sources */,
 				D4B81B3C1D4FF22300F9103C /* TBadRequest.swift in Sources */,
+				D469B2381D8EE6E200D41DC6 /* TFeedDetailsTableViewController.swift in Sources */,
 				D413357D1D6E4FCE00542BA1 /* TOrderBillTableViewController.swift in Sources */,
 				D4D0D6D61D2C5B5200B4E01D /* Api.swift in Sources */,
 				D40CC4DB1D65034D003A1487 /* TShopOrder.swift in Sources */,
@@ -729,6 +753,7 @@
 				D49C7E891D281DB1004408AF /* RegistrationPhoneViewController.swift in Sources */,
 				E5C062D91D2106BF002074C4 /* AppDelegate.swift in Sources */,
 				D4F213701D6E570100D94B62 /* TBillMenuItemTableViewCell.swift in Sources */,
+				D469B2341D8EA2C100D41DC6 /* TFeedTargoNewsTableViewCell.swift in Sources */,
 				D4F464DA1D402EF3009015FC /* TCompanyMenuHeaderView.swift in Sources */,
 				D46A4C591D63B363003CF2F9 /* TDeliveryMethodTableViewCell.swift in Sources */,
 				D44930941D495D5100ADF70A /* TAddCreditCardViewController.swift in Sources */,
@@ -738,11 +763,13 @@
 				D4036A0F1D36CE8200CA8E38 /* TCompany.swift in Sources */,
 				D4D4B68C1D42C67300278E2D /* TMenuItemFullTableViewCell.swift in Sources */,
 				D4D567AB1D8758C700679F53 /* TCompanyWorkingDay.swift in Sources */,
+				D449864B1D8EF48B007C9AF0 /* TFeedPage.swift in Sources */,
 				D4A392081D6BBBC9005B2047 /* TCompanyAddress.swift in Sources */,
 				D45F9FB01D610CBD00623A34 /* TPaymentMethodTableViewCell.swift in Sources */,
 				D4F84B491D24668400263D1A /* User.swift in Sources */,
 				D4DD9DDC1D418DC9009C28D5 /* TBaseTableViewCell.swift in Sources */,
 				D41C3A251D6F87FE00539ABD /* TOrderLoader.swift in Sources */,
+				D469B2321D8EA2A800D41DC6 /* TFeedCompanyNewsTableViewCell.swift in Sources */,
 				D4EE59691D3AFEE90002022F /* TCompanyMenuTableViewController.swift in Sources */,
 				D41D9D9A1D46C4F400358961 /* TCompanyAboutTableViewCell.swift in Sources */,
 				D4EE59631D3AFAF40002022F /* TTabBarController.swift in Sources */,
@@ -758,6 +785,7 @@
 				D4DD9DD91D41830A009C28D5 /* TMenuItemSmallTableViewCell.swift in Sources */,
 				D46A4C5B1D63BF6D003CF2F9 /* TUserCreditCardsTableViewController.swift in Sources */,
 				D45F9FAE1D61064D00623A34 /* TOrderTotalPriceTableViewCell.swift in Sources */,
+				D449864F1D8F099C007C9AF0 /* TFeedTargoNewsDetailsTableViewCell.swift in Sources */,
 				D4B96F761D244CAA00294A4B /* TRemoteServer.swift in Sources */,
 				D4F6E2A71D560FF20067F9BA /* TCreditCard.swift in Sources */,
 				D4A3920A1D6BBBF2005B2047 /* THistoryOrderItemTableViewCell.swift in Sources */,

@@ -44,7 +44,7 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
     
     private var searchCompaniesPage: TCompanyAddressesPage?
     
-    private var pageNumer: Int = 1
+    private var pageNumber: Int = 1
     
     private var searchPageNumer: Int = 1
     
@@ -239,7 +239,7 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
                         if self.pageSize == companyPage.companies.count {
                             
                             self.canLoadNext = true
-                            self.pageNumer += 1
+                            self.pageNumber += 1
                         }
                         
                         if let superview = self.view.superview {
@@ -276,7 +276,7 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
             
             self.userLocation!,
             query: nil,
-            pageNumber: self.pageNumer,
+            pageNumber: self.pageNumber,
             pageSize: self.pageSize)
             
             .onSuccess(callback: { [unowned self] companyPage in
@@ -290,12 +290,12 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
                 if self.pageSize == companyPage.companies.count {
                     
                     self.canLoadNext = true
-                    self.pageNumer += 1
+                    self.pageNumber += 1
                 }
                 else {
                     
                     // reset counter
-                    self.pageNumer = 1
+                    self.pageNumber = 1
                     self.canLoadNext = false
                 }
                 
@@ -424,8 +424,8 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
             + String(Int(company.distance))
             + " m"
         
-        cell.ratingText.text = "4.7"
-        cell.ratingProgress.setProgress(1 / 5 * 4.7, animated: false)
+        cell.ratingText.text = String(format:"%.1f", company.rating)
+        cell.ratingProgress.setProgress(1 / 5 * company.rating, animated: false)
         cell.ratingProgress.trackFillColor = UIColor(hexString: kHexMainPinkColor)
         cell.ratingProgress.hidden = false
         

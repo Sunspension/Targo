@@ -54,6 +54,8 @@ class TCompanyAddress: Object, Mappable {
     
     dynamic var distance = 0.0
     
+    dynamic var rating = 0.0
+    
     var wokingTime: [[String]] {
         
         get {
@@ -110,6 +112,7 @@ class TCompanyAddress: Object, Mappable {
         companyDescription <- map["company_category_description"]
         companyCategoryImageId <- map["company_category_image_id"]
         distance <- map["dist"]
+        rating <- map["company_rating"]
         
         var workingTime = [[String]]()
         workingTime <- map["work_time"]

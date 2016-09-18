@@ -203,6 +203,12 @@ struct TRemoteServer: PRemoteServerV1 {
         return self.request(.PUT, remotePath: baseURLString + "/shop-order/" + String(orderId), parameters: params)
     }
     
+    func feed(pageNumber: Int, pageSize: Int = 20) -> Request {
+        
+        let params: [String : AnyObject] = ["page" : pageNumber, "page_size" : pageSize, "extend" : "company"]
+        return self.request(.GET, remotePath: baseURLString + "/promotion", parameters : params)
+    }
+    
     
     // MARK: - Private methods
     

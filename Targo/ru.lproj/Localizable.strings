@@ -14,6 +14,10 @@
 
 "menu_handling_time" = "обработка заказа";
 
+"menu_quantity" = "Количество";
+
+"menu_more_ddetails" = "Подробнее";
+
 "maps_title" = "Карта";
 
 "company_info_working_hours" = "МЫ ОТКРЫТЫ";
@@ -36,7 +40,7 @@
 
 "order_title" = "Заказ";
 
-"order_review_title" = "Обзор заказа";
+"order_review_title" = "Просмотр заказа";
 
 "order_review_total_price" = "Итого";
 
@@ -70,11 +74,15 @@
 
 "bill_details_your_bill" = "Ваш чек";
 
+
 "action_close" = "Закрыть";
 
 "action_ok" = "Ok";
 
 "action_cancel" = "Отменить";
+
+"action_more" = "Подробнее";
+
 
 "company_info_make_call_title" = "Позвонить";
 
@@ -107,3 +115,11 @@
 "order_make_order_button_title" = "Сделать\nзаказ";
 
 "search_place_holder" = "Найти любимое место";
+
+"feed_title" = "Лента";
+
+"profile_item_logout" = "Выход";
+
+"profile_item_information" = "Информация";
+
+"profile_item_my_cards" = "Мои карты";

@@ -282,6 +282,11 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
                                                                                         let itemGood = item.item as! TShopGood
                                                                                         let viewCell = cell as! TMenuItemFullTableViewCell
                                                                                         
+                                                                                        viewCell.layoutIfNeeded()
+                                                                                        
+                                                                                        viewCell.buttonMore.setTitle("menu_more_ddetails".localized, forState: .Normal)
+                                                                                        viewCell.quantityTitle.text = "menu_quantity".localized
+                                                                                        
                                                                                         viewCell.addSeparator()
                                                                                         viewCell.goodTitle.text = itemGood.title
                                                                                         viewCell.goodDescription.text = itemGood.goodDescription
@@ -408,6 +413,11 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
 
         tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
     }
+    
+    
+    //MARK: - Private methods
+    
+    
     
     /*
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

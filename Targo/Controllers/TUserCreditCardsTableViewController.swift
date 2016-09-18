@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftOverlays
 
 class TUserCreditCardsTableViewController: UITableViewController {
 
@@ -16,7 +17,6 @@ class TUserCreditCardsTableViewController: UITableViewController {
     
     var selectedAction: ((cardIndex: Int) -> Void)?
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -24,60 +24,20 @@ class TUserCreditCardsTableViewController: UITableViewController {
         self.tableView.tableFooterView = UIView()
         self.setup()
         
-        self.title = "credit_card_payment_method".localized
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "",
+                                                                style: .Plain,
+                                                                target: nil,
+                                                                action: nil)
         
         self.tableView.dataSource = dataSource
         
-        if let cards = cards {
+        if cards != nil {
             
-            let section = CollectionSection()
+            createDataSource()
+        }
+        else {
             
-            for card in cards {
-                
-                section.initializeCellWithReusableIdentifierOrNibName("UserCardCell",
-                                                                      item: card,
-                                                                      bindingAction: { (cell, item) in
-                                                                        
-                                                                        let viewCell = cell as! TUserCreditCardTableViewCell
-                                                                        let card = item.item as! TCreditCard
-                                                                        viewCell.title.text = card.mask
-                                                                        viewCell.selectionStyle = .None
-                                                                        
-                                                                        switch card.type {
-                                                                            
-                                                                        case "Visa":
-                                                                            
-                                                                            viewCell.icon.image = UIImage(named: "visa")
-                                                                            
-                                                                            break
-                                                                            
-                                                                        case "MasterCard":
-                                                                            
-                                                                            viewCell.icon.image = UIImage(named: "mastercard")
-                                                                            
-                                                                            break
-                                                                            
-                                                                        default:
-                                                                            
-                                                                            break
-                                                                        }
-                })
-            }
-            
-            section.initializeCellWithReusableIdentifierOrNibName("UserCardCell",
-                                                                  item: nil,
-                                                                  itemType: 1,
-                                                                  bindingAction: { (cell, item) in
-                                                                    
-                                                                    let viewCell = cell as! TUserCreditCardTableViewCell
-                                                                    viewCell.title.text = "credit_card_add_new_one".localized
-                                                                    viewCell.icon.image = UIImage(named: "icon-new-card")
-                                                                    viewCell.icon.tintColor = UIColor(hexString: kHexMainPinkColor)
-                                                                    viewCell.accessoryType = .DisclosureIndicator
-                                                                    
-            })
-            
-            self.dataSource.sections.append(section)
+            loadCards()
         }
         
         // Uncomment the following line to preserve selection between presentations
@@ -106,6 +66,85 @@ class TUserCreditCardsTableViewController: UITableViewController {
         }
     }
 
+    private func createDataSource() {
+        
+        self.dataSource.sections.removeAll()
+        
+        let section = CollectionSection()
+        
+        for card in self.cards! {
+            
+            section.initializeCellWithReusableIdentifierOrNibName("UserCardCell",
+                                                                  item: card,
+                                                                  bindingAction: { (cell, item) in
+                                                                    
+                                                                    let viewCell = cell as! TUserCreditCardTableViewCell
+                                                                    let card = item.item as! TCreditCard
+                                                                    viewCell.title.text = card.mask
+                                                                    viewCell.selectionStyle = .None
+                                                                    
+                                                                    switch card.type {
+                                                                        
+                                                                    case "Visa":
+                                                                        
+                                                                        viewCell.icon.image = UIImage(named: "visa")
+                                                                        
+                                                                        break
+                                                                        
+                                                                    case "MasterCard":
+                                                                        
+                                                                        viewCell.icon.image = UIImage(named: "mastercard")
+                                                                        
+                                                                        break
+                                                                        
+                                                                    default:
+                                                                        
+                                                                        break
+                                                                    }
+            })
+        }
+        
+        section.initializeCellWithReusableIdentifierOrNibName("UserCardCell",
+                                                              item: nil,
+                                                              itemType: 1,
+                                                              bindingAction: { (cell, item) in
+                                                                
+                                                                let viewCell = cell as! TUserCreditCardTableViewCell
+                                                                viewCell.title.text = "credit_card_add_new_one".localized
+                                                                viewCell.icon.image = UIImage(named: "icon-new-card")
+                                                                viewCell.icon.tintColor = UIColor(hexString: kHexMainPinkColor)
+                                                                viewCell.accessoryType = .DisclosureIndicator
+                                                                
+        })
+        
+        self.dataSource.sections.append(section)
+    }
+    
+    private func loadCards() {
+        
+        Api.sharedInstance.loadCreditCards()
+            .onSuccess { [weak self] cards in
+                
+                if let superView = self?.view.superview {
+                    
+                    SwiftOverlays.removeAllOverlaysFromView(superView)
+                }
+                
+                self?.cards = cards
+                self?.createDataSource()
+                self?.tableView.reloadData()
+                
+            }.onFailure { [weak self] error in
+                
+                if let superView = self?.view.superview {
+                    
+                    SwiftOverlays.removeAllOverlaysFromView(superView)
+                }
+                
+                print(error)
+        }
+    }
+    
     /*
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)

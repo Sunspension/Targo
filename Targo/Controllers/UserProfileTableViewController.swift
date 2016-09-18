@@ -9,6 +9,16 @@
 import UIKit
 import DynamicColor
 
+private enum ItemTypeEnum {
+    
+    case Infromation
+    
+    case MyCards
+    
+    case Logout
+}
+
+
 class UserProfileTableViewController: UITableViewController {
 
     var itemsSource: GenericTableViewDataSource<UITableViewCell, String>?
@@ -16,6 +26,17 @@ class UserProfileTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.tableView.setup()
+        self.setup()
+        self.tableView.contentInset = UIEdgeInsets(top: 128, left: 0, bottom: 0, right: 0)
+        
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "",
+                                                                style: .Plain,
+                                                                target: nil,
+                                                                action: nil)
+        
+        self.navigationItem.titleView = UIImageView(image: UIImage(named: "icon-logo"))
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -24,35 +45,46 @@ class UserProfileTableViewController: UITableViewController {
         
         self.itemsSource = GenericTableViewDataSource<UITableViewCell, String>(reusableIdentifierOrNibName: nil, bindingAction: { (cell, item ) in
         
+            if (item.itemType as! ItemTypeEnum) != .Logout {
+                
+                cell.accessoryType = .DisclosureIndicator
+            }
+            
+            if (item.itemType as! ItemTypeEnum) == .Logout {
+                
+                cell.textLabel?.textAlignment = .Center
+                cell.textLabel?.textColor = UIColor(hexString: kHexMainPinkColor)
+            }
+            
             cell.textLabel?.text = item.item
         })
         
         let section = GenericCollectionSection<String>(title: nil)
         
-        let menuItems = ["Logout", "Add new card"]
+        let myCards = GenericCollectionSectionItem(item: "profile_item_my_cards".localized)
+        myCards.itemType = ItemTypeEnum.MyCards
+        section.items.append(myCards)
         
-        for item in menuItems {
-            
-            section.items.append(GenericCollectionSectionItem(item: item))
-        }
+        let information = GenericCollectionSectionItem(item: "profile_item_information".localized)
+        information.itemType = ItemTypeEnum.Infromation
+        section.items.append(information)
         
         self.itemsSource?.sections.append(section)
+        
+        
+        let sectionLogout = GenericCollectionSection<String>(title: nil)
+        
+        let logout = GenericCollectionSectionItem(item: "profile_item_logout".localized)
+        logout.itemType = ItemTypeEnum.Logout
+        sectionLogout.items.append(logout)
+        
+        self.itemsSource?.sections.append(sectionLogout)
         
         self.tableView.dataSource = self.itemsSource
         self.tableView.delegate = self
         self.tableView.tableFooterView = UIView()
     }
 
-    override func viewWillAppear(animated: Bool) {
-        
-        super.viewWillAppear(animated)
-        
-        let frame = self.view.frame
-        
-        self.tableView.contentInset = UIEdgeInsets(top: frame.size.height / 2 - 64 - 44, left: 0, bottom: 0, right: 0)
-        
-        self.setup()
-    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -63,9 +95,23 @@ class UserProfileTableViewController: UITableViewController {
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
-        switch indexPath.row {
+        let item = self.itemsSource!.sections[indexPath.section].items[indexPath.row]
+        
+        let itemType = item.itemType as! ItemTypeEnum
+        
+        switch itemType {
             
-        case 0:
+        case .MyCards:
+            
+            if let controller = self.instantiateViewControllerWithIdentifierOrNibName("UserCreditCards") {
+                
+                controller.title = "profile_item_my_cards".localized
+                self.navigationController?.pushViewController(controller, animated: true)
+            }
+            
+            break
+            
+        case .Logout:
          
             Api.sharedInstance.userLogut()
                 
@@ -77,15 +123,6 @@ class UserProfileTableViewController: UITableViewController {
                 
                 print("User logout error: \(error)")
             })
-            
-            break
-            
-        case 1:
-            
-            if let controller = self.instantiateViewControllerWithIdentifierOrNibName("AddCreditCard") {
-                
-                self.navigationController?.pushViewController(controller, animated: true)
-            }
             
             break
             

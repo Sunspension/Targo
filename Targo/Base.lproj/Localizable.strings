@@ -14,6 +14,10 @@
 
 "menu_handling_time" = "time to handle order";
 
+"menu_quantity" = "Quantity";
+
+"menu_more_ddetails" = "More";
+
 "maps_title" = "Maps";
 
 "company_info_working_hours" = "WE ARE OPENED";
@@ -70,11 +74,17 @@
 
 "bill_details_your_bill" = "Your bill";
 
+
+
 "action_close" = "Close";
 
 "action_ok" = "Ok";
 
 "action_cancel" = "Cancel";
+
+"action_more" = "More";
+
+
 
 "company_info_make_call_title" = "Make call";
 
@@ -107,3 +117,11 @@
 "order_make_order_button_title" = "Make\norder";
 
 "search_place_holder" = "Find your favorite place";
+
+"feed_title" = "Feed";
+
+"profile_item_logout" = "Logout";
+
+"profile_item_information" = "Information";
+
+"profile_item_my_cards" = "My cards";
