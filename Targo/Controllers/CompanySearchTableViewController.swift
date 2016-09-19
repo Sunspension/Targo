@@ -75,7 +75,10 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         super.viewDidLoad()
         
         self.tableView.setup()
-        self.tableView.backgroundView = UIImageView(image: UIImage(named: "background"))
+        
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = UIColor(red: 0 / 255, green: 0 / 255, blue: 80 / 255, alpha: 0.1)
+        self.tableView.backgroundView = backgroundView
         self.setup()
         
         setupSearchController()
@@ -136,12 +139,23 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         
         super.viewWillAppear(animated)
         
-        self.tableView.reloadData()
+//        self.tableView.reloadData()
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        let item = self.dataSource!.sections[indexPath.section].items[indexPath.row]
+        var item: GenericCollectionSectionItem<TCompanyAddress>!
+        
+        if shouldShowSearchResults == true {
+            
+            let section = self.searchDataSource!.sections[indexPath.section]
+            item = section.items[indexPath.row]
+        }
+        else {
+            
+            let section = self.dataSource!.sections[indexPath.section]
+            item = section.items[indexPath.row]
+        }
         
         if let controller = self.instantiateViewControllerWithIdentifierOrNibName("MenuController") as? TCompanyMenuTableViewController {
             
@@ -164,53 +178,55 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         }
     }
     
-//    // Here is a magic to save height of current cell, otherwise you will get scrolling of table view content when cell will expand
-//    override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-//        
-//        if shouldShowSearchResults {
-//            
-//            if let height = self.searchDataSource?.sections[indexPath.section].items[indexPath.row].cellHeight {
-//                
-//                return height
-//            }
-//        }
-//        else {
-//            
-//            if let height = self.dataSource?.sections[indexPath.section].items[indexPath.row].cellHeight {
-//                
-//                return height
-//            }
-//        }
-//        
-//        return UITableViewAutomaticDimension
-//    }
+    // Here is a magic to save height of current cell, otherwise you will get scrolling of table view content when cell will expand
+    override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        if shouldShowSearchResults {
+            
+            if let height = self.searchDataSource?.sections[indexPath.section].items[indexPath.row].cellHeight {
+                
+                return height
+            }
+        }
+        else {
+            
+            if let height = self.dataSource?.sections[indexPath.section].items[indexPath.row].cellHeight {
+                
+                return height
+            }
+        }
+        
+        return UITableViewAutomaticDimension
+    }
     
-//    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-//        
-//        let viewCell = cell as! TCompanyTableViewCell
-//        
-//        if shouldShowSearchResults {
-//            
-//            if let item = self.searchDataSource?.sections[indexPath.section].items[indexPath.row] {
-//                
-//                item.cellHeight = viewCell.frame.height
-//                getCompanyImage(item, viewCell: viewCell)
-//            }
-//        }
-//        else {
-//            
-//            if let item = self.dataSource?.sections[indexPath.section].items[indexPath.row] {
-//                
-//                item.cellHeight = viewCell.frame.height
-//                getCompanyImage(item, viewCell: viewCell)
-//            }
-//        }
-//        
-////        let layer = viewCell.shadowView.layer
-////        layer.shadowOffset = CGSize(width: 0, height: 1)
-////        layer.shadowOpacity = 0.5
-////        layer.shadowPath = UIBezierPath(rect: layer.bounds).CGPath
-//    }
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        let viewCell = cell as! TCompanyTableViewCell
+        
+        viewCell.layoutIfNeeded()
+        
+        if shouldShowSearchResults {
+            
+            if let item = self.searchDataSource?.sections[indexPath.section].items[indexPath.row] {
+                
+                item.cellHeight = viewCell.frame.height
+                getCompanyImage(item, viewCell: viewCell)
+            }
+        }
+        else {
+            
+            if let item = self.dataSource?.sections[indexPath.section].items[indexPath.row] {
+                
+                item.cellHeight = viewCell.frame.height
+                getCompanyImage(item, viewCell: viewCell)
+            }
+        }
+        
+        let layer = viewCell.shadowView.layer
+        layer.shadowOffset = CGSize(width: 0, height: 1)
+        layer.shadowOpacity = 0.5
+        layer.shadowPath = UIBezierPath(rect: layer.bounds).CGPath
+    }
     
     func userLocationChanged() {
         
@@ -367,7 +383,6 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         if let image =
             self.companyImages.filter({$0.id == company.companyImageId.value}).first {
             
-            print("cell size: \(viewCell.companyImage.bounds.size)")
             let filter = AspectScaledToFillSizeFilter(size: viewCell.companyImage.bounds.size)
             viewCell.companyImage.af_setImageWithURL(NSURL(string: image.url)!,
                                                      filter: filter, imageTransition: .CrossDissolve(0.5))
@@ -433,20 +448,20 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         // don't let cell's subviews having wrong size
         cell.layoutIfNeeded()
         
-        let layer = cell.shadowView.layer
-        layer.shadowOffset = CGSize(width: 0, height: 1)
-        layer.shadowOpacity = 0.5
-        layer.shadowPath = UIBezierPath(rect: layer.bounds).CGPath
+//        let layer = cell.shadowView.layer
+//        layer.shadowOffset = CGSize(width: 0, height: 1)
+//        layer.shadowOpacity = 0.5
+//        layer.shadowPath = UIBezierPath(rect: layer.bounds).CGPath
         
-        let imageSize = cell.companyImage.bounds.size
-        
-        if let image =
-            self.companyImages.filter({$0.id == company.companyImageId.value}).first {
-            
-            let filter = AspectScaledToFillSizeFilter(size: imageSize)
-            cell.companyImage.af_setImageWithURL(NSURL(string: image.url)!,
-                                                 filter: filter, imageTransition: .CrossDissolve(0.5))
-        }
+//        let imageSize = cell.companyImage.bounds.size
+//        
+//        if let image =
+//            self.companyImages.filter({$0.id == company.companyImageId.value}).first {
+//            
+//            let filter = AspectScaledToFillSizeFilter(size: imageSize)
+//            cell.companyImage.af_setImageWithURL(NSURL(string: image.url)!,
+//                                                 filter: filter, imageTransition: .CrossDissolve(0.5))
+//        }
     }
     
     private func loadCompanyAddress(query:String) {
