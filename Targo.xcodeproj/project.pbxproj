@@ -106,6 +106,7 @@
 		D4FDE67A1D3C007E003EF2CC /* TWorkingTimeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FDE6791D3C007E003EF2CC /* TWorkingTimeTableViewCell.swift */; };
 		D4FF40041D76362B00019195 /* TDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FF40021D76362B00019195 /* TDetailsTableViewCell.swift */; };
 		D4FF40051D76362B00019195 /* TDetailsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4FF40031D76362B00019195 /* TDetailsTableViewCell.xib */; };
+		E530B9411D929025005395C8 /* TUserInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E530B9401D929025005395C8 /* TUserInfoTableViewCell.swift */; };
 		E57C7E8A1D22B60D00F9A0FC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57C7E891D22B60D00F9A0FC /* Constants.swift */; };
 		E5C062D91D2106BF002074C4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C062D81D2106BF002074C4 /* AppDelegate.swift */; };
 		E5C062DE1D2106BF002074C4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5C062DC1D2106BF002074C4 /* Main.storyboard */; };
@@ -220,6 +221,7 @@
 		D4FDE6791D3C007E003EF2CC /* TWorkingTimeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TWorkingTimeTableViewCell.swift; sourceTree = "<group>"; };
 		D4FF40021D76362B00019195 /* TDetailsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TDetailsTableViewCell.swift; sourceTree = "<group>"; };
 		D4FF40031D76362B00019195 /* TDetailsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TDetailsTableViewCell.xib; sourceTree = "<group>"; };
+		E530B9401D929025005395C8 /* TUserInfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TUserInfoTableViewCell.swift; sourceTree = "<group>"; };
 		E57C7E891D22B60D00F9A0FC /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E5C062D51D2106BF002074C4 /* Targo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Targo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5C062D81D2106BF002074C4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Targo/AppDelegate.swift; sourceTree = SOURCE_ROOT; };
@@ -346,6 +348,7 @@
 				D469B2331D8EA2C100D41DC6 /* TFeedTargoNewsTableViewCell.swift */,
 				D449864C1D8F0456007C9AF0 /* TFeedCompanyNewsDetailsTableViewCell.swift */,
 				D449864E1D8F099C007C9AF0 /* TFeedTargoNewsDetailsTableViewCell.swift */,
+				E530B9401D929025005395C8 /* TUserInfoTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -785,6 +788,7 @@
 				D41F59CC1D32CDA80075568D /* UserProfileTableViewController.swift in Sources */,
 				D4FF40041D76362B00019195 /* TDetailsTableViewCell.swift in Sources */,
 				D46AC7341D43DB1F009C08D4 /* TCompaniesOnMapsViewController.swift in Sources */,
+				E530B9411D929025005395C8 /* TUserInfoTableViewCell.swift in Sources */,
 				D4C2A0A91D3422D20090BAFC /* TLocationManager.swift in Sources */,
 				D4DD9DD91D41830A009C28D5 /* TMenuItemSmallTableViewCell.swift in Sources */,
 				D46A4C5B1D63BF6D003CF2F9 /* TUserCreditCardsTableViewController.swift in Sources */,

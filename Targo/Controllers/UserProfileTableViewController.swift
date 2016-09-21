@@ -11,6 +11,8 @@ import DynamicColor
 
 private enum ItemTypeEnum {
     
+    case UserInfo
+    
     case Infromation
     
     case MyCards
@@ -21,14 +23,16 @@ private enum ItemTypeEnum {
 
 class UserProfileTableViewController: UITableViewController {
 
-    var itemsSource: GenericTableViewDataSource<UITableViewCell, String>?
+    var dataSource = TableViewDataSource()
+    
+    let identifier = "default"
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.tableView.setup()
         self.setup()
-        self.tableView.contentInset = UIEdgeInsets(top: 128, left: 0, bottom: 0, right: 0)
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "",
                                                                 style: .Plain,
@@ -43,9 +47,11 @@ class UserProfileTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        self.itemsSource = GenericTableViewDataSource<UITableViewCell, String>(reusableIdentifierOrNibName: nil, bindingAction: { (cell, item ) in
         
-            if (item.itemType as! ItemTypeEnum) != .Logout {
+        let bindingClosure = { (cell: UITableViewCell, item: CollectionSectionItem) in
+            
+            if (item.itemType as! ItemTypeEnum) != .Logout
+                && (item.itemType as! ItemTypeEnum) != .UserInfo {
                 
                 cell.accessoryType = .DisclosureIndicator
             }
@@ -56,46 +62,62 @@ class UserProfileTableViewController: UITableViewController {
                 cell.textLabel?.textColor = UIColor(hexString: kHexMainPinkColor)
             }
             
-            cell.textLabel?.text = item.item
-        })
-        
-        let section = GenericCollectionSection<String>(title: nil)
-        
-        let myCards = GenericCollectionSectionItem(item: "profile_item_my_cards".localized)
-        myCards.itemType = ItemTypeEnum.MyCards
-        section.items.append(myCards)
-        
-        let information = GenericCollectionSectionItem(item: "profile_item_information".localized)
-        information.itemType = ItemTypeEnum.Infromation
-        section.items.append(information)
-        
-        self.itemsSource?.sections.append(section)
+            cell.textLabel?.text = item.item as? String
+        }
         
         
-        let sectionLogout = GenericCollectionSection<String>(title: nil)
+        let userInfo = CollectionSection()
         
-        let logout = GenericCollectionSectionItem(item: "profile_item_logout".localized)
-        logout.itemType = ItemTypeEnum.Logout
-        sectionLogout.items.append(logout)
+        userInfo.initializeCellWithReusableIdentifierOrNibName("UserInfo",
+                                                               item: nil,
+                                                               itemType: ItemTypeEnum.UserInfo) { (cell, item) in
         
-        self.itemsSource?.sections.append(sectionLogout)
+                                                                let viewCell = cell as! TUserInfoTableViewCell
+                                                                
+                                                                viewCell.layoutIfNeeded()
+                                                                
+                                                                viewCell.selectionStyle = .None
+                                                                viewCell.userIcon.makeCircular()
+        }
         
-        self.tableView.dataSource = self.itemsSource
+        self.dataSource.sections.append(userInfo)
+        
+        
+        let mainSection = CollectionSection()
+        self.dataSource.sections.append(mainSection)
+        
+        mainSection.initializeDefaultCell(identifier,
+                                          cellStyle: .Default,
+                                          item: "profile_item_my_cards".localized,
+                                          itemType: ItemTypeEnum.MyCards,
+                                          bindingAction: bindingClosure)
+        
+        mainSection.initializeDefaultCell(identifier,
+                                          cellStyle: .Default,
+                                          item: "profile_item_information".localized,
+                                          itemType: ItemTypeEnum.Infromation,
+                                          bindingAction: bindingClosure)
+        
+        let logout = CollectionSection()
+        self.dataSource.sections.append(logout)
+        
+        logout.initializeDefaultCell(identifier,
+                                     cellStyle: .Default,
+                                     item: "profile_item_logout".localized,
+                                     itemType: ItemTypeEnum.Logout,
+                                     bindingAction: bindingClosure)
+        
+        self.tableView.dataSource = self.dataSource
         self.tableView.delegate = self
         self.tableView.tableFooterView = UIView()
     }
 
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
-        let item = self.itemsSource!.sections[indexPath.section].items[indexPath.row]
+        let item = self.dataSource.sections[indexPath.section].items[indexPath.row]
         
         let itemType = item.itemType as! ItemTypeEnum
         

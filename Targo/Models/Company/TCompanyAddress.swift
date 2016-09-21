@@ -109,7 +109,7 @@ class TCompanyAddress: Object, Mappable {
         companySite <- map["company_site"]
         companyPhone <- map["company_phone"]
         companyCategoryTitle <- map["company_category_title"]
-        companyDescription <- map["company_category_description"]
+        companyCategoryDescription <- map["company_category_description"]
         companyCategoryImageId <- map["company_category_image_id"]
         distance <- map["dist"]
         rating <- map["company_rating"]
