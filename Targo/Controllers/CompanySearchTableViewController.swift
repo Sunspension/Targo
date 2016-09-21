@@ -25,7 +25,6 @@ private enum TCompanyAddressLoadingStatus : Int {
     case Loaded
 }
 
-
 class CompanySearchTableViewController: UITableViewController, UISearchResultsUpdating, UISearchBarDelegate {
     
     private let section = GenericCollectionSection<TCompanyAddress>()
@@ -63,6 +62,10 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
     private let searchController = UISearchController(searchResultsController: nil)
     
     private var shouldShowSearchResults = false
+    
+    private var cancelPreviousResult = false
+    
+    private var cancellationTokens = [NSOperation]()
     
     
     deinit {
@@ -289,6 +292,12 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         
         self.loadingStatus = .Loading
         
+        if self.userLocation == nil {
+            
+            self.loadingStatus = .Failed
+            return
+        }
+        
         Api.sharedInstance.loadCompanyAddresses(
             
             self.userLocation!,
@@ -364,14 +373,20 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         
-        guard let string = searchController.searchBar.text where
-            self.searchLoadingStatus != .Loading else {
+        self.searchPageNumer = 1
+        
+        for token in self.cancellationTokens {
             
-            return
+            token.cancel()
         }
         
-        self.searchPageNumer = 1
-        loadCompanyAddress(string)
+        let token = NSOperation()
+        self.cancellationTokens.append(token)
+        
+        if let string = searchController.searchBar.text {
+            
+            loadCompanyAddress(string, cancellationToken: token)
+        }
     }
 
     //MARK: - Private methods
@@ -444,29 +459,17 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         cell.ratingProgress.setProgress(1 / 5 * company.rating, animated: false)
         cell.ratingProgress.trackFillColor = UIColor(hexString: kHexMainPinkColor)
         cell.ratingProgress.hidden = false
-        
-        // don't let cell's subviews having wrong size
-        cell.layoutIfNeeded()
-        
-//        let layer = cell.shadowView.layer
-//        layer.shadowOffset = CGSize(width: 0, height: 1)
-//        layer.shadowOpacity = 0.5
-//        layer.shadowPath = UIBezierPath(rect: layer.bounds).CGPath
-        
-//        let imageSize = cell.companyImage.bounds.size
-//        
-//        if let image =
-//            self.companyImages.filter({$0.id == company.companyImageId.value}).first {
-//            
-//            let filter = AspectScaledToFillSizeFilter(size: imageSize)
-//            cell.companyImage.af_setImageWithURL(NSURL(string: image.url)!,
-//                                                 filter: filter, imageTransition: .CrossDissolve(0.5))
-//        }
     }
     
-    private func loadCompanyAddress(query:String) {
+    private func loadCompanyAddress(query:String, cancellationToken: NSOperation? = nil) {
         
         self.searchLoadingStatus = .Loading
+        
+        if self.userLocation == nil {
+            
+            self.searchLoadingStatus = .Failed
+            return
+        }
         
         if let superView = self.tableView.superview {
             
@@ -482,11 +485,19 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
             
             .onSuccess(callback: { [unowned self] companyPage in
                 
-                self.searchLoadingStatus = .Loaded
-                
                 if let superView = self.tableView.superview {
                     
                     SwiftOverlays.removeAllOverlaysFromView(superView)
+                }
+                
+                if let token = cancellationToken {
+                    
+                    self.cancellationTokens.remove(token)
+                    
+                    if token.cancelled {
+                        
+                        return
+                    }
                 }
                 
                 self.searchCompaniesPage = companyPage
@@ -495,9 +506,6 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
                     
                     self.searchSection.items.removeAll()
                 }
-                
-                self.createSearchDataSource()
-                self.tableView.reloadData()
                 
                 if self.pageSize == companyPage.companies.count {
                     
@@ -510,6 +518,12 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
                     self.searchPageNumer = 1
                     self.searchCanLoadNext = false
                 }
+                
+                self.searchLoadingStatus = .Loaded
+                
+                // apply received data
+                self.createSearchDataSource()
+                self.tableView.reloadData()
                 
                 }).onFailure(callback: { error in
                     

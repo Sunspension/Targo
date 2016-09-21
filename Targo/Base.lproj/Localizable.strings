@@ -96,9 +96,11 @@
 
 "order_time_title" = "Time to prepare the order";
 
-"order_time_place_holder" = "Please, choose time";
+"order_time_place_holder" = "You can specify time if needed";
 
 "order_how_to_eat" = "How to eat";
+
+"order_not_chosen" = "Not chosen";
 
 "order_take_away" = "Take away";
 
@@ -125,3 +127,4 @@
 "profile_item_information" = "Information";
 
 "profile_item_my_cards" = "My cards";
+

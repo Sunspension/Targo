@@ -86,10 +86,12 @@ struct TRemoteServer: PRemoteServerV1 {
         return self.request(.GET, remotePath: baseURLString + "/company-address", parameters: params)
     }
     
-    func loadCompanyMenu(companyId: Int) -> Request {
+    func loadCompanyMenu(companyId: Int, pageNumber: Int, pageSize: Int = 20) -> Request {
         
         let params: [String : AnyObject] = [ "filters" : ["company_id" : companyId],
-                                             "extend" : "shop-category"]
+                                             "extend" : "shop-category",
+                                             "page" : pageNumber,
+                                             "page_size" : pageSize]
         
         return self.request(.GET, remotePath: baseURLString + "/shop-good", parameters: params)
     }
@@ -114,13 +116,8 @@ struct TRemoteServer: PRemoteServerV1 {
                        items: [Int : Int],
                        addressId: Int,
                        serviceId: Int,
-                       date: NSDate,
+                       date: NSDate?,
                        description: String?) -> Request {
-        
-        let formatter = NSDateFormatter()
-        
-        formatter.dateFormat = kDateTimeFormat
-        let dateString = formatter.stringFromDate(date)
         
         var goods: [[String : Int]] = []
         
@@ -132,8 +129,16 @@ struct TRemoteServer: PRemoteServerV1 {
         var params: [String : AnyObject] = [ "items" : goods,
                                              "address_id" : addressId,
                                              "card_id" : cardId,
-                                             "service_id" : serviceId,
-                                             "prepared_at" : dateString]
+                                             "service_id" : serviceId]
+        if let date = date {
+            
+            let formatter = NSDateFormatter()
+            
+            formatter.dateFormat = kDateTimeFormat
+            let dateString = formatter.stringFromDate(date)
+            
+            params["prepared_at"] = dateString
+        }
         
         if description != nil && !description!.isEmpty{
             

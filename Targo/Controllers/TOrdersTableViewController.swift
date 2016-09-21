@@ -87,8 +87,14 @@ class TOrdersTableViewController: UITableViewController {
                                                                 
                                                                 if item.item!.isNew {
                                                                     
-                                                                    let background = UIView(frame: cell.contentView.frame)
-                                                                    background.backgroundColor = UIColor(red: 205 / 255, green: 0 / 255, blue: 121 / 255, alpha: 0.1)
+                                                                    let background = UIView()
+                                                                    background.backgroundColor = UIColor(red: 205 / 255, green: 0 / 255, blue: 121 / 255, alpha: 0.17)
+                                                                    cell.backgroundView = background
+                                                                }
+                                                                else {
+                                                                    
+                                                                    let background = UIView()
+                                                                    background.backgroundColor = UIColor.whiteColor()
                                                                     cell.backgroundView = background
                                                                 }
                                                                 
@@ -262,7 +268,17 @@ class TOrdersTableViewController: UITableViewController {
                                         
                                         if oldDate.compare(newDate) != .OrderedSame {
                                             
-                                            order.isNew = true
+                                            if order.orderStatus == ShopOrderStatusEnum.Canceled.rawValue
+                                                || order.orderStatus == ShopOrderStatusEnum.Finished.rawValue
+                                                || order.orderStatus == ShopOrderStatusEnum.PayError.rawValue
+                                                || order.orderStatus == ShopOrderStatusEnum.CanceledByUser.rawValue {
+                                                
+                                                order.isNew = false
+                                            }
+                                            else {
+                                                
+                                                order.isNew = true
+                                            }
                                             
                                             try! realm.write({
                                                 
@@ -350,7 +366,7 @@ class TOrdersTableViewController: UITableViewController {
                                     
                                     SwiftOverlays.removeAllOverlaysFromView(superview)
                                 }
-                                })
+                            })
                     
                     }).onFailure(callback: {[weak self] error in
                         
@@ -385,6 +401,20 @@ class TOrdersTableViewController: UITableViewController {
                     sectionHistory = GenericCollectionSection<TShopOrder>(title: "order_history_order_title".localized)
                     sectionHistory!.sectionType = ShopOrdersSectionEnum.History
                     self.dataSource?.sections.append(sectionHistory!)
+                }
+                
+                let realm = try! Realm()
+                realm.beginWrite()
+                
+                order.isNew = false
+                
+                do {
+                    
+                    try realm.commitWrite()
+                }
+                catch {
+                    
+                    print("Caught an error when was trying to make commit to Realm")
                 }
                 
                 sectionHistory!.items.append(GenericCollectionSectionItem(item: order))

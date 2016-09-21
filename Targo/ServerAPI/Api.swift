@@ -295,11 +295,11 @@ struct Api {
         return p.future
     }
     
-    func loadCompanyMenu(companyId: Int) -> Future<TCompanyMenuPage, TargoError> {
+    func loadCompanyMenu(companyId: Int, pageNumber: Int, pageSize: Int = 20) -> Future<TCompanyMenuPage, TargoError> {
         
         let p = Promise<TCompanyMenuPage, TargoError>()
         
-        server.loadCompanyMenu(companyId)
+        server.loadCompanyMenu(companyId, pageNumber: pageNumber, pageSize: pageSize)
             
             .responseJSON { response in
                 
@@ -396,7 +396,7 @@ struct Api {
                        items: [Int : Int],
                        addressId: Int,
                        serviceId: Int,
-                       date: NSDate,
+                       date: NSDate?,
                        description: String?) -> Future<TShopOrder, TargoError> {
         
         let p = Promise<TShopOrder, TargoError>()

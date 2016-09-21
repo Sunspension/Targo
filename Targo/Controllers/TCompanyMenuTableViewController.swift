@@ -62,14 +62,13 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.tableView.setup()
+        self.title = company?.companyTitle
+        self.setup()
         
         self.buttonMakeOrder.backgroundColor = UIColor(hexString: kHexMainPinkColor)
         
         self.buttonMakeOrder.enabled = false
         self.buttonMakeOrder.alpha = 0.5
-        
-        self.title = company?.companyTitle
         
         self.tableView.setup()
         self.tableView.delegate = self
@@ -123,32 +122,32 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
             
             self.loading = true
             
-            Api.sharedInstance.loadCompanyMenu(company.companyId)
+            Api.sharedInstance.loadCompanyMenu(company.companyId, pageNumber: 1, pageSize: 100)
                 
                 .onSuccess(callback: { [unowned self] menuPage in
-                
-                    self.loading = false
                     
                     self.buttonMakeOrder.hidden = false
+                    
+                    self.menuPage = menuPage
+                    self.createDataSource()
+                    self.tableView.reloadData()
+                    
+                    self.loading = false
                     
                     if let superview = self.view.superview {
                         
                         SwiftOverlays.removeAllOverlaysFromView(superview)
                     }
-                
-                self.menuPage = menuPage
-                self.createDataSource()
-                self.tableView.reloadData()
-                
-            }).onFailure(callback: { [unowned self] error in
-                
-                self.loading = false
-                
-                if let superview = self.view.superview {
                     
-                    SwiftOverlays.removeAllOverlaysFromView(superview)
-                }
-            })
+                }).onFailure(callback: { [unowned self] error in
+                        
+                    self.loading = false
+                    
+                    if let superview = self.view.superview {
+                        
+                        SwiftOverlays.removeAllOverlaysFromView(superview)
+                    }
+                })
         }
         
         // Uncomment the following line to preserve selection between presentations
@@ -161,8 +160,6 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
     override func viewWillAppear(animated: Bool) {
         
         super.viewWillAppear(animated)
-        
-        self.setup()
     }
     
     override func viewDidAppear(animated: Bool) {

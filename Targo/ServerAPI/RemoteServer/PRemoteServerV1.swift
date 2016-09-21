@@ -22,7 +22,7 @@ protocol PRemoteServerV1 {
     
     func loadCompanyAddresses(location: CLLocation, query: String?, pageNumber: Int, pageSize: Int) -> Request
     
-    func loadCompanyMenu(companyId: Int) -> Request
+    func loadCompanyMenu(companyId: Int, pageNumber: Int, pageSize: Int) -> Request
     
     func makeTestOrder() -> Request
     
@@ -34,7 +34,7 @@ protocol PRemoteServerV1 {
                        items: [Int : Int],
                        addressId: Int,
                        serviceId: Int,
-                       date: NSDate,
+                       date: NSDate?,
                        description: String?) -> Request
     
     func checkShopOrderStatus(orderStatus: Int) -> Request

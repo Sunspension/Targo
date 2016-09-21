@@ -1,21 +1,21 @@
 
 /* Class = "UILabel"; text = "ABOUT US"; ObjectID = "0e1-Q6-z3V"; */
-"0e1-Q6-z3V.text" = "ABOUT US";
+"0e1-Q6-z3V.text" = "О НАС";
 
 /* Class = "UIButton"; normalTitle = "Login"; ObjectID = "0tT-yN-6Q1"; */
-"0tT-yN-6Q1.normalTitle" = "Login";
+"0tT-yN-6Q1.normalTitle" = "Вход";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "1Xb-im-jS5"; */
 "1Xb-im-jS5.text" = "Label";
 
 /* Class = "UILabel"; text = "Where to eat"; ObjectID = "20F-lC-wAl"; */
-"20F-lC-wAl.text" = "Where to eat";
+"20F-lC-wAl.text" = "Где поесть?";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "2DJ-uW-aAr"; */
 "2DJ-uW-aAr.text" = "Label";
 
 /* Class = "UINavigationItem"; title = "Feed"; ObjectID = "33d-jd-jqF"; */
-"33d-jd-jqF.title" = "Feed";
+"33d-jd-jqF.title" = "Лента";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "3hg-KN-RL9"; */
 "3hg-KN-RL9.text" = "Label";
@@ -27,7 +27,7 @@
 "4Ds-gk-MkV.text" = "Label";
 
 /* Class = "UIButton"; normalTitle = "Registration"; ObjectID = "6Up-UG-Vw1"; */
-"6Up-UG-Vw1.normalTitle" = "Registration";
+"6Up-UG-Vw1.normalTitle" = "Регистрация";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "8NA-hN-dwA"; */
 "8NA-hN-dwA.text" = "Label";
@@ -36,16 +36,16 @@
 "8wr-ZF-Fsm.text" = "Label";
 
 /* Class = "UITextField"; placeholder = "Code"; ObjectID = "9EY-bu-Ykv"; */
-"9EY-bu-Ykv.placeholder" = "Code";
+"9EY-bu-Ykv.placeholder" = "Код";
 
 /* Class = "UILabel"; text = "Order status"; ObjectID = "9b8-Xn-lFz"; */
-"9b8-Xn-lFz.text" = "Order status";
+"9b8-Xn-lFz.text" = "Статус заказа";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "AAr-oq-qYx"; */
 "AAr-oq-qYx.text" = "Label";
 
 /* Class = "UILabel"; text = "Code"; ObjectID = "Az2-Lb-Mlz"; */
-"Az2-Lb-Mlz.text" = "Code";
+"Az2-Lb-Mlz.text" = "Код";
 
 /* Class = "UIButton"; normalTitle = "Fogot password?"; ObjectID = "C86-U2-X54"; */
 "C86-U2-X54.normalTitle" = "Забыли пароль?";
@@ -90,7 +90,7 @@
 "W5k-EY-Ln4.segmentTitles[0]" = "Взять с собой";
 
 /* Class = "UISegmentedControl"; W5k-EY-Ln4.segmentTitles[1] = "Eat inside"; ObjectID = "W5k-EY-Ln4"; */
-"W5k-EY-Ln4.segmentTitles[1]" = "Подать на стол";
+"W5k-EY-Ln4.segmentTitles[1]" = "Есть внутри";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "Wp4-C6-3dG"; */
 "Wp4-C6-3dG.text" = "Label";
@@ -144,7 +144,7 @@
 "tfi-kZ-mg3.title" = "Профиль";
 
 /* Class = "UILabel"; text = "28 May"; ObjectID = "u5X-ZO-C1W"; */
-"u5X-ZO-C1W.text" = "28 May";
+"u5X-ZO-C1W.text" = "28 Мая";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "uS3-Bh-GCk"; */
 "uS3-Bh-GCk.text" = "Label";

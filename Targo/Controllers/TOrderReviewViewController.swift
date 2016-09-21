@@ -174,6 +174,8 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
             .onSuccess { [weak self] cards in
                 
                 self?.loading = false
+                self?.makeOrder.hidden = false
+                self?.makeOrder.setNeedsDisplay()
                 
                 if let superView = self?.view.superview {
                     
@@ -187,6 +189,8 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
             }.onFailure { [weak self] error in
                 
                 self?.loading = false
+                self?.makeOrder.hidden = false
+                self?.makeOrder.setNeedsDisplay()
                 
                 if let superView = self?.view.superview {
                     
@@ -198,8 +202,6 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
     }
     
     private func createDataSource() {
-        
-        self.makeOrder.hidden = false
         
         let section = CollectionSection()
         
@@ -297,31 +299,34 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
                                                                     viewCell.details.text = "order_time_place_holder".localized
             })
             
-            section.initializeCellWithReusableIdentifierOrNibName("DetailsCell",
+//            section.initializeCellWithReusableIdentifierOrNibName("DetailsCell",
+//                                                                  item: nil,
+//                                                                  itemType: ItemTypeEnum.DeliveryType,
+//                                                                  bindingAction: { (cell, item) in
+//                                                                    
+//                                                                    let viewCell = cell as! TDetailsTableViewCell
+//                                                                    
+//                                                                    viewCell.title.text = "order_how_to_eat".localized
+//                                                                    viewCell.details.text = "order_how_to_eat_place_holder".localized
+//            })
+            
+            section.initializeCellWithReusableIdentifierOrNibName("DeliveryCell",
                                                                   item: nil,
                                                                   itemType: ItemTypeEnum.DeliveryType,
-                                                                  bindingAction: { (cell, item) in
+                                                                  bindingAction: {[unowned self] (cell, item) in
                                                                     
-                                                                    let viewCell = cell as! TDetailsTableViewCell
+                                                                    let viewCell = cell as! TDeliveryMethodTableViewCell
                                                                     
-                                                                    viewCell.title.text = "order_how_to_eat".localized
-                                                                    viewCell.details.text = "order_how_to_eat_place_holder".localized
+                                                                    viewCell.deliveryMethod.tintColor = UIColor(hexString: kHexMainPinkColor)
+                                                                    viewCell.selectionStyle = .None
+                                                                    viewCell.deliveryMethod.setTitle("order_not_chosen".localized, forSegmentAtIndex: 0)
+                                                                    viewCell.deliveryMethod.setTitle("order_take_away".localized, forSegmentAtIndex: 1)
+                                                                    viewCell.deliveryMethod.setTitle("order_take_inside".localized, forSegmentAtIndex: 2)
+                                                                    viewCell.deliveryMethod.bnd_selectedSegmentIndex.observe({ index in
+                                                                        
+                                                                        self.serviceId = index
+                                                                    })
             })
-            
-//            section.initializeCellWithReusableIdentifierOrNibName("DeliveryCell",
-//                                                                  item: nil,
-//                                                                  bindingAction: {[unowned self] (cell, item) in
-//                                                                    
-//                                                                    let viewCell = cell as! TDeliveryMethodTableViewCell
-//                                                                    
-//                                                                    viewCell.deliveryMethod.tintColor = UIColor(hexString: kHexMainPinkColor)
-//                                                                    viewCell.selectionStyle = .None
-//                                                                    
-//                                                                    viewCell.deliveryMethod.bnd_selectedSegmentIndex.observe({ index in
-//                                                                        
-//                                                                        self.deliverySelectedIndex = index
-//                                                                    })
-//            })
             
             section.initializeCellWithReusableIdentifierOrNibName("OrderDescriptionCell",
                                                                   item: nil,
@@ -442,35 +447,35 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
             break
             
             
-        case .DeliveryType:
-            
-            let alert = UIAlertController(title: "order_how_to_eat".localized, message: "", preferredStyle: .ActionSheet)
-            
-            let takeAwayAction = UIAlertAction(title: "order_take_away".localized, style: .Default, handler: { action in
-                
-                self.serviceId = 1
-                let viewCell = tableView.cellForRowAtIndexPath(item.indexPath) as! TDetailsTableViewCell
-                viewCell.details.text = "order_take_away".localized
-                viewCell.details.textColor = UIColor.blackColor()
-            })
-            
-            let eatInsideAction = UIAlertAction(title: "order_take_inside".localized, style: .Default, handler: { action in
-                
-                self.serviceId = 2
-                let viewCell = tableView.cellForRowAtIndexPath(item.indexPath) as! TDetailsTableViewCell
-                viewCell.details.text = "order_take_inside".localized
-                viewCell.details.textColor = UIColor.blackColor()
-            })
-            
-            let cancel = UIAlertAction(title: "action_cancel".localized, style: .Cancel, handler: nil)
-            
-            alert.addAction(takeAwayAction)
-            alert.addAction(eatInsideAction)
-            alert.addAction(cancel)
-            
-            self.presentViewController(alert, animated: true, completion: nil)
-            
-            break
+//        case .DeliveryType:
+//            
+//            let alert = UIAlertController(title: "order_how_to_eat".localized, message: "", preferredStyle: .ActionSheet)
+//            
+//            let takeAwayAction = UIAlertAction(title: "order_take_away".localized, style: .Default, handler: { action in
+//                
+//                self.serviceId = 1
+//                let viewCell = tableView.cellForRowAtIndexPath(item.indexPath) as! TDetailsTableViewCell
+//                viewCell.details.text = "order_take_away".localized
+//                viewCell.details.textColor = UIColor.blackColor()
+//            })
+//            
+//            let eatInsideAction = UIAlertAction(title: "order_take_inside".localized, style: .Default, handler: { action in
+//                
+//                self.serviceId = 2
+//                let viewCell = tableView.cellForRowAtIndexPath(item.indexPath) as! TDetailsTableViewCell
+//                viewCell.details.text = "order_take_inside".localized
+//                viewCell.details.textColor = UIColor.blackColor()
+//            })
+//            
+//            let cancel = UIAlertAction(title: "action_cancel".localized, style: .Cancel, handler: nil)
+//            
+//            alert.addAction(takeAwayAction)
+//            alert.addAction(eatInsideAction)
+//            alert.addAction(cancel)
+//            
+//            self.presentViewController(alert, animated: true, completion: nil)
+//            
+//            break
             
         case .OrderDescription:
             
@@ -478,6 +483,9 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
             cell.textView.becomeFirstResponder()
             self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Middle, animated: true)
             
+            break
+            
+        default:
             break
         }
     }
@@ -495,11 +503,11 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
             return
         }
         
-        guard self.preparedDate != nil else {
-            
-            self.showOkAlert("error".localized, message: "oder_time_to_prepare_empty".localized)
-            return
-        }
+//        guard self.preparedDate != nil else {
+//            
+//            self.showOkAlert("error".localized, message: "oder_time_to_prepare_empty".localized)
+//            return
+//        }
         
         guard self.serviceId != 0 else {
             
@@ -520,8 +528,8 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
         Api.sharedInstance.makeShopOrder(card.id,
             items: items,
             addressId: self.company!.id,
-            serviceId: serviceId,
-            date: self.preparedDate!,
+            serviceId: self.serviceId,
+            date: self.preparedDate,
             description: self.orderDescription)
             
             .onSuccess {[weak self] shopOrder in
