@@ -17,6 +17,7 @@ class TUserCreditCardsTableViewController: UITableViewController {
     
     var selectedAction: ((cardIndex: Int) -> Void)?
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -112,7 +113,6 @@ class TUserCreditCardsTableViewController: UITableViewController {
                                                                 let viewCell = cell as! TUserCreditCardTableViewCell
                                                                 viewCell.title.text = "credit_card_add_new_one".localized
                                                                 viewCell.icon.image = UIImage(named: "icon-new-card")
-                                                                viewCell.icon.tintColor = UIColor(hexString: kHexMainPinkColor)
                                                                 viewCell.accessoryType = .DisclosureIndicator
                                                                 
         })

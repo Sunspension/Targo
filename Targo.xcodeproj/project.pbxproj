@@ -47,6 +47,8 @@
 		D44986511D8F3AB5007C9AF0 /* TLoadingStatusEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44986501D8F3AB5007C9AF0 /* TLoadingStatusEnum.swift */; };
 		D449B41B1D777F3C0088CEEB /* KeyboardNotificationListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = D449B41A1D777F3C0088CEEB /* KeyboardNotificationListener.swift */; };
 		D45391D11D2DBE0900669669 /* UserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45391D01D2DBE0900669669 /* UserSession.swift */; };
+		D4553CE41D932985009A3E16 /* TOrderFinishedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4553CE31D932985009A3E16 /* TOrderFinishedViewController.swift */; };
+		D4553CE61D932DE2009A3E16 /* TOrderShareTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4553CE51D932DE2009A3E16 /* TOrderShareTableViewCell.swift */; };
 		D45AC7141D74E83F001BF90B /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = D45AC7131D74E83F001BF90B /* UIImage+ImageEffects.m */; };
 		D45F9FAA1D6101FD00623A34 /* TOrderReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45F9FA91D6101FD00623A34 /* TOrderReviewViewController.swift */; };
 		D45F9FAC1D61055E00623A34 /* TOrderItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45F9FAB1D61055E00623A34 /* TOrderItemTableViewCell.swift */; };
@@ -157,6 +159,8 @@
 		D44986501D8F3AB5007C9AF0 /* TLoadingStatusEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TLoadingStatusEnum.swift; path = Models/TLoadingStatusEnum.swift; sourceTree = "<group>"; };
 		D449B41A1D777F3C0088CEEB /* KeyboardNotificationListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardNotificationListener.swift; sourceTree = "<group>"; };
 		D45391D01D2DBE0900669669 /* UserSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSession.swift; sourceTree = "<group>"; };
+		D4553CE31D932985009A3E16 /* TOrderFinishedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TOrderFinishedViewController.swift; sourceTree = "<group>"; };
+		D4553CE51D932DE2009A3E16 /* TOrderShareTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TOrderShareTableViewCell.swift; sourceTree = "<group>"; };
 		D45AC70E1D74E6BF001BF90B /* Targo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Targo-Bridging-Header.h"; sourceTree = "<group>"; };
 		D45AC7121D74E83F001BF90B /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
 		D45AC7131D74E83F001BF90B /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
@@ -349,6 +353,7 @@
 				D449864C1D8F0456007C9AF0 /* TFeedCompanyNewsDetailsTableViewCell.swift */,
 				D449864E1D8F099C007C9AF0 /* TFeedTargoNewsDetailsTableViewCell.swift */,
 				E530B9401D929025005395C8 /* TUserInfoTableViewCell.swift */,
+				D4553CE51D932DE2009A3E16 /* TOrderShareTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -373,6 +378,7 @@
 				D4151E111D688D0B00DB26C0 /* TOrderStatusViewController.swift */,
 				D413357C1D6E4FCE00542BA1 /* TOrderBillTableViewController.swift */,
 				D469B2371D8EE6E200D41DC6 /* TFeedDetailsTableViewController.swift */,
+				D4553CE31D932985009A3E16 /* TOrderFinishedViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -761,6 +767,7 @@
 				D4F213701D6E570100D94B62 /* TBillMenuItemTableViewCell.swift in Sources */,
 				D469B2341D8EA2C100D41DC6 /* TFeedTargoNewsTableViewCell.swift in Sources */,
 				D4F464DA1D402EF3009015FC /* TCompanyMenuHeaderView.swift in Sources */,
+				D4553CE41D932985009A3E16 /* TOrderFinishedViewController.swift in Sources */,
 				D46A4C591D63B363003CF2F9 /* TDeliveryMethodTableViewCell.swift in Sources */,
 				D44930941D495D5100ADF70A /* TAddCreditCardViewController.swift in Sources */,
 				D40E10241D3EC1660012DCF4 /* TableViewDataSource.swift in Sources */,
@@ -771,6 +778,7 @@
 				D4D567AB1D8758C700679F53 /* TCompanyWorkingDay.swift in Sources */,
 				D449864B1D8EF48B007C9AF0 /* TFeedPage.swift in Sources */,
 				D4A392081D6BBBC9005B2047 /* TCompanyAddress.swift in Sources */,
+				D4553CE61D932DE2009A3E16 /* TOrderShareTableViewCell.swift in Sources */,
 				D45F9FB01D610CBD00623A34 /* TPaymentMethodTableViewCell.swift in Sources */,
 				D4F84B491D24668400263D1A /* User.swift in Sources */,
 				D4DD9DDC1D418DC9009C28D5 /* TBaseTableViewCell.swift in Sources */,

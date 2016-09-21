@@ -92,7 +92,7 @@
 
 "company_info_opened_text" = "Сегодня открыто\n%@";
 
-"order_time_title" = "К какому времени сделать заказ";
+"order_time_title" = "К какому времени сделать заказ?";
 
 "order_time_place_holder" = "Указать конкретное время";
 
@@ -110,7 +110,7 @@
 
 "oder_time_to_prepare_empty" = "Вы не указали к какому времени сделать заказ";
 
-"oder_delivery_service_empty" = "Вы не указали подачу";
+"oder_delivery_service_empty" = "Вы не выбрали где поесть";
 
 "order_description_title" = "Коментарий к заказу";
 

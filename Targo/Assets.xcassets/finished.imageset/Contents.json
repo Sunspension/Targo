@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "mastercard.pdf",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "finished.png",
       "scale" : "2x"
     },
     {

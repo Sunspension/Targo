@@ -54,6 +54,11 @@ class TOrderStatusViewController: UIViewController {
     var reason: OrderStatusOpenReasonEnum = .Undefined
     
     
+    deinit {
+        
+        print("TOrderStatusViewController deinit")
+    }
+    
     override func viewWillLayoutSubviews() {
         
         super.viewWillLayoutSubviews()
@@ -194,6 +199,17 @@ class TOrderStatusViewController: UIViewController {
                     
                     self?.shopOrder = shopOrder
                     self?.setOrderStatus(shopOrder.orderStatus)
+                    
+                    if shopOrder.orderStatus == ShopOrderStatusEnum.Finished.rawValue {
+                        
+                        if let controller = self?.instantiateViewControllerWithIdentifierOrNibName("OrderFinished") as? TOrderFinishedViewController {
+                            
+                            controller.companyName = self?.companyName
+                            controller.shopOrder = self?.shopOrder
+                            
+                            self?.navigationController?.pushViewController(controller, animated: true)
+                        }
+                    }
                     
                     NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: kTargoDidLoadOrdersNotification, object: nil))
                     
@@ -364,4 +380,15 @@ class TOrderStatusViewController: UIViewController {
                                     
             }, completion: nil)
     }
+    
+//    private func showLocalNotification(text: String) {
+//        
+//        let notification = UILocalNotification()
+//        notification.fireDate = NSDate(timeIntervalSinceNow: 5)
+//        notification.alertBody = text
+//        notification.soundName = UILocalNotificationDefaultSoundName
+//        notification.userInfo = ["CustomField1": "w00t"]
+//        
+//        UIApplication.sharedApplication().scheduleLocalNotification(notification)
+//    }
 }

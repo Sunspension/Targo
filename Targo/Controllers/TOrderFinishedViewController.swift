@@ -1,16 +1,20 @@
 //
-//  TOrderBillTableViewController.swift
+//  TOrderFinishedViewController.swift
 //  Targo
 //
-//  Created by Vladimir Kokhanevich on 25/08/16.
+//  Created by Vladimir Kokhanevich on 21/09/16.
 //  Copyright © 2016 Targo. All rights reserved.
 //
 
 import UIKit
 import DynamicColor
 
-class TOrderBillTableViewController: UITableViewController {
+class TOrderFinishedViewController: UIViewController {
 
+    @IBOutlet weak var tableView: UITableView!
+    
+    @IBOutlet weak var buttonFinish: UIButton!
+    
     var dataSource = TableViewDataSource()
     
     var shopOrder: TShopOrder?
@@ -20,20 +24,22 @@ class TOrderBillTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.tableView.setup()
         self.tableView.tableFooterView = UIView()
         self.tableView.dataSource = self.dataSource
         self.tableView.allowsSelection = false
         
-//        self.tableView.registerNib(UINib(nibName: "TCompanyMenuHeaderView", bundle: nil),
-//                                   forHeaderFooterViewReuseIdentifier: "sectionHeader")
+        self.title = "Оцените заказ"
         
-        self.title = "bill_details_your_bill".localized
+        self.navigationItem.hidesBackButton = true
+        
+        self.buttonFinish.backgroundColor = UIColor(hexString: kHexMainPinkColor)
+        self.buttonFinish.addTarget(self, action: #selector(TOrderFinishedViewController.closeAction), forControlEvents: .TouchUpInside)
         
         let section = CollectionSection()
         
-        section.initializeCellWithReusableIdentifierOrNibName("BillCompanyNameCell",
+        section.initializeCellWithReusableIdentifierOrNibName("OrderCompanyNameCell",
                                                               item: self.shopOrder) { (cell, item) in
                                                                 
                                                                 let viewCell = cell as! TBillCompanyNameTableViewCell
@@ -60,7 +66,7 @@ class TOrderBillTableViewController: UITableViewController {
             for item in order.items {
                 
                 totalPrice += item.count * item.price
-                section.initializeCellWithReusableIdentifierOrNibName("BillMenuItemCell",
+                section.initializeCellWithReusableIdentifierOrNibName("OrderMenuItemCell",
                                                                       item: item) { (cell, item) in
                                                                         
                                                                         let viewCell = cell as! TBillMenuItemTableViewCell
@@ -73,7 +79,7 @@ class TOrderBillTableViewController: UITableViewController {
             }
         }
         
-        section.initializeCellWithReusableIdentifierOrNibName("BillCompanyNameCell",
+        section.initializeCellWithReusableIdentifierOrNibName("OrderCompanyNameCell",
                                                               item: nil, itemType: 1) { (cell, item) in
                                                                 
                                                                 let viewCell = cell as! TBillCompanyNameTableViewCell
@@ -85,105 +91,41 @@ class TOrderBillTableViewController: UITableViewController {
                                                                 viewCell.contentView.backgroundColor = color
         }
         
+        section.initializeCellWithReusableIdentifierOrNibName("OrderShareCell", item: nil) { (cell, item) in
+            
+            let viewCell = cell as! TOrderShareTableViewCell
+            viewCell.shareImage.image = UIImage(named: "stars")
+            viewCell.title.text = "Оцените заказ"
+        }
+        
+        section.initializeCellWithReusableIdentifierOrNibName("OrderShareCell", item: nil) { (cell, item) in
+            
+            let viewCell = cell as! TOrderShareTableViewCell
+            viewCell.shareImage.image = UIImage(named: "social")
+            viewCell.title.text = "Рассказать друзьям"
+        }
+        
         self.dataSource.sections.append(section)
         
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+        // Do any additional setup after loading the view.
+    }
+
+    func closeAction() {
         
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
-//    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-//        
-//        guard self.dataSource.sections[indexPath.section].items[indexPath.row].itemType != nil else {
-//            
-//            return
-//        }
-//        
-//        
-//    }
-
-//    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        
-//        let header = tableView.dequeueReusableHeaderFooterViewWithIdentifier("sectionHeader") as! TCompanyMenuHeaderView
-//        header.title.text = self.dataSource.sections[section].title
-//        header.title.textColor = UIColor(hexString: kHexMainPinkColor)
-//        
-//        return header;
-//    }
-//    
-//    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-//        
-//        let header = view as! TCompanyMenuHeaderView
-//        
-//        header.background.backgroundColor = UIColor.lightGrayColor()
-//        header.layer.shadowPath = UIBezierPath(rect: header.layer.bounds).CGPath
-//        header.layer.shadowOffset = CGSize(width: 0, height: 2)
-//        header.layer.shadowOpacity = 0.5
-//    }
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
     
-//    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        
-//        let header = UILabel()
-//        
-//        header.textColor = UIColor(hexString: kHexMainPinkColor)
-//        header.font = UIFont.systemFontOfSize(20)
-//        header.text = self.dataSource.sections[section].title
-//        header.sizeToFit()
-//        return header
-//    }
-    
-    /*
-     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
-
-        // Configure the cell...
-
-        return cell
-    }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
 
     /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }

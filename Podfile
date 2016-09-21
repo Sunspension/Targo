@@ -31,6 +31,9 @@ pod 'SwiftOverlays', '~> 2.0.0'
 pod 'SCLAlertView'
 pod 'CircleProgressView', :git => 'https://github.com/CardinalNow/iOS-CircleProgressView.git'
 pod 'ActionSheetPicker-3.0'
+#pod 'BRYXBanner'
+#pod 'Toast-Swift', '~> 2.0.0'
+pod 'LNRSimpleNotifications', :git => 'https://github.com/LISNR/LNRSimpleNotifications.git', :branch => 'swift2.3'
 
 #Date
 pod 'Timepiece'

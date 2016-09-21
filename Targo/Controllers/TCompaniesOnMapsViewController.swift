@@ -50,6 +50,10 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
     
     var loading = false
 
+    deinit {
+        
+        print("TCompaniesOnMapsViewController deinit")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
