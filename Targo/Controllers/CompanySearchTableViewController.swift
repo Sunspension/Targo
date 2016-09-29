@@ -14,16 +14,6 @@ import AlamofireImage
 import SwiftOverlays
 import Alamofire
 
-private enum TCompanyAddressLoadingStatus : Int {
-    
-    case Idle
-    
-    case Loading
-    
-    case Failed
-    
-    case Loaded
-}
 
 class CompanySearchTableViewController: UITableViewController, UISearchResultsUpdating, UISearchBarDelegate {
     
@@ -53,9 +43,9 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
     
     private var searchCanLoadNext = true
     
-    private var loadingStatus = TCompanyAddressLoadingStatus.Idle
+    private var loadingStatus = TLoadingStatusEnum.Idle
     
-    private var searchLoadingStatus = TCompanyAddressLoadingStatus.Idle
+    private var searchLoadingStatus = TLoadingStatusEnum.Idle
     
     private let manager = NetworkReachabilityManager(host: "www.apple.com")
     
@@ -66,6 +56,8 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
     private var cancelPreviousResult = false
     
     private var cancellationTokens = [NSOperation]()
+    
+    private var scheduleRefreshTimer: NSTimer?
     
     
     deinit {
@@ -129,7 +121,13 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         
         self.navigationItem.titleView = UIImageView(image: UIImage(named: "icon-logo"))
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CompanySearchTableViewController.onUIApplicationWillEnterForegroundNotification), name: UIApplicationWillEnterForegroundNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector: #selector(CompanySearchTableViewController.onUIApplicationWillEnterForegroundNotification),
+                                                         name: UIApplicationWillEnterForegroundNotification, object: nil)
+        
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl?.addTarget(self, action: #selector(CompanySearchTableViewController.manualRefresh), forControlEvents: .ValueChanged)
+
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -138,11 +136,22 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewDidAppear(animated: Bool) {
         
-        super.viewWillAppear(animated)
+        super.viewDidAppear(animated)
         
-//        self.tableView.reloadData()
+        // update for new items every 10 minutes
+        self.scheduleRefreshTimer = NSTimer.scheduledTimerWithTimeInterval(600,
+                                                                           target: self,
+                                                                           selector: #selector(CompanySearchTableViewController.manualRefresh),
+                                                                           userInfo: nil,
+                                                                           repeats: true)
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        
+        super.viewDidDisappear(animated)
+        self.scheduleRefreshTimer?.invalidate()
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -233,62 +242,61 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
     
     func userLocationChanged() {
         
-        if self.userLocation == nil {
+        self.userLocation = TLocationManager.sharedInstance.lastLocation
+        
+        if self.userLocation != nil && self.loadingStatus != .Loading {
             
-            self.userLocation = TLocationManager.sharedInstance.lastLocation
+            if let superview = self.view.superview {
+                
+                SwiftOverlays.showCenteredWaitOverlay(superview)
+            }
             
-            if self.userLocation != nil && self.loadingStatus != .Loading {
+            self.loadingStatus = .Loading
+            
+            self.pageNumber = 1
+            
+            // Try to load only first several companies related to user location and limit
+            Api.sharedInstance.loadCompanyAddresses(
+                self.userLocation!,
+                query: nil,
+                pageNumber: self.pageNumber, pageSize: self.pageSize)
                 
-                if let superview = self.view.superview {
+                .onSuccess(callback: { [unowned self] companyPage in
                     
-                    SwiftOverlays.showCenteredWaitOverlay(superview)
-                }
-                
-                self.loadingStatus = .Loading
-                
-                // Try to load only first several companies related to user location and limit
-                Api.sharedInstance.loadCompanyAddresses(
-                    self.userLocation!,
-                    query: nil,
-                    pageNumber: 1, pageSize: self.pageSize)
+                    self.loadingStatus = .Loaded
                     
-                    .onSuccess(callback: { [unowned self] companyPage in
+                    if self.pageSize == companyPage.companies.count {
                         
-                        self.loadingStatus = .Loaded
+                        self.canLoadNext = true
+                        self.pageNumber += 1
+                    }
+                    
+                    if let superview = self.view.superview {
                         
-                        if self.pageSize == companyPage.companies.count {
-                            
-                            self.canLoadNext = true
-                            self.pageNumber += 1
-                        }
+                        SwiftOverlays.removeAllOverlaysFromView(superview)
+                    }
+                    
+                    self.companiesPage = companyPage
+                    
+                    self.section.items.removeAll()
+                    self.createDataSource()
+                    self.tableView.reloadData()
+                    
+                    }).onFailure(callback: { [unowned self] error in
+                        
+                        self.loadingStatus = .Failed
                         
                         if let superview = self.view.superview {
                             
                             SwiftOverlays.removeAllOverlaysFromView(superview)
                         }
                         
-                        self.companiesPage = companyPage
-                        
-                        self.section.items.removeAll()
-                        self.createDataSource()
-                        self.tableView.reloadData()
-                        
-                        }).onFailure(callback: { [unowned self] error in
-                            
-                            self.loadingStatus = .Failed
-                            
-                            if let superview = self.view.superview {
-                                
-                                SwiftOverlays.removeAllOverlaysFromView(superview)
-                            }
-                            
-                            print(error)
-                        })
-            }
+                        print(error)
+                    })
         }
     }
     
-    func loadCompanyAddress() {
+    func loadCompanyAddress(forceRefresh: Bool = false) {
         
         self.loadingStatus = .Loading
         
@@ -309,6 +317,12 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
                 
                 self.loadingStatus = .Loaded
                 
+                if forceRefresh {
+                    
+                    self.refreshControl?.endRefreshing()
+                    self.section.items.removeAll()
+                }
+                
                 self.companiesPage = companyPage
                 self.createDataSource()
                 self.tableView.reloadData()
@@ -327,6 +341,11 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
                 
                 }).onFailure(callback: { error in
                 
+                    if forceRefresh {
+                        
+                        self.refreshControl?.endRefreshing()
+                    }
+                    
                     self.loadingStatus = .Failed
                     print(error)
                 })
@@ -389,6 +408,12 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         }
     }
 
+    func manualRefresh() {
+        
+        self.pageNumber = 1
+        self.loadCompanyAddress(true)
+    }
+    
     //MARK: - Private methods
     
     private func getCompanyImage(item: GenericCollectionSectionItem<TCompanyAddress>, viewCell: TCompanyTableViewCell) {

@@ -113,7 +113,6 @@
 		E5C062D91D2106BF002074C4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C062D81D2106BF002074C4 /* AppDelegate.swift */; };
 		E5C062DE1D2106BF002074C4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5C062DC1D2106BF002074C4 /* Main.storyboard */; };
 		E5C062E01D2106BF002074C4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5C062DF1D2106BF002074C4 /* Assets.xcassets */; };
-		E5C062E31D2106BF002074C4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5C062E11D2106BF002074C4 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -231,7 +230,6 @@
 		E5C062D81D2106BF002074C4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Targo/AppDelegate.swift; sourceTree = SOURCE_ROOT; };
 		E5C062DD1D2106BF002074C4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E5C062DF1D2106BF002074C4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		E5C062E21D2106BF002074C4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E5C062E41D2106BF002074C4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -519,7 +517,6 @@
 				D467AED71D2B0F8C00319966 /* App */,
 				E5C062DC1D2106BF002074C4 /* Main.storyboard */,
 				E5C062DF1D2106BF002074C4 /* Assets.xcassets */,
-				E5C062E11D2106BF002074C4 /* LaunchScreen.storyboard */,
 				E5C062E41D2106BF002074C4 /* Info.plist */,
 				D498D49D1D2825EC002F0E88 /* Localizable.strings */,
 			);
@@ -610,7 +607,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E5C062E31D2106BF002074C4 /* LaunchScreen.storyboard in Resources */,
 				D40E10221D3EAEE60012DCF4 /* TCompanyImageMenuTableViewCell.xib in Resources */,
 				D41D9D941D46B47300358961 /* TWorkingHoursHeader.xib in Resources */,
 				D4D4B68D1D42C67300278E2D /* TMenuItemFullTableViewCell.xib in Resources */,
@@ -843,14 +839,6 @@
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		E5C062E11D2106BF002074C4 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E5C062E21D2106BF002074C4 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -950,6 +938,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Targo/Targo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -976,6 +965,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Targo/Targo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

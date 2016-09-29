@@ -38,6 +38,8 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
     
     private var userLocation: CLLocation?
     
+    private var loadingStatus = TLoadingStatusEnum.Idle
+    
     var images: [TCompanyImage]?
     
     var selectedMarker: GMSMarker?
@@ -48,7 +50,8 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
     
     var reason = OpenMapsReasonEnum.AllCompanies
     
-    var loading = false
+    var failedtimer: NSTimer?
+    
 
     deinit {
         
@@ -70,15 +73,15 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
         self.mapView.bringSubviewToFront(self.companyView)
         self.companyView.alpha = 0
         
+        TLocationManager.sharedInstance.subscribeObjectForLocationChange(self,
+                                                                         selector: #selector(TCompaniesOnMapsViewController.userLocationChanged))
         
         if self.reason == .OneCompany {
             
             self.addMarkers()
         }
         else {
-            
-            self.loading = true
-            showWaitOverlay()
+
             self.mapView.alpha = 0
         }
     }    
@@ -86,20 +89,39 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
     override func viewDidAppear(animated: Bool) {
         
         super.viewDidAppear(animated)
+    }
+    
+    func startFailedTimer() {
         
-        if self.loading {
+        self.failedtimer = NSTimer.scheduledTimerWithTimeInterval(15,
+                                                                  target: self,
+                                                                  selector: #selector(TCompaniesOnMapsViewController.onFailedLoadCompaniesTimerEvent),
+                                                                  userInfo: nil,
+                                                                  repeats: false)
+    }
+    
+    func onFailedLoadCompaniesTimerEvent() {
+        
+        if self.loadingStatus == .Loading {
             
-            
-//            if let superview = self.mapView.superview {
-//                
-//                SwiftOverlays.showCenteredWaitOverlay(self.view)
-//            }
+            return
         }
+        
+        self.loadCompanies()
     }
     
     func loadCompanies() -> Future<TCompanyAddressesPage, TargoError> {
         
-        self.loading = true
+        if self.userLocation == nil {
+            
+            self.loadingStatus = .Failed
+            
+            self.startFailedTimer()
+        }
+        
+        self.loadingStatus = .Loading
+        
+        showWaitOverlay()
         
         return Api.sharedInstance.loadCompanyAddresses(
             self.userLocation!,
@@ -114,7 +136,7 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
                     SwiftOverlays.removeAllOverlaysFromView(superview)
                 }
                 
-                self.loading = false
+                self.loadingStatus = .Loaded
                 
                 self.images = companyPage.images
                 self.companies = companyPage.companies
@@ -123,14 +145,10 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
                 
                 }).onFailure(callback: { [unowned self] error in
                     
-                    self.loading = false
-
-                    self.removeAllOverlays()
+                    self.loadingStatus = .Failed
                     
-//                    if let superview = self.view.superview {
-//                        
-//                        SwiftOverlays.removeAllOverlaysFromView(superview)
-//                    }
+                    self.startFailedTimer()
+                    self.removeAllOverlays()
                     
                     print(error)
                 })
@@ -202,19 +220,25 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
         self.selectedMarker = nil
     }
     
+    func userLocationChanged() {
+        
+        self.userLocation = TLocationManager.sharedInstance.lastLocation
+        self.loadCompanies()
+    }
+    
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         
         if let newValue = change {
             
             if let location: CLLocation = newValue[NSKeyValueChangeNewKey] as? CLLocation {
                 
-                if self.reason == .AllCompanies {
+                if self.reason == .AllCompanies && self.loadingStatus != .Loading {
                     
                     self.userLocation = location
                     
                     self.loadCompanies().andThen(callback: { _ in
                         
-                        self.mapView.camera = GMSCameraPosition.cameraWithTarget(location.coordinate, zoom: 12)
+                        self.mapView.camera = GMSCameraPosition.cameraWithTarget(location.coordinate, zoom: 13)
                         
                         UIView.animateWithDuration(0.5, delay: 0, options: .CurveEaseInOut, animations: {
                             

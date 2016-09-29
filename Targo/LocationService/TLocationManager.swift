@@ -36,7 +36,7 @@ class TLocationManager: NSObject, CLLocationManagerDelegate {
     let distanceThreshold: Double = 50
     
     // seconds
-    let timeThreshold: NSTimeInterval = 180
+    let timeThreshold: NSTimeInterval = 600
     
     override init() {
         
@@ -55,10 +55,9 @@ class TLocationManager: NSObject, CLLocationManagerDelegate {
                 || location.timestamp.timeIntervalSinceNow > self.timeThreshold {
                 
                 self.lastLocation = location
+                NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: kTargoLocationDidUpdateNotification, object: nil))
             }
         }
-        
-        NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: kTargoLocationDidUpdateNotification, object: nil))
     }
     
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
