@@ -10,6 +10,7 @@ import UIKit
 import RealmSwift
 import Timberjack
 import GoogleMaps
+import Alamofire
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

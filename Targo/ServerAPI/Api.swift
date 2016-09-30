@@ -270,11 +270,11 @@ struct Api {
         return p.future
     }
     
-    func loadCompanyAddresses(location: CLLocation, query: String?, pageNumber: Int, pageSize: Int = 20) -> Future<TCompanyAddressesPage, TargoError> {
+    func loadCompanyAddresses(location: CLLocation, pageNumber: Int, pageSize: Int = 20, query: String? = nil, distance: Int? = nil) -> Future<TCompanyAddressesPage, TargoError> {
         
         let p = Promise<TCompanyAddressesPage, TargoError>()
         
-        server.loadCompanyAddresses(location, query: query, pageNumber: pageNumber, pageSize: pageSize)
+        server.loadCompanyAddresses(location, pageNumber: pageNumber, pageSize: pageSize, query: query, distance: distance)
             
             .responseJSON { response in
                 

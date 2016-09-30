@@ -40,6 +40,8 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
     
     private var loadingStatus = TLoadingStatusEnum.Idle
     
+    private var mapsMarkers = Array<GMSMarker>()
+    
     var images: [TCompanyImage]?
     
     var selectedMarker: GMSMarker?
@@ -91,6 +93,13 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
         super.viewDidAppear(animated)
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        
+        super.viewWillDisappear(animated)
+        
+        removeAllOverlays()
+    }
+    
     func startFailedTimer() {
         
         self.failedtimer = NSTimer.scheduledTimerWithTimeInterval(15,
@@ -101,6 +110,8 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
     }
     
     func onFailedLoadCompaniesTimerEvent() {
+        
+        self.failedtimer?.invalidate()
         
         if self.loadingStatus == .Loading {
             
@@ -125,9 +136,10 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
         
         return Api.sharedInstance.loadCompanyAddresses(
             self.userLocation!,
-            query: nil,
             pageNumber: 1,
-            pageSize: 1000)
+            pageSize: 1000,
+            query: nil,
+            distance: 50000)
             
             .onSuccess(callback: { [unowned self] companyPage in
                 
@@ -158,6 +170,13 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
         
         if let companies = self.companies {
             
+            for marker in self.mapsMarkers {
+                
+                marker.map = nil
+            }
+            
+            self.mapsMarkers.removeAll()
+            
             for company in companies {
                 
                 let marker = GMSMarker()
@@ -168,6 +187,8 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
                 marker.map = self.mapView
                 marker.icon = GMSMarker.markerImageWithColor(UIColor.redColor())
                 marker.appearAnimation = kGMSMarkerAnimationPop
+                
+                self.mapsMarkers.append(marker)
                 
                 if reason == .OneCompany {
                     

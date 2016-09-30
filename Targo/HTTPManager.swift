@@ -13,6 +13,7 @@ import Timberjack
 class HTTPManager: Alamofire.Manager {
 
     static let sharedManager: HTTPManager = {
+        
         let configuration = Timberjack.defaultSessionConfiguration()
         let manager = HTTPManager(configuration: configuration)
         return manager

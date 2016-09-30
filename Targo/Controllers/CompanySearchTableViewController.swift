@@ -148,11 +148,15 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
                                                                            repeats: true)
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    
+    override func viewWillDisappear(animated: Bool) {
         
-        super.viewDidDisappear(animated)
+        super.viewWillDisappear(animated)
+        
         self.scheduleRefreshTimer?.invalidate()
+        SwiftOverlays.showCenteredWaitOverlay(self.view.superview!)
     }
+    
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
@@ -258,8 +262,8 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
             // Try to load only first several companies related to user location and limit
             Api.sharedInstance.loadCompanyAddresses(
                 self.userLocation!,
-                query: nil,
-                pageNumber: self.pageNumber, pageSize: self.pageSize)
+                pageNumber: self.pageNumber,
+                pageSize: self.pageSize)
                 
                 .onSuccess(callback: { [unowned self] companyPage in
                     
@@ -309,7 +313,6 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         Api.sharedInstance.loadCompanyAddresses(
             
             self.userLocation!,
-            query: nil,
             pageNumber: self.pageNumber,
             pageSize: self.pageSize)
             
@@ -504,9 +507,9 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         Api.sharedInstance.loadCompanyAddresses(
             
             self.userLocation!,
-            query: query,
             pageNumber: self.searchPageNumer,
-            pageSize: self.pageSize)
+            pageSize: self.pageSize,
+            query: query)
             
             .onSuccess(callback: { [unowned self] companyPage in
                 

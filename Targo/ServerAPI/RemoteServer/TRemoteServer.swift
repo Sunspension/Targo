@@ -11,7 +11,16 @@ import Alamofire
 import CoreLocation
 
 struct TRemoteServer: PRemoteServerV1 {
-
+    
+    static let alamofireManager: Alamofire.Manager = {
+        
+        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        configuration.timeoutIntervalForRequest = 10
+        configuration.timeoutIntervalForResource = 10
+        
+        return Alamofire.Manager(configuration: configuration)
+    }()
+    
     let baseURLString = "https://api.targo.club/api"
     
     let deviceType = "ios"
@@ -64,7 +73,7 @@ struct TRemoteServer: PRemoteServerV1 {
         return self.request(.GET, remotePath: baseURLString + "/user/\(userId)")
     }
     
-    func loadCompanyAddresses(location: CLLocation, query: String?, pageNumber: Int, pageSize: Int) -> Request {
+    func loadCompanyAddresses(location: CLLocation, pageNumber: Int, pageSize: Int, query: String?, distance: Int?) -> Request {
         //
         //        let params: [String: AnyObject] = ["lat" : location.coordinate.latitude,
         //                                           "lon" : location.coordinate.longitude,
@@ -81,6 +90,11 @@ struct TRemoteServer: PRemoteServerV1 {
         if let query = query {
             
             params["query"] = query
+        }
+        
+        if let distance = distance {
+            
+            params["conditions"] = ["dist" : ["<" : distance]]
         }
         
         return self.request(.GET, remotePath: baseURLString + "/company-address", parameters: params)
@@ -229,6 +243,6 @@ struct TRemoteServer: PRemoteServerV1 {
     
     private func request(method: Alamofire.Method, remotePath: URLStringConvertible, parameters: [String : AnyObject]?, headers: [String : String]?) -> Request {
         
-        return Alamofire.request(method, remotePath, parameters: parameters, encoding: method == .POST ? .JSON : .URL, headers: headers)
+        return TRemoteServer.alamofireManager.request(method, remotePath, parameters: parameters, encoding: method == .POST ? .JSON : .URL, headers: headers)
     }
 }
