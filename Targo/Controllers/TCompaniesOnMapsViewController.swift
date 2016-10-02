@@ -188,6 +188,7 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
                 
                 if reason == .OneCompany {
                     
+                    self.displayCompanyInfo(marker)
                     self.mapView.camera = GMSCameraPosition.cameraWithTarget(marker.position, zoom: 13)
                 }
             }
@@ -198,34 +199,7 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
         
         self.selectedMarker?.icon = GMSMarker.markerImageWithColor(UIColor.redColor())
         
-        marker.icon = GMSMarker.markerImageWithColor(UIColor(hexString: kHexMainPinkColor))
-        let company = marker.userData as! TCompanyAddress
-        
-        let transition = CATransition()
-        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
-        transition.type = kCATransitionFade
-        transition.duration = 0.3
-        self.companyView.layer.addAnimation(transition, forKey: "setInfo")
-        
-        self.companyTitle.text = company.companyTitle
-        self.companyAddress.text = company.title
-        self.companyInfo.text = company.companyCategoryTitle + ", " + String(Int(company.distance)) + " m"
-        
-        if let image = self.images?.filter({$0.id == company.companyImageId.value}).first {
-            
-            let filter = AspectScaledToFillSizeFilter(size: self.companyImage.frame.size)
-            self.companyImage.af_setImageWithURL(NSURL(string: image.url)!, filter: filter, imageTransition: .CrossDissolve(0.5))
-        }
-        
-        if (self.companyView.layer.shadowPath == nil) {
-            
-            self.companyView.layer.shadowPath = UIBezierPath(rect: self.companyView.layer.bounds).CGPath
-            self.companyView.layer.shadowOffset = CGSize(width: 2, height: 1)
-            self.companyView.layer.shadowOpacity = 0.5
-        }
-
-        self.selectedMarker = marker
-        self.companyView.alpha = 1
+        self.displayCompanyInfo(marker)
         
         return true
     }
@@ -310,5 +284,42 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
             
             self.navigationController?.pushViewController(controller, animated: true)
         }
+    }
+    
+    // MARK: - Private methods
+    
+    private func displayCompanyInfo(marker: GMSMarker) {
+        
+        marker.icon = GMSMarker.markerImageWithColor(UIColor(hexString: kHexMainPinkColor))
+        let company = marker.userData as! TCompanyAddress
+        
+        let transition = CATransition()
+        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+        transition.type = kCATransitionFade
+        transition.duration = 0.3
+        self.companyView.layer.addAnimation(transition, forKey: "setInfo")
+        
+        self.companyTitle.text = company.companyTitle
+        self.companyAddress.text = company.title
+        self.companyInfo.text = company.companyCategoryTitle + ", " + String(Int(company.distance)) + " m"
+        
+        if let image = self.images?.filter({$0.id == company.companyImageId.value}).first {
+            
+            let filter = AspectScaledToFillSizeFilter(size: self.companyImage.frame.size)
+            self.companyImage.af_setImageWithURL(NSURL(string: image.url)!, filter: filter, imageTransition: .CrossDissolve(0.5))
+        }
+        
+        if (self.companyView.layer.shadowPath == nil) {
+            
+            dispatch_async(dispatch_get_main_queue()) {
+                
+                self.companyView.layer.shadowPath = UIBezierPath(rect: self.companyView.layer.bounds).CGPath
+                self.companyView.layer.shadowOffset = CGSize(width: 2, height: 1)
+                self.companyView.layer.shadowOpacity = 0.5
+            }
+        }
+        
+        self.selectedMarker = marker
+        self.companyView.alpha = 1
     }
 }

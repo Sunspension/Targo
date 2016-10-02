@@ -143,11 +143,11 @@ class TCompanyInfoTableViewController: UITableViewController {
             
             if let header = tableView.dequeueReusableHeaderFooterViewWithIdentifier(self.companyContactsIdentifier) as? TCompanyInfoContactsHeader {
                 
-                header.buttonPhone.setTitle(!self.company!.companyPhone.isEmpty ? self.company!.companyPhone : "+7 812 345 6789", forState: .Normal)
+                header.buttonPhone.setTitle(self.company!.companyPhone, forState: .Normal)
                 header.buttonPhone.alignImageAndTitleVertically()
                 header.buttonPhone.addTarget(self, action: #selector(TCompanyInfoTableViewController.makeCall), forControlEvents: .TouchUpInside)
                 
-                header.buttonLocation.setTitle(self.title, forState: .Normal)
+                header.buttonLocation.setTitle(self.company?.title, forState: .Normal)
                 header.buttonLocation.alignImageAndTitleVertically()
                 header.buttonLocation.addTarget(self, action: #selector(TCompanyInfoTableViewController.openMapAction), forControlEvents: .TouchUpInside)
                 
@@ -203,32 +203,21 @@ class TCompanyInfoTableViewController: UITableViewController {
         
         if let company = self.company {
             
-            let phone = company.phone.isEmpty ? "79111111111" : company.phone
+            let alertController = UIAlertController(title: "company_info_make_call_title".localized,
+                                                    message: String(format:"company_info_make_call_confirmation".localized, company.phone),
+                                                    preferredStyle: .Alert)
             
-            do {
+            let okAction = UIAlertAction(title: "action_ok".localized, style: .Default, handler: { action in
                 
-                let phoneNumber = try PhoneNumber(rawNumber: phone)
-                
-                let alertController = UIAlertController(title: "company_info_make_call_title".localized,
-                                                        message: String(format:"company_info_make_call_confirmation".localized, phoneNumber.toInternational(true)),
-                                                        preferredStyle: .Alert)
-                
-                let okAction = UIAlertAction(title: "action_ok".localized, style: .Default, handler: { action in
-                    
-                    InterOperation.makeCall(phone)
-                })
-                
-                let cancelAction = UIAlertAction(title: "action_cancel".localized, style: .Cancel, handler: nil)
-                
-                alertController.addAction(okAction)
-                alertController.addAction(cancelAction)
-                
-                self.presentViewController(alertController, animated: true, completion: nil)
-            }
-            catch {
-                
-                print("Parsing of phone number error")
-            }
+                InterOperation.makeCall(company.phone)
+            })
+            
+            let cancelAction = UIAlertAction(title: "action_cancel".localized, style: .Cancel, handler: nil)
+            
+            alertController.addAction(okAction)
+            alertController.addAction(cancelAction)
+            
+            self.presentViewController(alertController, animated: true, completion: nil)
         }
     }
     

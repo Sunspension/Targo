@@ -430,11 +430,7 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
             
             let filter = AspectScaledToFillSizeFilter(size: viewCell.companyImage.bounds.size)
             viewCell.companyImage.af_setImageWithURL(NSURL(string: image.url)!,
-                                                     filter: filter, imageTransition: .CrossDissolve(0.5), completion: { response in
-            
-                                                        let image = response.result.value
-                                                        print(image)
-            })
+                                                     filter: filter, imageTransition: .CrossDissolve(0.5))
         }
     }
     
