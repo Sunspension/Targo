@@ -105,7 +105,8 @@ struct TRemoteServer: PRemoteServerV1 {
         let params: [String : AnyObject] = [ "filters" : ["company_id" : companyId],
                                              "extend" : "shop-category",
                                              "page" : pageNumber,
-                                             "page_size" : pageSize]
+                                             "page_size" : pageSize,
+                                             "order" : ["shop_category_id" : "asc"]]
         
         return self.request(.GET, remotePath: baseURLString + "/shop-good", parameters: params)
     }
@@ -131,7 +132,8 @@ struct TRemoteServer: PRemoteServerV1 {
                        addressId: Int,
                        serviceId: Int,
                        date: NSDate?,
-                       description: String?) -> Request {
+                       numberOfPersons: Int? = nil,
+                       description: String? = nil) -> Request {
         
         var goods: [[String : Int]] = []
         
@@ -152,6 +154,11 @@ struct TRemoteServer: PRemoteServerV1 {
             let dateString = formatter.stringFromDate(date)
             
             params["prepared_at"] = dateString
+        }
+        
+        if numberOfPersons != nil {
+            
+            params["person_number"] = numberOfPersons
         }
         
         if description != nil && !description!.isEmpty{
@@ -243,6 +250,8 @@ struct TRemoteServer: PRemoteServerV1 {
     
     private func request(method: Alamofire.Method, remotePath: URLStringConvertible, parameters: [String : AnyObject]?, headers: [String : String]?) -> Request {
         
-        return TRemoteServer.alamofireManager.request(method, remotePath, parameters: parameters, encoding: method == .POST ? .JSON : .URL, headers: headers)
+        let request = TRemoteServer.alamofireManager.request(method, remotePath, parameters: parameters, encoding: method == .POST ? .JSON : .URL, headers: headers)
+        print(request)
+        return request
     }
 }

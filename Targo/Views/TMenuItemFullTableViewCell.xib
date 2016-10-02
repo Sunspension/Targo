@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -62,16 +62,8 @@
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <state key="normal" title="More"/>
                     </button>
-                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vih-k2-gaH">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="249" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JDN-ZE-cCC">
                         <constraints>
-                            <constraint firstAttribute="height" constant="40" id="MYA-hW-rr0"/>
-                            <constraint firstAttribute="width" constant="40" id="dXZ-Wm-V4l"/>
-                        </constraints>
-                        <state key="normal" image="icon-plus"/>
-                    </button>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JDN-ZE-cCC">
-                        <constraints>
-                            <constraint firstAttribute="width" constant="25" id="RLA-dN-gnL"/>
                             <constraint firstAttribute="height" constant="21" id="dTI-Kc-9to"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="19"/>
@@ -85,30 +77,37 @@
                         </constraints>
                         <state key="normal" image="icon-minus"/>
                     </button>
+                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vih-k2-gaH">
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="MYA-hW-rr0"/>
+                            <constraint firstAttribute="width" constant="40" id="dXZ-Wm-V4l"/>
+                        </constraints>
+                        <state key="normal" image="icon-plus"/>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="Oto-nj-KqI" firstAttribute="trailing" secondItem="FWW-eP-ZRr" secondAttribute="trailingMargin" constant="-8" id="29e-N7-V90"/>
                     <constraint firstItem="JDN-ZE-cCC" firstAttribute="centerY" secondItem="vih-k2-gaH" secondAttribute="centerY" id="2YG-QL-0bh"/>
+                    <constraint firstItem="JDN-ZE-cCC" firstAttribute="leading" secondItem="K5c-Li-yhd" secondAttribute="trailing" constant="14" id="4Oh-nm-Jkl"/>
                     <constraint firstItem="FDk-nt-H33" firstAttribute="centerY" secondItem="35X-n2-1Vz" secondAttribute="centerY" id="5ts-i2-PVI"/>
+                    <constraint firstItem="K5c-Li-yhd" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="47p-ag-fy2" secondAttribute="trailing" priority="750" constant="10" id="AFG-7S-y9V"/>
                     <constraint firstItem="3G7-A6-XVy" firstAttribute="top" secondItem="PWk-nY-VHL" secondAttribute="bottom" constant="4" id="Bpv-NH-pHJ"/>
                     <constraint firstItem="PWk-nY-VHL" firstAttribute="leading" secondItem="35X-n2-1Vz" secondAttribute="leading" id="DrE-ew-JH1"/>
                     <constraint firstItem="vih-k2-gaH" firstAttribute="centerY" secondItem="K5c-Li-yhd" secondAttribute="centerY" id="EfI-Qx-xDR"/>
                     <constraint firstItem="PWk-nY-VHL" firstAttribute="trailing" secondItem="35X-n2-1Vz" secondAttribute="trailing" id="GjX-j0-TSQ"/>
+                    <constraint firstItem="vih-k2-gaH" firstAttribute="leading" secondItem="JDN-ZE-cCC" secondAttribute="trailing" constant="14" id="KUH-9I-oKG"/>
                     <constraint firstAttribute="bottomMargin" secondItem="K5c-Li-yhd" secondAttribute="bottom" priority="999" constant="4" id="PC1-GI-05M"/>
                     <constraint firstItem="35X-n2-1Vz" firstAttribute="leading" secondItem="FDk-nt-H33" secondAttribute="trailing" constant="10" id="QBm-Kk-m23"/>
                     <constraint firstItem="47p-ag-fy2" firstAttribute="leading" secondItem="PWk-nY-VHL" secondAttribute="leading" id="QMA-0T-hLp"/>
                     <constraint firstItem="Oto-nj-KqI" firstAttribute="leading" secondItem="35X-n2-1Vz" secondAttribute="trailing" constant="8" id="U2A-JE-XVg"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="vih-k2-gaH" secondAttribute="trailing" constant="8" id="U7Y-Ol-VgG"/>
                     <constraint firstItem="3G7-A6-XVy" firstAttribute="leading" secondItem="PWk-nY-VHL" secondAttribute="leading" id="UjQ-cZ-vfk"/>
                     <constraint firstItem="PWk-nY-VHL" firstAttribute="top" secondItem="35X-n2-1Vz" secondAttribute="bottom" id="YcR-7t-P17"/>
-                    <constraint firstItem="vih-k2-gaH" firstAttribute="leading" secondItem="47p-ag-fy2" secondAttribute="trailing" constant="17" id="dJE-vx-ZKa"/>
                     <constraint firstItem="47p-ag-fy2" firstAttribute="top" secondItem="3G7-A6-XVy" secondAttribute="bottom" constant="4" id="dS2-SF-qv1"/>
                     <constraint firstItem="35X-n2-1Vz" firstAttribute="top" secondItem="FWW-eP-ZRr" secondAttribute="topMargin" constant="4" id="sCA-dt-bjY"/>
                     <constraint firstItem="Oto-nj-KqI" firstAttribute="centerY" secondItem="35X-n2-1Vz" secondAttribute="centerY" id="sXU-1H-GQJ"/>
                     <constraint firstItem="FDk-nt-H33" firstAttribute="leading" secondItem="FWW-eP-ZRr" secondAttribute="leadingMargin" constant="8" id="ua2-yj-7NX"/>
-                    <constraint firstItem="JDN-ZE-cCC" firstAttribute="leading" secondItem="vih-k2-gaH" secondAttribute="trailing" constant="10" id="v3r-Ke-azv"/>
                     <constraint firstItem="47p-ag-fy2" firstAttribute="centerY" secondItem="vih-k2-gaH" secondAttribute="centerY" id="w2K-00-EmA"/>
-                    <constraint firstItem="K5c-Li-yhd" firstAttribute="trailing" secondItem="FWW-eP-ZRr" secondAttribute="trailingMargin" constant="-8" id="x4u-F6-h29"/>
-                    <constraint firstItem="K5c-Li-yhd" firstAttribute="leading" secondItem="JDN-ZE-cCC" secondAttribute="trailing" constant="10" id="xvV-Bi-J0x"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

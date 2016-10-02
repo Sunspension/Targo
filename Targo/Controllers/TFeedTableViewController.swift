@@ -58,7 +58,6 @@ class TFeedTableViewController: UITableViewController {
                                                                 style: .Plain,
                                                                 target: nil,
                                                                 action: nil)
-        
         self.loadNews()
         
         // Uncomment the following line to preserve selection between presentations

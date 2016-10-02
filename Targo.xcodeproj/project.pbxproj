@@ -65,6 +65,8 @@
 		D46AC7341D43DB1F009C08D4 /* TCompaniesOnMapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46AC7331D43DB1F009C08D4 /* TCompaniesOnMapsViewController.swift */; };
 		D46DEC771D62582000B4716B /* GenericCollectionSectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46DEC761D62582000B4716B /* GenericCollectionSectionItem.swift */; };
 		D470DFB91D384D74003473E6 /* TCompanyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D470DFB81D384D74003473E6 /* TCompanyTableViewCell.swift */; };
+		D47196A21DA18A2C001FA295 /* TOrderNumberOfPersons.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47196A01DA18A2C001FA295 /* TOrderNumberOfPersons.swift */; };
+		D47196A31DA18A2C001FA295 /* TOrderNumberOfPersons.xib in Resources */ = {isa = PBXBuildFile; fileRef = D47196A11DA18A2C001FA295 /* TOrderNumberOfPersons.xib */; };
 		D498D49B1D2825EC002F0E88 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D498D49D1D2825EC002F0E88 /* Localizable.strings */; };
 		D49C7E891D281DB1004408AF /* RegistrationPhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49C7E881D281DB1004408AF /* RegistrationPhoneViewController.swift */; };
 		D4A392081D6BBBC9005B2047 /* TCompanyAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A392071D6BBBC9005B2047 /* TCompanyAddress.swift */; };
@@ -178,6 +180,8 @@
 		D46AC7331D43DB1F009C08D4 /* TCompaniesOnMapsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCompaniesOnMapsViewController.swift; sourceTree = "<group>"; };
 		D46DEC761D62582000B4716B /* GenericCollectionSectionItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GenericCollectionSectionItem.swift; path = Models/GenericCollectionSectionItem.swift; sourceTree = "<group>"; };
 		D470DFB81D384D74003473E6 /* TCompanyTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCompanyTableViewCell.swift; sourceTree = "<group>"; };
+		D47196A01DA18A2C001FA295 /* TOrderNumberOfPersons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TOrderNumberOfPersons.swift; sourceTree = "<group>"; };
+		D47196A11DA18A2C001FA295 /* TOrderNumberOfPersons.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TOrderNumberOfPersons.xib; sourceTree = "<group>"; };
 		D47342961D88A6A200AF3DD5 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D47342981D88ABB600AF3DD5 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
 		D4876FB71D8B711100FFC1A3 /* Targo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Targo.entitlements; sourceTree = "<group>"; };
@@ -352,6 +356,8 @@
 				D449864E1D8F099C007C9AF0 /* TFeedTargoNewsDetailsTableViewCell.swift */,
 				E530B9401D929025005395C8 /* TUserInfoTableViewCell.swift */,
 				D4553CE51D932DE2009A3E16 /* TOrderShareTableViewCell.swift */,
+				D47196A01DA18A2C001FA295 /* TOrderNumberOfPersons.swift */,
+				D47196A11DA18A2C001FA295 /* TOrderNumberOfPersons.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -619,6 +625,7 @@
 				D4FD14061D441BE500AC9722 /* TShortCompanyOnMapInfo.xib in Resources */,
 				E5C062E01D2106BF002074C4 /* Assets.xcassets in Resources */,
 				D4FF40051D76362B00019195 /* TDetailsTableViewCell.xib in Resources */,
+				D47196A31DA18A2C001FA295 /* TOrderNumberOfPersons.xib in Resources */,
 				E5C062DE1D2106BF002074C4 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -809,6 +816,7 @@
 				D4FD14041D441BD300AC9722 /* TShortCompanyOnMapInfo.swift in Sources */,
 				D4F464D81D400E14009015FC /* RealmInt.swift in Sources */,
 				D4036A111D36D08900CA8E38 /* TCompaniesPage.swift in Sources */,
+				D47196A21DA18A2C001FA295 /* TOrderNumberOfPersons.swift in Sources */,
 				D45391D11D2DBE0900669669 /* UserSession.swift in Sources */,
 				D403017A1D39936A00B7B610 /* TShopGood.swift in Sources */,
 				D4151E121D688D0B00DB26C0 /* TOrderStatusViewController.swift in Sources */,

@@ -116,6 +116,8 @@
 
 "order_make_order_button_title" = "Сделать\nзаказ";
 
+"order_number_of_persons_title" = "Количество персон";
+
 "search_place_holder" = "Найти любимое место";
 
 "feed_title" = "Лента";

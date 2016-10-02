@@ -138,11 +138,6 @@ class TOrdersTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        
-        super.viewWillAppear(animated)
-    }
-    
     override func viewDidAppear(animated: Bool) {
         
         super.viewDidAppear(animated)
@@ -166,6 +161,7 @@ class TOrdersTableViewController: UITableViewController {
         
         super.viewDidDisappear(animated)
         self.timer?.invalidate()
+        self.removeAllOverlays()
     }
     
     func onOrdersLoadNotification(notification: NSNotification) {

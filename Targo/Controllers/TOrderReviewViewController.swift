@@ -19,6 +19,8 @@ private enum ItemTypeEnum : Int {
     case AddNewCard
     
     case OrderTime
+ 
+    case NumberOfPersons
     
     case DeliveryType
     
@@ -59,31 +61,8 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
     
     deinit {
         
+        print("\(typeName(self)) \(#function)")
         NSNotificationCenter.defaultCenter().removeObserver(self)
-    }
-    
-    override func viewWillLayoutSubviews() {
-        
-        super.viewWillLayoutSubviews()
-        
-        let button = self.makeOrder
-        
-        if button.hidden {
-            
-            return
-        }
-        
-        button.layer.borderColor = UIColor.whiteColor().CGColor
-        button.layer.borderWidth = 3
-        button.titleLabel?.textAlignment = .Center
-        
-        let radius = button.layer.bounds.width / 2
-        
-        button.layer.cornerRadius = radius
-        button.layer.shadowPath = UIBezierPath(roundedRect: button.layer.bounds, cornerRadius: radius).CGPath
-        button.layer.shadowOffset = CGSize(width:0, height: 1)
-        button.layer.shadowOpacity = 0.5
-        button.backgroundColor = UIColor(hexString: kHexMainPinkColor)
     }
     
     override func viewDidLoad() {
@@ -103,12 +82,13 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
         tableView.registerNib(UINib(nibName: "TOrderDescriptionTableViewCell", bundle: nil),
                               forCellReuseIdentifier: "OrderDescriptionCell")
         
+        tableView.registerNib(UINib(nibName: "TOrderNumberOfPersons", bundle: nil),
+                              forCellReuseIdentifier: "NumberOfPersonsCell")
+        
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "",
                                                                 style: .Plain,
                                                                 target: nil,
                                                                 action: nil)
-        
-        self.makeOrder.hidden = true
         
         NSNotificationCenter.defaultCenter().addObserver(self,
                                                          selector: #selector(TOrderReviewViewController.onDidAddCardNotification),
@@ -119,6 +99,8 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
         button.addTarget(self, action: #selector(TOrderReviewViewController.sendOrder),
                          forControlEvents: .TouchUpInside)
         button.setTitle("order_make_order_button_title".localized, forState: .Normal)
+        
+        self.setStyleToOrderButton()
         
         self.loadCards()
     }
@@ -174,8 +156,6 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
             .onSuccess { [weak self] cards in
                 
                 self?.loading = false
-                self?.makeOrder.hidden = false
-                self?.makeOrder.setNeedsLayout()
                 
                 if let superView = self?.view.superview {
                     
@@ -189,8 +169,6 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
             }.onFailure { [weak self] error in
                 
                 self?.loading = false
-                self?.makeOrder.hidden = false
-                self?.makeOrder.setNeedsDisplay()
                 
                 if let superView = self?.view.superview {
                     
@@ -198,6 +176,28 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
                 }
                 
                 print(error)
+        }
+    }
+    
+    // MARK: - Private methods
+    
+    private func setStyleToOrderButton() {
+        
+        dispatch_async(dispatch_get_main_queue()) { 
+            
+            let button = self.makeOrder
+            
+            button.layer.borderColor = UIColor.whiteColor().CGColor
+            button.layer.borderWidth = 3
+            button.titleLabel?.textAlignment = .Center
+            button.backgroundColor = UIColor(hexString: kHexMainPinkColor)
+            
+            let radius = button.layer.bounds.width / 2
+            
+            button.layer.cornerRadius = radius
+            button.layer.shadowPath = UIBezierPath(roundedRect: button.layer.bounds, cornerRadius: radius).CGPath
+            button.layer.shadowOffset = CGSize(width:0, height: 1)
+            button.layer.shadowOpacity = 0.5
         }
     }
     
@@ -306,6 +306,44 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
                                                                     })
                 })
             
+            section.initializeCellWithReusableIdentifierOrNibName("NumberOfPersonsCell",
+                                                                  item: nil,
+                                                                  itemType: ItemTypeEnum.NumberOfPersons,
+                                                                  bindingAction: { (cell, item) in
+                                                                    
+                                                                    let viewCell = cell as! TOrderNumberOfPersons
+                                                                    
+                                                                    if item.userData == nil {
+                                                                        
+                                                                        item.userData = 1
+                                                                    }
+                                                                    
+                                                                    viewCell.title.text = "order_number_of_persons_title".localized
+                                                                    viewCell.quantityLabel.text = String(item.userData as! Int)
+                                                                    
+                                                                    viewCell.buttonPlus.bnd_tap.observe({
+                                                                        
+                                                                        var count = item.userData as! Int
+                                                                        count += 1
+                                                                        item.userData = count
+                                                                        viewCell.quantityLabel.text = String(count)
+                                                                        
+                                                                    }).disposeIn(viewCell.bag)
+                                                                    
+                                                                    viewCell.buttonMinus.bnd_tap.observe({
+                                                                        
+                                                                        if let count = item.userData as? Int where count > 1 {
+                                                                            
+                                                                            var quantity = count
+                                                                            quantity -= 1
+                                                                            item.userData = quantity
+                                                                            viewCell.quantityLabel.text = String(quantity)
+                                                                        }
+                                                                        
+                                                                    }).disposeIn(viewCell.bag)
+
+            })
+            
             section.initializeCellWithReusableIdentifierOrNibName("DetailsCell",
                                                                   item: nil,
                                                                   itemType: ItemTypeEnum.OrderTime,
@@ -316,17 +354,6 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
                                                                     viewCell.title.text = "order_time_title".localized
                                                                     viewCell.details.text = "order_time_place_holder".localized
             })
-            
-            //            section.initializeCellWithReusableIdentifierOrNibName("DetailsCell",
-            //                                                                  item: nil,
-            //                                                                  itemType: ItemTypeEnum.DeliveryType,
-            //                                                                  bindingAction: { (cell, item) in
-            //
-            //                                                                    let viewCell = cell as! TDetailsTableViewCell
-            //
-            //                                                                    viewCell.title.text = "order_how_to_eat".localized
-            //                                                                    viewCell.details.text = "order_how_to_eat_place_holder".localized
-            //            })
             
             section.initializeCellWithReusableIdentifierOrNibName("OrderDescriptionCell",
                                                                   item: nil,
@@ -503,12 +530,6 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
             return
         }
         
-        //        guard self.preparedDate != nil else {
-        //
-        //            self.showOkAlert("error".localized, message: "oder_time_to_prepare_empty".localized)
-        //            return
-        //        }
-        
         guard self.serviceId != 0 else {
             
             self.showOkAlert("error".localized, message: "oder_delivery_service_empty".localized)
@@ -525,11 +546,14 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
         
         self.showWaitOverlay()
         
+        let numberOfPersons = self.dataSource.sections.flatMap({ $0.items.filter({ $0.itemType as? ItemTypeEnum == ItemTypeEnum.NumberOfPersons }) }).first
+        
         Api.sharedInstance.makeShopOrder(card.id,
             items: items,
             addressId: self.company!.id,
             serviceId: self.serviceId,
             date: self.preparedDate,
+            numberOfPersons: numberOfPersons?.userData as? Int,
             description: self.orderDescription)
             
             .onSuccess {[weak self] shopOrder in

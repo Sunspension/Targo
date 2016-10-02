@@ -12,13 +12,29 @@ import SwiftOverlays
 import AlamofireImage
 import Bond
 
+private enum SectionTypeEnum: Int {
+    
+    case CompanyInfo = 001
+}
+
+
 class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
 
+    private var pageNumber = 1
+    
+    private var pageSize = 20
+    
+    private var canLoadNext = true
+    
+    private var loadingStatus = TLoadingStatusEnum.Idle
+    
+    private var categories = Set<TShopCategory>()
+    
     var company: TCompanyAddress?
     
     var companyImage: TCompanyImage?
     
-    var itemsSource = TableViewDataSource()
+    var dataSource = TableViewDataSource()
     
     var menuPage: TCompanyMenuPage?
     
@@ -27,8 +43,6 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
     let orderItems = ObservableArray<CollectionSectionItem>()
 
     var cellHeightDictionary = [NSIndexPath : CGFloat]()
-    
-    var loading = false
     
     
     @IBOutlet weak var tableView: UITableView!
@@ -58,6 +72,10 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         }
     }
     
+    deinit {
+        
+        print("\(typeName(self)) \(#function)")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,11 +90,11 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         
         self.tableView.setup()
         self.tableView.delegate = self
-        self.tableView.dataSource = self.itemsSource
+        self.tableView.dataSource = self.dataSource
         
         self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 20, 0)
         
-        self.buttonMakeOrder.hidden = true
+//        self.buttonMakeOrder.hidden = true
         
         self.orderItems.observe { event in
             
@@ -118,37 +136,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         self.tableView.registerNib(UINib(nibName: "TMenuItemFullTableViewCell", bundle: nil),
                                    forCellReuseIdentifier: "MenuItemFullCell")
         
-        if let company = company {
-            
-            self.loading = true
-            
-            Api.sharedInstance.loadCompanyMenu(company.companyId, pageNumber: 1, pageSize: 100)
-                
-                .onSuccess(callback: { [unowned self] menuPage in
-                    
-                    self.buttonMakeOrder.hidden = false
-                    
-                    self.menuPage = menuPage
-                    self.createDataSource()
-                    self.tableView.reloadData()
-                    
-                    self.loading = false
-                    
-                    if let superview = self.view.superview {
-                        
-                        SwiftOverlays.removeAllOverlaysFromView(superview)
-                    }
-                    
-                }).onFailure(callback: { [unowned self] error in
-                        
-                    self.loading = false
-                    
-                    if let superview = self.view.superview {
-                        
-                        SwiftOverlays.removeAllOverlaysFromView(superview)
-                    }
-                })
-        }
+        self.loadCompanyMenu()
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -156,22 +144,17 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
-
-    override func viewWillAppear(animated: Bool) {
-        
-        super.viewWillAppear(animated)
-    }
     
     override func viewDidAppear(animated: Bool) {
         
         super.viewDidAppear(animated)
         
-        if let superview = self.view.superview {
+        if self.loadingStatus != .Loading {
             
-            if !self.loading {
-                
-                return
-            }
+            return
+        }
+        
+        if let superview = self.view.superview {
             
             SwiftOverlays.showCenteredWaitOverlay(superview)
         }
@@ -213,53 +196,35 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         }
     }
     
-    func createDataSource() {
-        
-        let section = CollectionSection()
-        
-        section.initializeCellWithReusableIdentifierOrNibName("CompanyImageMenu", item: self.companyImage) { (cell, item) in
-            
-            let viewCell = cell as! TCompanyImageMenuTableViewCell
-            
-            viewCell.layoutIfNeeded()
-            
-            viewCell.point.hidden = true
-            viewCell.title.hidden = true
-            
-            if let companyImage = item.item as? TCompanyImage {
-                
-                let filter = AspectScaledToFillSizeFilter(size: viewCell.companyImage.bounds.size)
-                viewCell.companyImage.af_setImageWithURL(NSURL(string: companyImage.url)!, filter: filter)
-            }
-            
-            viewCell.selectionStyle = .None
-        }
-        
-        section.initializeCellWithReusableIdentifierOrNibName("WorkingTimeViewCell", item: company) { (cell, item) in
-        
-            let viewCell = cell as! TWorkingTimeTableViewCell
-            viewCell.selectionStyle = .None
-            viewCell.setWorkingTimeAndHandlingOrder("11:00 - 00:00", handlingOrder: "20 - 37 minutes")
-        }
-        
-        self.itemsSource.sections.append(section)
+    func addGoods() {
         
         for good in self.menuPage!.goods {
             
-            var section = self.itemsSource.sections.filter({ $0.sectionType as? Int == good.shopCategoryId }).first
+            var section = self.dataSource.sections.filter({ $0.sectionType as? Int == good.shopCategoryId }).first
             
             if (section == nil) {
                 
-                let category = menuPage!.categories.filter({ $0.id == good.shopCategoryId && $0.id != 0 }).first
+                let category = self.categories.filter({ $0.id == good.shopCategoryId && $0.id != 0 }).first
                 section = CollectionSection(title: category?.title ?? "Акция")
                 section?.sectionType = good.shopCategoryId
-                self.itemsSource.sections.append(section!)
+                self.dataSource.sections.append(section!)
             }
             
             section!.initializeSwappableCellWithReusableIdentifierOrNibName("MenuItemSmallCell",
                                                                             secondIdentifierOrNibName: "MenuItemFullCell",
                                                                             item: good,
                                                                             bindingAction: { (cell, item) in
+                                                                                
+                                                                                let indexPath = item.indexPath
+                                                                                
+                                                                                if indexPath.section == self.dataSource.sections.count - 1
+                                                                                    && indexPath.row + 10
+                                                                                    >= self.dataSource.sections[indexPath.section].items.count
+                                                                                    && self.canLoadNext
+                                                                                    && self.loadingStatus != .Loading {
+                                                                                    
+                                                                                    self.loadCompanyMenu()
+                                                                                }
                                                                                 
                                                                                 if item.swappable {
                                                                                     
@@ -323,6 +288,46 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         }
     }
     
+    func createDataSource() {
+        
+        guard self.dataSource.sections.filter({ $0.sectionType as? SectionTypeEnum == SectionTypeEnum.CompanyInfo }).first == nil else {
+            
+            self.addGoods()
+            return
+        }
+        
+        let section = CollectionSection()
+        section.sectionType = SectionTypeEnum.CompanyInfo
+        
+        section.initializeCellWithReusableIdentifierOrNibName("CompanyImageMenu", item: self.companyImage) { (cell, item) in
+            
+            let viewCell = cell as! TCompanyImageMenuTableViewCell
+            
+            viewCell.layoutIfNeeded()
+            
+            viewCell.point.hidden = true
+            viewCell.title.hidden = true
+            
+            if let companyImage = item.item as? TCompanyImage {
+                
+                let filter = AspectScaledToFillSizeFilter(size: viewCell.companyImage.bounds.size)
+                viewCell.companyImage.af_setImageWithURL(NSURL(string: companyImage.url)!, filter: filter)
+            }
+            
+            viewCell.selectionStyle = .None
+        }
+        
+        section.initializeCellWithReusableIdentifierOrNibName("WorkingTimeViewCell", item: company) { (cell, item) in
+            
+            let viewCell = cell as! TWorkingTimeTableViewCell
+            viewCell.selectionStyle = .None
+            viewCell.setWorkingTimeAndHandlingOrder("11:00 - 00:00", handlingOrder: "20 - 37 minutes")
+        }
+        
+        self.dataSource.sections.append(section)
+        self.addGoods()
+    }
+    
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         if section == 0 {
@@ -331,7 +336,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         }
         
         let header = tableView.dequeueReusableHeaderFooterViewWithIdentifier("sectionHeader") as! TCompanyMenuHeaderView
-        header.title.text = self.itemsSource.sections[section].title
+        header.title.text = self.dataSource.sections[section].title
         
         return header;
     }
@@ -386,7 +391,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        let section = self.itemsSource.sections[indexPath.section]
+        let section = self.dataSource.sections[indexPath.section]
         
         if section.sectionType == nil {
             
@@ -414,6 +419,62 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
     
     //MARK: - Private methods
     
+    private func loadCompanyMenu() {
+        
+        if let company = company {
+            
+            self.loadingStatus = .Loading
+            
+//            if let superview = self.view.superview {
+//                
+//                SwiftOverlays.showCenteredWaitOverlay(superview)
+//            }
+
+            Api.sharedInstance.loadCompanyMenu(company.companyId, pageNumber: self.pageNumber, pageSize: self.pageSize)
+                
+                .onSuccess(callback: { [weak self] menuPage in
+                    
+//                    if let superview = self?.view.superview {
+//                        
+//                        SwiftOverlays.removeAllOverlaysFromView(superview)
+//                    }
+                    
+//                    self?.buttonMakeOrder.hidden = false
+                    
+                    self?.loadingStatus = .Loaded
+                    
+                    self?.menuPage = menuPage
+                    
+                    for category in menuPage.categories {
+                        
+                        self?.categories.insert(category)
+                    }
+                    
+                    self?.createDataSource()
+                    self?.tableView.reloadData()
+                    
+                    if self?.pageSize == menuPage.goods.count {
+                        
+                        self?.canLoadNext = true
+                        self?.pageNumber += 1
+                    }
+                    else {
+                        
+                        self?.pageNumber = 1
+                        self?.canLoadNext = false
+                    }
+                })
+                .onFailure(callback: { [weak self] error in
+                    
+                    self?.loadingStatus = .Failed
+                    
+                    if let superview = self?.view.superview {
+                        
+                        SwiftOverlays.removeAllOverlaysFromView(superview)
+                    }
+                })
+        }
+    }
     
     
     /*

@@ -57,7 +57,7 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
 
     deinit {
         
-        print("TCompaniesOnMapsViewController deinit")
+        print("\(typeName(self)) \(#function)")
     }
     
     override func viewDidLoad() {
@@ -86,17 +86,13 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
 
             self.mapView.alpha = 0
         }
-    }    
-    
-    override func viewDidAppear(animated: Bool) {
-        
-        super.viewDidAppear(animated)
     }
     
     override func viewWillDisappear(animated: Bool) {
         
         super.viewWillDisappear(animated)
         
+        self.failedtimer?.invalidate()
         removeAllOverlays()
     }
     

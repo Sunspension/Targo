@@ -9,7 +9,7 @@
 import UIKit
 import ObjectMapper
 
-class TShopCategory: Mappable {
+class TShopCategory: NSObject, Mappable {
     
     var id = 0
     

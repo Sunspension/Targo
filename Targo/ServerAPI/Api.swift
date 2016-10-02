@@ -396,8 +396,9 @@ struct Api {
                        items: [Int : Int],
                        addressId: Int,
                        serviceId: Int,
-                       date: NSDate?,
-                       description: String?) -> Future<TShopOrder, TargoError> {
+                       date: NSDate? = nil,
+                       numberOfPersons: Int? = nil,
+                       description: String? = nil) -> Future<TShopOrder, TargoError> {
         
         let p = Promise<TShopOrder, TargoError>()
         
@@ -406,6 +407,7 @@ struct Api {
             addressId: addressId,
             serviceId: serviceId,
             date: date,
+            numberOfPersons: numberOfPersons,
             description: description)
             
             .responseJSON { response in

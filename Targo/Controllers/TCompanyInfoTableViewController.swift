@@ -36,6 +36,11 @@ class TCompanyInfoTableViewController: UITableViewController {
     var openMapNavigationAction:(()-> Void)?
     
     
+    deinit {
+        
+        print("\(typeName(self)) \(#function)")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

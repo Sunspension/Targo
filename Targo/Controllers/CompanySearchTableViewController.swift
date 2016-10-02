@@ -65,7 +65,6 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -148,15 +147,17 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
                                                                            repeats: true)
     }
     
-    
     override func viewWillDisappear(animated: Bool) {
         
         super.viewWillDisappear(animated)
         
         self.scheduleRefreshTimer?.invalidate()
-        SwiftOverlays.showCenteredWaitOverlay(self.view.superview!)
+        
+        if let superView = self.view.superview {
+            
+            SwiftOverlays.removeAllOverlaysFromView(superView)
+        }
     }
-    
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
@@ -248,7 +249,7 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         
         self.userLocation = TLocationManager.sharedInstance.lastLocation
         
-        if self.userLocation != nil && self.loadingStatus != .Loading {
+        if self.userLocation != nil && self.loadingStatus != .Loading && self.canLoadNext {
             
             if let superview = self.view.superview {
                 
@@ -302,13 +303,13 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
     
     func loadCompanyAddress(forceRefresh: Bool = false) {
         
-        self.loadingStatus = .Loading
-        
         if self.userLocation == nil {
             
             self.loadingStatus = .Failed
             return
         }
+        
+        self.loadingStatus = .Loading
         
         Api.sharedInstance.loadCompanyAddresses(
             
@@ -374,11 +375,12 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         
         if canLoadNext && loadingStatus == .Failed {
             
-            loadCompanyAddress()
+            self.loadCompanyAddress()
         }
     }
     
     //MARK: - UISearchBar delegate implementation
+
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         
         shouldShowSearchResults = true
@@ -428,7 +430,11 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
             
             let filter = AspectScaledToFillSizeFilter(size: viewCell.companyImage.bounds.size)
             viewCell.companyImage.af_setImageWithURL(NSURL(string: image.url)!,
-                                                     filter: filter, imageTransition: .CrossDissolve(0.5))
+                                                     filter: filter, imageTransition: .CrossDissolve(0.5), completion: { response in
+            
+                                                        let image = response.result.value
+                                                        print(image)
+            })
         }
     }
     
@@ -491,13 +497,13 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
     
     private func loadCompanyAddress(query:String, cancellationToken: NSOperation? = nil) {
         
-        self.searchLoadingStatus = .Loading
-        
         if self.userLocation == nil {
             
             self.searchLoadingStatus = .Failed
             return
         }
+        
+        self.searchLoadingStatus = .Loading
         
         if let superView = self.tableView.superview {
             

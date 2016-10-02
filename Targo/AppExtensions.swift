@@ -10,6 +10,11 @@ import Foundation
 import UIKit
 import DynamicColor
 
+func typeName(some: Any) -> String {
+    
+    return (some is Any.Type) ? "\(some)" : "\(some.dynamicType)"
+}
+
 func += <K, V> (inout left: [K:V], right: [K:V]) {
     
     for (k, v) in right {

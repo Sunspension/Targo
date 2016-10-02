@@ -118,6 +118,8 @@
 
 "order_make_order_button_title" = "Make\norder";
 
+"order_number_of_persons_title" = "Number of persons";
+
 "search_place_holder" = "Find your favorite place";
 
 "feed_title" = "Feed";

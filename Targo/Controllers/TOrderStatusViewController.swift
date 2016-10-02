@@ -56,7 +56,7 @@ class TOrderStatusViewController: UIViewController {
     
     deinit {
         
-        print("TOrderStatusViewController deinit")
+        print("\(typeName(self)) \(#function)")
     }
     
     override func viewWillLayoutSubviews() {

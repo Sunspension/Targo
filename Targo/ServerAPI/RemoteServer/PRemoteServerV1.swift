@@ -35,6 +35,7 @@ protocol PRemoteServerV1 {
                        addressId: Int,
                        serviceId: Int,
                        date: NSDate?,
+                       numberOfPersons: Int?,
                        description: String?) -> Request
     
     func checkShopOrderStatus(orderStatus: Int) -> Request
