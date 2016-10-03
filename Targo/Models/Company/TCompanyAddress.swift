@@ -57,7 +57,8 @@ class TCompanyAddress: Object, Mappable {
     dynamic var rating = 0.0
     
     dynamic var isFavorite = false
-    
+//    
+//    dynamic var averageOrderTime = 
     
     var wokingTime: [[String]] {
         

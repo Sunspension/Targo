@@ -21,6 +21,8 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
     
     private let searchSection = GenericCollectionSection<TCompanyAddress>()
     
+    private let favoriteSection = GenericCollectionSection<TCompanyAddress>()
+    
     private var companyImages = Set<TCompanyImage>()
     
     private var userLocation: CLLocation?
@@ -28,6 +30,8 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
     private var dataSource: GenericTableViewDataSource<TCompanyTableViewCell, TCompanyAddress>?
     
     private var searchDataSource: GenericTableViewDataSource<TCompanyTableViewCell, TCompanyAddress>?
+    
+    private var favoriteDataSource: GenericTableViewDataSource<TCompanyTableViewCell, TCompanyAddress>?
     
     private var companiesPage: TCompanyAddressesPage?
     
@@ -47,6 +51,8 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
     
     private var searchLoadingStatus = TLoadingStatusEnum.Idle
     
+    private var favoriteLoadingStatus = TLoadingStatusEnum.Idle
+    
     private let manager = NetworkReachabilityManager(host: "www.apple.com")
     
     private let searchController = UISearchController(searchResultsController: nil)
@@ -58,6 +64,8 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
     private var cancellationTokens = [NSOperation]()
     
     private var scheduleRefreshTimer: NSTimer?
+    
+    private var bookmarkButton = UIButton(type: .Custom)
     
     
     deinit {
@@ -76,6 +84,7 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         self.setup()
         
         setupSearchController()
+        setupRefreshControl()
         
         manager?.listener = { status in
             
@@ -102,10 +111,12 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
                                                                  target: self,
                                                                  action: #selector(CompanySearchTableViewController.openMap))
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "icon-star"),
-                                                                style: .Plain,
-                                                                target: self,
-                                                                action: #selector(CompanySearchTableViewController.loadBookmarks))
+        self.bookmarkButton.setImage(UIImage(named: "icon-star"), forState: .Normal)
+        self.bookmarkButton.setImage(UIImage(named: "icon-fullStar"), forState: .Selected)
+        self.bookmarkButton.addTarget(self, action: #selector(CompanySearchTableViewController.loadFavoriteCompanyAddresses), forControlEvents: .TouchUpInside)
+        self.bookmarkButton.sizeToFit()
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: self.bookmarkButton)
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "",
                                                                 style: .Plain,
@@ -118,6 +129,9 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         self.searchDataSource = GenericTableViewDataSource(reusableIdentifierOrNibName: "CompanyTableCell", bindingAction: binding)
         self.searchDataSource?.sections.append(searchSection)
         
+        self.favoriteDataSource = GenericTableViewDataSource(reusableIdentifierOrNibName: "CompanyTableCell", bindingAction: binding)
+        self.favoriteDataSource?.sections.append(favoriteSection)
+        
         self.tableView.dataSource = self.dataSource
         
         TLocationManager.sharedInstance.subscribeObjectForLocationChange(self,
@@ -129,8 +143,7 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
                                                          selector: #selector(CompanySearchTableViewController.onUIApplicationWillEnterForegroundNotification),
                                                          name: UIApplicationWillEnterForegroundNotification, object: nil)
         
-        self.refreshControl = UIRefreshControl()
-        self.refreshControl?.addTarget(self, action: #selector(CompanySearchTableViewController.manualRefresh), forControlEvents: .ValueChanged)
+        
 
         
         // Uncomment the following line to preserve selection between presentations
@@ -171,6 +184,11 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         if shouldShowSearchResults == true {
             
             let section = self.searchDataSource!.sections[indexPath.section]
+            item = section.items[indexPath.row]
+        }
+        else if self.bookmarkButton.selected {
+            
+            let section = self.favoriteDataSource!.sections[indexPath.section]
             item = section.items[indexPath.row]
         }
         else {
@@ -215,6 +233,13 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
                 return height
             }
         }
+        else if self.bookmarkButton.selected {
+            
+            if let height = self.favoriteDataSource?.sections[indexPath.section].items[indexPath.row].cellHeight {
+                
+                return height
+            }
+        }
         else {
             
             if let height = self.dataSource?.sections[indexPath.section].items[indexPath.row].cellHeight {
@@ -240,6 +265,15 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
                 getCompanyImage(item, viewCell: viewCell)
             }
         }
+        else if self.bookmarkButton.selected {
+            
+            if let item = self.favoriteDataSource?.sections[indexPath.section].items[indexPath.row] {
+                
+                item.cellHeight = viewCell.frame.height
+                getCompanyImage(item, viewCell: viewCell)
+            }
+        }
+            
         else {
             
             if let item = self.dataSource?.sections[indexPath.section].items[indexPath.row] {
@@ -394,12 +428,16 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         
         shouldShowSearchResults = true
+        self.refreshControl = nil
+        
         reloadData()
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         
         shouldShowSearchResults = false
+        setupRefreshControl()
+        
         reloadData()
     }
     
@@ -429,7 +467,99 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         self.loadCompanyAddress(true)
     }
     
+    func createFavoriteDataSource(page: TCompanyAddressesPage) {
+        
+        self.favoriteSection.items.removeAll()
+        
+        for company in page.companies {
+            
+            self.favoriteSection.items.append(GenericCollectionSectionItem(item: company))
+        }
+        
+        for image in page.images {
+            
+            self.companyImages.insert(image)
+        }
+    }
+    
+    func loadFavoriteCompanyAddresses(forceRefresh: Bool = false) {
+        
+        if self.userLocation == nil {
+            
+            self.loadingStatus = .Failed
+            return
+        }
+        
+        self.bookmarkButton.selected = !self.bookmarkButton.selected
+        
+        if bookmarkButton.selected {
+            
+            tableView.tableHeaderView = nil
+            self.tableView.dataSource = self.favoriteDataSource
+            
+            if let superview = self.view.superview {
+                
+                SwiftOverlays.showCenteredWaitOverlay(superview)
+            }
+            
+            Api.sharedInstance.favoriteComanyAddresses(self.userLocation!)
+                
+                .onSuccess(callback: { [unowned self] companyPage in
+                    
+                    if let superview = self.view.superview {
+                        
+                        SwiftOverlays.removeAllOverlaysFromView(superview)
+                    }
+                    
+                    self.loadingStatus = .Loaded
+                    
+                    if forceRefresh {
+                        
+                        self.refreshControl?.endRefreshing()
+                        self.favoriteSection.items.removeAll()
+                    }
+                    
+                    self.createFavoriteDataSource(companyPage)
+                    self.tableView.reloadData()
+                    
+//                    if self.pageSize == companyPage.companies.count {
+//                        
+//                        self.canLoadNext = true
+//                        self.pageNumber += 1
+//                    }
+//                    else {
+//                        
+//                        // reset counter
+//                        self.pageNumber = 1
+//                        self.canLoadNext = false
+//                    }
+                    
+                    }).onFailure(callback: { error in
+                        
+                        if forceRefresh {
+                            
+                            self.refreshControl?.endRefreshing()
+                        }
+                        
+                        self.loadingStatus = .Failed
+                        print(error)
+                    })
+        }
+        else {
+            
+            self.tableView.tableHeaderView = searchController.searchBar
+            self.tableView.dataSource = self.dataSource
+            self.tableView.reloadData()
+        }
+    }
+    
     //MARK: - Private methods
+    
+    private func setupRefreshControl() {
+        
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl?.addTarget(self, action: #selector(CompanySearchTableViewController.manualRefresh), forControlEvents: .ValueChanged)
+    }
     
     private func getCompanyImage(item: GenericCollectionSectionItem<TCompanyAddress>, viewCell: TCompanyTableViewCell) {
         

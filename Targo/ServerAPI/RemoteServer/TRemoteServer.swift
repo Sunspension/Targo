@@ -240,6 +240,32 @@ struct TRemoteServer: PRemoteServerV1 {
         return self.request(.PUT, remotePath: baseURLString + "/company-address" + "/\(companyAddressId)", parameters: ["is_favorite" : true])
     }
     
+    func removeBookmark(companyAddressId: Int) -> Request {
+        
+        return self.request(.PUT, remotePath: baseURLString + "/company-address" + "/\(companyAddressId)", parameters: ["is_favorite" : false])
+    }
+    
+    func favoriteComanyAddresses(location: CLLocation, pageNumber: Int?, pageSize: Int?) -> Request {
+        
+        var params: [String: AnyObject] = ["lat" : location.coordinate.latitude,
+                                           "lon" : location.coordinate.longitude,
+                                           "order" : ["dist" : "asc"],
+                                           "extend" : "image",
+                                           "filters" : ["is_favorite" : true]]
+        
+        if let pageNumber = pageNumber {
+            
+            params["page"] = pageNumber
+        }
+        
+        if let pageSize = pageSize {
+            
+            params["page_size"] = pageSize
+        }
+        
+        return self.request(.GET, remotePath: baseURLString + "/company-address", parameters: params)
+    }
+    
     // MARK: - Private methods
     
     private func request(method: Alamofire.Method, remotePath: URLStringConvertible) -> Request {

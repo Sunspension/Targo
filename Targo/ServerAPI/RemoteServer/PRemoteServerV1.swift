@@ -57,4 +57,8 @@ protocol PRemoteServerV1 {
     func feed(pageNumber: Int, pageSize: Int) -> Request
     
     func addBookmark(companyAddressId: Int) -> Request
+    
+    func removeBookmark(companyAddressId: Int) -> Request
+    
+    func favoriteComanyAddresses(location: CLLocation, pageNumber: Int?, pageSize: Int?) -> Request
 }

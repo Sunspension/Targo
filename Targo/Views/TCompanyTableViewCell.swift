@@ -31,7 +31,6 @@ class TCompanyTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         
-        companyImage.image = UIImage(named: "blank")
         ratingProgress.hidden = true
     }
 

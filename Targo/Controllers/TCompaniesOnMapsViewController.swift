@@ -124,6 +124,11 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
             self.loadingStatus = .Failed
             
             self.startFailedTimer()
+            
+            let p = Promise<TCompanyAddressesPage, TargoError>()
+            p.failure(TargoError.UndefinedError(message: "User location is nil"))
+            
+            return p.future
         }
         
         self.loadingStatus = .Loading
@@ -139,10 +144,7 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
             
             .onSuccess(callback: { [unowned self] companyPage in
                 
-                if let superview = self.view.superview {
-                    
-                    SwiftOverlays.removeAllOverlaysFromView(superview)
-                }
+                self.removeAllOverlays()
                 
                 self.loadingStatus = .Loaded
                 

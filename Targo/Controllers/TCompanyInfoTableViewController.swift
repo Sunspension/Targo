@@ -62,6 +62,8 @@ class TCompanyInfoTableViewController: UITableViewController {
         bookmarkButton.addTarget(self, action: #selector(TCompanyInfoTableViewController.makeFavorite), forControlEvents: .TouchUpInside)
         bookmarkButton.sizeToFit()
         
+        bookmarkButton.selected = self.company!.isFavorite
+        
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: bookmarkButton)
         
         self.tableView.registerNib(UINib(nibName: "TCompanyImageMenuTableViewCell", bundle: nil),
@@ -359,17 +361,24 @@ class TCompanyInfoTableViewController: UITableViewController {
     func makeFavorite() {
         
         self.bookmarkButton.selected = !self.bookmarkButton.selected
-        self.bookmarkButton.tintColor = UIColor.yellowColor()
         
-        Api.sharedInstance.addBookmark(self.company!.companyId)
-            
-            .onSuccess { result in
-            
-                self.bookmarkButton.selected = result.success[0] == 1
-            }
-            .onFailure { error in
+        if self.bookmarkButton.selected {
+
+            Api.sharedInstance.addBookmark(self.company!.id)
                 
+                .onFailure { error in
+                    
+                    self.bookmarkButton.selected = !self.bookmarkButton.selected
+                }
+        }
+        else {
+            
+            Api.sharedInstance.removeBookmark(self.company!.id)
                 
-            }
+                .onFailure { error in
+                    
+                    self.bookmarkButton.selected = !self.bookmarkButton.selected
+                }
+        }
     }
 }

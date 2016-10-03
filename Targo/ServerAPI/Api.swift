@@ -678,7 +678,7 @@ struct Api {
             
                 print(response.result.value)
             }
-            .responseObject("") { (response: Response<TAddRemoveBookmarkResponse, TargoError>) in
+            .responseObject { (response: Response<TAddRemoveBookmarkResponse, TargoError>) in
                 
                 guard let _ = response.result.value else {
                     
@@ -688,6 +688,55 @@ struct Api {
                 
                 p.success(response.result.value!)
             }
+        
+        return p.future
+    }
+    
+    func removeBookmark(companyAddressId: Int) -> Future<TAddRemoveBookmarkResponse, TargoError> {
+        
+        let p = Promise<TAddRemoveBookmarkResponse, TargoError>()
+        
+        server.removeBookmark(companyAddressId)
+            
+            .responseJSON { response in
+                
+                print(response.result.value)
+            }
+            .responseObject { (response: Response<TAddRemoveBookmarkResponse, TargoError>) in
+                
+                guard let _ = response.result.value else {
+                    
+                    p.failure(response.result.error!)
+                    return
+                }
+                
+                p.success(response.result.value!)
+        }
+        
+        return p.future
+    }
+    
+    func favoriteComanyAddresses(location: CLLocation, pageNumber: Int? = nil, pageSize: Int? = nil) -> Future<TCompanyAddressesPage, TargoError> {
+        
+        let p = Promise<TCompanyAddressesPage, TargoError>()
+        
+        server.favoriteComanyAddresses(location, pageNumber: pageNumber, pageSize: pageSize)
+            
+            .responseJSON { response in
+                
+                print(response.result.value)
+            }
+            .responseObject("data") { (response: Response<TCompanyAddressesPage, TargoError>) in
+                
+                guard let _ = response.result.value else {
+                    
+                    p.failure(response.result.error!)
+                    return
+                }
+                
+                let page = response.result.value!
+                p.success(page)
+        }
         
         return p.future
     }

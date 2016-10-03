@@ -139,11 +139,6 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
     
     func onDidAddCardNotification() {
         
-        if let superView = self.view.superview {
-            
-            SwiftOverlays.showCenteredWaitOverlay(superView)
-        }
-        
         self.dataSource.sections.removeAll()
         self.loadCards()
     }
@@ -151,6 +146,11 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
     func loadCards() {
         
         self.loading = true
+        
+        if let superView = self.view.superview {
+            
+            SwiftOverlays.showCenteredWaitOverlay(superView)
+        }
         
         Api.sharedInstance.loadCreditCards()
             .onSuccess { [weak self] cards in

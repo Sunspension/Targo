@@ -94,8 +94,6 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         
         self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 20, 0)
         
-//        self.buttonMakeOrder.hidden = true
-        
         self.orderItems.observe { event in
             
             UIView.beginAnimations("buton", context: nil)
@@ -468,10 +466,10 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
                     
                     self?.loadingStatus = .Failed
                     
-                    if let superview = self?.view.superview {
-                        
-                        SwiftOverlays.removeAllOverlaysFromView(superview)
-                    }
+//                    if let superview = self?.view.superview {
+//                        
+//                        SwiftOverlays.removeAllOverlaysFromView(superview)
+//                    }
                 })
         }
     }
