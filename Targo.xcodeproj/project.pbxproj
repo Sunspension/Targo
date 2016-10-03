@@ -115,6 +115,7 @@
 		E5C062D91D2106BF002074C4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C062D81D2106BF002074C4 /* AppDelegate.swift */; };
 		E5C062DE1D2106BF002074C4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5C062DC1D2106BF002074C4 /* Main.storyboard */; };
 		E5C062E01D2106BF002074C4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5C062DF1D2106BF002074C4 /* Assets.xcassets */; };
+		E5EEEF541DA242FC009ADF7E /* TAddRemoveBookmarkResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EEEF531DA242FC009ADF7E /* TAddRemoveBookmarkResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -235,6 +236,7 @@
 		E5C062DD1D2106BF002074C4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E5C062DF1D2106BF002074C4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E5C062E41D2106BF002074C4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E5EEEF531DA242FC009ADF7E /* TAddRemoveBookmarkResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TAddRemoveBookmarkResponse.swift; path = Models/Response/TAddRemoveBookmarkResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -484,6 +486,7 @@
 				D40CC4DA1D65034D003A1487 /* TShopOrder.swift */,
 				D469B2351D8EAF2600D41DC6 /* TFeedItem.swift */,
 				D449864A1D8EF48B007C9AF0 /* TFeedPage.swift */,
+				E5EEEF531DA242FC009ADF7E /* TAddRemoveBookmarkResponse.swift */,
 			);
 			name = Response;
 			sourceTree = "<group>";
@@ -772,6 +775,7 @@
 				D4F464DA1D402EF3009015FC /* TCompanyMenuHeaderView.swift in Sources */,
 				D4553CE41D932985009A3E16 /* TOrderFinishedViewController.swift in Sources */,
 				D46A4C591D63B363003CF2F9 /* TDeliveryMethodTableViewCell.swift in Sources */,
+				E5EEEF541DA242FC009ADF7E /* TAddRemoveBookmarkResponse.swift in Sources */,
 				D44930941D495D5100ADF70A /* TAddCreditCardViewController.swift in Sources */,
 				D40E10241D3EC1660012DCF4 /* TableViewDataSource.swift in Sources */,
 				D449B41B1D777F3C0088CEEB /* KeyboardNotificationListener.swift in Sources */,

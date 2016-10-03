@@ -102,6 +102,11 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
                                                                  target: self,
                                                                  action: #selector(CompanySearchTableViewController.openMap))
         
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "icon-star"),
+                                                                style: .Plain,
+                                                                target: self,
+                                                                action: #selector(CompanySearchTableViewController.loadBookmarks))
+        
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "",
                                                                 style: .Plain,
                                                                 target: nil,
@@ -193,6 +198,11 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
             
             self.navigationController?.pushViewController(mapViewController, animated: true)
         }
+    }
+    
+    func loadBookmarks() {
+        
+        
     }
     
     // Here is a magic to save height of current cell, otherwise you will get scrolling of table view content when cell will expand

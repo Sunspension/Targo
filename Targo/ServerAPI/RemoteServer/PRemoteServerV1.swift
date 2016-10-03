@@ -55,4 +55,6 @@ protocol PRemoteServerV1 {
     func updateOrderStatus(orderId: Int, orderStatus: Int) -> Request
     
     func feed(pageNumber: Int, pageSize: Int) -> Request
+    
+    func addBookmark(companyAddressId: Int) -> Request
 }

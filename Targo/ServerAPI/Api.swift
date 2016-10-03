@@ -667,4 +667,28 @@ struct Api {
         
         return p.future
     }
+    
+    func addBookmark(companyAddressId: Int) -> Future<TAddRemoveBookmarkResponse, TargoError> {
+        
+        let p = Promise<TAddRemoveBookmarkResponse, TargoError>()
+        
+        server.addBookmark(companyAddressId)
+            
+            .responseJSON { response in
+            
+                print(response.result.value)
+            }
+            .responseObject("") { (response: Response<TAddRemoveBookmarkResponse, TargoError>) in
+                
+                guard let _ = response.result.value else {
+                    
+                    p.failure(response.result.error!)
+                    return
+                }
+                
+                p.success(response.result.value!)
+            }
+        
+        return p.future
+    }
 }

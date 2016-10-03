@@ -235,6 +235,10 @@ struct TRemoteServer: PRemoteServerV1 {
         return self.request(.GET, remotePath: baseURLString + "/promotion", parameters : params)
     }
     
+    func addBookmark(companyAddressId: Int) -> Request {
+        
+        return self.request(.PUT, remotePath: baseURLString + "/company-address" + "/\(companyAddressId)", parameters: ["is_favorite" : true])
+    }
     
     // MARK: - Private methods
     

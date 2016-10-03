@@ -56,6 +56,9 @@ class TCompanyAddress: Object, Mappable {
     
     dynamic var rating = 0.0
     
+    dynamic var isFavorite = false
+    
+    
     var wokingTime: [[String]] {
         
         get {
@@ -113,6 +116,7 @@ class TCompanyAddress: Object, Mappable {
         companyCategoryImageId <- map["company_category_image_id"]
         distance <- map["dist"]
         rating <- map["company_rating"]
+        isFavorite <- map["is_favorite"]
         
         var workingTime = [[String]]()
         workingTime <- map["work_time"]

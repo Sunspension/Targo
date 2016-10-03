@@ -19,17 +19,20 @@ enum InfoSectionEnum {
 
 class TCompanyInfoTableViewController: UITableViewController {
     
+    private let workingHoursIdentifier = "workingHoursHeader"
+    
+    private let companyContactsIdentifier = "companyContacts"
+    
+    private let companyAboutIdentifier = "AboutCompanyCell"
+    
+    private let bookmarkButton = UIButton(type: .Custom)
+    
+    
     var company: TCompanyAddress?
     
     var companyImage: TCompanyImage?
     
     var itemsSource = TableViewDataSource()
-    
-    let workingHoursIdentifier = "workingHoursHeader"
-    
-    let companyContactsIdentifier = "companyContacts"
-    
-    let companyAboutIdentifier = "AboutCompanyCell"
     
     var makeOrderNavigationAction: (() -> Void)?
     
@@ -53,11 +56,13 @@ class TCompanyInfoTableViewController: UITableViewController {
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         
-        let rightButton = UIBarButtonItem(image: UIImage(named: "icon-star"), style: .Plain, target: self, action: #selector(TCompanyInfoTableViewController.makeFavorite))
+        bookmarkButton.setImage(UIImage(named: "icon-star"), forState: .Normal)
+        bookmarkButton.setImage(UIImage(named: "icon-fullStar"), forState: .Selected)
+        bookmarkButton.tintColor = UIColor.yellowColor()
+        bookmarkButton.addTarget(self, action: #selector(TCompanyInfoTableViewController.makeFavorite), forControlEvents: .TouchUpInside)
+        bookmarkButton.sizeToFit()
         
-        rightButton.tintColor = UIColor.yellowColor()
-        
-        self.navigationItem.rightBarButtonItem = rightButton
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: bookmarkButton)
         
         self.tableView.registerNib(UINib(nibName: "TCompanyImageMenuTableViewCell", bundle: nil),
                                    forCellReuseIdentifier: "CompanyImageMenu")
@@ -353,6 +358,18 @@ class TCompanyInfoTableViewController: UITableViewController {
     
     func makeFavorite() {
         
+        self.bookmarkButton.selected = !self.bookmarkButton.selected
+        self.bookmarkButton.tintColor = UIColor.yellowColor()
         
+        Api.sharedInstance.addBookmark(self.company!.companyId)
+            
+            .onSuccess { result in
+            
+                self.bookmarkButton.selected = result.success[0] == 1
+            }
+            .onFailure { error in
+                
+                
+            }
     }
 }
