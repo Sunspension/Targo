@@ -285,7 +285,52 @@ class TCompanyInfoTableViewController: UITableViewController {
     }
     */
     
-    func createDataSource() {
+    func openCompanyMenu() {
+        
+        self.makeOrderNavigationAction?()
+    }
+
+    func makeFavorite() {
+        
+        self.bookmarkButton.selected = !self.bookmarkButton.selected
+        
+        if self.bookmarkButton.selected {
+            
+            Api.sharedInstance.addBookmark(self.company!.id)
+                
+                .onFailure { error in
+                    
+                    self.bookmarkButton.selected = !self.bookmarkButton.selected
+            }
+        }
+        else {
+            
+            Api.sharedInstance.removeBookmark(self.company!.id)
+                
+                .onFailure { error in
+                    
+                    self.bookmarkButton.selected = !self.bookmarkButton.selected
+            }
+        }
+    }
+    
+    
+    // MARK: - Private methods
+    
+    private func todayWorkingHours() {
+        
+        if let company = self.company {
+            
+//            ПВСЧПСВ
+//            1234567
+//            2345671
+            let weekDay = NSDate().weekday
+            
+            company.wokingTime
+        }
+    }
+    
+    private func createDataSource() {
     
         let section = CollectionSection()
         section.sectionType = InfoSectionEnum.CompanyImage
@@ -312,11 +357,13 @@ class TCompanyInfoTableViewController: UITableViewController {
 
         let workingHoursSection = CollectionSection(title: "company_info_working_hours".localized)
         
-        let formatter = NSDateFormatter()
+        let calendar = NSCalendar.currentCalendar()
         
-        for weekDay in 0...6 {
+        for index in 0...6 {
             
-            let day = formatter.weekdaySymbols[weekDay]
+            let weekDay = (index + 1) % 7
+            
+            let day = calendar.weekdaySymbols[weekDay]
             
             workingHoursSection.initializeCellWithReusableIdentifierOrNibName("WorkingHoursCell",
                                                                               item: day,
@@ -325,7 +372,7 @@ class TCompanyInfoTableViewController: UITableViewController {
                                                                                 let viewCell = cell as! TWorkingHoursTableViewCell
                                                                                 viewCell.weekday.text = item.item as? String
                                                                                 
-                                                                                if let day = self.company?.backingWorkingTime[weekDay] {
+                                                                                if let day = self.company?.backingWorkingTime[index] {
                                                                                     
                                                                                     viewCell.hours.text = "\(day.begin) - \(day.end)"
                                                                                 }
@@ -351,34 +398,5 @@ class TCompanyInfoTableViewController: UITableViewController {
         }
         
         self.itemsSource.sections.append(aboutSection)
-    }
-    
-    func openCompanyMenu() {
-        
-        self.makeOrderNavigationAction?()
-    }
-    
-    func makeFavorite() {
-        
-        self.bookmarkButton.selected = !self.bookmarkButton.selected
-        
-        if self.bookmarkButton.selected {
-
-            Api.sharedInstance.addBookmark(self.company!.id)
-                
-                .onFailure { error in
-                    
-                    self.bookmarkButton.selected = !self.bookmarkButton.selected
-                }
-        }
-        else {
-            
-            Api.sharedInstance.removeBookmark(self.company!.id)
-                
-                .onFailure { error in
-                    
-                    self.bookmarkButton.selected = !self.bookmarkButton.selected
-                }
-        }
     }
 }

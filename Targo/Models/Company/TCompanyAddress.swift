@@ -9,6 +9,7 @@
 import UIKit
 import ObjectMapper
 import RealmSwift
+import CoreLocation
 
 class TCompanyAddress: Object, Mappable {
 
@@ -57,8 +58,10 @@ class TCompanyAddress: Object, Mappable {
     dynamic var rating = 0.0
     
     dynamic var isFavorite = false
-//    
-//    dynamic var averageOrderTime = 
+    
+    let backingWorkingTime = List<TCompanyWorkingDay>()
+
+    var averageOrderTime = List<RealmInt>()
     
     var wokingTime: [[String]] {
         
@@ -74,8 +77,6 @@ class TCompanyAddress: Object, Mappable {
         }
     }
     
-    let backingWorkingTime = List<TCompanyWorkingDay>()
-    
     
     required convenience init?(_ map: Map) {
         
@@ -89,7 +90,7 @@ class TCompanyAddress: Object, Mappable {
     
     override static func ignoredProperties() -> [String] {
         
-        return ["workingTime"]
+        return ["workingTime", "averageOrderTime"]
     }
 
     
@@ -118,6 +119,41 @@ class TCompanyAddress: Object, Mappable {
         distance <- map["dist"]
         rating <- map["company_rating"]
         isFavorite <- map["is_favorite"]
+        
+        let transform = TransformOf<List<RealmInt>, [Int]>(fromJSON: { (value: [Int]?) -> List<RealmInt>? in
+            
+            if let time = value where time.count == 2 {
+                
+                let list = List<RealmInt>()
+                
+                for t in time {
+                    
+                    list.append(RealmInt(value: ["value" : t]))
+                }
+                
+                return list
+            }
+            
+            return nil
+            
+            }, toJSON: { (value: List<RealmInt>?) -> [Int]? in
+                
+                if let time = value {
+                    
+                    var result = [Int]()
+                    
+                    for t in time {
+                        
+                        result.append(t.value)
+                    }
+                    
+                    return result
+                }
+                
+                return nil
+        })
+        
+        averageOrderTime <- (map["avg_order_time"], transform)
         
         var workingTime = [[String]]()
         workingTime <- map["work_time"]

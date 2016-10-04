@@ -1,5 +1,5 @@
 //
-//  TAverageOrderTime.swift
+//  ListRealmStringTransform.swift
 //  Targo
 //
 //  Created by Vladimir Kokhanevich on 04/10/2016.
@@ -8,6 +8,6 @@
 
 import UIKit
 
-class TAverageOrderTime: NSObject {
+class ListRealmStringTransform: NSObject {
 
 }

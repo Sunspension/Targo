@@ -64,6 +64,7 @@
 		D46A4C5D1D63BFA3003CF2F9 /* TUserCreditCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46A4C5C1D63BFA3003CF2F9 /* TUserCreditCardTableViewCell.swift */; };
 		D46AC7341D43DB1F009C08D4 /* TCompaniesOnMapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46AC7331D43DB1F009C08D4 /* TCompaniesOnMapsViewController.swift */; };
 		D46DEC771D62582000B4716B /* GenericCollectionSectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46DEC761D62582000B4716B /* GenericCollectionSectionItem.swift */; };
+		D46E29B01DA434C0001377E6 /* ListRealmStringTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46E29AF1DA434C0001377E6 /* ListRealmStringTransform.swift */; };
 		D470DFB91D384D74003473E6 /* TCompanyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D470DFB81D384D74003473E6 /* TCompanyTableViewCell.swift */; };
 		D47196A21DA18A2C001FA295 /* TOrderNumberOfPersons.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47196A01DA18A2C001FA295 /* TOrderNumberOfPersons.swift */; };
 		D47196A31DA18A2C001FA295 /* TOrderNumberOfPersons.xib in Resources */ = {isa = PBXBuildFile; fileRef = D47196A11DA18A2C001FA295 /* TOrderNumberOfPersons.xib */; };
@@ -181,6 +182,7 @@
 		D46A4C5C1D63BFA3003CF2F9 /* TUserCreditCardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TUserCreditCardTableViewCell.swift; sourceTree = "<group>"; };
 		D46AC7331D43DB1F009C08D4 /* TCompaniesOnMapsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCompaniesOnMapsViewController.swift; sourceTree = "<group>"; };
 		D46DEC761D62582000B4716B /* GenericCollectionSectionItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GenericCollectionSectionItem.swift; path = Models/GenericCollectionSectionItem.swift; sourceTree = "<group>"; };
+		D46E29AF1DA434C0001377E6 /* ListRealmStringTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListRealmStringTransform.swift; sourceTree = "<group>"; };
 		D470DFB81D384D74003473E6 /* TCompanyTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCompanyTableViewCell.swift; sourceTree = "<group>"; };
 		D47196A01DA18A2C001FA295 /* TOrderNumberOfPersons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TOrderNumberOfPersons.swift; sourceTree = "<group>"; };
 		D47196A11DA18A2C001FA295 /* TOrderNumberOfPersons.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TOrderNumberOfPersons.xib; sourceTree = "<group>"; };
@@ -455,6 +457,7 @@
 				D4B9C1EA1D723D6400BC4571 /* InterOperation.swift */,
 				D45AC70E1D74E6BF001BF90B /* Targo-Bridging-Header.h */,
 				D449B41A1D777F3C0088CEEB /* KeyboardNotificationListener.swift */,
+				D46E29AF1DA434C0001377E6 /* ListRealmStringTransform.swift */,
 			);
 			name = AppHelpers;
 			sourceTree = "<group>";
@@ -793,6 +796,7 @@
 				D45F9FB01D610CBD00623A34 /* TPaymentMethodTableViewCell.swift in Sources */,
 				D4F84B491D24668400263D1A /* User.swift in Sources */,
 				D4DD9DDC1D418DC9009C28D5 /* TBaseTableViewCell.swift in Sources */,
+				D46E29B01DA434C0001377E6 /* ListRealmStringTransform.swift in Sources */,
 				D44986511D8F3AB5007C9AF0 /* TLoadingStatusEnum.swift in Sources */,
 				D41C3A251D6F87FE00539ABD /* TOrderLoader.swift in Sources */,
 				D469B2321D8EA2A800D41DC6 /* TFeedCompanyNewsTableViewCell.swift in Sources */,

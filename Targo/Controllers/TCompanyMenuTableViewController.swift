@@ -319,7 +319,14 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
             
             let viewCell = cell as! TWorkingTimeTableViewCell
             viewCell.selectionStyle = .None
-            viewCell.setWorkingTimeAndHandlingOrder("11:00 - 00:00", handlingOrder: "20 - 37 minutes")
+            
+            if let company = item.item as? TCompanyAddress where company.averageOrderTime.count == 2 {
+                
+                let min = company.averageOrderTime[0].value
+                let max = company.averageOrderTime[1].value
+                
+                viewCell.setWorkingTimeAndHandlingOrder("11:00 - 00:00", handlingOrder: "\(min) - \(max) " + "minutes".localized)
+            }
         }
         
         self.dataSource.sections.append(section)
