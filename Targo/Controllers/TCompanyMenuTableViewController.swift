@@ -389,6 +389,11 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
+        if indexPath.section == 0 {
+            
+            return
+        }
+        
         let section = self.dataSource.sections[indexPath.section]
         
         if section.sectionType == nil {
@@ -423,23 +428,21 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
             
             self.loadingStatus = .Loading
             
-//            if let superview = self.view.superview {
-//                
-//                SwiftOverlays.showCenteredWaitOverlay(superview)
-//            }
+            if let superview = self.view.superview {
+                
+                SwiftOverlays.showCenteredWaitOverlay(superview)
+            }
 
             Api.sharedInstance.loadCompanyMenu(company.companyId, pageNumber: self.pageNumber, pageSize: self.pageSize)
                 
                 .onSuccess(callback: { [weak self] menuPage in
                     
-//                    if let superview = self?.view.superview {
-//                        
-//                        SwiftOverlays.removeAllOverlaysFromView(superview)
-//                    }
-                    
-//                    self?.buttonMakeOrder.hidden = false
-                    
                     self?.loadingStatus = .Loaded
+                    
+                    if let superview = self?.view.superview {
+                        
+                        SwiftOverlays.removeAllOverlaysFromView(superview)
+                    }
                     
                     self?.menuPage = menuPage
                     
@@ -466,10 +469,10 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
                     
                     self?.loadingStatus = .Failed
                     
-//                    if let superview = self?.view.superview {
-//                        
-//                        SwiftOverlays.removeAllOverlaysFromView(superview)
-//                    }
+                    if let superview = self?.view.superview {
+                        
+                        SwiftOverlays.removeAllOverlaysFromView(superview)
+                    }
                 })
         }
     }

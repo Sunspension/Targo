@@ -113,7 +113,7 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         
         self.bookmarkButton.setImage(UIImage(named: "icon-star"), forState: .Normal)
         self.bookmarkButton.setImage(UIImage(named: "icon-fullStar"), forState: .Selected)
-        self.bookmarkButton.addTarget(self, action: #selector(CompanySearchTableViewController.loadFavoriteCompanyAddresses), forControlEvents: .TouchUpInside)
+        self.bookmarkButton.addTarget(self, action: #selector(CompanySearchTableViewController.loadBookmarks), forControlEvents: .TouchUpInside)
         self.bookmarkButton.sizeToFit()
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: self.bookmarkButton)
@@ -218,10 +218,6 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         }
     }
     
-    func loadBookmarks() {
-        
-        
-    }
     
     // Here is a magic to save height of current cell, otherwise you will get scrolling of table view content when cell will expand
     override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -428,16 +424,12 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         
         shouldShowSearchResults = true
-        self.refreshControl = nil
-        
         reloadData()
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         
         shouldShowSearchResults = false
-        setupRefreshControl()
-        
         reloadData()
     }
     
@@ -461,10 +453,18 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         }
     }
 
+    
     func manualRefresh() {
         
-        self.pageNumber = 1
-        self.loadCompanyAddress(true)
+        if self.bookmarkButton.selected {
+            
+            self.loadFavoriteCompanyAddresses(true)
+        }
+        else {
+            
+            self.pageNumber = 1
+            self.loadCompanyAddress(true)
+        }
     }
     
     func createFavoriteDataSource(page: TCompanyAddressesPage) {
@@ -482,11 +482,12 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         }
     }
     
-    func loadFavoriteCompanyAddresses(forceRefresh: Bool = false) {
+    func loadBookmarks() {
         
         if self.userLocation == nil {
             
             self.loadingStatus = .Failed
+            
             return
         }
         
@@ -497,53 +498,7 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
             tableView.tableHeaderView = nil
             self.tableView.dataSource = self.favoriteDataSource
             
-            if let superview = self.view.superview {
-                
-                SwiftOverlays.showCenteredWaitOverlay(superview)
-            }
-            
-            Api.sharedInstance.favoriteComanyAddresses(self.userLocation!)
-                
-                .onSuccess(callback: { [unowned self] companyPage in
-                    
-                    if let superview = self.view.superview {
-                        
-                        SwiftOverlays.removeAllOverlaysFromView(superview)
-                    }
-                    
-                    self.loadingStatus = .Loaded
-                    
-                    if forceRefresh {
-                        
-                        self.refreshControl?.endRefreshing()
-                        self.favoriteSection.items.removeAll()
-                    }
-                    
-                    self.createFavoriteDataSource(companyPage)
-                    self.tableView.reloadData()
-                    
-//                    if self.pageSize == companyPage.companies.count {
-//                        
-//                        self.canLoadNext = true
-//                        self.pageNumber += 1
-//                    }
-//                    else {
-//                        
-//                        // reset counter
-//                        self.pageNumber = 1
-//                        self.canLoadNext = false
-//                    }
-                    
-                    }).onFailure(callback: { error in
-                        
-                        if forceRefresh {
-                            
-                            self.refreshControl?.endRefreshing()
-                        }
-                        
-                        self.loadingStatus = .Failed
-                        print(error)
-                    })
+            self.loadFavoriteCompanyAddresses()
         }
         else {
             
@@ -551,6 +506,47 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
             self.tableView.dataSource = self.dataSource
             self.tableView.reloadData()
         }
+    }
+    
+    func loadFavoriteCompanyAddresses(forceRefresh: Bool = false) {
+        
+        Api.sharedInstance.favoriteComanyAddresses(self.userLocation!)
+            
+            .onSuccess(callback: { [unowned self] companyPage in
+                
+                self.loadingStatus = .Loaded
+                
+                if forceRefresh {
+                    
+                    self.refreshControl?.endRefreshing()
+                    self.favoriteSection.items.removeAll()
+                }
+                
+                self.createFavoriteDataSource(companyPage)
+                self.tableView.reloadData()
+                
+                //                    if self.pageSize == companyPage.companies.count {
+                //
+                //                        self.canLoadNext = true
+                //                        self.pageNumber += 1
+                //                    }
+                //                    else {
+                //
+                //                        // reset counter
+                //                        self.pageNumber = 1
+                //                        self.canLoadNext = false
+                //                    }
+                
+                }).onFailure(callback: { error in
+                    
+                    if forceRefresh {
+                        
+                        self.refreshControl?.endRefreshing()
+                    }
+                    
+                    self.loadingStatus = .Failed
+                    print(error)
+                })
     }
     
     //MARK: - Private methods
