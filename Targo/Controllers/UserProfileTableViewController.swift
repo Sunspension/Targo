@@ -8,6 +8,7 @@
 
 import UIKit
 import DynamicColor
+import AlamofireImage
 
 private enum ItemTypeEnum {
     
@@ -27,6 +28,7 @@ class UserProfileTableViewController: UITableViewController {
     
     let identifier = "default"
     
+    let headerIdentifier = "ProfileHeader"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +42,8 @@ class UserProfileTableViewController: UITableViewController {
                                                                 action: nil)
         
         self.navigationItem.titleView = UIImageView(image: UIImage(named: "icon-logo"))
+        
+        self.tableView.registerNib(UINib(nibName: "TUserProfileHeaderTableViewCell", bundle: nil), forCellReuseIdentifier: headerIdentifier)
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -68,16 +72,20 @@ class UserProfileTableViewController: UITableViewController {
         
         let userInfo = CollectionSection()
         
-        userInfo.initializeCellWithReusableIdentifierOrNibName("UserInfo",
+        userInfo.initializeCellWithReusableIdentifierOrNibName(headerIdentifier,
                                                                item: nil,
                                                                itemType: ItemTypeEnum.UserInfo) { (cell, item) in
         
-                                                                let viewCell = cell as! TUserInfoTableViewCell
+                                                                let viewCell = cell as! TUserProfileHeaderTableViewCell
                                                                 
                                                                 viewCell.layoutIfNeeded()
                                                                 
                                                                 viewCell.selectionStyle = .None
-                                                                viewCell.userIcon.makeCircular()
+                                                                viewCell.buttonAvatar.addTarget(self, action: #selector(UserProfileTableViewController.changePhoto), forControlEvents: .TouchUpInside)
+                                                                viewCell.imageViewBlur.image = viewCell.imageViewBlur.image?.applyBlurWithRadius(5, tintColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0.4), saturationDeltaFactor: 1, maskImage: nil)
+                                                                let layer = viewCell.buttonAvatar.layer
+                                                                layer.borderColor = UIColor.whiteColor().CGColor
+                                                                layer.borderWidth = 2
         }
         
         self.dataSource.sections.append(userInfo)
@@ -111,8 +119,7 @@ class UserProfileTableViewController: UITableViewController {
         self.tableView.delegate = self
         self.tableView.tableFooterView = UIView()
     }
-
-
+    
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
@@ -151,6 +158,11 @@ class UserProfileTableViewController: UITableViewController {
         default:
             break
         }
+    }
+    
+    func changePhoto() {
+        
+        
     }
     
     // MARK: - Table view data source

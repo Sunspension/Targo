@@ -471,7 +471,7 @@
             <objects>
                 <navigationController storyboardIdentifier="TLoginNavigation" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" navigationBarHidden="YES" id="vYO-UF-LQ9" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="owp-qM-XkB">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="owp-qM-XkB">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -491,7 +491,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="n0M-K0-YnC" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Search" image="icon-search" id="ZiQ-hA-bCC"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="k87-Jp-TlG">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="k87-Jp-TlG">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -510,7 +510,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="bhM-5p-kh8" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Orders" image="icon-basket" id="JJW-p2-TXp"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="WFY-BS-XP8">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="WFY-BS-XP8">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1395,13 +1395,13 @@
         <scene sceneID="ewn-Py-9vz">
             <objects>
                 <tableViewController id="XQf-O4-bW0" customClass="UserProfileTableViewController" customModule="Targo" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="113" sectionHeaderHeight="18" sectionFooterHeight="18" id="ymC-fc-KJZ">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="113" sectionHeaderHeight="28" sectionFooterHeight="28" id="ymC-fc-KJZ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="UserInfo" rowHeight="113" id="s6Z-NF-Ai4" customClass="TUserInfoTableViewCell" customModule="Targo" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="120" width="375" height="113"/>
+                                <rect key="frame" x="0.0" y="28" width="375" height="113"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="s6Z-NF-Ai4" id="1NP-5A-TNo">
                                     <frame key="frameInset" width="375" height="112"/>
@@ -1782,7 +1782,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Xr2-NY-mcf" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Feed" image="icon-feed" id="KEB-f3-MEc"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="0Fe-OV-FK5">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="0Fe-OV-FK5">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1798,10 +1798,10 @@
         <!--Profile-->
         <scene sceneID="anL-W2-XDi">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0Zn-4m-UjR" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="0Zn-4m-UjR" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Profile" image="icon-user" id="FPs-3d-X9e"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Dzz-v1-BEW">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Dzz-v1-BEW">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

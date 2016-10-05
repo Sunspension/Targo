@@ -37,6 +37,11 @@
 		D41F59CA1D32C6F00075568D /* GenericCollectionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41F59C91D32C6F00075568D /* GenericCollectionSection.swift */; };
 		D41F59CC1D32CDA80075568D /* UserProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41F59CB1D32CDA80075568D /* UserProfileTableViewController.swift */; };
 		D420B2CB1D293748003FDC83 /* RegistrationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D420B2CA1D293748003FDC83 /* RegistrationCodeViewController.swift */; };
+		D42AF2231DA58A0B00F20945 /* CirlceImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42AF2221DA58A0B00F20945 /* CirlceImage.swift */; };
+		D42AF2261DA5915600F20945 /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42AF2251DA5915600F20945 /* CircleButton.swift */; };
+		D42AF2291DA5956A00F20945 /* TUserProfileHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42AF2271DA5956A00F20945 /* TUserProfileHeaderTableViewCell.swift */; };
+		D42AF22A1DA5956A00F20945 /* TUserProfileHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D42AF2281DA5956A00F20945 /* TUserProfileHeaderTableViewCell.xib */; };
+		D42AF22C1DA5A97900F20945 /* TImageUploadResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42AF22B1DA5A97900F20945 /* TImageUploadResponse.swift */; };
 		D42F190E1D764A3F0091C3E1 /* TOrderDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42F190C1D764A3F0091C3E1 /* TOrderDescriptionTableViewCell.swift */; };
 		D42F190F1D764A3F0091C3E1 /* TOrderDescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D42F190D1D764A3F0091C3E1 /* TOrderDescriptionTableViewCell.xib */; };
 		D44930921D49494800ADF70A /* TTestOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44930911D49494800ADF70A /* TTestOrder.swift */; };
@@ -153,6 +158,11 @@
 		D41F59C91D32C6F00075568D /* GenericCollectionSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GenericCollectionSection.swift; path = Models/GenericCollectionSection.swift; sourceTree = "<group>"; };
 		D41F59CB1D32CDA80075568D /* UserProfileTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileTableViewController.swift; sourceTree = "<group>"; };
 		D420B2CA1D293748003FDC83 /* RegistrationCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationCodeViewController.swift; sourceTree = "<group>"; };
+		D42AF2221DA58A0B00F20945 /* CirlceImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CirlceImage.swift; sourceTree = "<group>"; };
+		D42AF2251DA5915600F20945 /* CircleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleButton.swift; sourceTree = "<group>"; };
+		D42AF2271DA5956A00F20945 /* TUserProfileHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TUserProfileHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		D42AF2281DA5956A00F20945 /* TUserProfileHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TUserProfileHeaderTableViewCell.xib; sourceTree = "<group>"; };
+		D42AF22B1DA5A97900F20945 /* TImageUploadResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TImageUploadResponse.swift; path = Models/Response/TImageUploadResponse.swift; sourceTree = "<group>"; };
 		D42F190C1D764A3F0091C3E1 /* TOrderDescriptionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TOrderDescriptionTableViewCell.swift; sourceTree = "<group>"; };
 		D42F190D1D764A3F0091C3E1 /* TOrderDescriptionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TOrderDescriptionTableViewCell.xib; sourceTree = "<group>"; };
 		D44930911D49494800ADF70A /* TTestOrder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TTestOrder.swift; path = Models/Response/TTestOrder.swift; sourceTree = "<group>"; };
@@ -302,6 +312,24 @@
 			name = Services;
 			sourceTree = "<group>";
 		};
+		D42AF21C1DA587F300F20945 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				D42AF2271DA5956A00F20945 /* TUserProfileHeaderTableViewCell.swift */,
+				D42AF2281DA5956A00F20945 /* TUserProfileHeaderTableViewCell.xib */,
+			);
+			name = Profile;
+			sourceTree = "<group>";
+		};
+		D42AF2211DA589DF00F20945 /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				D42AF2221DA58A0B00F20945 /* CirlceImage.swift */,
+				D42AF2251DA5915600F20945 /* CircleButton.swift */,
+			);
+			name = CustomViews;
+			sourceTree = "<group>";
+		};
 		D464027C1D21CBE200644463 /* ServerAPI */ = {
 			isa = PBXGroup;
 			children = (
@@ -323,6 +351,8 @@
 		D470DFB71D384D44003473E6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D42AF2211DA589DF00F20945 /* CustomViews */,
+				D42AF21C1DA587F300F20945 /* Profile */,
 				D4A392091D6BBBF2005B2047 /* THistoryOrderItemTableViewCell.swift */,
 				D470DFB81D384D74003473E6 /* TCompanyTableViewCell.swift */,
 				D4FDE6791D3C007E003EF2CC /* TWorkingTimeTableViewCell.swift */,
@@ -492,6 +522,7 @@
 				D469B2351D8EAF2600D41DC6 /* TFeedItem.swift */,
 				D449864A1D8EF48B007C9AF0 /* TFeedPage.swift */,
 				E5EEEF531DA242FC009ADF7E /* TAddRemoveBookmarkResponse.swift */,
+				D42AF22B1DA5A97900F20945 /* TImageUploadResponse.swift */,
 			);
 			name = Response;
 			sourceTree = "<group>";
@@ -626,6 +657,7 @@
 				D41D9D941D46B47300358961 /* TWorkingHoursHeader.xib in Resources */,
 				D4D4B68D1D42C67300278E2D /* TMenuItemFullTableViewCell.xib in Resources */,
 				D4F464DC1D402F08009015FC /* TCompanyMenuHeaderView.xib in Resources */,
+				D42AF22A1DA5956A00F20945 /* TUserProfileHeaderTableViewCell.xib in Resources */,
 				D40E10291D3ECE260012DCF4 /* TCompanySearchTableViewCell.xib in Resources */,
 				D41D9D981D46BA3600358961 /* TCompanyInfoContactsHeader.xib in Resources */,
 				D4DD9DDA1D41830A009C28D5 /* TMenuItemSmallTableViewCell.xib in Resources */,
@@ -774,9 +806,11 @@
 				D4D0D6D61D2C5B5200B4E01D /* Api.swift in Sources */,
 				D40CC4DB1D65034D003A1487 /* TShopOrder.swift in Sources */,
 				D45F9FAC1D61055E00623A34 /* TOrderItemTableViewCell.swift in Sources */,
+				D42AF2231DA58A0B00F20945 /* CirlceImage.swift in Sources */,
 				D4F464D51D400A17009015FC /* TShopCategory.swift in Sources */,
 				D49C7E891D281DB1004408AF /* RegistrationPhoneViewController.swift in Sources */,
 				E5C062D91D2106BF002074C4 /* AppDelegate.swift in Sources */,
+				D42AF2261DA5915600F20945 /* CircleButton.swift in Sources */,
 				D4F213701D6E570100D94B62 /* TBillMenuItemTableViewCell.swift in Sources */,
 				D469B2341D8EA2C100D41DC6 /* TFeedTargoNewsTableViewCell.swift in Sources */,
 				D4F464DA1D402EF3009015FC /* TCompanyMenuHeaderView.swift in Sources */,
@@ -785,9 +819,11 @@
 				E5EEEF541DA242FC009ADF7E /* TAddRemoveBookmarkResponse.swift in Sources */,
 				D44930941D495D5100ADF70A /* TAddCreditCardViewController.swift in Sources */,
 				D40E10241D3EC1660012DCF4 /* TableViewDataSource.swift in Sources */,
+				D42AF2291DA5956A00F20945 /* TUserProfileHeaderTableViewCell.swift in Sources */,
 				D449B41B1D777F3C0088CEEB /* KeyboardNotificationListener.swift in Sources */,
 				D4C47FD11D5FE805000D1AA2 /* CenteredButton.swift in Sources */,
 				D4036A0F1D36CE8200CA8E38 /* TCompany.swift in Sources */,
+				D42AF22C1DA5A97900F20945 /* TImageUploadResponse.swift in Sources */,
 				D4D4B68C1D42C67300278E2D /* TMenuItemFullTableViewCell.swift in Sources */,
 				D4D567AB1D8758C700679F53 /* TCompanyWorkingDay.swift in Sources */,
 				D449864B1D8EF48B007C9AF0 /* TFeedPage.swift in Sources */,

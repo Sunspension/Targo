@@ -734,8 +734,43 @@ struct Api {
                     return
                 }
                 
-                let page = response.result.value!
-                p.success(page)
+                p.success(response.result.value!)
+        }
+        
+        return p.future
+        
+    }
+    
+    func uploadImage(image: UIImage) -> Future<TImageUploadResponse, TargoError> {
+        
+        let p = Promise<TImageUploadResponse, TargoError>()
+        
+        server.uploadImage(image) { (encodingResult) in
+            
+            switch encodingResult {
+                
+            case .Success(let upload, _, _):
+                
+                upload.responseJSON { response in
+                    
+                        print(response.result.value)
+                    }
+                    .responseObject("data") { (response: Response<TImageUploadResponse, TargoError>) in
+                        
+                        guard let _ = response.result.value else {
+                            
+                            p.failure(response.result.error!)
+                            return
+                        }
+                        
+                        p.success(response.result.value!)
+                }
+                
+            case .Failure(let encodingError):
+                
+                p.failure(TargoError.UndefinedError(message: "Encoding error"))
+                print(encodingError)
+            }
         }
         
         return p.future

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProfileHeader" rowHeight="196" id="KGk-i7-Jjw" customClass="TUserProfileHeaderTableViewCell" customModule="Targo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="240"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <frame key="frameInset" width="320" height="239"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-avatar" translatesAutoresizingMaskIntoConstraints="NO" id="7KR-fC-sa7">
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Grigory Borozdin" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2gr-uy-AM2">
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="VS1-kc-CkJ"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ria-bV-K0v" customClass="CircleButton" customModule="Targo" customModuleProvider="target">
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="Ria-bV-K0v" secondAttribute="height" multiplier="1:1" id="7or-qz-1Eg"/>
+                        </constraints>
+                        <state key="normal" image="icon-avatar"/>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="7KR-fC-sa7" secondAttribute="bottom" id="2cp-3A-skK"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="2gr-uy-AM2" secondAttribute="bottom" priority="750" constant="40" id="2ma-Ng-i7S"/>
+                    <constraint firstItem="Ria-bV-K0v" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="40" id="2q4-FI-fzg"/>
+                    <constraint firstAttribute="trailing" secondItem="7KR-fC-sa7" secondAttribute="trailing" id="9gh-jO-39K"/>
+                    <constraint firstItem="2gr-uy-AM2" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="Il6-z6-z6J"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="2gr-uy-AM2" secondAttribute="trailing" constant="8" id="Yql-zK-vxA"/>
+                    <constraint firstItem="7KR-fC-sa7" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="eqp-ns-coB"/>
+                    <constraint firstItem="7KR-fC-sa7" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="pyE-jg-aeg"/>
+                    <constraint firstItem="2gr-uy-AM2" firstAttribute="top" secondItem="Ria-bV-K0v" secondAttribute="bottom" constant="16" id="qSB-Za-5HE"/>
+                    <constraint firstItem="Ria-bV-K0v" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="102" id="re6-BX-xCR"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="Ria-bV-K0v" secondAttribute="trailing" constant="102" id="y78-xG-9yF"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="buttonAvatar" destination="Ria-bV-K0v" id="Rjq-hD-VMt"/>
+                <outlet property="imageViewBlur" destination="7KR-fC-sa7" id="ck8-QN-RoU"/>
+                <outlet property="labelUserName" destination="2gr-uy-AM2" id="9ju-Ec-12Y"/>
+            </connections>
+            <point key="canvasLocation" x="69" y="-17"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="icon-avatar" width="320" height="320"/>
+    </resources>
+</document>

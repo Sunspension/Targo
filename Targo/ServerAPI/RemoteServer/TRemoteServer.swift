@@ -266,6 +266,18 @@ struct TRemoteServer: PRemoteServerV1 {
         return self.request(.GET, remotePath: baseURLString + "/company-address", parameters: params)
     }
     
+    func uploadImage(image: UIImage, encodingCompletion: (Manager.MultipartFormDataEncodingResult -> Void)?) {
+        
+        TRemoteServer.alamofireManager.upload(.POST, baseURLString + "/image", multipartFormData: { multipartFromData in
+            
+                if let data = UIImagePNGRepresentation(image) {
+                    
+                    multipartFromData.appendBodyPart(data: data, name: "file", mimeType: "image/png")
+                }
+            
+            }, encodingCompletion: encodingCompletion)
+    }
+    
     // MARK: - Private methods
     
     private func request(method: Alamofire.Method, remotePath: URLStringConvertible) -> Request {

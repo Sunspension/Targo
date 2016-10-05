@@ -61,4 +61,6 @@ protocol PRemoteServerV1 {
     func removeBookmark(companyAddressId: Int) -> Request
     
     func favoriteComanyAddresses(location: CLLocation, pageNumber: Int?, pageSize: Int?) -> Request
+    
+    func uploadImage(image: UIImage, encodingCompletion: (Manager.MultipartFormDataEncodingResult -> Void)?)
 }
