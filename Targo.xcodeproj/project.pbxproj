@@ -72,7 +72,6 @@
 		D49C7E891D281DB1004408AF /* RegistrationPhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49C7E881D281DB1004408AF /* RegistrationPhoneViewController.swift */; };
 		D4A392081D6BBBC9005B2047 /* TCompanyAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A392071D6BBBC9005B2047 /* TCompanyAddress.swift */; };
 		D4A3920A1D6BBBF2005B2047 /* THistoryOrderItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A392091D6BBBF2005B2047 /* THistoryOrderItemTableViewCell.swift */; };
-		D4A8F6D01DA301DE00B88FB2 /* TAverageOrderTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A8F6CF1DA301DE00B88FB2 /* TAverageOrderTime.swift */; };
 		D4B05FBE1D4FE202000E494E /* TAuthorizationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B05FBD1D4FE202000E494E /* TAuthorizationResponse.swift */; };
 		D4B81B3A1D4FE8AE00F9103C /* TServerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B81B391D4FE8AE00F9103C /* TServerError.swift */; };
 		D4B81B3C1D4FF22300F9103C /* TBadRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B81B3B1D4FF22300F9103C /* TBadRequest.swift */; };
@@ -118,6 +117,7 @@
 		E5C062DE1D2106BF002074C4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5C062DC1D2106BF002074C4 /* Main.storyboard */; };
 		E5C062E01D2106BF002074C4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5C062DF1D2106BF002074C4 /* Assets.xcassets */; };
 		E5EEEF541DA242FC009ADF7E /* TAddRemoveBookmarkResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EEEF531DA242FC009ADF7E /* TAddRemoveBookmarkResponse.swift */; };
+		E5F457151DA4E8EE00821AD1 /* CompanyAddressExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F457141DA4E8EE00821AD1 /* CompanyAddressExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -193,7 +193,6 @@
 		D49C7E881D281DB1004408AF /* RegistrationPhoneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationPhoneViewController.swift; sourceTree = "<group>"; };
 		D4A392071D6BBBC9005B2047 /* TCompanyAddress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TCompanyAddress.swift; path = Models/Company/TCompanyAddress.swift; sourceTree = "<group>"; };
 		D4A392091D6BBBF2005B2047 /* THistoryOrderItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = THistoryOrderItemTableViewCell.swift; sourceTree = "<group>"; };
-		D4A8F6CF1DA301DE00B88FB2 /* TAverageOrderTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TAverageOrderTime.swift; path = Models/Company/TAverageOrderTime.swift; sourceTree = "<group>"; };
 		D4B05FBD1D4FE202000E494E /* TAuthorizationResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TAuthorizationResponse.swift; path = Models/Response/TAuthorizationResponse.swift; sourceTree = "<group>"; };
 		D4B81B391D4FE8AE00F9103C /* TServerError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TServerError.swift; path = Models/Response/TServerError.swift; sourceTree = "<group>"; };
 		D4B81B3B1D4FF22300F9103C /* TBadRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TBadRequest.swift; path = Models/Response/TBadRequest.swift; sourceTree = "<group>"; };
@@ -241,6 +240,7 @@
 		E5C062DF1D2106BF002074C4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E5C062E41D2106BF002074C4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E5EEEF531DA242FC009ADF7E /* TAddRemoveBookmarkResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TAddRemoveBookmarkResponse.swift; path = Models/Response/TAddRemoveBookmarkResponse.swift; sourceTree = "<group>"; };
+		E5F457141DA4E8EE00821AD1 /* CompanyAddressExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompanyAddressExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -290,7 +290,6 @@
 				D4036A101D36D08900CA8E38 /* TCompaniesPage.swift */,
 				D4EE595F1D3AC98A0002022F /* TCompanyImage.swift */,
 				D4D567AA1D8758C700679F53 /* TCompanyWorkingDay.swift */,
-				D4A8F6CF1DA301DE00B88FB2 /* TAverageOrderTime.swift */,
 			);
 			name = Company;
 			sourceTree = "<group>";
@@ -543,6 +542,7 @@
 			children = (
 				D4F84B421D24591300263D1A /* AppExtensions.swift */,
 				D4EE596A1D3AFFA60002022F /* AlamofireExtensions.swift */,
+				E5F457141DA4E8EE00821AD1 /* CompanyAddressExtension.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -743,7 +743,6 @@
 				D41F36071D2855C8001896A2 /* LoginViewController.swift in Sources */,
 				D41F59C81D3294D00075568D /* CollectionSectionItem.swift in Sources */,
 				D4F464D31D40096A009015FC /* TCompanyMenuPage.swift in Sources */,
-				D4A8F6D01DA301DE00B88FB2 /* TAverageOrderTime.swift in Sources */,
 				D41D9D961D46BA2500358961 /* TCompanyInfoContactsHeader.swift in Sources */,
 				D41F59C61D32910A0075568D /* GenericTableViewDataSource.swift in Sources */,
 				D4B9C1EB1D723D6400BC4571 /* InterOperation.swift in Sources */,
@@ -758,6 +757,7 @@
 				D41D9D901D46AD4000358961 /* TWorkingHoursTableViewCell.swift in Sources */,
 				D4B81B3A1D4FE8AE00F9103C /* TServerError.swift in Sources */,
 				D40E10211D3EAEE60012DCF4 /* TCompanyImageMenuTableViewCell.swift in Sources */,
+				E5F457151DA4E8EE00821AD1 /* CompanyAddressExtension.swift in Sources */,
 				D420B2CB1D293748003FDC83 /* RegistrationCodeViewController.swift in Sources */,
 				D470DFB91D384D74003473E6 /* TCompanyTableViewCell.swift in Sources */,
 				D4F84B431D24591300263D1A /* AppExtensions.swift in Sources */,
