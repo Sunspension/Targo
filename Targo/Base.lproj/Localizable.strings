@@ -131,3 +131,16 @@
 "profile_item_my_cards" = "My cards";
 
 "minutes" = "minutes";
+
+
+"photo_action_choose" = "Choose Photo";
+
+"photo_action_take" = "Take Photo";
+
+"photo_library_unavailable_title" = "Photo album unavailable";
+
+"photo_library_unavailable_message" = "Unable to get access to Photos on your device";
+
+"camera_unavailable_title" = "Camera unavailable";
+
+"camera_unavailable_message" = "Unable to get access to Camera on your device";

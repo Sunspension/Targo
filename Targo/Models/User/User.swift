@@ -22,7 +22,7 @@ class User: Object, Mappable {
     
     dynamic var createdAt = ""
     
-    dynamic var updatedAt: String?
+    dynamic var updatedAt = ""
     
     dynamic var deleted = false
     
@@ -41,6 +41,8 @@ class User: Object, Mappable {
     dynamic var email = ""
     
     dynamic var isEmailConfirmed = false
+    
+    dynamic var image: TImage?
     
     
     required convenience init?(_ map: Map) {
@@ -70,5 +72,6 @@ class User: Object, Mappable {
         alias <- map["alias"]
         email <- map["email"]
         isEmailConfirmed <- map["is_email_confirmed"]
+        image <- map["image"]
     }
 }

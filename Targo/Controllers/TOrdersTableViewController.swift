@@ -27,7 +27,7 @@ class TOrdersTableViewController: UITableViewController {
     
     var orders: [TShopOrder]?
     
-    var companyImages: [TCompanyImage]?
+    var companyImages: [TImage]?
     
     var loading = false
     

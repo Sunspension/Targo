@@ -21,7 +21,14 @@ struct TRemoteServer: PRemoteServerV1 {
         return Alamofire.Manager(configuration: configuration)
     }()
     
-    let baseURLString = "https://api.targo.club/api"
+    let dev = "http://dev.targo.club/api"
+    
+    let prod = "https://api.targo.club/api"
+    
+    var baseURLString: String {
+        
+        return dev
+    }
     
     let deviceType = "ios"
     
@@ -70,7 +77,9 @@ struct TRemoteServer: PRemoteServerV1 {
     
     func loadUserById(userId: Int) -> Request {
         
-        return self.request(.GET, remotePath: baseURLString + "/user/\(userId)")
+        return self.request(.GET,
+                            remotePath: baseURLString + "/user/\(userId)",
+                            parameters: ["extend" : "image"])
     }
     
     func loadCompanyAddresses(location: CLLocation, pageNumber: Int, pageSize: Int, query: String?, distance: Int?) -> Request {
@@ -270,12 +279,17 @@ struct TRemoteServer: PRemoteServerV1 {
         
         TRemoteServer.alamofireManager.upload(.POST, baseURLString + "/image", multipartFormData: { multipartFromData in
             
-                if let data = UIImagePNGRepresentation(image) {
-                    
-                    multipartFromData.appendBodyPart(data: data, name: "file", mimeType: "image/png")
+            if let data = UIImageJPEGRepresentation(image, 0.85) {
+                
+                    multipartFromData.appendBodyPart(data: data, name: "file", fileName: "jpg", mimeType: "image/jpeg")
                 }
             
             }, encodingCompletion: encodingCompletion)
+    }
+    
+    func applyUserImage(userId: Int, imageId: Int) -> Request {
+        
+        return self.request(.PUT, remotePath: baseURLString + "/user/\(userId)", parameters: ["image_id" : imageId])
     }
     
     // MARK: - Private methods

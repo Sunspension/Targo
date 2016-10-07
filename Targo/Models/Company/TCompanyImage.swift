@@ -1,5 +1,5 @@
 //
-//  TCompanyImage.swift
+//  TImage.swift
 //  Targo
 //
 //  Created by Vladimir Kokhanevich on 16/07/16.
@@ -10,7 +10,7 @@ import UIKit
 import ObjectMapper
 import RealmSwift
 
-class TCompanyImage: Object, Mappable {
+class TImage: Object, Mappable {
 
     dynamic var id = 0
     

@@ -23,7 +23,7 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
     
     private let favoriteSection = GenericCollectionSection<TCompanyAddress>()
     
-    private var companyImages = Set<TCompanyImage>()
+    private var companyImages = Set<TImage>()
     
     private var userLocation: CLLocation?
     

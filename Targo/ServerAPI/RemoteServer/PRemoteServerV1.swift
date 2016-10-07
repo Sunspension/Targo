@@ -63,4 +63,6 @@ protocol PRemoteServerV1 {
     func favoriteComanyAddresses(location: CLLocation, pageNumber: Int?, pageSize: Int?) -> Request
     
     func uploadImage(image: UIImage, encodingCompletion: (Manager.MultipartFormDataEncodingResult -> Void)?)
+    
+    func applyUserImage(userId: Int, imageId: Int) -> Request
 }

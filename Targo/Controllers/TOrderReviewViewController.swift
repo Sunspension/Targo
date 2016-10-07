@@ -46,7 +46,7 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
     
     var company: TCompanyAddress?
     
-    var companyImage: TCompanyImage?
+    var companyImage: TImage?
     
     var loading = false
     

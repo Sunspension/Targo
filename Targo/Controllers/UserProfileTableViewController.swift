@@ -9,6 +9,9 @@
 import UIKit
 import DynamicColor
 import AlamofireImage
+import SwiftOverlays
+import RealmSwift
+import Alamofire
 
 private enum ItemTypeEnum {
     
@@ -22,7 +25,7 @@ private enum ItemTypeEnum {
 }
 
 
-class UserProfileTableViewController: UITableViewController {
+class UserProfileTableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     var dataSource = TableViewDataSource()
     
@@ -30,11 +33,46 @@ class UserProfileTableViewController: UITableViewController {
     
     let headerIdentifier = "ProfileHeader"
     
+    let userInfo = CollectionSection()
+    
+    let downloader = ImageDownloader()
+    
+    var user: User?
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.tableView.setup()
         self.setup()
+        
+        let realm = try! Realm()
+        
+        if let user = realm.objects(User).first {
+            
+            self.user = user
+        }
+        
+        Api.sharedInstance.loadCurrentUser()
+            
+            .onSuccess { user in
+            
+                self.user = user
+                self.tableView.reloadData()
+                
+                try! realm.write({
+                    
+                    realm.add(user, update: true)
+                })
+            }
+            .onFailure { error in
+            
+                print(error)
+            }
+        
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = UIColor(red: 0 / 255, green: 0 / 255, blue: 80 / 255, alpha: 0.1)
+        self.tableView.backgroundView = backgroundView
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "",
                                                                 style: .Plain,
@@ -69,9 +107,6 @@ class UserProfileTableViewController: UITableViewController {
             cell.textLabel?.text = item.item as? String
         }
         
-        
-        let userInfo = CollectionSection()
-        
         userInfo.initializeCellWithReusableIdentifierOrNibName(headerIdentifier,
                                                                item: nil,
                                                                itemType: ItemTypeEnum.UserInfo) { (cell, item) in
@@ -81,11 +116,39 @@ class UserProfileTableViewController: UITableViewController {
                                                                 viewCell.layoutIfNeeded()
                                                                 
                                                                 viewCell.selectionStyle = .None
-                                                                viewCell.buttonAvatar.addTarget(self, action: #selector(UserProfileTableViewController.changePhoto), forControlEvents: .TouchUpInside)
-                                                                viewCell.imageViewBlur.image = viewCell.imageViewBlur.image?.applyBlurWithRadius(5, tintColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0.4), saturationDeltaFactor: 1, maskImage: nil)
-                                                                let layer = viewCell.buttonAvatar.layer
-                                                                layer.borderColor = UIColor.whiteColor().CGColor
-                                                                layer.borderWidth = 2
+                                                                viewCell.buttonAvatar.addTarget(self,
+                                                                                                action: #selector(UserProfileTableViewController.changePhoto),
+                                                                                                forControlEvents: .TouchUpInside)
+                                                                
+                                                                if let user = self.user {
+                                                                    
+                                                                    if let image = user.image {
+                                                                        
+                                                                        let urlRequest = NSMutableURLRequest(URL: NSURL(string: image.url)!)
+                                                                        
+                                                                        let filter = AspectScaledToFillSizeFilter(size: viewCell.imageViewBlur.bounds.size)
+                                                                        
+                                                                        self.downloader.downloadImage(URLRequest: urlRequest,
+                                                                                                 filter: filter,
+                                                                                                 completion: { response in
+                                                                            
+                                                                            guard response.result.error == nil else {
+                                                                                
+                                                                                return
+                                                                            }
+                                                                            
+                                                                            viewCell.imageViewBlur.image = response.result.value!.applyBlurWithRadius(5,
+                                                                                tintColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0.4),
+                                                                                saturationDeltaFactor: 1,
+                                                                                maskImage: nil)
+                                                                            
+                                                                            viewCell.buttonAvatar.setImage(response.result.value!, forState: .Normal)
+                                                                            let layer = viewCell.buttonAvatar.layer
+                                                                            layer.borderColor = UIColor.whiteColor().CGColor
+                                                                            layer.borderWidth = 2
+                                                                        })
+                                                                    }
+                                                                }
         }
         
         self.dataSource.sections.append(userInfo)
@@ -160,9 +223,159 @@ class UserProfileTableViewController: UITableViewController {
         }
     }
     
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        return UIView()
+    }
+    
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        
+        switch section {
+            
+        case 0, 1:
+            return 0.01
+            
+        default:
+            return 40
+        }
+    }
+    
     func changePhoto() {
         
+        let alert = UIAlertController(title: "", message: "", preferredStyle: .ActionSheet)
         
+        let cancelAction = UIAlertAction(title: "action_cancel".localized, style: .Cancel, handler: nil)
+        
+        let choosePhotoAction = UIAlertAction(title: "photo_action_choose".localized, style: .Default) { action in
+            
+            if UIImagePickerController.isSourceTypeAvailable(.PhotoLibrary) {
+                
+                let library = UIImagePickerController()
+                library.sourceType = .PhotoLibrary
+                library.navigationBar.barTintColor = UIColor(hexString: kHexMainPinkColor)
+                library.navigationBar.tintColor = UIColor.whiteColor()
+                library.allowsEditing = true
+                library.delegate = self
+                
+                self.presentViewController(library, animated: true, completion: nil)
+            }
+            else {
+                
+                self.showOkAlert("photo_library_unavailable_title".localized,
+                                 message: "photo_library_unavailable_message".localized)
+            }
+        }
+        
+        let takePhotoAction = UIAlertAction(title: "photo_action_take".localized, style: .Default) { action in
+            
+            if UIImagePickerController.isSourceTypeAvailable(.PhotoLibrary) {
+                
+                let camera = UIImagePickerController()
+                camera.sourceType = .Camera
+                camera.allowsEditing = true
+                camera.delegate = self
+                
+                self.presentViewController(camera, animated: true, completion: nil)
+            }
+            else {
+                
+                self.showOkAlert("camera_unavailable_title".localized,
+                                 message: "camera_unavailable_message".localized)
+            }
+        }
+        
+        alert.addAction(choosePhotoAction)
+        alert.addAction(takePhotoAction)
+        alert.addAction(cancelAction)
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        
+        self.presentedViewController?.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func imagePickerController(picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        
+        self.uploadImage(info)
+        self.presentedViewController?.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    //MARK: - Private Methods
+    
+    func uploadImage(info:[String: AnyObject]) {
+        
+        let originalImage = info["UIImagePickerControllerOriginalImage"] as! UIImage
+        let rectValue = info["UIImagePickerControllerCropRect"] as? NSValue
+        
+        if let cropRect = rectValue?.CGRectValue() {
+            
+            let croppedImage = CGImageCreateWithImageInRect(originalImage.CGImage!, cropRect)
+            
+            if let cropped = croppedImage {
+                
+                let finalImage = UIImage(CGImage: cropped)
+                
+                if let superview = self.view.superview {
+                    
+                    SwiftOverlays.showCenteredWaitOverlay(superview)
+                }
+                
+                Api.sharedInstance.uploadImage(finalImage)
+                    
+                    .onSuccess(callback: { uploadResponse in
+                        
+                        let imageUrlString = uploadResponse.url
+                        print(imageUrlString)
+                        
+                        let realm = try! Realm()
+                        if let user = realm.objects(User).first {
+                            
+                            Api.sharedInstance.applyUserImage(user.id, imageId: uploadResponse.id)
+                                
+                                .onSuccess(callback: { user in
+                                
+                                    if let superview = self.view.superview {
+                                        
+                                        SwiftOverlays.removeAllOverlaysFromView(superview)
+                                    }
+                                    
+                                    if self.userInfo.items.count > 0 {
+                                        
+                                        let indexPath = self.userInfo.items[0].indexPath
+                                        
+                                        if let cell = self.tableView.cellForRowAtIndexPath(indexPath) as? TUserProfileHeaderTableViewCell {
+                                            
+                                            cell.buttonAvatar.setImage(finalImage, forState: .Normal)
+                                            cell.imageViewBlur.image = finalImage.applyBlurWithRadius(5, tintColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0.4), saturationDeltaFactor: 1, maskImage: nil)
+                                        }
+                                    }
+                                    
+                                }).onFailure(callback: { error in
+                                    
+                                    if let superview = self.view.superview {
+                                        
+                                        SwiftOverlays.removeAllOverlaysFromView(superview)
+                                    }
+                                    
+                                    print(error)
+                                })
+                        }
+                    })
+                    .onFailure(callback: { (error) in
+                        
+                        if let superview = self.view.superview {
+                            
+                            SwiftOverlays.removeAllOverlaysFromView(superview)
+                        }
+                        
+                        print(error)
+                    })
+            }
+        }
+
     }
     
     // MARK: - Table view data source

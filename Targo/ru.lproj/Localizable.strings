@@ -129,3 +129,16 @@
 "profile_item_my_cards" = "Мои карты";
 
 "minutes" = "минут";
+
+
+"photo_action_choose" = "Выбрать фото";
+
+"photo_action_take" = "Сделать фото";
+
+"photo_library_unavailable_title" = "Нет доступа к Фото";
+
+"photo_library_unavailable_message" = "Не удалось получить доступ к Фото на вашем устройстве";
+
+"camera_unavailable_title" = "Нет доступа к камере";
+
+"camera_unavailable_message" = "Не удалось получить доступ к Камере на вашем устройстве";

@@ -22,7 +22,7 @@ class TCompanyAddressesPage: Mappable {
     
     var companies = [TCompanyAddress]()
     
-    var images = [TCompanyImage]()
+    var images = [TImage]()
     
     
     required convenience init?(_ map: Map) {

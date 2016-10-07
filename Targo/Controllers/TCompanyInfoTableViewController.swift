@@ -30,7 +30,7 @@ class TCompanyInfoTableViewController: UITableViewController {
     
     var company: TCompanyAddress?
     
-    var companyImage: TCompanyImage?
+    var companyImage: TImage?
     
     var itemsSource = TableViewDataSource()
     
@@ -329,7 +329,7 @@ class TCompanyInfoTableViewController: UITableViewController {
             
             viewCell.addBlurEffect()
             
-            if let companyImage = item.item as? TCompanyImage {
+            if let companyImage = item.item as? TImage {
                 
                 let filter = AspectScaledToFillSizeFilter(size: viewCell.companyImage.bounds.size)
                 viewCell.companyImage.af_setImageWithURL(NSURL(string: companyImage.url)!, filter: filter)

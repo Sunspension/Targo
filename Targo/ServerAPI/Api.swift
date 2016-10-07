@@ -246,7 +246,7 @@ struct Api {
                     
                     print(response.result.value)
                 }
-                .responseObject("data.user") { (response: Response<User, TargoError>) in
+                .responseObject("data") { (response: Response<User, TargoError>) in
                     
                     guard let _ = response.result.value else {
                         
@@ -517,9 +517,9 @@ struct Api {
         return p.future
     }
     
-    func loadImageById(imageId: Int) -> Future<TCompanyImage, TargoError> {
+    func loadImageById(imageId: Int) -> Future<TImage, TargoError> {
         
-        let p = Promise<TCompanyImage, TargoError>()
+        let p = Promise<TImage, TargoError>()
         
         server.loadImageById(imageId)
             
@@ -527,7 +527,7 @@ struct Api {
                 
                 print(response.result.value)
                 
-            }.responseObject("data.image") { (response: Response<TCompanyImage, TargoError>) in
+            }.responseObject("data.image") { (response: Response<TImage, TargoError>) in
                 
                 guard let _ = response.result.value else {
                     
@@ -541,9 +541,9 @@ struct Api {
         return p.future
     }
     
-    func loadImagesByIds(imageIds: [Int]) -> Future<[TCompanyImage], TargoError> {
+    func loadImagesByIds(imageIds: [Int]) -> Future<[TImage], TargoError> {
         
-        let p = Promise<[TCompanyImage], TargoError>()
+        let p = Promise<[TImage], TargoError>()
         
         server.loadImagesByIds(imageIds)
             
@@ -551,7 +551,7 @@ struct Api {
             
                 print(response.result.value)
                 
-            }.responseArray("data.image") { (response: Response<[TCompanyImage], TargoError>) in
+            }.responseArray("data.image") { (response: Response<[TImage], TargoError>) in
                 
                 guard let _ = response.result.value else {
                     
@@ -751,9 +751,17 @@ struct Api {
                 
             case .Success(let upload, _, _):
                 
-                upload.responseJSON { response in
-                    
-                        print(response.result.value)
+                upload
+                    .responseJSON { response in
+                        
+                        if let error = response.result.error {
+                            
+                            print("Error: \(error)")
+                        }
+                        else {
+                            
+                            print(response.result.value)
+                        }
                     }
                     .responseObject("data") { (response: Response<TImageUploadResponse, TargoError>) in
                         
@@ -771,6 +779,30 @@ struct Api {
                 p.failure(TargoError.UndefinedError(message: "Encoding error"))
                 print(encodingError)
             }
+        }
+        
+        return p.future
+    }
+    
+    func applyUserImage(userId: Int, imageId: Int) -> Future<User, TargoError> {
+        
+        let p = Promise<User, TargoError>()
+        
+        server.applyUserImage(userId, imageId: imageId)
+            
+            .responseJSON { response in
+                
+                print(response.result.value)
+            }
+            .responseObject("data") { (response: Response<User, TargoError>) in
+                
+                guard let _ = response.result.value else {
+                    
+                    p.failure(response.result.error!)
+                    return
+                }
+                
+                p.success(response.result.value!)
         }
         
         return p.future

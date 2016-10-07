@@ -32,7 +32,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
     
     var company: TCompanyAddress?
     
-    var companyImage: TCompanyImage?
+    var companyImage: TImage?
     
     var dataSource = TableViewDataSource()
     
@@ -306,7 +306,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
             viewCell.point.hidden = true
             viewCell.title.hidden = true
             
-            if let companyImage = item.item as? TCompanyImage {
+            if let companyImage = item.item as? TImage {
                 
                 let filter = AspectScaledToFillSizeFilter(size: viewCell.companyImage.bounds.size)
                 viewCell.companyImage.af_setImageWithURL(NSURL(string: companyImage.url)!, filter: filter)
@@ -360,7 +360,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
 //            
 //            let item = self.itemsSource.sections[indexPath.section].items[indexPath.row]
 //            
-//            if let companyImage = item.item as? TCompanyImage {
+//            if let companyImage = item.item as? TImage {
 //                
 //                let filter = AspectScaledToFillSizeFilter(size: viewCell.companyImage.bounds.size)
 //                viewCell.companyImage.af_setImageWithURL(NSURL(string: companyImage.url)!, filter: filter)

@@ -42,7 +42,7 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
     
     private var mapsMarkers = Array<GMSMarker>()
     
-    var images: [TCompanyImage]?
+    var images: [TImage]?
     
     var selectedMarker: GMSMarker?
     

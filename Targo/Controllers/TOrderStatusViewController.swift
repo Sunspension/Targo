@@ -49,7 +49,7 @@ class TOrderStatusViewController: UIViewController {
     
     var companyName: String?
     
-    var companyImage: TCompanyImage?
+    var companyImage: TImage?
     
     var reason: OrderStatusOpenReasonEnum = .Undefined
     
