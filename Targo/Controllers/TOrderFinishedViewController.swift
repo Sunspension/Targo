@@ -30,6 +30,9 @@ class TOrderFinishedViewController: UIViewController {
         self.tableView.dataSource = self.dataSource
         self.tableView.allowsSelection = false
         
+        self.tableView.registerNib(UINib(nibName: "TOrderRatingTableViewCell", bundle: nil),
+                                   forCellReuseIdentifier: "OrderRatingCell")
+        
         self.title = "Оцените заказ"
         
         self.navigationItem.hidesBackButton = true
@@ -91,19 +94,30 @@ class TOrderFinishedViewController: UIViewController {
                                                                 viewCell.contentView.backgroundColor = color
         }
         
-        section.initializeCellWithReusableIdentifierOrNibName("OrderShareCell", item: nil) { (cell, item) in
+        section.initializeCellWithReusableIdentifierOrNibName("OrderRatingCell", item: nil) { (cell, item) in
             
-            let viewCell = cell as! TOrderShareTableViewCell
-            viewCell.shareImage.image = UIImage(named: "stars")
-            viewCell.title.text = "Оцените заказ"
+            let viewCell = cell as! TOrderRatingTableViewCell
+            viewCell.unratedColor = UIColor.lightGrayColor()
+            viewCell.ratedColor = UIColor(hexString: "#FAAE00")
+            viewCell.title.text = "order_rating_title".localized
+            
+            var rating = item.userData as? Int
+            
+            if rating == nil {
+                
+                item.userData = 0
+                rating = 0
+            }
+            
+            viewCell.rating = rating!
         }
         
-        section.initializeCellWithReusableIdentifierOrNibName("OrderShareCell", item: nil) { (cell, item) in
-            
-            let viewCell = cell as! TOrderShareTableViewCell
-            viewCell.shareImage.image = UIImage(named: "social")
-            viewCell.title.text = "Рассказать друзьям"
-        }
+//        section.initializeCellWithReusableIdentifierOrNibName("OrderShareCell", item: nil) { (cell, item) in
+//            
+//            let viewCell = cell as! TOrderShareTableViewCell
+//            viewCell.shareImage.image = UIImage(named: "social")
+//            viewCell.title.text = "Рассказать друзьям"
+//        }
         
         self.dataSource.sections.append(section)
         

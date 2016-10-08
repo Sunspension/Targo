@@ -17,9 +17,7 @@
                 <frame key="frameInset" width="320" height="239"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-avatar" translatesAutoresizingMaskIntoConstraints="NO" id="7KR-fC-sa7">
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                    </imageView>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7KR-fC-sa7"/>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Grigory Borozdin" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2gr-uy-AM2">
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="VS1-kc-CkJ"/>
@@ -32,7 +30,6 @@
                         <constraints>
                             <constraint firstAttribute="width" secondItem="Ria-bV-K0v" secondAttribute="height" multiplier="1:1" id="7or-qz-1Eg"/>
                         </constraints>
-                        <state key="normal" image="icon-avatar"/>
                     </button>
                 </subviews>
                 <constraints>
@@ -57,7 +54,4 @@
             <point key="canvasLocation" x="69" y="-17"/>
         </tableViewCell>
     </objects>
-    <resources>
-        <image name="icon-avatar" width="320" height="320"/>
-    </resources>
 </document>

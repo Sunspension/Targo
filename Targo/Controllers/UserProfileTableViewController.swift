@@ -17,16 +17,19 @@ private enum ItemTypeEnum {
     
     case UserInfo
     
-    case Infromation
+    case Information
     
     case MyCards
     
     case Logout
+    
+    case Settings
 }
 
 
 class UserProfileTableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
+    
     var dataSource = TableViewDataSource()
     
     let identifier = "default"
@@ -39,14 +42,31 @@ class UserProfileTableViewController: UITableViewController, UIImagePickerContro
     
     var user: User?
     
+    let realm = try! Realm()
+    
+    
+    override func viewWillDisappear(animated: Bool) {
+        
+        super.viewWillDisappear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
+    deinit {
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.tableView.setup()
         self.setup()
-        
-        let realm = try! Realm()
         
         if let user = realm.objects(User).first {
             
@@ -60,9 +80,9 @@ class UserProfileTableViewController: UITableViewController, UIImagePickerContro
                 self.user = user
                 self.tableView.reloadData()
                 
-                try! realm.write({
+                try! self.realm.write({
                     
-                    realm.add(user, update: true)
+                    self.realm.add(user, update: true)
                 })
             }
             .onFailure { error in
@@ -71,7 +91,7 @@ class UserProfileTableViewController: UITableViewController, UIImagePickerContro
             }
         
         let backgroundView = UIView()
-        backgroundView.backgroundColor = UIColor(red: 0 / 255, green: 0 / 255, blue: 80 / 255, alpha: 0.1)
+        backgroundView.backgroundColor = UIColor(hexString: kHexTableViewBackground)
         self.tableView.backgroundView = backgroundView
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "",
@@ -100,7 +120,7 @@ class UserProfileTableViewController: UITableViewController, UIImagePickerContro
             
             if (item.itemType as! ItemTypeEnum) == .Logout {
                 
-                cell.textLabel?.textAlignment = .Center
+//                cell.textLabel?.textAlignment = .Center
                 cell.textLabel?.textColor = UIColor(hexString: kHexMainPinkColor)
             }
             
@@ -122,30 +142,35 @@ class UserProfileTableViewController: UITableViewController, UIImagePickerContro
                                                                 
                                                                 if let user = self.user {
                                                                     
+                                                                    viewCell.labelUserName.text = user.firstName + " " + user.lastName
+                                                                    
                                                                     if let image = user.image {
                                                                         
                                                                         let urlRequest = NSMutableURLRequest(URL: NSURL(string: image.url)!)
                                                                         
                                                                         let filter = AspectScaledToFillSizeFilter(size: viewCell.imageViewBlur.bounds.size)
                                                                         
+                                                                        SwiftOverlays.showCenteredWaitOverlay(viewCell)
+                                                                        
                                                                         self.downloader.downloadImage(URLRequest: urlRequest,
                                                                                                  filter: filter,
                                                                                                  completion: { response in
-                                                                            
-                                                                            guard response.result.error == nil else {
-                                                                                
-                                                                                return
-                                                                            }
-                                                                            
-                                                                            viewCell.imageViewBlur.image = response.result.value!.applyBlurWithRadius(5,
-                                                                                tintColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0.4),
-                                                                                saturationDeltaFactor: 1,
-                                                                                maskImage: nil)
-                                                                            
-                                                                            viewCell.buttonAvatar.setImage(response.result.value!, forState: .Normal)
-                                                                            let layer = viewCell.buttonAvatar.layer
-                                                                            layer.borderColor = UIColor.whiteColor().CGColor
-                                                                            layer.borderWidth = 2
+                                                                        
+                                                                                                    SwiftOverlays.removeAllOverlaysFromView(viewCell)
+                                                                                                    guard response.result.error == nil else {
+                                                                                                        
+                                                                                                        return
+                                                                                                    }
+                                                                                                    
+                                                                                                    viewCell.imageViewBlur.image = response.result.value!.applyBlurWithRadius(5,
+                                                                                                        tintColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0.4),
+                                                                                                        saturationDeltaFactor: 1,
+                                                                                                        maskImage: nil)
+                                                                                                    
+                                                                                                    viewCell.buttonAvatar.setImage(response.result.value!, forState: .Normal)
+                                                                                                    let layer = viewCell.buttonAvatar.layer
+                                                                                                    layer.borderColor = UIColor.whiteColor().CGColor
+                                                                                                    layer.borderWidth = 2
                                                                         })
                                                                     }
                                                                 }
@@ -166,7 +191,13 @@ class UserProfileTableViewController: UITableViewController, UIImagePickerContro
         mainSection.initializeDefaultCell(identifier,
                                           cellStyle: .Default,
                                           item: "profile_item_information".localized,
-                                          itemType: ItemTypeEnum.Infromation,
+                                          itemType: ItemTypeEnum.Information,
+                                          bindingAction: bindingClosure)
+        
+        mainSection.initializeDefaultCell(identifier,
+                                          cellStyle: .Default,
+                                          item: "profile_item_settings".localized,
+                                          itemType: ItemTypeEnum.Settings,
                                           bindingAction: bindingClosure)
         
         let logout = CollectionSection()
@@ -181,6 +212,11 @@ class UserProfileTableViewController: UITableViewController, UIImagePickerContro
         self.tableView.dataSource = self.dataSource
         self.tableView.delegate = self
         self.tableView.tableFooterView = UIView()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector: #selector(self.onUserDidUpdateNotification),
+                                                         name: kTargoDidUpdateUserProfileNotification,
+                                                         object: nil)
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -196,6 +232,16 @@ class UserProfileTableViewController: UITableViewController, UIImagePickerContro
         case .MyCards:
             
             if let controller = self.instantiateViewControllerWithIdentifierOrNibName("UserCreditCards") {
+                
+                controller.title = "profile_item_my_cards".localized
+                self.navigationController?.pushViewController(controller, animated: true)
+            }
+            
+            break
+            
+        case .Settings:
+            
+            if let controller = self.instantiateViewControllerWithIdentifierOrNibName("EditSetting") {
                 
                 controller.title = "profile_item_my_cards".localized
                 self.navigationController?.pushViewController(controller, animated: true)
@@ -238,6 +284,12 @@ class UserProfileTableViewController: UITableViewController, UIImagePickerContro
         default:
             return 40
         }
+    }
+    
+    func onUserDidUpdateNotification() {
+        
+        self.user = self.realm.objects(User).last
+        self.tableView.reloadData()
     }
     
     func changePhoto() {

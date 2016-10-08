@@ -65,4 +65,6 @@ protocol PRemoteServerV1 {
     func uploadImage(image: UIImage, encodingCompletion: (Manager.MultipartFormDataEncodingResult -> Void)?)
     
     func applyUserImage(userId: Int, imageId: Int) -> Request
+    
+    func updateUserInformation(userId: Int, firstName: String?, lastName: String?, email: String?) -> Request
 }

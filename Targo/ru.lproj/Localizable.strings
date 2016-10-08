@@ -83,6 +83,10 @@
 
 "action_more" = "Подробнее";
 
+"action_done" = "Готово";
+
+"action_save" = "Сохранить";
+
 
 "company_info_make_call_title" = "Позвонить";
 
@@ -118,6 +122,8 @@
 
 "order_number_of_persons_title" = "Количество персон";
 
+"order_rating_title" = "Оцените заказ";
+
 "search_place_holder" = "Найти любимое место";
 
 "feed_title" = "Лента";
@@ -127,6 +133,8 @@
 "profile_item_information" = "Информация";
 
 "profile_item_my_cards" = "Мои карты";
+
+"profile_item_settings" = "Настройки";
 
 "minutes" = "минут";
 
@@ -142,3 +150,17 @@
 "camera_unavailable_title" = "Нет доступа к камере";
 
 "camera_unavailable_message" = "Не удалось получить доступ к Камере на вашем устройстве";
+
+"settings_personal_data_title" = "Персональные данные";
+
+"settings_contact_data_title" = "Контактные данные";
+
+"settings_user_first_name" = "Имя";
+
+"settings_user_last_name" = "Фамилия";
+
+"settings_user_email" = "Email";
+
+"settings_user_phone" = "Телефон";
+
+"settings_user_update_profile_error" = "Не удалось сохранить изменения";

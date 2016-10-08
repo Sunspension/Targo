@@ -20,9 +20,11 @@ let kTargodidChangeAuthorizationStatus = "kTargodidChangeAuthorizationStatus"
 let kTargoDidLoadOrdersNotification = "kTargoDidLoadOrdersNotification"
 let kTargoUserDidCancelOrderNotification = "kTargoUserDidCancelOrderNotification"
 let kTargoDidAddNewCardNotification = "kTargoDidAddNewCardNotification"
+let kTargoDidUpdateUserProfileNotification = "kTargoDidUpdateUserProfileNotification"
 
 // Colors
 let kHexLoginTextColor = "#625375"
+let kHexTableViewBackground = "#EFEFF4"
 let kHexMainPinkColor = "#CD0079"
 
 let kDateTimeFormat = "yyyy-MM-dd HH:mm:ss"

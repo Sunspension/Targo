@@ -807,4 +807,28 @@ struct Api {
         
         return p.future
     }
+    
+    func updateUserInformation(userId: Int, firstName: String?, lastName: String?, email: String?) -> Future<User, TargoError> {
+        
+        let p = Promise<User, TargoError>()
+        
+        server.updateUserInformation(userId, firstName: firstName, lastName: lastName, email: email)
+            
+            .responseJSON { response in
+                
+                print(response.result.value)
+            }
+            .responseObject("data") { (response: Response<User, TargoError>) in
+                
+                guard let _ = response.result.value else {
+                    
+                    p.failure(response.result.error!)
+                    return
+                }
+                
+                p.success(response.result.value!)
+        }
+        
+        return p.future
+    }
 }

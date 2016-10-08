@@ -44,6 +44,11 @@
 		D42AF22C1DA5A97900F20945 /* TImageUploadResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42AF22B1DA5A97900F20945 /* TImageUploadResponse.swift */; };
 		D42F190E1D764A3F0091C3E1 /* TOrderDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42F190C1D764A3F0091C3E1 /* TOrderDescriptionTableViewCell.swift */; };
 		D42F190F1D764A3F0091C3E1 /* TOrderDescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D42F190D1D764A3F0091C3E1 /* TOrderDescriptionTableViewCell.xib */; };
+		D447B5F71DA8E1AA0002B91A /* TSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D447B5F61DA8E1AA0002B91A /* TSettingsTableViewController.swift */; };
+		D447B5FE1DA8F0850002B91A /* TSettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D447B5FD1DA8F0850002B91A /* TSettingsTableViewCell.swift */; };
+		D447B6011DA9055C0002B91A /* TSettingsPhoneTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D447B6001DA9055C0002B91A /* TSettingsPhoneTableViewCell.swift */; };
+		D447B6051DA939750002B91A /* TOrderRatingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D447B6031DA939750002B91A /* TOrderRatingTableViewCell.swift */; };
+		D447B6061DA939750002B91A /* TOrderRatingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D447B6041DA939750002B91A /* TOrderRatingTableViewCell.xib */; };
 		D44930921D49494800ADF70A /* TTestOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44930911D49494800ADF70A /* TTestOrder.swift */; };
 		D44930941D495D5100ADF70A /* TAddCreditCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44930931D495D5100ADF70A /* TAddCreditCardViewController.swift */; };
 		D449864B1D8EF48B007C9AF0 /* TFeedPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D449864A1D8EF48B007C9AF0 /* TFeedPage.swift */; };
@@ -165,6 +170,11 @@
 		D42AF22B1DA5A97900F20945 /* TImageUploadResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TImageUploadResponse.swift; path = Models/Response/TImageUploadResponse.swift; sourceTree = "<group>"; };
 		D42F190C1D764A3F0091C3E1 /* TOrderDescriptionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TOrderDescriptionTableViewCell.swift; sourceTree = "<group>"; };
 		D42F190D1D764A3F0091C3E1 /* TOrderDescriptionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TOrderDescriptionTableViewCell.xib; sourceTree = "<group>"; };
+		D447B5F61DA8E1AA0002B91A /* TSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TSettingsTableViewController.swift; sourceTree = "<group>"; };
+		D447B5FD1DA8F0850002B91A /* TSettingsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TSettingsTableViewCell.swift; sourceTree = "<group>"; };
+		D447B6001DA9055C0002B91A /* TSettingsPhoneTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TSettingsPhoneTableViewCell.swift; sourceTree = "<group>"; };
+		D447B6031DA939750002B91A /* TOrderRatingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TOrderRatingTableViewCell.swift; sourceTree = "<group>"; };
+		D447B6041DA939750002B91A /* TOrderRatingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TOrderRatingTableViewCell.xib; sourceTree = "<group>"; };
 		D44930911D49494800ADF70A /* TTestOrder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TTestOrder.swift; path = Models/Response/TTestOrder.swift; sourceTree = "<group>"; };
 		D44930931D495D5100ADF70A /* TAddCreditCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TAddCreditCardViewController.swift; sourceTree = "<group>"; };
 		D449864A1D8EF48B007C9AF0 /* TFeedPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TFeedPage.swift; path = Models/Response/TFeedPage.swift; sourceTree = "<group>"; };
@@ -330,6 +340,68 @@
 			name = CustomViews;
 			sourceTree = "<group>";
 		};
+		D447B5F81DA8E1CF0002B91A /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				D447B5F61DA8E1AA0002B91A /* TSettingsTableViewController.swift */,
+				D41F59CB1D32CDA80075568D /* UserProfileTableViewController.swift */,
+			);
+			name = Profile;
+			sourceTree = "<group>";
+		};
+		D447B5F91DA8E1E50002B91A /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				D4C2A0AB1D343ED50090BAFC /* CompanySearchTableViewController.swift */,
+			);
+			name = Search;
+			sourceTree = "<group>";
+		};
+		D447B5FA1DA8E2080002B91A /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				D469B2371D8EE6E200D41DC6 /* TFeedDetailsTableViewController.swift */,
+				D4EE59661D3AFE1E0002022F /* TFeedTableViewController.swift */,
+			);
+			name = Feed;
+			sourceTree = "<group>";
+		};
+		D447B5FB1DA8E2270002B91A /* Maps */ = {
+			isa = PBXGroup;
+			children = (
+				D46AC7331D43DB1F009C08D4 /* TCompaniesOnMapsViewController.swift */,
+			);
+			name = Maps;
+			sourceTree = "<group>";
+		};
+		D447B5FC1DA8E2500002B91A /* Registration */ = {
+			isa = PBXGroup;
+			children = (
+				D41F36061D2855C8001896A2 /* LoginViewController.swift */,
+				D49C7E881D281DB1004408AF /* RegistrationPhoneViewController.swift */,
+				D420B2CA1D293748003FDC83 /* RegistrationCodeViewController.swift */,
+			);
+			name = Registration;
+			sourceTree = "<group>";
+		};
+		D447B5FF1DA905310002B91A /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				D447B5FD1DA8F0850002B91A /* TSettingsTableViewCell.swift */,
+				D447B6001DA9055C0002B91A /* TSettingsPhoneTableViewCell.swift */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
+		D447B6021DA939400002B91A /* Order */ = {
+			isa = PBXGroup;
+			children = (
+				D447B6031DA939750002B91A /* TOrderRatingTableViewCell.swift */,
+				D447B6041DA939750002B91A /* TOrderRatingTableViewCell.xib */,
+			);
+			name = Order;
+			sourceTree = "<group>";
+		};
 		D464027C1D21CBE200644463 /* ServerAPI */ = {
 			isa = PBXGroup;
 			children = (
@@ -351,6 +423,8 @@
 		D470DFB71D384D44003473E6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D447B6021DA939400002B91A /* Order */,
+				D447B5FF1DA905310002B91A /* Settings */,
 				D42AF2211DA589DF00F20945 /* CustomViews */,
 				D42AF21C1DA587F300F20945 /* Profile */,
 				D4A392091D6BBBF2005B2047 /* THistoryOrderItemTableViewCell.swift */,
@@ -401,23 +475,20 @@
 		D49C7E871D281D7F004408AF /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				D41F36061D2855C8001896A2 /* LoginViewController.swift */,
-				D49C7E881D281DB1004408AF /* RegistrationPhoneViewController.swift */,
-				D420B2CA1D293748003FDC83 /* RegistrationCodeViewController.swift */,
-				D41F59CB1D32CDA80075568D /* UserProfileTableViewController.swift */,
-				D4C2A0AB1D343ED50090BAFC /* CompanySearchTableViewController.swift */,
+				D447B5FC1DA8E2500002B91A /* Registration */,
+				D447B5FB1DA8E2270002B91A /* Maps */,
+				D447B5FA1DA8E2080002B91A /* Feed */,
+				D447B5F91DA8E1E50002B91A /* Search */,
+				D447B5F81DA8E1CF0002B91A /* Profile */,
 				D4EE59621D3AFAF40002022F /* TTabBarController.swift */,
 				D4EE59641D3AFDE30002022F /* TOrdersTableViewController.swift */,
-				D4EE59661D3AFE1E0002022F /* TFeedTableViewController.swift */,
 				D4EE59681D3AFEE90002022F /* TCompanyMenuTableViewController.swift */,
-				D46AC7331D43DB1F009C08D4 /* TCompaniesOnMapsViewController.swift */,
 				D41D9D8D1D46A1AB00358961 /* TCompanyInfoTableViewController.swift */,
 				D44930931D495D5100ADF70A /* TAddCreditCardViewController.swift */,
 				D45F9FA91D6101FD00623A34 /* TOrderReviewViewController.swift */,
 				D46A4C5A1D63BF6D003CF2F9 /* TUserCreditCardsTableViewController.swift */,
 				D4151E111D688D0B00DB26C0 /* TOrderStatusViewController.swift */,
 				D413357C1D6E4FCE00542BA1 /* TOrderBillTableViewController.swift */,
-				D469B2371D8EE6E200D41DC6 /* TFeedDetailsTableViewController.swift */,
 				D4553CE31D932985009A3E16 /* TOrderFinishedViewController.swift */,
 			);
 			path = Controllers;
@@ -659,6 +730,7 @@
 				D4F464DC1D402F08009015FC /* TCompanyMenuHeaderView.xib in Resources */,
 				D42AF22A1DA5956A00F20945 /* TUserProfileHeaderTableViewCell.xib in Resources */,
 				D40E10291D3ECE260012DCF4 /* TCompanySearchTableViewCell.xib in Resources */,
+				D447B6061DA939750002B91A /* TOrderRatingTableViewCell.xib in Resources */,
 				D41D9D981D46BA3600358961 /* TCompanyInfoContactsHeader.xib in Resources */,
 				D4DD9DDA1D41830A009C28D5 /* TMenuItemSmallTableViewCell.xib in Resources */,
 				D42F190F1D764A3F0091C3E1 /* TOrderDescriptionTableViewCell.xib in Resources */,
@@ -773,6 +845,7 @@
 			files = (
 				D467AED61D2B0F7100319966 /* AppSettings.swift in Sources */,
 				D41F36071D2855C8001896A2 /* LoginViewController.swift in Sources */,
+				D447B6051DA939750002B91A /* TOrderRatingTableViewCell.swift in Sources */,
 				D41F59C81D3294D00075568D /* CollectionSectionItem.swift in Sources */,
 				D4F464D31D40096A009015FC /* TCompanyMenuPage.swift in Sources */,
 				D41D9D961D46BA2500358961 /* TCompanyInfoContactsHeader.swift in Sources */,
@@ -814,6 +887,7 @@
 				D4F213701D6E570100D94B62 /* TBillMenuItemTableViewCell.swift in Sources */,
 				D469B2341D8EA2C100D41DC6 /* TFeedTargoNewsTableViewCell.swift in Sources */,
 				D4F464DA1D402EF3009015FC /* TCompanyMenuHeaderView.swift in Sources */,
+				D447B5F71DA8E1AA0002B91A /* TSettingsTableViewController.swift in Sources */,
 				D4553CE41D932985009A3E16 /* TOrderFinishedViewController.swift in Sources */,
 				D46A4C591D63B363003CF2F9 /* TDeliveryMethodTableViewCell.swift in Sources */,
 				E5EEEF541DA242FC009ADF7E /* TAddRemoveBookmarkResponse.swift in Sources */,
@@ -837,6 +911,7 @@
 				D41C3A251D6F87FE00539ABD /* TOrderLoader.swift in Sources */,
 				D469B2321D8EA2A800D41DC6 /* TFeedCompanyNewsTableViewCell.swift in Sources */,
 				D4EE59691D3AFEE90002022F /* TCompanyMenuTableViewController.swift in Sources */,
+				D447B5FE1DA8F0850002B91A /* TSettingsTableViewCell.swift in Sources */,
 				D41D9D9A1D46C4F400358961 /* TCompanyAboutTableViewCell.swift in Sources */,
 				D4EE59631D3AFAF40002022F /* TTabBarController.swift in Sources */,
 				D42F190E1D764A3F0091C3E1 /* TOrderDescriptionTableViewCell.swift in Sources */,
@@ -859,6 +934,7 @@
 				D4B96F7B1D244DBA00294A4B /* PRemoteServerV1.swift in Sources */,
 				D40301741D397F5100B7B610 /* HTTPManager.swift in Sources */,
 				D4EE59601D3AC98A0002022F /* TCompanyImage.swift in Sources */,
+				D447B6011DA9055C0002B91A /* TSettingsPhoneTableViewCell.swift in Sources */,
 				D41F59CA1D32C6F00075568D /* GenericCollectionSection.swift in Sources */,
 				D4151E191D689F5900DB26C0 /* RealmString.swift in Sources */,
 				D4FD14041D441BD300AC9722 /* TShortCompanyOnMapInfo.swift in Sources */,

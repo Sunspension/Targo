@@ -292,6 +292,28 @@ struct TRemoteServer: PRemoteServerV1 {
         return self.request(.PUT, remotePath: baseURLString + "/user/\(userId)", parameters: ["image_id" : imageId])
     }
     
+    func updateUserInformation(userId: Int, firstName: String?, lastName: String?, email: String?) -> Request {
+        
+        var params = [String : AnyObject]()
+        
+        if let firstName = firstName {
+            
+            params["first_name"] = firstName
+        }
+        
+        if let lastName = lastName {
+            
+            params["last_name"] = lastName
+        }
+        
+        if let email = email {
+            
+            params["email"] = email
+        }
+        
+        return self.request(.PUT, remotePath: baseURLString + "/user/\(userId)", parameters: params)
+    }
+    
     // MARK: - Private methods
     
     private func request(method: Alamofire.Method, remotePath: URLStringConvertible) -> Request {

@@ -84,6 +84,9 @@
 
 "action_more" = "More";
 
+"action_done" = "Done";
+
+"action_save" = "Save";
 
 
 "company_info_make_call_title" = "Make call";
@@ -120,6 +123,8 @@
 
 "order_number_of_persons_title" = "Number of persons";
 
+"order_rating_title" = "Rate the order";
+
 "search_place_holder" = "Find your favorite place";
 
 "feed_title" = "Feed";
@@ -129,6 +134,8 @@
 "profile_item_information" = "Information";
 
 "profile_item_my_cards" = "My cards";
+
+"profile_item_settings" = "Settings";
 
 "minutes" = "minutes";
 
@@ -144,3 +151,17 @@
 "camera_unavailable_title" = "Camera unavailable";
 
 "camera_unavailable_message" = "Unable to get access to Camera on your device";
+
+"settings_user_first_name" = "First Name";
+
+"settings_user_last_name" = "Last Name";
+
+"settings_user_email" = "Email";
+
+"settings_user_phone" = "Phone";
+
+"settings_personal_data_title" = "Personal data";
+
+"settings_contact_data_title" = "Contact data";
+
+"settings_user_update_profile_error" = "Couldn't save changes";

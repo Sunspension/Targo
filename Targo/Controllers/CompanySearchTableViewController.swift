@@ -79,7 +79,7 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         self.tableView.setup()
         
         let backgroundView = UIView()
-        backgroundView.backgroundColor = UIColor(red: 0 / 255, green: 0 / 255, blue: 80 / 255, alpha: 0.1)
+        backgroundView.backgroundColor = UIColor(hexString: kHexTableViewBackground)
         self.tableView.backgroundView = backgroundView
         self.setup()
         
