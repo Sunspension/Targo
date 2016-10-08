@@ -10,7 +10,12 @@ import UIKit
 
 extension TCompanyAddress {
     
-    var todayWorkingHours: [String] {
+    var todayWorkingHours: [String]? {
+        
+        if self.workingTime.count < 6 {
+            
+            return nil
+        }
         
         let correctionArray = [7, 1, 2, 3, 4, 5, 6]
         
@@ -18,6 +23,6 @@ extension TCompanyAddress {
         
         let index = correctionArray[weekDay - 1]
         
-        return self.wokingTime[index]
+        return self.workingTime[index - 1]
     }
 }

@@ -8,6 +8,7 @@
 
 import UIKit
 import DynamicColor
+import SwiftOverlays
 
 class TOrderFinishedViewController: UIViewController {
 
@@ -21,6 +22,8 @@ class TOrderFinishedViewController: UIViewController {
     
     var companyName: String?
     
+    var ratingMark: Int?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +36,7 @@ class TOrderFinishedViewController: UIViewController {
         self.tableView.registerNib(UINib(nibName: "TOrderRatingTableViewCell", bundle: nil),
                                    forCellReuseIdentifier: "OrderRatingCell")
         
-        self.title = "Оцените заказ"
+        self.title = "order_rating_title".localized
         
         self.navigationItem.hidesBackButton = true
         
@@ -110,23 +113,46 @@ class TOrderFinishedViewController: UIViewController {
             }
             
             viewCell.rating = rating!
+            viewCell.ratingDidSetAction = { ratingMark in
+            
+                self.ratingMark = ratingMark
+                item.userData = ratingMark
+            }
         }
         
-//        section.initializeCellWithReusableIdentifierOrNibName("OrderShareCell", item: nil) { (cell, item) in
-//            
-//            let viewCell = cell as! TOrderShareTableViewCell
-//            viewCell.shareImage.image = UIImage(named: "social")
-//            viewCell.title.text = "Рассказать друзьям"
-//        }
-        
         self.dataSource.sections.append(section)
-        
-        // Do any additional setup after loading the view.
     }
 
     func closeAction() {
         
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        if self.ratingMark != nil {
+            
+            if let superview = self.view.superview {
+                
+                SwiftOverlays.showCenteredWaitOverlay(superview)
+            }
+            
+            Api.sharedInstance.setCompanyRating(self.shopOrder!.id, mark: self.ratingMark!)
+                .onSuccess(callback: { order in
+                
+                    if let superview = self.view.superview {
+                        
+                        SwiftOverlays.removeAllOverlaysFromView(superview)
+                    }
+                    
+                    self.navigationController?.popToRootViewControllerAnimated(true)
+                })
+                .onFailure(callback: { (error) in
+                    
+                    if let superview = self.view.superview {
+                        
+                        SwiftOverlays.removeAllOverlaysFromView(superview)
+                    }
+                    
+                    self.showOkAlert("error".localized, message: "order_rating_set_error".localized)
+                    print(error)
+                })
+        }
     }
     
     override func didReceiveMemoryWarning() {

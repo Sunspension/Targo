@@ -165,15 +165,15 @@ class TOrderStatusViewController: UIViewController {
     
     func openBill() {
         
-        if let controller = self.instantiateViewControllerWithIdentifierOrNibName("OrderFinished") as? TOrderFinishedViewController {
-            
-            controller.companyName = self.companyName
-            controller.shopOrder = self.shopOrder
-            
-            self.navigationController?.pushViewController(controller, animated: true)
-        }
-        
-        return
+//        if let controller = self.instantiateViewControllerWithIdentifierOrNibName("OrderFinished") as? TOrderFinishedViewController {
+//            
+//            controller.companyName = self.companyName
+//            controller.shopOrder = self.shopOrder
+//            
+//            self.navigationController?.pushViewController(controller, animated: true)
+//        }
+//        
+//        return
         
         if let controller = self.instantiateViewControllerWithIdentifierOrNibName("OrderBill") as? TOrderBillTableViewController {
             

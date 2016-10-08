@@ -151,6 +151,8 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        self.loadCompanyAddress()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -315,6 +317,12 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
                         self.canLoadNext = true
                         self.pageNumber += 1
                     }
+                    else {
+                        
+                        // reset counter
+                        self.pageNumber = 1
+                        self.canLoadNext = false
+                    }
                     
                     if let superview = self.view.superview {
                         
@@ -345,8 +353,21 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         
         if self.userLocation == nil {
             
-            self.loadingStatus = .Failed
-            return
+            if let location = TLocationManager.sharedInstance.previousSuccessLocation {
+                
+                self.userLocation = location
+            }
+            else {
+                
+                if forceRefresh {
+                    
+                    self.refreshControl?.endRefreshing()
+                }
+                
+                self.loadingStatus = .Failed
+                
+                return
+            }
         }
         
         self.loadingStatus = .Loading

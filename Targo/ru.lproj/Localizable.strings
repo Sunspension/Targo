@@ -124,6 +124,8 @@
 
 "order_rating_title" = "Оцените заказ";
 
+"order_rating_set_error" = "Не удалось проголосовать";
+
 "search_place_holder" = "Найти любимое место";
 
 "feed_title" = "Лента";

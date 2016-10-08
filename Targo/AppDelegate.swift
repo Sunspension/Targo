@@ -84,22 +84,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             let defaults = NSUserDefaults.standardUserDefaults()
             
-            if defaults.boolForKey(kTargoCodeSent) == true {
-                
-                let controller = storyBoard.instantiateViewControllerWithIdentifier("RegistrationCode")
-                let navigation = UINavigationController(rootViewController: controller)
-                
-                self.window?.rootViewController = navigation
-                self.window?.makeKeyAndVisible()
-            }
-            else {
-                
-                let controller = storyBoard.instantiateViewControllerWithIdentifier("RegistrationPhone")
-                let navigation = UINavigationController(rootViewController: controller)
-                
-                self.window?.rootViewController = navigation
-                self.window?.makeKeyAndVisible()
-            }
+            // temporary solution
+            let controller = storyBoard.instantiateViewControllerWithIdentifier("RegistrationPhone")
+            let navigation = UINavigationController(rootViewController: controller)
+            
+            self.window?.rootViewController = navigation
+            self.window?.makeKeyAndVisible()
+            
+//            if defaults.boolForKey(kTargoCodeSent) == true {
+//                
+//                let controller = storyBoard.instantiateViewControllerWithIdentifier("RegistrationCode")
+//                let navigation = UINavigationController(rootViewController: controller)
+//                
+//                self.window?.rootViewController = navigation
+//                self.window?.makeKeyAndVisible()
+//            }
+//            else {
+//                
+//                let controller = storyBoard.instantiateViewControllerWithIdentifier("RegistrationPhone")
+//                let navigation = UINavigationController(rootViewController: controller)
+//                
+//                self.window?.rootViewController = navigation
+//                self.window?.makeKeyAndVisible()
+//            }
         }
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AppDelegate.logoutAction), name: kTargoUserLoggedOutSuccessfully, object: nil)

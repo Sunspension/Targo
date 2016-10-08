@@ -67,4 +67,6 @@ protocol PRemoteServerV1 {
     func applyUserImage(userId: Int, imageId: Int) -> Request
     
     func updateUserInformation(userId: Int, firstName: String?, lastName: String?, email: String?) -> Request
+    
+    func setCompanyRating(orderId: Int, mark: Int) -> Request
 }

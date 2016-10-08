@@ -63,7 +63,7 @@ class TCompanyAddress: Object, Mappable {
 
     var averageOrderTime = List<RealmInt>()
     
-    var wokingTime: [[String]] {
+    var workingTime: [[String]] {
         
         get {
             

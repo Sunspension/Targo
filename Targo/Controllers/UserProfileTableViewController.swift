@@ -167,11 +167,26 @@ class UserProfileTableViewController: UITableViewController, UIImagePickerContro
                                                                                                         saturationDeltaFactor: 1,
                                                                                                         maskImage: nil)
                                                                                                     
+//                                                                                                    viewCell.buttonAvatar.contentMode = .ScaleAspectFill
                                                                                                     viewCell.buttonAvatar.setImage(response.result.value!, forState: .Normal)
                                                                                                     let layer = viewCell.buttonAvatar.layer
                                                                                                     layer.borderColor = UIColor.whiteColor().CGColor
                                                                                                     layer.borderWidth = 2
                                                                         })
+                                                                    }
+                                                                    else {
+                                                                        
+                                                                        let defaultImage = UIImage(named: "default")
+                                                                        
+                                                                        viewCell.imageViewBlur.image = defaultImage!.applyBlurWithRadius(5,
+                                                                                                                                                     tintColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0.4),
+                                                                                                                                                     saturationDeltaFactor: 1,
+                                                                                                                                                     maskImage: nil)
+                                                                        viewCell.buttonAvatar.setImage(defaultImage, forState: .Normal)
+//                                                                        viewCell.buttonAvatar.contentMode = .ScaleAspectFit
+                                                                        let layer = viewCell.buttonAvatar.layer
+                                                                        layer.borderColor = UIColor.whiteColor().CGColor
+                                                                        layer.borderWidth = 2
                                                                     }
                                                                 }
         }
@@ -306,6 +321,7 @@ class UserProfileTableViewController: UITableViewController, UIImagePickerContro
                 library.sourceType = .PhotoLibrary
                 library.navigationBar.barTintColor = UIColor(hexString: kHexMainPinkColor)
                 library.navigationBar.tintColor = UIColor.whiteColor()
+                library.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]
                 library.allowsEditing = true
                 library.delegate = self
                 

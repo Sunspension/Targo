@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Разрешение на доступ к Фото для использования фотографий в профиле.</string>
-	<key>NSCameraUsageDescription</key>
-	<string>Разрешение на доступ к Камере для использования фотографий в профиле.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -23,7 +19,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>11</string>
+	<string>13</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -31,8 +27,12 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Разрешение на доступ к Камере для использования фотографий в профиле.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Request permission to use location service when the apps is in background.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Разрешение на доступ к Фото для использования фотографий в профиле.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

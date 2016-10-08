@@ -125,6 +125,8 @@
 
 "order_rating_title" = "Rate the order";
 
+"order_rating_set_error" = "Can't send your vote";
+
 "search_place_holder" = "Find your favorite place";
 
 "feed_title" = "Feed";

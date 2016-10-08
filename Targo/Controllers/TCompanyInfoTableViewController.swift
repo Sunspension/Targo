@@ -335,11 +335,12 @@ class TCompanyInfoTableViewController: UITableViewController {
                 viewCell.companyImage.af_setImageWithURL(NSURL(string: companyImage.url)!, filter: filter)
             }
             
-            let workingHours = self.company!.todayWorkingHours
-            
-            if workingHours.count == 2 {
+            if let workingHours = self.company!.todayWorkingHours {
                 
-                viewCell.title.text = String(format: "company_info_opened_text".localized, "\(workingHours[0]) - \(workingHours[1])")
+                if workingHours.count == 2 {
+                    
+                    viewCell.title.text = String(format: "company_info_opened_text".localized, "\(workingHours[0]) - \(workingHours[1])")
+                }
             }
             
             viewCell.selectionStyle = .None

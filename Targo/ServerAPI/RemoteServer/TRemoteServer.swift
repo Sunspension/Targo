@@ -27,7 +27,7 @@ struct TRemoteServer: PRemoteServerV1 {
     
     var baseURLString: String {
         
-        return dev
+        return prod
     }
     
     let deviceType = "ios"
@@ -312,6 +312,11 @@ struct TRemoteServer: PRemoteServerV1 {
         }
         
         return self.request(.PUT, remotePath: baseURLString + "/user/\(userId)", parameters: params)
+    }
+    
+    func setCompanyRating(orderId: Int, mark: Int) -> Request {
+        
+        return self.request(.PUT, remotePath: baseURLString + "/shop-order/\(orderId)", parameters: ["mark" : mark])
     }
     
     // MARK: - Private methods

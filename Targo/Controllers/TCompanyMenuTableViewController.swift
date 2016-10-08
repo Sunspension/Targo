@@ -325,11 +325,12 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
                 let min = company.averageOrderTime[0].value
                 let max = company.averageOrderTime[1].value
                 
-                let workingHours = self.company!.todayWorkingHours
-                
-                if workingHours.count == 2 {
-                 
-                    viewCell.setWorkingTimeAndHandlingOrder("\(workingHours[0]) - \(workingHours[1])", handlingOrder: "\(min) - \(max) " + "minutes".localized)
+                if let workingHours = self.company!.todayWorkingHours {
+                    
+                    if workingHours.count == 2 {
+                        
+                        viewCell.setWorkingTimeAndHandlingOrder("\(workingHours[0]) - \(workingHours[1])", handlingOrder: "\(min) - \(max) " + "minutes".localized)
+                    }
                 }
             }
         }

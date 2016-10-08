@@ -17,6 +17,8 @@ class TLocationManager: NSObject, CLLocationManagerDelegate {
     
     var lastLocation: CLLocation?
     
+    var previousSuccessLocation: CLLocation?
+    
     var subscribersCount: Int = 0 {
         
         didSet {
@@ -49,6 +51,8 @@ class TLocationManager: NSObject, CLLocationManagerDelegate {
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         if let location = locations.last {
+            
+            self.previousSuccessLocation = location
             
             if self.lastLocation == nil
                 || location.distanceFromLocation(self.lastLocation!) > self.distanceThreshold
