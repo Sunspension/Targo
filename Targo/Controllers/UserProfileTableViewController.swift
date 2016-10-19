@@ -11,19 +11,18 @@ import DynamicColor
 import AlamofireImage
 import SwiftOverlays
 import RealmSwift
-import Alamofire
 
 private enum ItemTypeEnum {
     
-    case UserInfo
+    case userInfo
     
-    case Information
+    case information
     
-    case MyCards
+    case myCards
     
-    case Logout
+    case logout
     
-    case Settings
+    case settings
 }
 
 
@@ -45,13 +44,13 @@ class UserProfileTableViewController: UITableViewController, UIImagePickerContro
     let realm = try! Realm()
     
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         
         super.viewWillDisappear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: false)
@@ -59,7 +58,7 @@ class UserProfileTableViewController: UITableViewController, UIImagePickerContro
     
     deinit {
         
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func viewDidLoad() {
@@ -68,7 +67,7 @@ class UserProfileTableViewController: UITableViewController, UIImagePickerContro
         self.tableView.setup()
         self.setup()
         
-        if let user = realm.objects(User).first {
+        if let user = realm.objects(User.self).first {
             
             self.user = user
         }
@@ -95,13 +94,13 @@ class UserProfileTableViewController: UITableViewController, UIImagePickerContro
         self.tableView.backgroundView = backgroundView
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "",
-                                                                style: .Plain,
+                                                                style: .plain,
                                                                 target: nil,
                                                                 action: nil)
         
         self.navigationItem.titleView = UIImageView(image: UIImage(named: "icon-logo"))
         
-        self.tableView.registerNib(UINib(nibName: "TUserProfileHeaderTableViewCell", bundle: nil), forCellReuseIdentifier: headerIdentifier)
+        self.tableView.register(UINib(nibName: "TUserProfileHeaderTableViewCell", bundle: nil), forCellReuseIdentifier: headerIdentifier)
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -109,16 +108,15 @@ class UserProfileTableViewController: UITableViewController, UIImagePickerContro
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        
         let bindingClosure = { (cell: UITableViewCell, item: CollectionSectionItem) in
             
-            if (item.itemType as! ItemTypeEnum) != .Logout
-                && (item.itemType as! ItemTypeEnum) != .UserInfo {
+            if (item.itemType as! ItemTypeEnum) != .logout
+                && (item.itemType as! ItemTypeEnum) != .userInfo {
                 
-                cell.accessoryType = .DisclosureIndicator
+                cell.accessoryType = .disclosureIndicator
             }
             
-            if (item.itemType as! ItemTypeEnum) == .Logout {
+            if (item.itemType as! ItemTypeEnum) == .logout {
                 
 //                cell.textLabel?.textAlignment = .Center
                 cell.textLabel?.textColor = UIColor(hexString: kHexMainPinkColor)
@@ -129,68 +127,8 @@ class UserProfileTableViewController: UITableViewController, UIImagePickerContro
         
         userInfo.initializeCellWithReusableIdentifierOrNibName(headerIdentifier,
                                                                item: nil,
-                                                               itemType: ItemTypeEnum.UserInfo) { (cell, item) in
-        
-                                                                let viewCell = cell as! TUserProfileHeaderTableViewCell
-                                                                
-                                                                viewCell.layoutIfNeeded()
-                                                                
-                                                                viewCell.selectionStyle = .None
-                                                                viewCell.buttonAvatar.addTarget(self,
-                                                                                                action: #selector(UserProfileTableViewController.changePhoto),
-                                                                                                forControlEvents: .TouchUpInside)
-                                                                
-                                                                if let user = self.user {
-                                                                    
-                                                                    viewCell.labelUserName.text = user.firstName + " " + user.lastName
-                                                                    
-                                                                    if let image = user.image {
-                                                                        
-                                                                        let urlRequest = NSMutableURLRequest(URL: NSURL(string: image.url)!)
-                                                                        
-                                                                        let filter = AspectScaledToFillSizeFilter(size: viewCell.imageViewBlur.bounds.size)
-                                                                        
-                                                                        SwiftOverlays.showCenteredWaitOverlay(viewCell)
-                                                                        
-                                                                        self.downloader.downloadImage(URLRequest: urlRequest,
-                                                                                                 filter: filter,
-                                                                                                 completion: { response in
-                                                                        
-                                                                                                    SwiftOverlays.removeAllOverlaysFromView(viewCell)
-                                                                                                    guard response.result.error == nil else {
-                                                                                                        
-                                                                                                        return
-                                                                                                    }
-                                                                                                    
-                                                                                                    viewCell.imageViewBlur.image = response.result.value!.applyBlurWithRadius(5,
-                                                                                                        tintColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0.4),
-                                                                                                        saturationDeltaFactor: 1,
-                                                                                                        maskImage: nil)
-                                                                                                    
-//                                                                                                    viewCell.buttonAvatar.contentMode = .ScaleAspectFill
-                                                                                                    viewCell.buttonAvatar.setImage(response.result.value!, forState: .Normal)
-                                                                                                    let layer = viewCell.buttonAvatar.layer
-                                                                                                    layer.borderColor = UIColor.whiteColor().CGColor
-                                                                                                    layer.borderWidth = 2
-                                                                        })
-                                                                    }
-                                                                    else {
-                                                                        
-                                                                        let defaultImage = UIImage(named: "default")
-                                                                        
-                                                                        viewCell.imageViewBlur.image = defaultImage!.applyBlurWithRadius(5,
-                                                                                                                                                     tintColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0.4),
-                                                                                                                                                     saturationDeltaFactor: 1,
-                                                                                                                                                     maskImage: nil)
-                                                                        viewCell.buttonAvatar.setImage(defaultImage, forState: .Normal)
-//                                                                        viewCell.buttonAvatar.contentMode = .ScaleAspectFit
-                                                                        let layer = viewCell.buttonAvatar.layer
-                                                                        layer.borderColor = UIColor.whiteColor().CGColor
-                                                                        layer.borderWidth = 2
-                                                                    }
-                                                                }
-        }
-        
+                                                               itemType: ItemTypeEnum.userInfo,
+                                                               bindingAction: headerCellBinding)
         self.dataSource.sections.append(userInfo)
         
         
@@ -198,53 +136,53 @@ class UserProfileTableViewController: UITableViewController, UIImagePickerContro
         self.dataSource.sections.append(mainSection)
         
         mainSection.initializeDefaultCell(identifier,
-                                          cellStyle: .Default,
+                                          cellStyle: .default,
                                           item: "profile_item_my_cards".localized,
-                                          itemType: ItemTypeEnum.MyCards,
+                                          itemType: ItemTypeEnum.myCards,
                                           bindingAction: bindingClosure)
         
         mainSection.initializeDefaultCell(identifier,
-                                          cellStyle: .Default,
+                                          cellStyle: .default,
                                           item: "profile_item_information".localized,
-                                          itemType: ItemTypeEnum.Information,
+                                          itemType: ItemTypeEnum.information,
                                           bindingAction: bindingClosure)
         
         mainSection.initializeDefaultCell(identifier,
-                                          cellStyle: .Default,
+                                          cellStyle: .default,
                                           item: "profile_item_settings".localized,
-                                          itemType: ItemTypeEnum.Settings,
+                                          itemType: ItemTypeEnum.settings,
                                           bindingAction: bindingClosure)
         
         let logout = CollectionSection()
         self.dataSource.sections.append(logout)
         
         logout.initializeDefaultCell(identifier,
-                                     cellStyle: .Default,
+                                     cellStyle: .default,
                                      item: "profile_item_logout".localized,
-                                     itemType: ItemTypeEnum.Logout,
+                                     itemType: ItemTypeEnum.logout,
                                      bindingAction: bindingClosure)
         
         self.tableView.dataSource = self.dataSource
         self.tableView.delegate = self
         self.tableView.tableFooterView = UIView()
         
-        NSNotificationCenter.defaultCenter().addObserver(self,
-                                                         selector: #selector(self.onUserDidUpdateNotification),
-                                                         name: kTargoDidUpdateUserProfileNotification,
-                                                         object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.onUserDidUpdateNotification),
+                                               name: NSNotification.Name(rawValue: kTargoDidUpdateUserProfileNotification),
+                                               object: nil)
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
         
-        let item = self.dataSource.sections[indexPath.section].items[indexPath.row]
+        let item = self.dataSource.sections[(indexPath as NSIndexPath).section].items[(indexPath as NSIndexPath).row]
         
         let itemType = item.itemType as! ItemTypeEnum
         
         switch itemType {
             
-        case .MyCards:
+        case .myCards:
             
             if let controller = self.instantiateViewControllerWithIdentifierOrNibName("UserCreditCards") {
                 
@@ -254,7 +192,7 @@ class UserProfileTableViewController: UITableViewController, UIImagePickerContro
             
             break
             
-        case .Settings:
+        case .settings:
             
             if let controller = self.instantiateViewControllerWithIdentifierOrNibName("EditSetting") {
                 
@@ -264,13 +202,13 @@ class UserProfileTableViewController: UITableViewController, UIImagePickerContro
             
             break
             
-        case .Logout:
+        case .logout:
          
             Api.sharedInstance.userLogut()
                 
                 .onSuccess(callback: { success in
                 
-                NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: kTargoUserLoggedOutSuccessfully, object: nil))
+                NotificationCenter.default.post(Notification(name: Notification.Name(rawValue: kTargoUserLoggedOutSuccessfully), object: nil))
                 
             }).onFailure(callback: { error in
                 
@@ -284,12 +222,12 @@ class UserProfileTableViewController: UITableViewController, UIImagePickerContro
         }
     }
     
-    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         return UIView()
     }
     
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
         switch section {
             
@@ -303,29 +241,29 @@ class UserProfileTableViewController: UITableViewController, UIImagePickerContro
     
     func onUserDidUpdateNotification() {
         
-        self.user = self.realm.objects(User).last
+        self.user = self.realm.objects(User.self).last
         self.tableView.reloadData()
     }
     
     func changePhoto() {
         
-        let alert = UIAlertController(title: "", message: "", preferredStyle: .ActionSheet)
+        let alert = UIAlertController(title: "", message: "", preferredStyle: .actionSheet)
         
-        let cancelAction = UIAlertAction(title: "action_cancel".localized, style: .Cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "action_cancel".localized, style: .cancel, handler: nil)
         
-        let choosePhotoAction = UIAlertAction(title: "photo_action_choose".localized, style: .Default) { action in
+        let choosePhotoAction = UIAlertAction(title: "photo_action_choose".localized, style: .default) { action in
             
-            if UIImagePickerController.isSourceTypeAvailable(.PhotoLibrary) {
+            if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
                 
                 let library = UIImagePickerController()
-                library.sourceType = .PhotoLibrary
+                library.sourceType = .photoLibrary
                 library.navigationBar.barTintColor = UIColor(hexString: kHexMainPinkColor)
-                library.navigationBar.tintColor = UIColor.whiteColor()
-                library.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]
+                library.navigationBar.tintColor = UIColor.white
+                library.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
                 library.allowsEditing = true
                 library.delegate = self
                 
-                self.presentViewController(library, animated: true, completion: nil)
+                self.present(library, animated: true, completion: nil)
             }
             else {
                 
@@ -334,16 +272,16 @@ class UserProfileTableViewController: UITableViewController, UIImagePickerContro
             }
         }
         
-        let takePhotoAction = UIAlertAction(title: "photo_action_take".localized, style: .Default) { action in
+        let takePhotoAction = UIAlertAction(title: "photo_action_take".localized, style: .default) { action in
             
-            if UIImagePickerController.isSourceTypeAvailable(.PhotoLibrary) {
+            if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
                 
                 let camera = UIImagePickerController()
-                camera.sourceType = .Camera
+                camera.sourceType = .camera
                 camera.allowsEditing = true
                 camera.delegate = self
                 
-                self.presentViewController(camera, animated: true, completion: nil)
+                self.present(camera, animated: true, completion: nil)
             }
             else {
                 
@@ -356,42 +294,99 @@ class UserProfileTableViewController: UITableViewController, UIImagePickerContro
         alert.addAction(takePhotoAction)
         alert.addAction(cancelAction)
         
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
     
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         
-        self.presentedViewController?.dismissViewControllerAnimated(true, completion: nil)
+        self.presentedViewController?.dismiss(animated: true, completion: nil)
     }
     
-    func imagePickerController(picker: UIImagePickerController,
-                               didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [String : Any]) {
         
-        self.uploadImage(info)
-        self.presentedViewController?.dismissViewControllerAnimated(true, completion: nil)
+        self.uploadImage(info as [String : AnyObject])
+        self.presentedViewController?.dismiss(animated: true, completion: nil)
     }
-    
+
     //MARK: - Private Methods
     
-    func uploadImage(info:[String: AnyObject]) {
+    fileprivate func headerCellBinding(_ cell: UITableViewCell, _ item: CollectionSectionItem) {
+        
+        let viewCell = cell as! TUserProfileHeaderTableViewCell
+        
+        viewCell.layoutIfNeeded()
+        
+        viewCell.selectionStyle = .none
+        viewCell.buttonAvatar.addTarget(self,
+                                        action: #selector(UserProfileTableViewController.changePhoto),
+                                        for: .touchUpInside)
+        
+        if let user = self.user {
+            
+            viewCell.labelUserName.text = user.firstName + " " + user.lastName
+            
+            if let image = user.image {
+                
+                let urlRequest = URLRequest(url: URL(string: image.url)!)
+                
+                let filter = AspectScaledToFillSizeFilter(size: viewCell.imageViewBlur.bounds.size)
+                
+                SwiftOverlays.showCenteredWaitOverlay(viewCell)
+                
+                self.downloader.download(urlRequest, filter: filter) { response in
+                    
+                    SwiftOverlays.removeAllOverlaysFromView(viewCell)
+                    guard response.result.error == nil else {
+                        
+                        return
+                    }
+                    
+                    viewCell.imageViewBlur.image =
+                        response.result.value!.applyBlur(withRadius: 5,
+                                                         tintColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0.4),
+                                                         saturationDeltaFactor: 1,
+                                                         maskImage: nil)
+                    
+                    viewCell.buttonAvatar.setImage(response.result.value!, for: .normal)
+                    let layer = viewCell.buttonAvatar.layer
+                    layer.borderColor = UIColor.white.cgColor
+                    layer.borderWidth = 2
+                }
+            }
+            else {
+                
+                let defaultImage = UIImage(named: "default")
+                
+                viewCell.imageViewBlur.image = defaultImage!.applyBlur(withRadius: 5,                                                                                                                                             tintColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0.4),                                                                                                                                                     saturationDeltaFactor: 1,                                                                                                                                                     maskImage: nil)
+                
+                viewCell.buttonAvatar.setImage(defaultImage, for: UIControlState())
+                let layer = viewCell.buttonAvatar.layer
+                layer.borderColor = UIColor.white.cgColor
+                layer.borderWidth = 2
+            }
+        }
+    }
+    
+    fileprivate func uploadImage(_ info:[String: AnyObject]) {
         
         let originalImage = info["UIImagePickerControllerOriginalImage"] as! UIImage
         let rectValue = info["UIImagePickerControllerCropRect"] as? NSValue
         
-        if let cropRect = rectValue?.CGRectValue() {
+        if let cropRect = rectValue?.cgRectValue {
             
-            let croppedImage = CGImageCreateWithImageInRect(originalImage.CGImage!, cropRect)
+            let croppedImage = originalImage.cgImage!.cropping(to: cropRect)
             
             if let cropped = croppedImage {
                 
-                let finalImage = UIImage(CGImage: cropped)
+                let finalImage = UIImage(cgImage: cropped)
                 
                 if let superview = self.view.superview {
                     
                     SwiftOverlays.showCenteredWaitOverlay(superview)
                 }
                 
-                Api.sharedInstance.uploadImage(finalImage)
+                Api.sharedInstance.uploadImage(image: finalImage)
                     
                     .onSuccess(callback: { uploadResponse in
                         
@@ -399,9 +394,9 @@ class UserProfileTableViewController: UITableViewController, UIImagePickerContro
                         print(imageUrlString)
                         
                         let realm = try! Realm()
-                        if let user = realm.objects(User).first {
+                        if let user = realm.objects(User.self.self).first {
                             
-                            Api.sharedInstance.applyUserImage(user.id, imageId: uploadResponse.id)
+                            Api.sharedInstance.applyUserImage(userId: user.id, imageId: uploadResponse.id)
                                 
                                 .onSuccess(callback: { user in
                                 
@@ -412,12 +407,15 @@ class UserProfileTableViewController: UITableViewController, UIImagePickerContro
                                     
                                     if self.userInfo.items.count > 0 {
                                         
-                                        let indexPath = self.userInfo.items[0].indexPath
+                                        let indexPath = self.userInfo.items[0].indexPath!
                                         
-                                        if let cell = self.tableView.cellForRowAtIndexPath(indexPath) as? TUserProfileHeaderTableViewCell {
+                                        if let cell = self.tableView.cellForRow(at: indexPath) as? TUserProfileHeaderTableViewCell {
                                             
-                                            cell.buttonAvatar.setImage(finalImage, forState: .Normal)
-                                            cell.imageViewBlur.image = finalImage.applyBlurWithRadius(5, tintColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0.4), saturationDeltaFactor: 1, maskImage: nil)
+                                            cell.buttonAvatar.setImage(finalImage, for: .normal)
+                                            cell.imageViewBlur.image = finalImage.applyBlur(withRadius: 5,
+                                                                                            tintColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0.4),
+                                                                                            saturationDeltaFactor: 1,
+                                                                                            maskImage: nil)
                                         }
                                     }
                                     

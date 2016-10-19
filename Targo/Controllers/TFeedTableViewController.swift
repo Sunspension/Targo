@@ -12,32 +12,32 @@ import SwiftOverlays
 
 private enum TCompanyNewsLoadingStatus : Int {
     
-    case Idle
+    case idle
     
-    case Loading
+    case loading
     
-    case Failed
+    case failed
     
-    case Loaded
+    case loaded
 }
 
 class TFeedTableViewController: UITableViewController {
 
-    private var loadingStatus = TCompanyNewsLoadingStatus.Idle
+    fileprivate var loadingStatus = TCompanyNewsLoadingStatus.idle
     
-    private var dataSource = TableViewDataSource()
+    fileprivate var dataSource = TableViewDataSource()
     
-    private let section = CollectionSection()
+    fileprivate let section = CollectionSection()
     
-    private var news: [TFeedItem] = []
+    fileprivate var news: [TFeedItem] = []
     
-    private var companies = Set<TCompany>()
+    fileprivate var companies = Set<TCompany>()
     
-    private var pageNumber = 1
+    fileprivate var pageNumber = 1
     
-    private var pageSize = 20
+    fileprivate var pageSize = 20
     
-    private var canLoadNext = false
+    fileprivate var canLoadNext = false
     
     
     override func viewDidLoad() {
@@ -55,7 +55,7 @@ class TFeedTableViewController: UITableViewController {
         self.navigationItem.titleView = UIImageView(image: UIImage(named: "icon-logo"))
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "",
-                                                                style: .Plain,
+                                                                style: .plain,
                                                                 target: nil,
                                                                 action: nil)
         self.loadNews()
@@ -72,16 +72,16 @@ class TFeedTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
         
-        if let superView = self.view.superview where self.loadingStatus == .Loading {
+        if let superView = self.view.superview , self.loadingStatus == .loading {
             
             SwiftOverlays.showCenteredWaitOverlay(superView)
         }
         
-        if self.loadingStatus == .Failed {
+        if self.loadingStatus == .failed {
             
             self.loadNews()
         }
@@ -89,20 +89,20 @@ class TFeedTableViewController: UITableViewController {
     
     // MARK: - Private mathods
     
-    private func loadNews() {
+    fileprivate func loadNews() {
         
-        self.loadingStatus = .Loading
+        self.loadingStatus = .loading
         
         if let superView = self.view.superview {
             
             SwiftOverlays.showCenteredWaitOverlay(superView)
         }
         
-        Api.sharedInstance.feed(pageNumber, pageSize: pageSize)
+        Api.sharedInstance.feed(pageNumber: pageNumber, pageSize: pageSize)
             
             .onSuccess {[weak self] page in
                 
-                self?.loadingStatus = .Loaded
+                self?.loadingStatus = .loaded
                 
                 if self?.pageSize == page.news.count {
                     
@@ -133,7 +133,7 @@ class TFeedTableViewController: UITableViewController {
             }
             .onFailure {[unowned self] error in
                 
-                self.loadingStatus = .Failed
+                self.loadingStatus = .failed
                 
                 if let superView = self.view.superview {
                     
@@ -144,7 +144,7 @@ class TFeedTableViewController: UITableViewController {
             }
     }
     
-    private func createDataSource() {
+    fileprivate func createDataSource() {
         
         self.section.items.removeAll()
         
@@ -159,7 +159,7 @@ class TFeedTableViewController: UITableViewController {
                         if item.indexPath.row + 10
                             >= self.dataSource.sections[item.indexPath.section].items.count
                             && self.canLoadNext
-                            && self.loadingStatus != .Loading {
+                            && self.loadingStatus != .loading {
                             
                             self.loadNews()
                         }
@@ -169,21 +169,21 @@ class TFeedTableViewController: UITableViewController {
                         
                         viewCell.layoutIfNeeded()
                         
-                        viewCell.more.setTitle("action_more".localized, forState: .Normal)
+                        viewCell.more.setTitle("action_more".localized, for: UIControlState())
                         viewCell.more.tintColor = UIColor(hexString: kHexMainPinkColor)
-                        viewCell.more.userInteractionEnabled = false
+                        viewCell.more.isUserInteractionEnabled = false
                         viewCell.newsDetails.text = newsItem.feedItemDescription
                         
-                        let formatter = NSDateFormatter()
+                        let formatter = DateFormatter()
                         formatter.dateFormat = kDateTimeFormat
                         
-                        if let date = formatter.dateFromString(newsItem.createdAt) {
+                        if let date = formatter.date(from: newsItem.createdAt) {
                             
-                            let formatter = NSDateFormatter()
-                            formatter.dateStyle = .ShortStyle
-                            formatter.timeStyle = .NoStyle
+                            let formatter = DateFormatter()
+                            formatter.dateStyle = .short
+                            formatter.timeStyle = .none
                             
-                            viewCell.date.text = formatter.stringFromDate(date)
+                            viewCell.date.text = formatter.string(from: date)
                         }
                     })
                 }
@@ -194,7 +194,7 @@ class TFeedTableViewController: UITableViewController {
                         if item.indexPath.row + 10
                             >= self.dataSource.sections[item.indexPath.section].items.count
                             && self.canLoadNext
-                            && self.loadingStatus != .Loading {
+                            && self.loadingStatus != .loading {
                             
                             self.loadNews()
                         }
@@ -204,22 +204,22 @@ class TFeedTableViewController: UITableViewController {
                         
                         viewCell.layoutIfNeeded()
                         
-                        viewCell.more.setTitle("action_more".localized, forState: .Normal)
+                        viewCell.more.setTitle("action_more".localized, for: UIControlState())
                         viewCell.more.tintColor = UIColor(hexString: kHexMainPinkColor)
-                        viewCell.more.userInteractionEnabled = false
+                        viewCell.more.isUserInteractionEnabled = false
                         viewCell.companyTitle.text = company.title
                         viewCell.newsDetails.text = newsItem.feedItemDescription
                         
-                        let formatter = NSDateFormatter()
+                        let formatter = DateFormatter()
                         formatter.dateFormat = kDateTimeFormat
                         
-                        if let date = formatter.dateFromString(newsItem.createdAt) {
+                        if let date = formatter.date(from: newsItem.createdAt) {
                             
-                            let formatter = NSDateFormatter()
-                            formatter.dateStyle = .ShortStyle
-                            formatter.timeStyle = .NoStyle
+                            let formatter = DateFormatter()
+                            formatter.dateStyle = .short
+                            formatter.timeStyle = .none
                             
-                            viewCell.date.text = formatter.stringFromDate(date)
+                            viewCell.date.text = formatter.string(from: date)
                         }
                     })
                 }
@@ -227,11 +227,11 @@ class TFeedTableViewController: UITableViewController {
         }
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let controller = self.instantiateViewControllerWithIdentifierOrNibName("FeedDetails") as! TFeedDetailsTableViewController
         
-        if let news = self.dataSource.sections[indexPath.section].items[indexPath.row].item as? TFeedItem {
+        if let news = self.dataSource.sections[(indexPath as NSIndexPath).section].items[(indexPath as NSIndexPath).row].item as? TFeedItem {
             
             controller.news = news
             

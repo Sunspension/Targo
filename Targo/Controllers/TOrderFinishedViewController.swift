@@ -33,7 +33,7 @@ class TOrderFinishedViewController: UIViewController {
         self.tableView.dataSource = self.dataSource
         self.tableView.allowsSelection = false
         
-        self.tableView.registerNib(UINib(nibName: "TOrderRatingTableViewCell", bundle: nil),
+        self.tableView.register(UINib(nibName: "TOrderRatingTableViewCell", bundle: nil),
                                    forCellReuseIdentifier: "OrderRatingCell")
         
         self.title = "order_rating_title".localized
@@ -41,7 +41,7 @@ class TOrderFinishedViewController: UIViewController {
         self.navigationItem.hidesBackButton = true
         
         self.buttonFinish.backgroundColor = UIColor(hexString: kHexMainPinkColor)
-        self.buttonFinish.addTarget(self, action: #selector(TOrderFinishedViewController.closeAction), forControlEvents: .TouchUpInside)
+        self.buttonFinish.addTarget(self, action: #selector(TOrderFinishedViewController.closeAction), for: .touchUpInside)
         
         let section = CollectionSection()
         
@@ -52,16 +52,16 @@ class TOrderFinishedViewController: UIViewController {
                                                                 let order = item.item as? TShopOrder
                                                                 viewCell.companyName.text = self.companyName
                                                                 
-                                                                let formatter = NSDateFormatter()
+                                                                let formatter = DateFormatter()
                                                                 formatter.dateFormat = kDateTimeFormat
                                                                 
-                                                                if let date = formatter.dateFromString(order!.created) {
+                                                                if let date = formatter.date(from: order!.created) {
                                                                     
-                                                                    let formatter = NSDateFormatter()
-                                                                    formatter.dateStyle = .MediumStyle
-                                                                    formatter.timeStyle = .NoStyle
+                                                                    let formatter = DateFormatter()
+                                                                    formatter.dateStyle = .medium
+                                                                    formatter.timeStyle = .none
                                                                     
-                                                                    viewCell.orderDate.text = formatter.stringFromDate(date)
+                                                                    viewCell.orderDate.text = formatter.string(from: date)
                                                                 }
         }
         
@@ -91,7 +91,7 @@ class TOrderFinishedViewController: UIViewController {
                                                                 let viewCell = cell as! TBillCompanyNameTableViewCell
                                                                 
                                                                 viewCell.companyName.text = "order_review_total_price".localized
-                                                                viewCell.companyName.textAlignment = .Right
+                                                                viewCell.companyName.textAlignment = .right
                                                                 viewCell.orderDate.text = String(totalPrice) + " \u{20BD}"
                                                                 let color = DynamicColor(hexString: "F0F0F0")
                                                                 viewCell.contentView.backgroundColor = color
@@ -100,7 +100,7 @@ class TOrderFinishedViewController: UIViewController {
         section.initializeCellWithReusableIdentifierOrNibName("OrderRatingCell", item: nil) { (cell, item) in
             
             let viewCell = cell as! TOrderRatingTableViewCell
-            viewCell.unratedColor = UIColor.lightGrayColor()
+            viewCell.unratedColor = UIColor.lightGray
             viewCell.ratedColor = UIColor(hexString: "#FAAE00")
             viewCell.title.text = "order_rating_title".localized
             
@@ -132,7 +132,7 @@ class TOrderFinishedViewController: UIViewController {
                 SwiftOverlays.showCenteredWaitOverlay(superview)
             }
             
-            Api.sharedInstance.setCompanyRating(self.shopOrder!.id, mark: self.ratingMark!)
+            Api.sharedInstance.setCompanyRating(orderId: self.shopOrder!.id, mark: self.ratingMark!)
                 .onSuccess(callback: { order in
                 
                     if let superview = self.view.superview {
@@ -140,7 +140,7 @@ class TOrderFinishedViewController: UIViewController {
                         SwiftOverlays.removeAllOverlaysFromView(superview)
                     }
                     
-                    self.navigationController?.popToRootViewControllerAnimated(true)
+                    let _ = self.navigationController?.popToRootViewController(animated: true)
                 })
                 .onFailure(callback: { (error) in
                     

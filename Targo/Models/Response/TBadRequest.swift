@@ -21,7 +21,7 @@ class TBadRequest: NSObject, Mappable {
     
     var type = ""
     
-    required convenience init?(_ map: Map) {
+    required convenience init?(map: Map) {
         
         self.init()
     }

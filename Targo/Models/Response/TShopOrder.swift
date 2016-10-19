@@ -12,23 +12,23 @@ import RealmSwift
 
 enum ShopOrderStatusEnum: Int {
     
-    case New = 1
+    case new = 1
     
-    case CanceledByUser
+    case canceledByUser
     
-    case View
+    case view
     
-    case Canceled
+    case canceled
     
-    case Processing
+    case processing
     
-    case Complete
+    case complete
     
-    case Finished
+    case finished
     
-    case PayError
+    case payError
     
-    case PaySuccess
+    case paySuccess
 }
 
 
@@ -65,7 +65,7 @@ class TShopOrder: Object, Mappable {
     var items = List<TShopGood>()
     
     
-    required convenience init?(_ map: Map) {
+    required convenience init?(map: Map) {
         
         self.init()
     }

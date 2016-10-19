@@ -34,12 +34,12 @@ class RegistrationCodeViewController: UIViewController {
         code.becomeFirstResponder()
         code.tintColor = DynamicColor(hexString: kHexMainPinkColor)
         
-        code.textDidChangeBlock = { (textfield: UITextField!) in
+        code.textDidChangeBlock = { textfield in
             
             if self.code.phoneNumber().characters.count < 6 {
                 
-                textfield.rightView = nil
-                self.buttonNext.enabled = false
+                textfield?.rightView = nil
+                self.buttonNext.isEnabled = false
             }
             else {
                 
@@ -47,48 +47,48 @@ class RegistrationCodeViewController: UIViewController {
                 let imageView = UIImageView(image: image)
                 imageView.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
                 imageView.tintColor = DynamicColor(hexString: kHexMainPinkColor)
-                textfield.rightViewMode = .Always
-                textfield.rightView = imageView
+                textfield?.rightViewMode = .always
+                textfield?.rightView = imageView
                 
-                self.buttonNext.enabled = true
+                self.buttonNext.isEnabled = true
             }
         }
         
-        separator.backgroundColor = UIColor.lightGrayColor()
+        separator.backgroundColor = UIColor.lightGray
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
         
-        self.navigationController?.navigationBarHidden = false;
+        self.navigationController?.isNavigationBarHidden = false;
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         
         super.viewWillDisappear(animated)
         
-        self.navigationController?.navigationBarHidden = true;
+        self.navigationController?.isNavigationBarHidden = true;
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         self.view.endEditing(true)
     }
     
-    @IBAction func nextAction(sender: AnyObject) {
+    @IBAction func nextAction(_ sender: AnyObject) {
         
         if let phoneNumber = AppSettings.sharedInstance.lastSessionPhoneNumber {
             
             showWaitOverlay()
             
-            Api.sharedInstance.userLogin(phoneNumber, code: self.code.phoneNumber())
+            Api.sharedInstance.userLogin(phoneNumber: phoneNumber, code: self.code.phoneNumber())
                 
                 .onSuccess { [weak self] user in
                     
                     self?.removeAllOverlays()
                     
-                    NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: kTargoUserLoggedInSuccessfully, object: nil))
+                    NotificationCenter.default.post(Notification(name: Notification.Name(rawValue: kTargoUserLoggedInSuccessfully)))
                     
                     print("User with user id: \(user.id) successfully logged in")
                     
@@ -101,13 +101,13 @@ class RegistrationCodeViewController: UIViewController {
         }
     }
     
-    @IBAction func sendCodeAction(sender: AnyObject) {
+    @IBAction func sendCodeAction(_ sender: AnyObject) {
         
         if let phoneNumber = AppSettings.sharedInstance.lastSessionPhoneNumber {
             
             showWaitOverlay()
             
-            Api.sharedInstance.userRegistration(phoneNumber)
+            Api.sharedInstance.userRegistration(phoneNumber: phoneNumber)
                 
                 .onSuccess { [weak self] response in
                     
@@ -122,11 +122,11 @@ class RegistrationCodeViewController: UIViewController {
         }
     }
     
-    private func showError(errorMessage: String) {
+    fileprivate func showError(_ errorMessage: String) {
         
-        let alert = UIAlertController(title: "Error", message: errorMessage, preferredStyle: .Alert)
-        let action = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+        let alert = UIAlertController(title: "Error", message: errorMessage, preferredStyle: .alert)
+        let action = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
         alert.addAction(action)
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
 }

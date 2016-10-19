@@ -8,6 +8,7 @@
 
 import UIKit
 import Bond
+import ReactiveKit
 
 class TOrderNumberOfPersons: UITableViewCell {
 
@@ -29,11 +30,11 @@ class TOrderNumberOfPersons: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        buttonMinus.imageView?.contentMode = .ScaleAspectFit
-        buttonPlus.imageView?.contentMode = .ScaleAspectFit
+        buttonMinus.imageView?.contentMode = .scaleAspectFit
+        buttonPlus.imageView?.contentMode = .scaleAspectFit
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

@@ -32,7 +32,7 @@ class TShopCategory: NSObject, Mappable {
     var deletedAt: Bool?
     
     
-    required convenience init?(_ map: Map) {
+    required convenience init?(map: Map) {
         
         self.init()
     }

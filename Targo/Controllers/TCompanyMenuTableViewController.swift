@@ -11,24 +11,25 @@ import DynamicColor
 import SwiftOverlays
 import AlamofireImage
 import Bond
+import ReactiveKit
 
 private enum SectionTypeEnum: Int {
     
-    case CompanyInfo = 001
+    case companyInfo = 001
 }
 
 
 class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
 
-    private var pageNumber = 1
+    fileprivate var pageNumber = 1
     
-    private var pageSize = 20
+    fileprivate var pageSize = 20
     
-    private var canLoadNext = true
+    fileprivate var canLoadNext = true
     
-    private var loadingStatus = TLoadingStatusEnum.Idle
+    fileprivate var loadingStatus = TLoadingStatusEnum.idle
     
-    private var categories = Set<TShopCategory>()
+    fileprivate var categories = Set<TShopCategory>()
     
     var company: TCompanyAddress?
     
@@ -40,9 +41,11 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
     
     var showButtonInfo: Bool = false
     
-    let orderItems = ObservableArray<CollectionSectionItem>()
+    let orderItems = MutableObservableArray<CollectionSectionItem>()
 
-    var cellHeightDictionary = [NSIndexPath : CGFloat]()
+    var cellHeightDictionary = [IndexPath : CGFloat]()
+    
+    var bag: Disposable?
     
     
     @IBOutlet weak var tableView: UITableView!
@@ -50,7 +53,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
     @IBOutlet weak var buttonMakeOrder: UIButton!
     
     
-    @IBAction func makeOrderAction(sender: AnyObject) {
+    @IBAction func makeOrderAction(_ sender: AnyObject) {
     
         var goods = Array<(item: TShopGood, count: Int)>()
         
@@ -75,6 +78,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
     deinit {
         
         print("\(typeName(self)) \(#function)")
+        self.bag?.dispose()
     }
     
     override func viewDidLoad() {
@@ -85,7 +89,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         
         self.buttonMakeOrder.backgroundColor = UIColor(hexString: kHexMainPinkColor)
         
-        self.buttonMakeOrder.enabled = false
+        self.buttonMakeOrder.isEnabled = false
         self.buttonMakeOrder.alpha = 0.5
         
         self.tableView.setup()
@@ -94,20 +98,20 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         
         self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 20, 0)
         
-        self.orderItems.observe { event in
+        self.bag = self.orderItems.observe { event in
             
             UIView.beginAnimations("buton", context: nil)
             
-            UIView.animateWithDuration(0.2, animations: {
+            UIView.animate(withDuration: 0.2, animations: {
                 
-                if event.sequence.count == 0 {
+                if self.orderItems.count == 0 {
                     
-                    self.buttonMakeOrder.enabled = false
+                    self.buttonMakeOrder.isEnabled = false
                     self.buttonMakeOrder.alpha = 0.5
                 }
                 else {
                     
-                    self.buttonMakeOrder.enabled = true
+                    self.buttonMakeOrder.isEnabled = true
                     self.buttonMakeOrder.alpha = 1
                 }
             })
@@ -117,21 +121,21 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         
         if showButtonInfo {
             
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "icon-info"), style: .Plain, target: self, action: #selector(TCompanyMenuTableViewController.openInfo))
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "icon-info"), style: .plain, target: self, action: #selector(TCompanyMenuTableViewController.openInfo))
         }
         
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
-        self.tableView.registerNib(UINib(nibName: "TCompanyImageMenuTableViewCell", bundle: nil),
+        self.tableView.register(UINib(nibName: "TCompanyImageMenuTableViewCell", bundle: nil),
                                    forCellReuseIdentifier: "CompanyImageMenu")
         
-        self.tableView.registerNib(UINib(nibName: "TCompanyMenuHeaderView", bundle: nil),
+        self.tableView.register(UINib(nibName: "TCompanyMenuHeaderView", bundle: nil),
                                    forHeaderFooterViewReuseIdentifier: "sectionHeader")
         
-        self.tableView.registerNib(UINib(nibName: "TMenuItemSmallTableViewCell", bundle: nil),
+        self.tableView.register(UINib(nibName: "TMenuItemSmallTableViewCell", bundle: nil),
                                    forCellReuseIdentifier: "MenuItemSmallCell")
         
-        self.tableView.registerNib(UINib(nibName: "TMenuItemFullTableViewCell", bundle: nil),
+        self.tableView.register(UINib(nibName: "TMenuItemFullTableViewCell", bundle: nil),
                                    forCellReuseIdentifier: "MenuItemFullCell")
         
         self.loadCompanyMenu()
@@ -143,11 +147,11 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         
         super.viewDidAppear(animated)
         
-        if self.loadingStatus != .Loading {
+        if self.loadingStatus != .loading {
             
             return
         }
@@ -167,7 +171,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
             
             controller.makeOrderNavigationAction = {
                 
-                self.navigationController?.popViewControllerAnimated(true)
+                let _ = self.navigationController?.popViewController(animated: true)
             }
             
             controller.openMapNavigationAction = {
@@ -183,7 +187,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
                             mapViewController.images = [image]
                         }
                         
-                        mapViewController.reason = OpenMapsReasonEnum.OneCompany
+                        mapViewController.reason = OpenMapsReasonEnum.oneCompany
                         
                         self.navigationController?.pushViewController(mapViewController, animated: true)
                     }
@@ -213,13 +217,13 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
                                                                             item: good,
                                                                             bindingAction: { (cell, item) in
                                                                                 
-                                                                                let indexPath = item.indexPath
+                                                                                let indexPath = item.indexPath!
                                                                                 
                                                                                 if indexPath.section == self.dataSource.sections.count - 1
                                                                                     && indexPath.row + 10
                                                                                     >= self.dataSource.sections[indexPath.section].items.count
                                                                                     && self.canLoadNext
-                                                                                    && self.loadingStatus != .Loading {
+                                                                                    && self.loadingStatus != .loading {
                                                                                     
                                                                                     self.loadCompanyMenu()
                                                                                 }
@@ -235,7 +239,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
                                                                                         viewCell.goodTitle.text = itemGood.title
                                                                                         viewCell.goodDescription.text = itemGood.goodDescription
                                                                                         viewCell.price.text = String(itemGood.price) + " \u{20BD}"
-                                                                                        viewCell.selectionStyle = .None
+                                                                                        viewCell.selectionStyle = .none
                                                                                     }
                                                                                     else {
                                                                                         
@@ -244,14 +248,14 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
                                                                                         
                                                                                         viewCell.layoutIfNeeded()
                                                                                         
-                                                                                        viewCell.buttonMore.setTitle("menu_more_ddetails".localized, forState: .Normal)
+                                                                                        viewCell.buttonMore.setTitle("menu_more_ddetails".localized, for: UIControlState())
                                                                                         viewCell.quantityTitle.text = "menu_quantity".localized
                                                                                         
                                                                                         viewCell.addSeparator()
                                                                                         viewCell.goodTitle.text = itemGood.title
                                                                                         viewCell.goodDescription.text = itemGood.goodDescription
                                                                                         viewCell.price.text = String(itemGood.price) + " \u{20BD}"
-                                                                                        viewCell.selectionStyle = .None
+                                                                                        viewCell.selectionStyle = .none
                                                                                         
                                                                                         if item.userData == nil {
                                                                                             
@@ -260,7 +264,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
                                                                                         
                                                                                         viewCell.quantity.text = String(item.userData as! Int)
                                                                                         
-                                                                                        viewCell.buttonPlus.bnd_tap.observe({
+                                                                                        viewCell.buttonPlus.bnd_tap.observe(with: {_ in
                                                                                             
                                                                                             var count = item.userData as! Int
                                                                                             count += 1
@@ -269,9 +273,9 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
                                                                                             
                                                                                         }).disposeIn(viewCell.bag)
                                                                                         
-                                                                                        viewCell.buttonMinus.bnd_tap.observe({
+                                                                                        viewCell.buttonMinus.bnd_tap.observe(with: {_ in 
                                                                                             
-                                                                                            if let count = item.userData as? Int where count > 1 {
+                                                                                            if let count = item.userData as? Int , count > 1 {
                                                                                                 
                                                                                                 var quantity = count
                                                                                                 quantity -= 1
@@ -288,14 +292,14 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
     
     func createDataSource() {
         
-        guard self.dataSource.sections.filter({ $0.sectionType as? SectionTypeEnum == SectionTypeEnum.CompanyInfo }).first == nil else {
+        guard self.dataSource.sections.filter({ $0.sectionType as? SectionTypeEnum == SectionTypeEnum.companyInfo }).first == nil else {
             
             self.addGoods()
             return
         }
         
         let section = CollectionSection()
-        section.sectionType = SectionTypeEnum.CompanyInfo
+        section.sectionType = SectionTypeEnum.companyInfo
         
         section.initializeCellWithReusableIdentifierOrNibName("CompanyImageMenu", item: self.companyImage) { (cell, item) in
             
@@ -303,24 +307,24 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
             
             viewCell.layoutIfNeeded()
             
-            viewCell.point.hidden = true
-            viewCell.title.hidden = true
+            viewCell.point.isHidden = true
+            viewCell.title.isHidden = true
             
             if let companyImage = item.item as? TImage {
                 
                 let filter = AspectScaledToFillSizeFilter(size: viewCell.companyImage.bounds.size)
-                viewCell.companyImage.af_setImageWithURL(NSURL(string: companyImage.url)!, filter: filter)
+                viewCell.companyImage.af_setImage(withURL: URL(string: companyImage.url)!, filter: filter)
             }
             
-            viewCell.selectionStyle = .None
+            viewCell.selectionStyle = .none
         }
         
         section.initializeCellWithReusableIdentifierOrNibName("WorkingTimeViewCell", item: company) { (cell, item) in
             
             let viewCell = cell as! TWorkingTimeTableViewCell
-            viewCell.selectionStyle = .None
+            viewCell.selectionStyle = .none
             
-            if let company = item.item as? TCompanyAddress where company.averageOrderTime.count == 2 {
+            if let company = item.item as? TCompanyAddress , company.averageOrderTime.count == 2 {
                 
                 let min = company.averageOrderTime[0].value
                 let max = company.averageOrderTime[1].value
@@ -339,21 +343,21 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         self.addGoods()
     }
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         if section == 0 {
             
             return nil
         }
         
-        let header = tableView.dequeueReusableHeaderFooterViewWithIdentifier("sectionHeader") as! TCompanyMenuHeaderView
+        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "sectionHeader") as! TCompanyMenuHeaderView
         header.title.text = self.dataSource.sections[section].title
         
         return header;
     }
     
     // Here is a magic to save height of current cell, otherwise you will get scrolling of table view content when cell will expand
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
         self.cellHeightDictionary[indexPath] = cell.frame.size.height
         
@@ -370,7 +374,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
     }
     
     // Here is a magic to save height of current cell, otherwise you will get scrolling of table view content when cell will expand
-    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         
         if let height = self.cellHeightDictionary[indexPath] {
             
@@ -380,7 +384,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         return UITableViewAutomaticDimension
     }
     
-    func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         
         if section == 0 {
             
@@ -390,31 +394,31 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         let header = view as! TCompanyMenuHeaderView
         
         header.background.backgroundColor = UIColor(hexString: kHexMainPinkColor)
-        header.layer.shadowPath = UIBezierPath(rect: header.layer.bounds).CGPath
+        header.layer.shadowPath = UIBezierPath(rect: header.layer.bounds).cgPath
         header.layer.shadowOffset = CGSize(width: 0, height: 1)
         header.layer.shadowOpacity = 0.5
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
         return section == 0 ? 0.01 : 30
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if indexPath.section == 0 {
+        if (indexPath as NSIndexPath).section == 0 {
             
             return
         }
         
-        let section = self.dataSource.sections[indexPath.section]
+        let section = self.dataSource.sections[(indexPath as NSIndexPath).section]
         
         if section.sectionType == nil {
             
             return
         }
         
-        let item = section.items[indexPath.row]
+        let item = section.items[(indexPath as NSIndexPath).row]
         item.selected = !item.selected
         
         if item.selected {
@@ -423,34 +427,34 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         }
         else {
             
-            if let index = self.orderItems.indexOf(item) {
+            if let index = self.orderItems.index(of: item) {
                 
-                self.orderItems.removeAtIndex(index)
+                self.orderItems.remove(at: index)
             }
         }
 
-        tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+        tableView.reloadRows(at: [indexPath], with: .fade)
     }
     
     
     //MARK: - Private methods
     
-    private func loadCompanyMenu() {
+    fileprivate func loadCompanyMenu() {
         
         if let company = company {
             
-            self.loadingStatus = .Loading
+            self.loadingStatus = .loading
             
             if let superview = self.view.superview {
                 
                 SwiftOverlays.showCenteredWaitOverlay(superview)
             }
 
-            Api.sharedInstance.loadCompanyMenu(company.companyId, pageNumber: self.pageNumber, pageSize: self.pageSize)
+            Api.sharedInstance.loadCompanyMenu(companyId: company.companyId, pageNumber: self.pageNumber, pageSize: self.pageSize)
                 
                 .onSuccess(callback: { [weak self] menuPage in
                     
-                    self?.loadingStatus = .Loaded
+                    self?.loadingStatus = .loaded
                     
                     if let superview = self?.view.superview {
                         
@@ -480,7 +484,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
                 })
                 .onFailure(callback: { [weak self] error in
                     
-                    self?.loadingStatus = .Failed
+                    self?.loadingStatus = .failed
                     
                     if let superview = self?.view.superview {
                         

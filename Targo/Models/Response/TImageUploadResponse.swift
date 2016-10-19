@@ -19,7 +19,7 @@ class TImageUploadResponse: NSObject, Mappable {
     
     var url = ""
     
-    required convenience init?(_ map: Map) {
+    required convenience init?(map: Map) {
         
         self.init()
     }

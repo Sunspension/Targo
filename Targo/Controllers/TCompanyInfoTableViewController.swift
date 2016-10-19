@@ -12,20 +12,20 @@ import PhoneNumberKit
 
 enum InfoSectionEnum {
     
-    case CompanyImage
-    case WorkingHours
-    case AdditionalInfo
+    case companyImage
+    case workingHours
+    case additionalInfo
 }
 
 class TCompanyInfoTableViewController: UITableViewController {
     
-    private let workingHoursIdentifier = "workingHoursHeader"
+    fileprivate let workingHoursIdentifier = "workingHoursHeader"
     
-    private let companyContactsIdentifier = "companyContacts"
+    fileprivate let companyContactsIdentifier = "companyContacts"
     
-    private let companyAboutIdentifier = "AboutCompanyCell"
+    fileprivate let companyAboutIdentifier = "AboutCompanyCell"
     
-    private let bookmarkButton = UIButton(type: .Custom)
+    fileprivate let bookmarkButton = UIButton(type: .custom)
     
     
     var company: TCompanyAddress?
@@ -54,25 +54,25 @@ class TCompanyInfoTableViewController: UITableViewController {
         
         self.title = company?.companyTitle
         
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
-        bookmarkButton.setImage(UIImage(named: "icon-star"), forState: .Normal)
-        bookmarkButton.setImage(UIImage(named: "icon-fullStar"), forState: .Selected)
-        bookmarkButton.tintColor = UIColor.yellowColor()
-        bookmarkButton.addTarget(self, action: #selector(TCompanyInfoTableViewController.makeFavorite), forControlEvents: .TouchUpInside)
+        bookmarkButton.setImage(UIImage(named: "icon-star"), for: UIControlState())
+        bookmarkButton.setImage(UIImage(named: "icon-fullStar"), for: .selected)
+        bookmarkButton.tintColor = UIColor.yellow
+        bookmarkButton.addTarget(self, action: #selector(TCompanyInfoTableViewController.makeFavorite), for: .touchUpInside)
         bookmarkButton.sizeToFit()
         
-        bookmarkButton.selected = self.company!.isFavorite
+        bookmarkButton.isSelected = self.company!.isFavorite
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: bookmarkButton)
         
-        self.tableView.registerNib(UINib(nibName: "TCompanyImageMenuTableViewCell", bundle: nil),
+        self.tableView.register(UINib(nibName: "TCompanyImageMenuTableViewCell", bundle: nil),
                                    forCellReuseIdentifier: "CompanyImageMenu")
         
-        self.tableView.registerNib(UINib(nibName: "TWorkingHoursHeader", bundle: nil),
+        self.tableView.register(UINib(nibName: "TWorkingHoursHeader", bundle: nil),
                                    forHeaderFooterViewReuseIdentifier: self.workingHoursIdentifier)
         
-        self.tableView.registerNib(UINib(nibName: "TCompanyInfoContactsHeader", bundle: nil),
+        self.tableView.register(UINib(nibName: "TCompanyInfoContactsHeader", bundle: nil),
                                    forHeaderFooterViewReuseIdentifier: self.companyContactsIdentifier)
         
         self.createDataSource()
@@ -89,7 +89,7 @@ class TCompanyInfoTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         
         switch section {
             
@@ -98,20 +98,20 @@ class TCompanyInfoTableViewController: UITableViewController {
             let header = view as! TWorkingHoursHeader
             let button = header.buttonMakeOrder
             
-            button.layer.borderColor = UIColor.whiteColor().CGColor
-            button.layer.borderWidth = 3
-            let radius = button.layer.bounds.width / 2
-            button.layer.cornerRadius = radius
-            button.layer.shadowPath = UIBezierPath(roundedRect: button.layer.bounds, cornerRadius: radius).CGPath
-            button.layer.shadowOffset = CGSize(width:0, height: 1)
-            button.layer.shadowOpacity = 0.5
-            button.backgroundColor = UIColor(hexString: kHexMainPinkColor)
+            button?.layer.borderColor = UIColor.white.cgColor
+            button?.layer.borderWidth = 3
+            let radius = (button?.layer.bounds.width)! / 2
+            button?.layer.cornerRadius = radius
+            button?.layer.shadowPath = UIBezierPath(roundedRect: (button?.layer.bounds)!, cornerRadius: radius).cgPath
+            button?.layer.shadowOffset = CGSize(width:0, height: 1)
+            button?.layer.shadowOpacity = 0.5
+            button?.backgroundColor = UIColor(hexString: kHexMainPinkColor)
             
             break
             
         case 2:
             
-            view.layer.shadowPath = UIBezierPath(rect: view.layer.bounds).CGPath
+            view.layer.shadowPath = UIBezierPath(rect: view.layer.bounds).cgPath
             view.layer.shadowOffset = CGSize(width: 0, height: 1)
             view.layer.shadowOpacity = 0.5
             
@@ -122,22 +122,22 @@ class TCompanyInfoTableViewController: UITableViewController {
         }
     }
     
-    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         switch section {
             
         case 1:
             
-            if let header = tableView.dequeueReusableHeaderFooterViewWithIdentifier(self.workingHoursIdentifier) as? TWorkingHoursHeader {
+            if let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: self.workingHoursIdentifier) as? TWorkingHoursHeader {
                 
                 header.title.text = self.itemsSource.sections[section].title
                 
                 let button = header.buttonMakeOrder
-                button.titleLabel?.textAlignment = .Center
-                button.hidden = false
-                button.addTarget(self, action: #selector(TCompanyInfoTableViewController.openCompanyMenu),
-                                 forControlEvents: .TouchUpInside)
-                button.setTitle("order_make_order_button_title".localized, forState: .Normal)
+                button?.titleLabel?.textAlignment = .center
+                button?.isHidden = false
+                button?.addTarget(self, action: #selector(TCompanyInfoTableViewController.openCompanyMenu),
+                                 for: .touchUpInside)
+                button?.setTitle("order_make_order_button_title".localized, for: UIControlState())
                 
                 return header
             }
@@ -148,19 +148,19 @@ class TCompanyInfoTableViewController: UITableViewController {
             
         case 2:
             
-            if let header = tableView.dequeueReusableHeaderFooterViewWithIdentifier(self.companyContactsIdentifier) as? TCompanyInfoContactsHeader {
+            if let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: self.companyContactsIdentifier) as? TCompanyInfoContactsHeader {
                 
-                header.buttonPhone.setTitle(self.company!.companyPhone, forState: .Normal)
+                header.buttonPhone.setTitle(self.company!.companyPhone, for: UIControlState())
                 header.buttonPhone.alignImageAndTitleVertically()
-                header.buttonPhone.addTarget(self, action: #selector(TCompanyInfoTableViewController.makeCall), forControlEvents: .TouchUpInside)
+                header.buttonPhone.addTarget(self, action: #selector(TCompanyInfoTableViewController.makeCall), for: .touchUpInside)
                 
-                header.buttonLocation.setTitle(self.company?.title, forState: .Normal)
+                header.buttonLocation.setTitle(self.company?.title, for: UIControlState())
                 header.buttonLocation.alignImageAndTitleVertically()
-                header.buttonLocation.addTarget(self, action: #selector(TCompanyInfoTableViewController.openMapAction), forControlEvents: .TouchUpInside)
+                header.buttonLocation.addTarget(self, action: #selector(TCompanyInfoTableViewController.openMapAction), for: .touchUpInside)
                 
-                header.buttonLink.setTitle(!self.company!.companySite.isEmpty ? self.company!.companySite : "www.google.com", forState: .Normal)
+                header.buttonLink.setTitle(!self.company!.companySite.isEmpty ? self.company!.companySite : "www.google.com", for: UIControlState())
                 header.buttonLink.alignImageAndTitleVertically()
-                header.buttonLink.addTarget(self, action: #selector(TCompanyInfoTableViewController.openURL), forControlEvents: .TouchUpInside)
+                header.buttonLink.addTarget(self, action: #selector(TCompanyInfoTableViewController.openURL), for: .touchUpInside)
                 
                 header.background.backgroundColor = UIColor(hexString: kHexMainPinkColor)
                 return header
@@ -175,7 +175,7 @@ class TCompanyInfoTableViewController: UITableViewController {
         }
     }
     
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
         switch section {
             
@@ -212,19 +212,19 @@ class TCompanyInfoTableViewController: UITableViewController {
             
             let alertController = UIAlertController(title: "company_info_make_call_title".localized,
                                                     message: String(format:"company_info_make_call_confirmation".localized, company.phone),
-                                                    preferredStyle: .Alert)
+                                                    preferredStyle: .alert)
             
-            let okAction = UIAlertAction(title: "action_ok".localized, style: .Default, handler: { action in
+            let okAction = UIAlertAction(title: "action_ok".localized, style: .default, handler: { action in
                 
                 InterOperation.makeCall(company.phone)
             })
             
-            let cancelAction = UIAlertAction(title: "action_cancel".localized, style: .Cancel, handler: nil)
+            let cancelAction = UIAlertAction(title: "action_cancel".localized, style: .cancel, handler: nil)
             
             alertController.addAction(okAction)
             alertController.addAction(cancelAction)
             
-            self.presentViewController(alertController, animated: true, completion: nil)
+            self.present(alertController, animated: true, completion: nil)
         }
     }
     
@@ -292,34 +292,34 @@ class TCompanyInfoTableViewController: UITableViewController {
 
     func makeFavorite() {
         
-        self.bookmarkButton.selected = !self.bookmarkButton.selected
+        self.bookmarkButton.isSelected = !self.bookmarkButton.isSelected
         
-        if self.bookmarkButton.selected {
+        if self.bookmarkButton.isSelected {
             
-            Api.sharedInstance.addBookmark(self.company!.id)
+            Api.sharedInstance.addBookmark(companyAddressId: self.company!.id)
                 
                 .onFailure { error in
                     
-                    self.bookmarkButton.selected = !self.bookmarkButton.selected
+                    self.bookmarkButton.isSelected = !self.bookmarkButton.isSelected
             }
         }
         else {
             
-            Api.sharedInstance.removeBookmark(self.company!.id)
+            Api.sharedInstance.removeBookmark(companyAddressId: self.company!.id)
                 
                 .onFailure { error in
                     
-                    self.bookmarkButton.selected = !self.bookmarkButton.selected
+                    self.bookmarkButton.isSelected = !self.bookmarkButton.isSelected
             }
         }
     }
     
     
     // MARK: - Private methods
-    private func createDataSource() {
+    fileprivate func createDataSource() {
     
         let section = CollectionSection()
-        section.sectionType = InfoSectionEnum.CompanyImage
+        section.sectionType = InfoSectionEnum.companyImage
         
         section.initializeCellWithReusableIdentifierOrNibName("CompanyImageMenu", item: self.companyImage) { (cell, item) in
             
@@ -332,7 +332,7 @@ class TCompanyInfoTableViewController: UITableViewController {
             if let companyImage = item.item as? TImage {
                 
                 let filter = AspectScaledToFillSizeFilter(size: viewCell.companyImage.bounds.size)
-                viewCell.companyImage.af_setImageWithURL(NSURL(string: companyImage.url)!, filter: filter)
+                viewCell.companyImage.af_setImage(withURL: URL(string: companyImage.url)!, filter: filter)
             }
             
             if let workingHours = self.company!.todayWorkingHours {
@@ -343,14 +343,14 @@ class TCompanyInfoTableViewController: UITableViewController {
                 }
             }
             
-            viewCell.selectionStyle = .None
+            viewCell.selectionStyle = .none
         }
         
         self.itemsSource.sections.append(section)
 
         let workingHoursSection = CollectionSection(title: "company_info_working_hours".localized)
         
-        let calendar = NSCalendar.currentCalendar()
+        let calendar = Calendar.current
         
         for index in 0...6 {
             
@@ -370,14 +370,14 @@ class TCompanyInfoTableViewController: UITableViewController {
                                                                                     viewCell.hours.text = "\(day.begin) - \(day.end)"
                                                                                 }
                                                                                 
-                                                                                viewCell.selectionStyle = .None
+                                                                                viewCell.selectionStyle = .none
             })
         }
         
         self.itemsSource.sections.append(workingHoursSection)
         
         let aboutSection = CollectionSection()
-        aboutSection.sectionType = InfoSectionEnum.AdditionalInfo
+        aboutSection.sectionType = InfoSectionEnum.additionalInfo
         
         aboutSection.initializeCellWithReusableIdentifierOrNibName(self.companyAboutIdentifier,
                                                                    item: self.company?.companyDescription) { (cell, item) in
@@ -387,7 +387,7 @@ class TCompanyInfoTableViewController: UITableViewController {
                                                                     
                                                                     viewCell.title.text = "company_info_about_us".localized
                                                                     viewCell.companyInfo.text = text
-                                                                    viewCell.selectionStyle = .None
+                                                                    viewCell.selectionStyle = .none
         }
         
         self.itemsSource.sections.append(aboutSection)

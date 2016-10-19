@@ -12,11 +12,11 @@ class GenericTableViewDataSource<TTableViewCell: UITableViewCell, TTableItem: An
 
     var sections: [GenericCollectionSection<TTableItem>] = []
     
-    var bindingAction: (cell: TTableViewCell, item: GenericCollectionSectionItem<TTableItem>) -> Void
+    var bindingAction: (_ cell: TTableViewCell, _ item: GenericCollectionSectionItem<TTableItem>) -> Void
     
     var reusableIdentifierOrNibName: String?
     
-    init(reusableIdentifierOrNibName: String? = nil, bindingAction: (cell: TTableViewCell, item: GenericCollectionSectionItem<TTableItem>) -> Void) {
+    init(reusableIdentifierOrNibName: String? = nil, bindingAction: @escaping (_ cell: TTableViewCell, _ item: GenericCollectionSectionItem<TTableItem>) -> Void) {
         
         self.bindingAction = bindingAction
         self.reusableIdentifierOrNibName = reusableIdentifierOrNibName
@@ -24,39 +24,39 @@ class GenericTableViewDataSource<TTableViewCell: UITableViewCell, TTableItem: An
         super.init()
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return self.sections[section].items.count ?? 0
+        return self.sections[section].items.count 
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         
-        return self.sections.count ?? 1
+        return self.sections.count 
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let item = self.sections[indexPath.section].items[indexPath.row]
+        let item = self.sections[(indexPath as NSIndexPath).section].items[(indexPath as NSIndexPath).row]
         item.indexPath = indexPath
         
         if let identifier = self.reusableIdentifierOrNibName {
             
-            if let cell = tableView.dequeueReusableCellWithIdentifier(identifier) as? TTableViewCell {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? TTableViewCell {
                 
-                self.bindingAction(cell: cell, item: item)
+                self.bindingAction(cell, item)
                 
                 return cell
             }
             
-            if let cell = NSBundle.mainBundle().loadNibNamed(self.reusableIdentifierOrNibName!, owner: self, options: nil)!.last as? TTableViewCell {
+            if let cell = Bundle.main.loadNibNamed(self.reusableIdentifierOrNibName!, owner: self, options: nil)!.last as? TTableViewCell {
                 
-                self.bindingAction(cell: cell, item: item)
+                self.bindingAction(cell, item)
                 return cell
             }
         }
         
         let cell =  UITableViewCell() as! TTableViewCell
-        self.bindingAction(cell: cell, item: item)
+        self.bindingAction(cell, item)
         
         return cell;
     }

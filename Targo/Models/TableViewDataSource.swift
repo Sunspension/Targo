@@ -12,50 +12,50 @@ class TableViewDataSource: NSObject, UITableViewDataSource {
     
     var sections: [CollectionSection] = []
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return self.sections[section].items.count ?? 0
+        return self.sections[section].items.count 
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         
-        return self.sections.count ?? 1
+        return self.sections.count 
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let item = self.sections[indexPath.section].items[indexPath.row]
+        let item = self.sections[(indexPath as NSIndexPath).section].items[(indexPath as NSIndexPath).row]
         item.indexPath = indexPath
         
         if item.defaultcell == true {
             
             let cell = UITableViewCell(style: item.cellStyle!, reuseIdentifier: item.reusableIdentifierOrNibName)
-            item.bindingAction(cell: cell, item: item)
+            item.bindingAction?(cell, item)
             return cell;
         }
         
         if let identifier = item.reusableIdentifierOrNibName {
             
-            if let cell = tableView.dequeueReusableCellWithIdentifier(identifier) {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: identifier) {
                 
-                item.bindingAction(cell: cell, item: item)
+                item.bindingAction?(cell, item)
                 return cell
             }
             
-            if let cell = NSBundle.mainBundle().loadNibNamed(item.reusableIdentifierOrNibName!, owner: self, options: nil)!.last as? UITableViewCell {
+            if let cell = Bundle.main.loadNibNamed(item.reusableIdentifierOrNibName!, owner: self, options: nil)!.last as? UITableViewCell {
                 
-                item.bindingAction(cell: cell, item: item)
+                item.bindingAction?(cell, item)
                 return cell
             }
         }
         
         let cell =  UITableViewCell()
-        item.bindingAction(cell: cell, item: item)
+        item.bindingAction?(cell, item)
         
         return cell;
     }
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
         return self.sections[section].title
     }

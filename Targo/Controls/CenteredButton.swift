@@ -14,7 +14,7 @@ class CenteredButton: UIButton {
         
         super.layoutSubviews()
         
-        self.titleLabel!.textAlignment = .Center
+        self.titleLabel!.textAlignment = .center
         self.titleLabel!.sizeToFit()
         self.imageView!.center = CGPoint(x: self.frame.width / 2,
                                          y: self.frame.height / 2 + 1 - (8 + self.titleLabel!.frame.height) / 2)

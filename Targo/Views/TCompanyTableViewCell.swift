@@ -31,10 +31,10 @@ class TCompanyTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         
-        ratingProgress.hidden = true
+        ratingProgress.isHidden = true
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
@@ -47,6 +47,6 @@ class TCompanyTableViewCell: UITableViewCell {
         let layer = self.shadowView.layer
         layer.shadowOffset = CGSize(width: 0, height: 1)
         layer.shadowOpacity = 0.5
-        layer.shadowPath = UIBezierPath(rect: layer.bounds).CGPath
+        layer.shadowPath = UIBezierPath(rect: layer.bounds).cgPath
     }
 }

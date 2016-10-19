@@ -8,46 +8,46 @@
 
 import Foundation
 
-enum UserRegistrationError: ErrorType {
+enum UserRegistrationError: Error {
     
-    case UknownError(description: String)
+    case uknownError(description: String)
     
-    case ToManyAuthorizationCodeRequest
+    case toManyAuthorizationCodeRequest
     
-    case BlankPhoneNumber
+    case blankPhoneNumber
     
-    case BlankDeviceType
+    case blankDeviceType
     
-    case BlankDeviceToken
+    case blankDeviceToken
     
-    case WrongCode
+    case wrongCode
     
     
     var message: String {
         
         switch self {
             
-        case .UknownError(let description):
+        case .uknownError(let description):
             
             return description
             
-        case .ToManyAuthorizationCodeRequest:
+        case .toManyAuthorizationCodeRequest:
             
             return "authorization_to_many_code_request".localized
             
-        case BlankPhoneNumber:
+        case .blankPhoneNumber:
             
             return "authorization_blank_phone".localized
             
-        case BlankDeviceType:
+        case .blankDeviceType:
             
             return "authorization_blank_device_type".localized
             
-        case BlankDeviceToken:
+        case .blankDeviceToken:
             
             return "authorization_blank_device_token".localized
             
-        case .WrongCode:
+        case .wrongCode:
             
             return "authorization_uknown_code".localized
         }

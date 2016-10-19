@@ -23,22 +23,22 @@ class TCompanyImageMenuTableViewCell: UITableViewCell {
         
     }
     
-    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         
-        if let path = keyPath where path == "image" {
+        if let path = keyPath , path == "image" {
             
             if let change = change {
                 
                 self.companyImage.removeObserver(self, forKeyPath: "image")
                 
-                let newImage = change[NSKeyValueChangeNewKey] as! UIImage
+                let newImage = change[NSKeyValueChangeKey.newKey] as! UIImage
                 
-                self.companyImage.image = newImage.applyBlurWithRadius(4, tintColor: UIColor(red: 33 / 255, green: 21 / 255, blue: 100 / 255, alpha: 0.65), saturationDeltaFactor: 1, maskImage: nil)
+                self.companyImage.image = newImage.applyBlur(withRadius: 4, tintColor: UIColor(red: 33 / 255, green: 21 / 255, blue: 100 / 255, alpha: 0.65), saturationDeltaFactor: 1, maskImage: nil)
             }
         }
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
@@ -46,7 +46,7 @@ class TCompanyImageMenuTableViewCell: UITableViewCell {
     
     func addBlurEffect() {
         
-        self.companyImage.addObserver(self, forKeyPath: "image", options: .New, context: nil)
+        self.companyImage.addObserver(self, forKeyPath: "image", options: .new, context: nil)
     }
     
     override func layoutSubviews() {

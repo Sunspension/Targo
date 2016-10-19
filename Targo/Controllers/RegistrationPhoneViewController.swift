@@ -26,10 +26,10 @@ class RegistrationPhoneViewController: UIViewController {
         super.viewDidLoad()
         self.setup()
         
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
         buttonSend.tintColor = DynamicColor(hexString: kHexMainPinkColor)
-        buttonSend.enabled = false
+        buttonSend.isEnabled = false
         
         self.title = "registration_phone_title".localized
         
@@ -37,12 +37,12 @@ class RegistrationPhoneViewController: UIViewController {
         phoneNumber.formatter.prefix = "+7"
         phoneNumber.becomeFirstResponder()
         phoneNumber.tintColor = DynamicColor(hexString: kHexMainPinkColor)
-        phoneNumber.textDidChangeBlock = { (textfield: UITextField!) in
+        phoneNumber.textDidChangeBlock = { textfield in
             
             if self.phoneNumber.phoneNumber().characters.count < 11 {
                 
-                textfield.rightView = nil
-                self.buttonSend.enabled = false
+                textfield!.rightView = nil
+                self.buttonSend.isEnabled = false
             }
             else {
                 
@@ -50,42 +50,42 @@ class RegistrationPhoneViewController: UIViewController {
                 let imageView = UIImageView(image: image)
                 imageView.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
                 imageView.tintColor = DynamicColor(hexString: kHexMainPinkColor)
-                textfield.rightViewMode = .Always
-                textfield.rightView = imageView
+                textfield!.rightViewMode = .always
+                textfield!.rightView = imageView
                 
-                self.buttonSend.enabled = true
+                self.buttonSend.isEnabled = true
             }
         }
         
-        separator.backgroundColor = UIColor.lightGrayColor()
+        separator.backgroundColor = UIColor.lightGray
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
         
-        self.navigationController?.navigationBarHidden = false;
+        self.navigationController?.isNavigationBarHidden = false;
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         
         super.viewWillDisappear(animated)
         
-        self.navigationController?.navigationBarHidden = true;
+        self.navigationController?.isNavigationBarHidden = true;
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         self.view.endEditing(true)
     }
     
-    @IBAction func sendAction(sender: AnyObject) {
+    @IBAction func sendAction(_ sender: AnyObject) {
         
         let phoneNumber = self.phoneNumber.phoneNumber()
         
         showWaitOverlay()
         
-        Api.sharedInstance.userRegistration(phoneNumber)
+        Api.sharedInstance.userRegistration(phoneNumber: phoneNumber!)
             
             .onSuccess {[weak self] response in
                 
@@ -93,8 +93,8 @@ class RegistrationPhoneViewController: UIViewController {
                 
                 AppSettings.sharedInstance.lastSessionPhoneNumber = phoneNumber
                 
-                let defaults = NSUserDefaults.standardUserDefaults()
-                defaults.setBool(true, forKey: kTargoCodeSent)
+                let defaults = UserDefaults.standard
+                defaults.set(true, forKey: kTargoCodeSent)
                 defaults.synchronize()
                 
                 let controller = self?.instantiateViewControllerWithIdentifierOrNibName("RegistrationCode")
@@ -108,10 +108,10 @@ class RegistrationPhoneViewController: UIViewController {
                 
                 self?.removeAllOverlays()
                 
-                let alert = UIAlertController(title: "Error", message: error.message, preferredStyle: .Alert)
-                let action = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                let alert = UIAlertController(title: "Error", message: error.message, preferredStyle: .alert)
+                let action = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                 alert.addAction(action)
-                self?.presentViewController(alert, animated: true, completion: nil)
+                self?.present(alert, animated: true, completion: nil)
         }
     }
 }

@@ -40,16 +40,16 @@ class TOrderBillTableViewController: UITableViewController {
                                                                 let order = item.item as? TShopOrder
                                                                 viewCell.companyName.text = self.companyName
                                                                 
-                                                                let formatter = NSDateFormatter()
+                                                                let formatter = DateFormatter()
                                                                 formatter.dateFormat = kDateTimeFormat
                                                                 
-                                                                if let date = formatter.dateFromString(order!.created) {
+                                                                if let date = formatter.date(from: order!.created) {
                                                                     
-                                                                    let formatter = NSDateFormatter()
-                                                                    formatter.dateStyle = .MediumStyle
-                                                                    formatter.timeStyle = .NoStyle
+                                                                    let formatter = DateFormatter()
+                                                                    formatter.dateStyle = .medium
+                                                                    formatter.timeStyle = .none
                                                                     
-                                                                    viewCell.orderDate.text = formatter.stringFromDate(date)
+                                                                    viewCell.orderDate.text = formatter.string(from: date)
                                                                 }
         }
         
@@ -79,7 +79,7 @@ class TOrderBillTableViewController: UITableViewController {
                                                                 let viewCell = cell as! TBillCompanyNameTableViewCell
                                                                 
                                                                 viewCell.companyName.text = "order_review_total_price".localized
-                                                                viewCell.companyName.textAlignment = .Right
+                                                                viewCell.companyName.textAlignment = .right
                                                                 viewCell.orderDate.text = String(totalPrice) + " \u{20BD}"
                                                                 let color = DynamicColor(hexString: "F0F0F0")
                                                                 viewCell.contentView.backgroundColor = color

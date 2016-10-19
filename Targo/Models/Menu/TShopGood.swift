@@ -61,7 +61,7 @@ class TShopGood: Object, Mappable {
         return ["imageIds"]
     }
     
-    required convenience init?(_ map: Map) {
+    required convenience init?(map: Map) {
         
         self.init()
     }
@@ -83,6 +83,6 @@ class TShopGood: Object, Mappable {
         
         var imageIds = [Int]()
         imageIds <- map["image_ids"]
-        self.backingImageIds.appendContentsOf(imageIds.map({ RealmInt(value: [$0]) }))
+        self.backingImageIds.append(objectsIn: imageIds.map({ RealmInt(value: [$0]) }))
     }
 }

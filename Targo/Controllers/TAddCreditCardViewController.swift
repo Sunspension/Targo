@@ -26,7 +26,7 @@ class TAddCreditCardViewController: UIViewController, WKUIDelegate, WKNavigation
         super.loadView()
     
         self.webView = WKWebView()
-        self.webView.UIDelegate = self
+        self.webView.uiDelegate = self
         self.webView.navigationDelegate = self
         self.view = self.webView
     }
@@ -44,10 +44,10 @@ class TAddCreditCardViewController: UIViewController, WKUIDelegate, WKNavigation
             
             self?.orderId = result.id
             
-            if let url = NSURL(string: result.url) {
+            if let url = URL(string: result.url) {
                 
-                self?.webView.loadRequest(NSURLRequest(URL: url))
-            }
+                    let _ = self?.webView.load(URLRequest(url: url))
+                }
             }
             .onFailure {[weak self] error in
             
@@ -56,7 +56,7 @@ class TAddCreditCardViewController: UIViewController, WKUIDelegate, WKNavigation
         }
     }
     
-    func webView(webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         
         showWaitOverlay()
         
@@ -66,11 +66,11 @@ class TAddCreditCardViewController: UIViewController, WKUIDelegate, WKNavigation
         }
     }
     
-    func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation!) {
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         
         removeAllOverlays()
         
-        if !self.webView.loading && self.navigation == navigation {
+        if !self.webView.isLoading && self.navigation == navigation {
             
             self.webView.evaluateJavaScript("show()", completionHandler: { (result, error) in
                 
@@ -84,11 +84,11 @@ class TAddCreditCardViewController: UIViewController, WKUIDelegate, WKNavigation
         }
     }
     
-    func webView(webView: WKWebView, createWebViewWithConfiguration configuration: WKWebViewConfiguration, forNavigationAction navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+    func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
         
         if navigationAction.targetFrame == nil {
             
-            self.webView.loadRequest(navigationAction.request)
+            self.webView.load(navigationAction.request)
         }
         
         return nil
@@ -96,54 +96,54 @@ class TAddCreditCardViewController: UIViewController, WKUIDelegate, WKNavigation
     
     func checkOrderStatus() {
         
-        Api.sharedInstance.checkTestOrder(self.orderId)
+        Api.sharedInstance.checkTestOrder(orderId: self.orderId)
             
             .onSuccess {[weak self] order in
             
             switch PaymentStatus(rawValue: order.paymentStatus)! {
                 
-            case .Error:
+            case .error:
                 
-                let alert = UIAlertController(title: "", message: order.message, preferredStyle: .Alert)
-                let action = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                let alert = UIAlertController(title: "", message: order.message, preferredStyle: .alert)
+                let action = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                 alert.addAction(action)
                 
-                self?.presentViewController(alert, animated: true, completion: nil)
+                self?.present(alert, animated: true, completion: nil)
                 
                 break
                 
-            case .Complete:
+            case .complete:
                 
-                NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: kTargoDidAddNewCardNotification, object: nil))
+                NotificationCenter.default.post(Notification(name: Notification.Name(rawValue: kTargoDidAddNewCardNotification), object: nil))
                 
-                let alert = UIAlertController(title: "success_title".localized, message: "test_order_success_message".localized, preferredStyle: .Alert)
-                let action = UIAlertAction(title: "Ok", style: .Cancel, handler: { action in
+                let alert = UIAlertController(title: "success_title".localized, message: "test_order_success_message".localized, preferredStyle: .alert)
+                let action = UIAlertAction(title: "Ok", style: .cancel, handler: { action in
                     
-                    self?.navigationController?.popViewControllerAnimated(true)
+                    let _ = self?.navigationController?.popViewController(animated: true)
                 })
                 
                 alert.addAction(action)
                 
-                self?.presentViewController(alert, animated: true, completion: nil)
+                self?.present(alert, animated: true, completion: nil)
                 
             default:
                 
-                self?.performSelector(#selector(TAddCreditCardViewController.checkOrderStatus), withObject: nil, afterDelay: 1)
+                self?.perform(#selector(TAddCreditCardViewController.checkOrderStatus), with: nil, afterDelay: 1)
                 
                 break
             }
                 
         }.onFailure {[weak self] error in
             
-            let alert = UIAlertController(title: "", message: error.localizedDescription, preferredStyle: .Alert)
-            let action = UIAlertAction(title: "Ok", style: .Cancel, handler: { action in
+            let alert = UIAlertController(title: "", message: error.localizedDescription, preferredStyle: .alert)
+            let action = UIAlertAction(title: "Ok", style: .cancel, handler: { action in
                 
-                self?.navigationController?.popViewControllerAnimated(true)
+                let _ = self?.navigationController?.popViewController(animated: true)
             })
             
             alert.addAction(action)
             
-            self?.presentViewController(alert, animated: true, completion: nil)
+            self?.present(alert, animated: true, completion: nil)
         }
     }
 }

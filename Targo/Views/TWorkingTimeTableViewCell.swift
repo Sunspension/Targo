@@ -21,26 +21,26 @@ class TWorkingTimeTableViewCell: UITableViewCell {
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
 
     
-    func setWorkingTimeAndHandlingOrder(workingTime: String, handlingOrder: String) {
+    func setWorkingTimeAndHandlingOrder(_ workingTime: String, handlingOrder: String) {
         
-        let workingTitle = NSMutableAttributedString(string: "menu_working_time".localized, attributes: [ NSForegroundColorAttributeName : UIColor.grayColor(), NSFontAttributeName : UIFont.systemFontOfSize(13)])
+        let workingTitle = NSMutableAttributedString(string: "menu_working_time".localized, attributes: [ NSForegroundColorAttributeName : UIColor.gray, NSFontAttributeName : UIFont.systemFont(ofSize: 13)])
         let workingTime = NSMutableAttributedString(string: "\n" + workingTime)
         
-        workingTitle.appendAttributedString(workingTime)
+        workingTitle.append(workingTime)
         
         self.workingHours.attributedText = workingTitle
         
-        let orderTitle = NSMutableAttributedString(string: "menu_handling_time".localized, attributes: [ NSForegroundColorAttributeName : UIColor.grayColor(), NSFontAttributeName : UIFont.systemFontOfSize(13)])
+        let orderTitle = NSMutableAttributedString(string: "menu_handling_time".localized, attributes: [ NSForegroundColorAttributeName : UIColor.gray, NSFontAttributeName : UIFont.systemFont(ofSize: 13)])
         let orderTime = NSMutableAttributedString(string: "\n" + handlingOrder)
         
-        orderTitle.appendAttributedString(orderTime)
+        orderTitle.append(orderTime)
         
         self.hadlingOrderTime.attributedText = orderTitle
     }

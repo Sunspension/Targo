@@ -21,7 +21,7 @@ class TTabBarController: UITabBarController {
                 
                 if let tintedImage = image.imageWithColor(UIColor(hexString: kHexMainPinkColor)) {
                     
-                    item.image = tintedImage.imageWithRenderingMode(.AlwaysOriginal)
+                    item.image = tintedImage.withRenderingMode(.alwaysOriginal)
                 }
             }
         }

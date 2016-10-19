@@ -10,7 +10,7 @@ import UIKit
 
 class TFeedDetailsTableViewController: UITableViewController {
 
-    private var dataSource = TableViewDataSource()
+    fileprivate var dataSource = TableViewDataSource()
     
     var news: TFeedItem!
     
@@ -44,7 +44,7 @@ class TFeedDetailsTableViewController: UITableViewController {
 
     //MARK: - Private methods
     
-    private func createDataSource() {
+    fileprivate func createDataSource() {
         
         let section = CollectionSection()
         
@@ -61,16 +61,16 @@ class TFeedDetailsTableViewController: UITableViewController {
                                                                     
                                                                     viewCell.newsDetails.text = news.feedItemDescription
                                                                     
-                                                                    let formatter = NSDateFormatter()
+                                                                    let formatter = DateFormatter()
                                                                     formatter.dateFormat = kDateTimeFormat
                                                                     
-                                                                    if let date = formatter.dateFromString(news.createdAt) {
+                                                                    if let date = formatter.date(from: news.createdAt) {
                                                                         
-                                                                        let formatter = NSDateFormatter()
-                                                                        formatter.dateStyle = .ShortStyle
-                                                                        formatter.timeStyle = .ShortStyle
+                                                                        let formatter = DateFormatter()
+                                                                        formatter.dateStyle = .short
+                                                                        formatter.timeStyle = .short
                                                                         
-                                                                        viewCell.date.text = formatter.stringFromDate(date)
+                                                                        viewCell.date.text = formatter.string(from: date)
                                                                     }
             })
         }
@@ -86,16 +86,16 @@ class TFeedDetailsTableViewController: UITableViewController {
                                                                     viewCell.companyTitle.text = self.company.title
                                                                     viewCell.newsDetails.text = news.feedItemDescription
                                                                     
-                                                                    let formatter = NSDateFormatter()
+                                                                    let formatter = DateFormatter()
                                                                     formatter.dateFormat = kDateTimeFormat
                                                                     
-                                                                    if let date = formatter.dateFromString(news.createdAt) {
+                                                                    if let date = formatter.date(from: news.createdAt) {
                                                                         
-                                                                        let formatter = NSDateFormatter()
-                                                                        formatter.dateStyle = .ShortStyle
-                                                                        formatter.timeStyle = .ShortStyle
+                                                                        let formatter = DateFormatter()
+                                                                        formatter.dateStyle = .short
+                                                                        formatter.timeStyle = .short
                                                                         
-                                                                        viewCell.date.text = formatter.stringFromDate(date)
+                                                                        viewCell.date.text = formatter.string(from: date)
                                                                     }
             })
         }

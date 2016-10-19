@@ -33,7 +33,7 @@ class TOrderLoader: NSObject {
     
     func loadOrders() {
         
-        Api.sharedInstance.loadShopOrders(self.pageNumer).onSuccess { orders in
+        Api.sharedInstance.loadShopOrders(pageNumber: self.pageNumer).onSuccess { orders in
             
             do {
                 
@@ -51,7 +51,7 @@ class TOrderLoader: NSObject {
                 
                 self.pageNumer += 1
                 
-                self.performSelector(#selector(TOrderLoader.loadOrders))
+                self.perform(#selector(TOrderLoader.loadOrders))
             }
             else {
                 
@@ -62,7 +62,7 @@ class TOrderLoader: NSObject {
                         let cookie = self.realm.create(TOrderLoaderCookie.self, value: ["ordersLoaded" : true])
                         self.realm.add(TOrderLoaderCookie(value: cookie))
                         
-                        NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: kTargoDidLoadOrdersNotification, object: nil))
+                        NotificationCenter.default.post(Notification(name: Notification.Name(rawValue: kTargoDidLoadOrdersNotification), object: nil))
                     })
                 }
                 catch {

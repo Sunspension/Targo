@@ -19,7 +19,7 @@ extension TCompanyAddress {
         
         let correctionArray = [7, 1, 2, 3, 4, 5, 6]
         
-        let weekDay = NSDate().weekday
+        let weekDay = Date().weekday
         
         let index = correctionArray[weekDay - 1]
         

@@ -38,7 +38,7 @@ class TLocationManager: NSObject, CLLocationManagerDelegate {
     let distanceThreshold: Double = 50
     
     // seconds
-    let timeThreshold: NSTimeInterval = 600
+    let timeThreshold: TimeInterval = 600
     
     override init() {
         
@@ -48,40 +48,40 @@ class TLocationManager: NSObject, CLLocationManagerDelegate {
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
     }
     
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         if let location = locations.last {
             
             self.previousSuccessLocation = location
             
             if self.lastLocation == nil
-                || location.distanceFromLocation(self.lastLocation!) > self.distanceThreshold
+                || location.distance(from: self.lastLocation!) > self.distanceThreshold
                 || location.timestamp.timeIntervalSinceNow > self.timeThreshold {
                 
                 self.lastLocation = location
-                NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: kTargoLocationDidUpdateNotification, object: nil))
+                NotificationCenter.default.post(Notification(name: Notification.Name(rawValue: kTargoLocationDidUpdateNotification), object: nil))
             }
         }
     }
     
-    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         
-        if CLLocationManager.authorizationStatus() != .NotDetermined {
+        if CLLocationManager.authorizationStatus() != .notDetermined {
             
             self.locationManager.startUpdatingLocation()
         }
         
-        NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: kTargodidChangeAuthorizationStatus, object: nil))
+        NotificationCenter.default.post(Notification(name: Notification.Name(rawValue: kTargodidChangeAuthorizationStatus), object: nil))
     }
     
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         
         print("TLocationManager did fail: \(error)")
     }
     
     func startUpdatingLocation() {
         
-        if CLLocationManager.authorizationStatus() == .NotDetermined {
+        if CLLocationManager.authorizationStatus() == .notDetermined {
             
             self.locationManager.requestWhenInUseAuthorization()
         }
@@ -96,16 +96,16 @@ class TLocationManager: NSObject, CLLocationManagerDelegate {
         self.locationManager.stopUpdatingLocation()
     }
     
-    func subscribeObjectForLocationChange(object: AnyObject, selector: Selector) {
+    func subscribeObjectForLocationChange(_ object: AnyObject, selector: Selector) {
         
-        NSNotificationCenter.defaultCenter().addObserver(object, selector: selector, name: kTargoLocationDidUpdateNotification, object: nil)
+        NotificationCenter.default.addObserver(object, selector: selector, name: NSNotification.Name(rawValue: kTargoLocationDidUpdateNotification), object: nil)
         
         self.subscribersCount += 1
     }
     
-    func unsubscribeObjectForLocationChange(object: AnyObject) {
+    func unsubscribeObjectForLocationChange(_ object: AnyObject) {
         
-        NSNotificationCenter.defaultCenter().removeObserver(object, name: kTargoLocationDidUpdateNotification, object: nil)
+        NotificationCenter.default.removeObserver(object, name: NSNotification.Name(rawValue: kTargoLocationDidUpdateNotification), object: nil)
         
         if subscribersCount > 0 {
             

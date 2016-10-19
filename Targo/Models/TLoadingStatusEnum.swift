@@ -10,11 +10,11 @@ import UIKit
 
 enum TLoadingStatusEnum : Int {
 
-    case Idle
+    case idle
     
-    case Loading
+    case loading
     
-    case Failed
+    case failed
     
-    case Loaded
+    case loaded
 }

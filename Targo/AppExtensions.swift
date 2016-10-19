@@ -10,12 +10,12 @@ import Foundation
 import UIKit
 import DynamicColor
 
-func typeName(some: Any) -> String {
+func typeName(_ some: Any) -> String {
     
-    return (some is Any.Type) ? "\(some)" : "\(some.dynamicType)"
+    return (some is Any.Type) ? "\(some)" : "\(type(of: (some) as AnyObject))"
 }
 
-func += <K, V> (inout left: [K:V], right: [K:V]) {
+func += <K, V> (left: inout [K:V], right: [K:V]) {
     
     for (k, v) in right {
         
@@ -27,23 +27,23 @@ extension String {
     
     var localized: String {
         
-        return NSLocalizedString(self, tableName: nil, bundle: NSBundle.mainBundle(), value: "", comment: "")
+        return NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: "", comment: "")
     }
     
     
-    func localizedWithComment(comment: String) -> String {
+    func localizedWithComment(_ comment: String) -> String {
         
-        return NSLocalizedString(self, tableName: nil, bundle: NSBundle.mainBundle(), value: "", comment: comment)
+        return NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: "", comment: comment)
     }
     
     
-    func matchesForRegexInText(pattern: String!) -> [String]? {
+    func matchesForRegexInText(_ pattern: String!) -> [String]? {
         
         do {
             
             let regex = try NSRegularExpression(pattern: pattern, options: [])
-            let result = regex.matchesInString(self, options: [], range: NSMakeRange(0, self.characters.count))
-            return result.map({ (self as NSString).substringWithRange($0.range)})
+            let result = regex.matches(in: self, options: [], range: NSMakeRange(0, self.characters.count))
+            return result.map({ (self as NSString).substring(with: $0.range)})
         }
         catch let error as NSError {
             
@@ -55,7 +55,7 @@ extension String {
 
 extension UIButton {
     
-    func alignImageAndTitleVertically(padding: CGFloat = 6.0) {
+    func alignImageAndTitleVertically(_ padding: CGFloat = 6.0) {
         
         self.titleLabel?.sizeToFit()
         
@@ -81,7 +81,7 @@ extension UIButton {
 
 extension UIViewController {
     
-    func instantiateViewControllerWithIdentifierOrNibName(identifier: String) -> UIViewController? {
+    func instantiateViewControllerWithIdentifierOrNibName(_ identifier: String) -> UIViewController? {
         
         var storyBoard = self.storyboard
         
@@ -92,7 +92,7 @@ extension UIViewController {
         
         var viewController: UIViewController?
         
-        viewController = storyBoard!.instantiateViewControllerWithIdentifier(identifier)
+        viewController = storyBoard!.instantiateViewController(withIdentifier: identifier)
         
         if viewController == nil {
             
@@ -105,22 +105,22 @@ extension UIViewController {
     func setup() {
         
         self.navigationController?.navigationBar.barTintColor = DynamicColor(hexString: kHexMainPinkColor)
-        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-        self.navigationController?.navigationBar.titleTextAttributes = [ NSForegroundColorAttributeName : UIColor.whiteColor() ]
+        self.navigationController?.navigationBar.tintColor = UIColor.white
+        self.navigationController?.navigationBar.titleTextAttributes = [ NSForegroundColorAttributeName : UIColor.white ]
     }
     
-    func showOkAlert(title: String?, message: String?) {
+    func showOkAlert(_ title: String?, message: String?) {
         
         let alert = UIAlertController(title: title,
                                       message: message,
-                                      preferredStyle: .Alert)
-        let action = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                                      preferredStyle: .alert)
+        let action = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
         alert.addAction(action)
         
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
     
-    private var activityRestorationIdentifier: String {
+    fileprivate var activityRestorationIdentifier: String {
         return "NVActivityIndicatorViewContainer"
     }
 }
@@ -181,20 +181,20 @@ extension UIViewController {
 
 extension UIImage {
     
-    func imageWithColor(tintColor: UIColor) -> UIImage? {
+    func imageWithColor(_ tintColor: UIColor) -> UIImage? {
         
         UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
         
         if let context = UIGraphicsGetCurrentContext() as CGContext? {
             
-            CGContextTranslateCTM(context, 0, self.size.height)
-            CGContextScaleCTM(context, 1.0, -1.0);
-            CGContextSetBlendMode(context, CGBlendMode.Normal)
+            context.translateBy(x: 0, y: self.size.height)
+            context.scaleBy(x: 1.0, y: -1.0);
+            context.setBlendMode(CGBlendMode.normal)
             
-            let rect = CGRectMake(0, 0, self.size.width, self.size.height) as CGRect
-            CGContextClipToMask(context, rect, self.CGImage!)
+            let rect = CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height) as CGRect
+            context.clip(to: rect, mask: self.cgImage!)
             tintColor.setFill()
-            CGContextFillRect(context, rect)
+            context.fill(rect)
             
             let newImage = UIGraphicsGetImageFromCurrentImageContext() as UIImage?
             UIGraphicsEndImageContext()
@@ -227,18 +227,18 @@ extension UITableView {
 extension Array where Element: Equatable {
     
     // Remove first collection element that is equal to the given `object`:
-    mutating func remove(object: Element) {
+    mutating func remove(_ object: Element) {
         
-        if let index = self.indexOf(object) {
+        if let index = self.index(of: object) {
             
-            self.removeAtIndex(index)
+            self.remove(at: index)
         }
     }
 }
 
 extension NSObject {
     
-    func lock(@noescape closure: () -> ()) {
+    func lock(_ closure: () -> ()) {
         
         objc_sync_enter(self)
         
@@ -248,19 +248,19 @@ extension NSObject {
     }
 }
 
-extension NSDate {
+extension Date {
     
-    var startOfDay: NSDate {
+    var startOfDay: Date {
         
-        return NSCalendar.currentCalendar().startOfDayForDate(self)
+        return Calendar.current.startOfDay(for: self)
     }
     
-    var endOfDay: NSDate? {
+    var endOfDay: Date? {
         
-        let components = NSDateComponents()
+        var components = DateComponents()
         components.day = 1
         components.second = -1
         
-        return NSCalendar.currentCalendar().dateByAddingComponents(components, toDate: startOfDay, options: NSCalendarOptions())
+        return (Calendar.current as NSCalendar).date(byAdding: components, to: startOfDay, options: NSCalendar.Options())
     }
 }

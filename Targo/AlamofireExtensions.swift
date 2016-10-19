@@ -21,9 +21,9 @@ extension Request {
 
 extension Request {
     
-    func responseObject<T: Mappable>(keyPath: String? = nil, completionHandler: Response<T, TargoError> -> Void) -> Self {
+    func responseObject<T: Mappable>(_ keyPath: String? = nil, completionHandler: @escaping (DataResponse<T>) -> Void) -> Self {
         
-        let responseSerializer = ResponseSerializer<T, TargoError> { request, response, data, error in
+        let responseSerializer = DataResponseSerializer<T, TargoError> { request, response, data, error in
             
             guard error == nil else {
                 
@@ -65,7 +65,7 @@ extension Request {
             
             let JSONToMap: AnyObject?
             
-            if let keyPath = keyPath where keyPath.isEmpty == false {
+            if let keyPath = keyPath , keyPath.isEmpty == false {
                 
                 JSONToMap = result.value?.valueForKeyPath(keyPath)
             }
@@ -86,9 +86,9 @@ extension Request {
         return response(responseSerializer:responseSerializer, completionHandler: completionHandler)
     }
     
-    func responseArray<T: Mappable>(keyPath: String? = nil, completionHandler: Response<[T], TargoError> -> Void) -> Self {
+    func responseArray<T: Mappable>(_ keyPath: String? = nil, completionHandler: (Response<[T], TargoError>) -> Void) -> Self {
         
-        let responseSerializer = ResponseSerializer<[T], TargoError> { request, response, data, error in
+        let responseSerializer = DataResponseSerializer<[T], TargoError> { request, response, data, error in
             
             guard error == nil else {
                 
@@ -127,7 +127,7 @@ extension Request {
             
             let JSONToMap: AnyObject?
             
-            if let keyPath = keyPath where keyPath.isEmpty == false {
+            if let keyPath = keyPath , keyPath.isEmpty == false {
                 
                 JSONToMap = result.value?.valueForKeyPath(keyPath)
             }

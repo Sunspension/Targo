@@ -10,25 +10,25 @@ import UIKit
 
 struct InterOperation {
 
-    static func makeCall(phoneNumber: String) {
+    static func makeCall(_ phoneNumber: String) {
         
-        if let phoneURL = NSURL(string: "tel://\(phoneNumber)") {
+        if let phoneURL = URL(string: "tel://\(phoneNumber)") {
             
             openURL(phoneURL)
         }
     }
     
-    static func openBrowser(urlString: String) {
+    static func openBrowser(_ urlString: String) {
         
-        if let url = NSURL(string: urlString) {
+        if let url = URL(string: urlString) {
             
             openURL(url)
         }
     }
     
-    private static func openURL(url: NSURL) {
+    fileprivate static func openURL(_ url: URL) {
         
-        let application = UIApplication.sharedApplication()
+        let application = UIApplication.shared
         
         if application.canOpenURL(url) {
             

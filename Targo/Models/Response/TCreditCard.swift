@@ -22,7 +22,7 @@ class TCreditCard: NSObject, Mappable {
     var expireAt: String?
    
     
-    required convenience init?(_ map: Map) {
+    required convenience init?(map: Map) {
         
         self.init()
     }

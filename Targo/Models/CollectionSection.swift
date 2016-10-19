@@ -26,11 +26,11 @@ class CollectionSection: NSObject {
         self.title = title;
     }
     
-    func initializeDefaultCell(reusableIdentifier: String? = nil,
+    func initializeDefaultCell(_ reusableIdentifier: String? = nil,
                                cellStyle: UITableViewCellStyle,
                                item: Any?,
                                itemType: Any? = nil,
-                               bindingAction: (cell:UITableViewCell, item: CollectionSectionItem) -> Void) {
+                               bindingAction: @escaping (_ cell:UITableViewCell, _ item: CollectionSectionItem) -> Void) {
     
         let item = CollectionSectionItem(reusableIdentifier: reusableIdentifier, cellStyle: cellStyle, item: item)
         item.bindingAction = bindingAction
@@ -38,10 +38,10 @@ class CollectionSection: NSObject {
         self.items.append(item)
     }
     
-    func initializeCellWithReusableIdentifierOrNibName(identifierOrNibName: String,
+    func initializeCellWithReusableIdentifierOrNibName(_ identifierOrNibName: String,
                                                        item: Any?,
                                                        itemType: Any? = nil,
-                                                       bindingAction: (cell:UITableViewCell, item: CollectionSectionItem) -> Void) {
+                                                       bindingAction: @escaping (_ cell:UITableViewCell, _ item: CollectionSectionItem) -> Void) {
         
         let item = CollectionSectionItem(reusableIdentifierOrNibName: identifierOrNibName, item: item)
         item.itemType = itemType
@@ -49,11 +49,11 @@ class CollectionSection: NSObject {
         self.items.append(item)
     }
     
-    func initializeSwappableCellWithReusableIdentifierOrNibName(firstIdentifierOrNibName: String,
+    func initializeSwappableCellWithReusableIdentifierOrNibName(_ firstIdentifierOrNibName: String,
                                                                 secondIdentifierOrNibName: String,
                                                                 item: Any?,
                                                                 itemType: Any? = nil,
-                                                                bindingAction: (cell:UITableViewCell, item: CollectionSectionItem) -> Void) {
+                                                                bindingAction: @escaping (_ cell:UITableViewCell, _ item: CollectionSectionItem) -> Void) {
         
         let item = CollectionSectionItem(firstReusableIdentifierOrNibName: firstIdentifierOrNibName,
                                          secondReusableIdentifierOrNibName: secondIdentifierOrNibName, item: item)

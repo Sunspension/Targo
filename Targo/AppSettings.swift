@@ -16,13 +16,13 @@ class AppSettings: NSObject {
         
         get {
             
-            let defaults = NSUserDefaults.standardUserDefaults()
-            return defaults.objectForKey(kTargoLastSessionPhone) as? String
+            let defaults = UserDefaults.standard
+            return defaults.object(forKey: kTargoLastSessionPhone) as? String
         }
         
         set (newValue) {
             
-            let defauls = NSUserDefaults.standardUserDefaults()
+            let defauls = UserDefaults.standard
             defauls.setValue(newValue, forKey: kTargoLastSessionPhone)
         }
     }

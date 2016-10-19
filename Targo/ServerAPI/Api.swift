@@ -25,126 +25,127 @@ struct Api {
         
         let p = Promise<Bool, UserRegistrationError>()
         
-        let deviceToken = NSUserDefaults.standardUserDefaults().objectForKey(kTargoDeviceToken) as? String
+        let deviceToken = UserDefaults.standard.object(forKey: kTargoDeviceToken) as? String
         
-        server.registration(phoneNumber, deviceToken: deviceToken ?? "", parameters: nil)
+        server.registration(phoneNumber: phoneNumber, deviceToken: deviceToken ?? "", parameters: nil)
             
             .responseJSON { response in
                 
                 print(response.result.value)
             }
-            .responseObject("data") { (response: Response<TAuthorizationResponse, TargoError>) in
+            .responseObject(mapToObject: TBadRequest(), completionHandler: { (response: DataResponse<TBadRequest>) in
+                
+                
+            })
+            .validate()
+            .responseObject(keyPath: "data", completionHandler: { (response: DataResponse<TAuthorizationResponse>) in
                 
                 guard let _ = response.result.value else {
                     
-                    switch response.result.error! {
-                        
-                    case .BadRequest:
-                        
-                        let error = response.result.error?.userData as! TBadRequest
-                        
-                        switch error.name {
-                            
-                        case "Bad Request":
-                            
-                            p.failure(.ToManyAuthorizationCodeRequest)
-                            return
-                            
-                        default:
-                            break
-                        }
-                        
-                    case .ServerError:
-                        
-                        let error = response.result.error?.userData as! TServerError
-                        
-                        // We can get many errors but we are going to handle just first
-                        let firstError = error.errors.first
-                        
-                        switch firstError!.field {
-                            
-                        case "phone":
-                            
-                            p.failure(UserRegistrationError.BlankPhoneNumber)
-                            
-                            return
-                            
-                        case "device_type":
-                            
-                            p.failure(UserRegistrationError.BlankDeviceType)
-                            
-                            return
-                            
-                        case "device_token":
-                            
-                            p.failure(UserRegistrationError.BlankDeviceToken)
-                            
-                            return
-                            
-                        default:
-                            break
-                        }
-                        
-                        break
-                        
-                    default:
-                        break
-                    }
-                    
-                    p.failure(UserRegistrationError.UknownError(description: response.result.error!.localizedDescription))
-                    
+                    p.failure(UserRegistrationError.uknownError(description: response.result.error!.localizedDescription))
                     return
                 }
                 
                 p.success(true)
-            }
+            })
+            
+//            .responseObject("data") { (response: Response<TAuthorizationResponse, TargoError>) in
+//                
+//                guard let _ = response.result.value else {
+//                    
+//                    switch response.result.error! {
+//                        
+//                    case .BadRequest:
+//                        
+//                        let error = response.result.error?.userData as! TBadRequest
+//                        
+//                        switch error.name {
+//                            
+//                        case "Bad Request":
+//                            
+//                            p.failure(.ToManyAuthorizationCodeRequest)
+//                            return
+//                            
+//                        default:
+//                            break
+//                        }
+//                        
+//                    case .ServerError:
+//                        
+//                        let error = response.result.error?.userData as! TServerError
+//                        
+//                        // We can get many errors but we are going to handle just first
+//                        let firstError = error.errors.first
+//                        
+//                        switch firstError!.field {
+//                            
+//                        case "phone":
+//                            
+//                            p.failure(UserRegistrationError.BlankPhoneNumber)
+//                            
+//                            return
+//                            
+//                        case "device_type":
+//                            
+//                            p.failure(UserRegistrationError.BlankDeviceType)
+//                            
+//                            return
+//                            
+//                        case "device_token":
+//                            
+//                            p.failure(UserRegistrationError.BlankDeviceToken)
+//                            
+//                            return
+//                            
+//                        default:
+//                            break
+//                        }
+//                        
+//                        break
+//                        
+//                    default:
+//                        break
+//                    }
+//                    
+//                    p.failure(UserRegistrationError.UknownError(description: response.result.error!.localizedDescription))
+//                    
+//                    return
+//                }
+//                
+//                p.success(true)
+//            }
         
         return p.future
     }
     
-    func userLogin(phoneNumber: String, code: String) -> Future<User, UserRegistrationError> {
+    func userLogin(phoneNumber: String, code: String) -> Future<User, TargoError> {
         
-        let p = Promise<User, UserRegistrationError>()
+        let p = Promise<User, TargoError>()
         
-        let defaults = NSUserDefaults.standardUserDefaults()
+        let defaults = UserDefaults.standard
         
-        if let token = defaults.objectForKey(kTargoDeviceToken) as? String {
+        if let token = defaults.object(forKey: kTargoDeviceToken) as? String {
             
-            server.authorization(phoneNumber, code: code, deviceToken: token, parameters: nil)
+            server.authorization(phoneNumber: phoneNumber, code: code, deviceToken: token, parameters: nil)
                 
                 .responseJSON { response in
                     
-                    print("login request:\(response.request?.HTTPBody)\n login response:\(response.result.value)")
+                    print(response.result.value)
                 }
-                .responseObject("data") { (response: Response<UserSession, TargoError>) in
+                .validate()
+                .responseObject(keyPath: "data", completionHandler: { (response: DataResponse<UserSession>) in
                     
-                    guard let _ = response.result.value else {
+                    guard let _ = response.result.error else {
                         
-                        switch response.result.error! {
-                            
-                        case .BadRequest:
-                            
-                            let error = response.result.error?.userData as! TBadRequest
-                            
-                            switch error.message {
-                                
-                            case "Code not found":
-                                
-                                p.failure(.WrongCode)
-                                return
-                                
-                            default:
-                                break
-                            }
-                            
-                        default:
-                            break
-                        }
-                        
-                        p.failure(UserRegistrationError.UknownError(description: "Unknown error"))
-                        
+                        p.failure(.error(error: response.result.error!))
                         return
                     }
+                    
+//                    guard let _ = response.result.value else {
+//                        
+//                        p.failure(UserRegistrationError.uknownError(description: response.result.error!.localizedDescription))
+//                        return
+//                    }
                     
                     let userSession = response.result.value!
                     
@@ -154,8 +155,47 @@ struct Api {
                         
                         realm.add(userSession, update: true)
                     })
-                }
-                .responseObject("data.user") { (response: Response<User, TargoError>) in
+                })
+//                .responseObject(keyPath: "data") { (response: DataResponse<UserSession>) in
+//                    
+//                    guard let _ = response.result.value else {
+//                        
+//                        switch response.result.error! {
+//                            
+//                        case .BadRequest:
+//                            
+//                            let error = response.result.error?.userData as! TBadRequest
+//                            
+//                            switch error.message {
+//                                
+//                            case "Code not found":
+//                                
+//                                p.failure(.WrongCode)
+//                                return
+//                                
+//                            default:
+//                                break
+//                            }
+//                            
+//                        default:
+//                            break
+//                        }
+//                        
+//                        p.failure(UserRegistrationError.UknownError(description: "Unknown error"))
+//                        
+//                        return
+//                    }
+//                    
+//                    let userSession = response.result.value!
+//                    
+//                    let realm = try! Realm()
+//                    
+//                    try! realm.write({
+//                        
+//                        realm.add(userSession, update: true)
+//                    })
+//                }
+                .responseObject(keyPath: "data.user") { (response: DataResponse<User>) in
                     
                     if let user = response.result.value {
                         
@@ -190,11 +230,12 @@ struct Api {
                 
                 print(response.result.value)
             }
-            .responseObject("data") { (response: Response<UserSession, TargoError>) in
+            .validate()
+            .responseObject(keyPath: "data") { (response: DataResponse<UserSession>) in
                 
-                guard let _ = response.result.value else {
+                guard let _ = response.result.error else {
                     
-                    p.failure(response.result.error!)
+                    p.failure(.error(error: response.result.error!))
                     return
                 }
 //                
@@ -216,8 +257,8 @@ struct Api {
 //                    print("Caught an error when was trying to make commit to Realm")
 //                }
                 
-                let defaults = NSUserDefaults.standardUserDefaults()
-                defaults.removeObjectForKey(kTargoCodeSent)
+                let defaults = UserDefaults.standard
+                defaults.removeObject(forKey: kTargoCodeSent)
                 defaults.synchronize()
                 
                 if let phone = AppSettings.sharedInstance.lastSessionPhoneNumber {
@@ -238,19 +279,19 @@ struct Api {
         
         let realm = try! Realm()
         
-        if let session = realm.objects(UserSession).last {
+        if let session = realm.objects(UserSession.self).last {
             
-            server.loadUserById(session.userId)
+            server.loadUserById(userId: session.userId)
                 
                 .responseJSON { response in
                     
                     print(response.result.value)
                 }
-                .responseObject("data") { (response: Response<User, TargoError>) in
+                .responseObject(keyPath: "data") { (response: DataResponse<User>) in
                     
                     guard let _ = response.result.value else {
                         
-                        p.failure(response.result.error!)
+                        p.failure(.error(error: response.result.error!))
                         return
                     }
                     
@@ -270,21 +311,25 @@ struct Api {
         return p.future
     }
     
-    func loadCompanyAddresses(location: CLLocation, pageNumber: Int, pageSize: Int = 20, query: String? = nil, distance: Int? = nil) -> Future<TCompanyAddressesPage, TargoError> {
+    func loadCompanyAddresses(location: CLLocation,
+                              pageNumber: Int,
+                              pageSize: Int = 20,
+                              query: String? = nil,
+                              distance: Int? = nil) -> Future<TCompanyAddressesPage, TargoError> {
         
         let p = Promise<TCompanyAddressesPage, TargoError>()
         
-        server.loadCompanyAddresses(location, pageNumber: pageNumber, pageSize: pageSize, query: query, distance: distance)
+        server.loadCompanyAddresses(location: location, pageNumber: pageNumber, pageSize: pageSize, query: query, distance: distance)
             
             .responseJSON { response in
                 
                 print(response.result.value)
             }
-            .responseObject("data") { (response: Response<TCompanyAddressesPage, TargoError>) in
+            .responseObject(keyPath: "data") { (response: DataResponse<TCompanyAddressesPage>) in
                 
                 guard let _ = response.result.value else {
                     
-                    p.failure(response.result.error!)
+                    p.failure(.error(error: response.result.error!))
                     return
                 }
                 
@@ -295,21 +340,23 @@ struct Api {
         return p.future
     }
     
-    func loadCompanyMenu(companyId: Int, pageNumber: Int, pageSize: Int = 20) -> Future<TCompanyMenuPage, TargoError> {
+    func loadCompanyMenu(companyId: Int,
+                         pageNumber: Int,
+                         pageSize: Int = 20) -> Future<TCompanyMenuPage, TargoError> {
         
         let p = Promise<TCompanyMenuPage, TargoError>()
         
-        server.loadCompanyMenu(companyId, pageNumber: pageNumber, pageSize: pageSize)
+        server.loadCompanyMenu(companyId: companyId, pageNumber: pageNumber, pageSize: pageSize)
             
             .responseJSON { response in
                 
                 print(response.result.value)
             }
-            .responseObject("data") { (response: Response<TCompanyMenuPage, TargoError>) in
+            .responseObject(keyPath: "data") { (response: DataResponse<TCompanyMenuPage>) in
                 
                 guard let _ = response.result.value else {
                     
-                    p.failure(response.result.error!)
+                    p.failure(.error(error: response.result.error!))
                     return
                 }
                 
@@ -330,11 +377,11 @@ struct Api {
                 
                 print(response.result.value)
             }
-            .responseObject("data") { (response: Response<TTestOrder, TargoError>) in
+            .responseObject(keyPath: "data") { (response: DataResponse<TTestOrder>) in
                 
                 guard let _ = response.result.value else {
                     
-                    p.failure(response.result.error!)
+                    p.failure(.error(error: response.result.error!))
                     return
                 }
                 
@@ -348,17 +395,17 @@ struct Api {
         
         let p = Promise<TTestOrder, TargoError>()
         
-        server.checkTestOrder(orderId)
+        server.checkTestOrder(orderId: orderId)
             
             .responseJSON { response in
                 
                 print(response.result.value)
             }
-            .responseObject("data") { (response: Response<TTestOrder, TargoError>) in
+            .responseObject(keyPath: "data") { (response: DataResponse<TTestOrder>) in
                 
                 guard let _ = response.result.value else {
                     
-                    p.failure(response.result.error!)
+                    p.failure(.error(error: response.result.error!))
                     return
                 }
                 
@@ -378,11 +425,11 @@ struct Api {
                 
                 print(response.result.value)
             }
-            .responseArray("data.card") { (response: Response<[TCreditCard], TargoError>) in
+            .responseArray(keyPath: "data.card") { (response: DataResponse<[TCreditCard]>) in
                 
                 guard let _ = response.result.value else {
                     
-                    p.failure(response.result.error!)
+                    p.failure(.error(error: response.result.error!))
                     return
                 }
                 
@@ -396,13 +443,13 @@ struct Api {
                        items: [Int : Int],
                        addressId: Int,
                        serviceId: Int,
-                       date: NSDate? = nil,
+                       date: Date? = nil,
                        numberOfPersons: Int? = nil,
                        description: String? = nil) -> Future<TShopOrder, TargoError> {
         
         let p = Promise<TShopOrder, TargoError>()
         
-        server.makeShopOrder(cardId,
+        server.makeShopOrder(cardId: cardId,
             items: items,
             addressId: addressId,
             serviceId: serviceId,
@@ -412,15 +459,17 @@ struct Api {
             
             .responseJSON { response in
                 
-                let request = String(data: response.request!.HTTPBody!, encoding: NSUTF8StringEncoding)
+                print(response.result.value)
                 
-                print("order request:\(request)\n order response:\(response.result.value)")
+//                let request = String(data: response.request!.HTTPBody!, encoding: String.Encoding.utf8)
+//
+//                print("order request:\(request)\n order response:\(response.result.value)")
                 
-            }.responseObject("data") { (response: Response<TShopOrder, TargoError>) in
+            }.responseObject(keyPath: "data") { (response: DataResponse<TShopOrder>) in
                 
                 guard let _ = response.result.value else {
                     
-                    p.failure(response.result.error!)
+                    p.failure(.error(error: response.result.error!))
                     return
                 }
                 
@@ -441,17 +490,17 @@ struct Api {
         
         let p = Promise<TShopOrder, TargoError>()
         
-        server.checkShopOrderStatus(orderStatus)
+        server.checkShopOrderStatus(orderStatus: orderStatus)
             
             .responseJSON { response in
                 
                 print(response.result.value)
                 
-            }.responseObject("data") { (response: Response<TShopOrder, TargoError>) in
+            }.responseObject(keyPath: "data") { (response: DataResponse<TShopOrder>) in
                 
                 guard let _ = response.result.value else {
                     
-                    p.failure(response.result.error!)
+                    p.failure(.error(error: response.result.error!))
                     return
                 }
                 
@@ -472,17 +521,17 @@ struct Api {
         
         let p = Promise<TCompany, TargoError>()
         
-        server.loadCompanyById(companyId)
+        server.loadCompanyById(companyId: companyId)
             
             .responseJSON { response in
                 
                 print(response.result.value)
                 
-            }.responseObject("data") { (response: Response<TCompany, TargoError>) in
+            }.responseObject(keyPath: "data") { (response: DataResponse<TCompany>) in
                 
                 guard let _ = response.result.value else {
                     
-                    p.failure(response.result.error!)
+                    p.failure(.error(error: response.result.error!))
                     return
                 }
                 
@@ -496,17 +545,17 @@ struct Api {
         
         let p = Promise<[TCompany], TargoError>()
         
-        server.loadCompaniesByIds(companiesIds)
+        server.loadCompaniesByIds(companiesIds: companiesIds)
             
             .responseJSON { response in
                 
                 print(response.result.value)
                 
-            }.responseArray("data.company") { (response: Response<[TCompany], TargoError>) in
+            }.responseArray(keyPath: "data.company") { (response: DataResponse<[TCompany]>) in
                 
                 guard let _ = response.result.value else {
                     
-                    p.failure(response.result.error!)
+                    p.failure(.error(error: response.result.error!))
                     return
                 }
                 
@@ -521,17 +570,17 @@ struct Api {
         
         let p = Promise<TImage, TargoError>()
         
-        server.loadImageById(imageId)
+        server.loadImageById(imageId: imageId)
             
             .responseJSON { response in
                 
                 print(response.result.value)
                 
-            }.responseObject("data.image") { (response: Response<TImage, TargoError>) in
+            }.responseObject(keyPath: "data.image") { (response: DataResponse<TImage>) in
                 
                 guard let _ = response.result.value else {
                     
-                    p.failure(response.result.error!)
+                    p.failure(.error(error: response.result.error!))
                     return
                 }
                 
@@ -545,17 +594,17 @@ struct Api {
         
         let p = Promise<[TImage], TargoError>()
         
-        server.loadImagesByIds(imageIds)
+        server.loadImagesByIds(imageIds: imageIds)
             
             .responseJSON { response in
             
                 print(response.result.value)
                 
-            }.responseArray("data.image") { (response: Response<[TImage], TargoError>) in
+            }.responseArray(keyPath: "data.image") { (response: DataResponse<[TImage]>) in
                 
                 guard let _ = response.result.value else {
                     
-                    p.failure(response.result.error!)
+                    p.failure(.error(error: response.result.error!))
                     return
                 }
                 
@@ -569,17 +618,17 @@ struct Api {
         
         let p = Promise<[TShopOrder], TargoError>()
         
-        server.loadShopOrders(updatedDate, olderThen: olderThen, pageSize: pageSize)
+        server.loadShopOrders(updatedDate: updatedDate, olderThen: olderThen, pageSize: pageSize)
             
             .responseJSON { response in
             
                 print(response.result.value)
             
-            }.responseArray("data.shop-order") { (response: Response<[TShopOrder], TargoError>) in
+            }.responseArray(keyPath: "data.shop-order") { (response: DataResponse<[TShopOrder]>) in
                 
                 guard let _ = response.result.value else {
                     
-                    p.failure(response.result.error!)
+                    p.failure(.error(error: response.result.error!))
                     return
                 }
                 
@@ -593,17 +642,17 @@ struct Api {
         
         let p = Promise<[TShopOrder], TargoError>()
         
-        server.loadShopOrders(pageNumber, pageSize: pageSize)
+        server.loadShopOrders(pageNumber: pageNumber, pageSize: pageSize)
             
             .responseJSON { response in
                 
                 print(response.result.value)
                 
-            }.responseArray("data.shop-order") { (response: Response<[TShopOrder], TargoError>) in
+            }.responseArray(keyPath: "data.shop-order") { (response: DataResponse<[TShopOrder]>) in
                 
                 guard let _ = response.result.value else {
                     
-                    p.failure(response.result.error!)
+                    p.failure(.error(error: response.result.error!))
                     return
                 }
                 
@@ -617,17 +666,17 @@ struct Api {
         
         let p = Promise<TShopOrder, TargoError>()
         
-        server.updateOrderStatus(orderId, orderStatus: 2)
+        server.updateOrderStatus(orderId: orderId, orderStatus: 2)
             
             .responseJSON { response in
             
                 print(response.result.value)
                 
-            }.responseObject("data") { (response:Response<TShopOrder, TargoError>) in
+            }.responseObject(keyPath: "data") { (response: DataResponse<TShopOrder>) in
                 
                 guard let _ = response.result.value else {
                     
-                    p.failure(response.result.error!)
+                    p.failure(.error(error: response.result.error!))
                     return
                 }
                 
@@ -648,17 +697,17 @@ struct Api {
         
         let p = Promise<TFeedPage, TargoError>()
         
-        server.feed(pageNumber, pageSize: pageSize)
+        server.feed(pageNumber: pageNumber, pageSize: pageSize)
             
             .responseJSON { response in
             
                 print(response.result.value)
             }
-            .responseObject("data") { (response: Response<TFeedPage, TargoError>) in
+            .responseObject(keyPath: "data") { (response: DataResponse<TFeedPage>) in
              
                 guard let _ = response.result.value else {
                     
-                    p.failure(response.result.error!)
+                    p.failure(.error(error: response.result.error!))
                     return
                 }
                 
@@ -672,17 +721,17 @@ struct Api {
         
         let p = Promise<TAddRemoveBookmarkResponse, TargoError>()
         
-        server.addBookmark(companyAddressId)
+        server.addBookmark(companyAddressId: companyAddressId)
             
             .responseJSON { response in
             
                 print(response.result.value)
             }
-            .responseObject { (response: Response<TAddRemoveBookmarkResponse, TargoError>) in
+            .responseObject { (response: DataResponse<TAddRemoveBookmarkResponse>) in
                 
                 guard let _ = response.result.value else {
                     
-                    p.failure(response.result.error!)
+                    p.failure(.error(error: response.result.error!))
                     return
                 }
                 
@@ -696,17 +745,17 @@ struct Api {
         
         let p = Promise<TAddRemoveBookmarkResponse, TargoError>()
         
-        server.removeBookmark(companyAddressId)
+        server.removeBookmark(companyAddressId: companyAddressId)
             
             .responseJSON { response in
                 
                 print(response.result.value)
             }
-            .responseObject { (response: Response<TAddRemoveBookmarkResponse, TargoError>) in
+            .responseObject { (response: DataResponse<TAddRemoveBookmarkResponse>) in
                 
                 guard let _ = response.result.value else {
                     
-                    p.failure(response.result.error!)
+                    p.failure(.error(error: response.result.error!))
                     return
                 }
                 
@@ -720,17 +769,17 @@ struct Api {
         
         let p = Promise<TCompanyAddressesPage, TargoError>()
         
-        server.favoriteComanyAddresses(location, pageNumber: pageNumber, pageSize: pageSize)
+        server.favoriteComanyAddresses(location: location, pageNumber: pageNumber, pageSize: pageSize)
             
             .responseJSON { response in
                 
                 print(response.result.value)
             }
-            .responseObject("data") { (response: Response<TCompanyAddressesPage, TargoError>) in
+            .responseObject(keyPath: "data") { (response: DataResponse<TCompanyAddressesPage>) in
                 
                 guard let _ = response.result.value else {
                     
-                    p.failure(response.result.error!)
+                    p.failure(.error(error: response.result.error!))
                     return
                 }
                 
@@ -745,11 +794,11 @@ struct Api {
         
         let p = Promise<TImageUploadResponse, TargoError>()
         
-        server.uploadImage(image) { (encodingResult) in
+        server.uploadImage(image: image) { (encodingResult) in
             
             switch encodingResult {
                 
-            case .Success(let upload, _, _):
+            case .success(let upload, _, _):
                 
                 upload
                     .responseJSON { response in
@@ -763,20 +812,20 @@ struct Api {
                             print(response.result.value)
                         }
                     }
-                    .responseObject("data") { (response: Response<TImageUploadResponse, TargoError>) in
+                    .responseObject(keyPath: "data") { (response: DataResponse<TImageUploadResponse>) in
                         
                         guard let _ = response.result.value else {
                             
-                            p.failure(response.result.error!)
+                            p.failure(.error(error: response.result.error!))
                             return
                         }
                         
                         p.success(response.result.value!)
                 }
                 
-            case .Failure(let encodingError):
+            case .failure(let encodingError):
                 
-                p.failure(TargoError.UndefinedError(message: "Encoding error"))
+                p.failure(.error(error: encodingError))
                 print(encodingError)
             }
         }
@@ -788,17 +837,17 @@ struct Api {
         
         let p = Promise<User, TargoError>()
         
-        server.applyUserImage(userId, imageId: imageId)
+        server.applyUserImage(userId: userId, imageId: imageId)
             
             .responseJSON { response in
                 
                 print(response.result.value)
             }
-            .responseObject("data") { (response: Response<User, TargoError>) in
+            .responseObject(keyPath: "data") { (response: DataResponse<User>) in
                 
                 guard let _ = response.result.value else {
                     
-                    p.failure(response.result.error!)
+                    p.failure(.error(error: response.result.error!))
                     return
                 }
                 
@@ -812,17 +861,17 @@ struct Api {
         
         let p = Promise<User, TargoError>()
         
-        server.updateUserInformation(userId, firstName: firstName, lastName: lastName, email: email)
+        server.updateUserInformation(userId: userId, firstName: firstName, lastName: lastName, email: email)
             
             .responseJSON { response in
                 
                 print(response.result.value)
             }
-            .responseObject("data") { (response: Response<User, TargoError>) in
+            .responseObject(keyPath: "data") { (response: DataResponse<User>) in
                 
                 guard let _ = response.result.value else {
                     
-                    p.failure(response.result.error!)
+                    p.failure(.error(error: response.result.error!))
                     return
                 }
                 
@@ -836,17 +885,17 @@ struct Api {
         
         let p = Promise<TShopOrder, TargoError>()
         
-        server.setCompanyRating(orderId, mark: mark)
+        server.setCompanyRating(orderId: orderId, mark: mark)
             
             .responseJSON { response in
                 
                 print(response.result.value)
             }
-            .responseObject("data") { (response: Response<TShopOrder, TargoError>) in
+            .responseObject(keyPath: "data") { (response: DataResponse<TShopOrder>) in
                 
                 guard let _ = response.result.value else {
                     
-                    p.failure(response.result.error!)
+                    p.failure(.error(error: response.result.error!))
                     return
                 }
                 

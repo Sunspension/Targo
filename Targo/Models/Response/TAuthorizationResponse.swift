@@ -23,7 +23,7 @@ class TAuthorizationResponse: Object, Mappable {
     dynamic var id = 0
     
     
-    required convenience init?(_ map: Map) {
+    required convenience init?(map: Map) {
         
         self.init()
     }

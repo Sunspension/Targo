@@ -45,7 +45,7 @@ class User: Object, Mappable {
     dynamic var image: TImage?
     
     
-    required convenience init?(_ map: Map) {
+    required convenience init?(map: Map) {
         
         self.init()
     }

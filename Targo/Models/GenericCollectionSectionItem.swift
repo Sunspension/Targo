@@ -18,7 +18,7 @@ class GenericCollectionSectionItem<TItem>: NSObject {
     
     var hasError = false
     
-    var indexPath: NSIndexPath!
+    var indexPath: IndexPath!
     
     var cellHeight: CGFloat?
     

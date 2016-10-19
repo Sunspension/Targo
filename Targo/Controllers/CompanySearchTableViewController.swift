@@ -17,60 +17,60 @@ import Alamofire
 
 class CompanySearchTableViewController: UITableViewController, UISearchResultsUpdating, UISearchBarDelegate {
     
-    private let section = GenericCollectionSection<TCompanyAddress>()
+    fileprivate let section = GenericCollectionSection<TCompanyAddress>()
     
-    private let searchSection = GenericCollectionSection<TCompanyAddress>()
+    fileprivate let searchSection = GenericCollectionSection<TCompanyAddress>()
     
-    private let favoriteSection = GenericCollectionSection<TCompanyAddress>()
+    fileprivate let favoriteSection = GenericCollectionSection<TCompanyAddress>()
     
-    private var companyImages = Set<TImage>()
+    fileprivate var companyImages = Set<TImage>()
     
-    private var userLocation: CLLocation?
+    fileprivate var userLocation: CLLocation?
     
-    private var dataSource: GenericTableViewDataSource<TCompanyTableViewCell, TCompanyAddress>?
+    fileprivate var dataSource: GenericTableViewDataSource<TCompanyTableViewCell, TCompanyAddress>?
     
-    private var searchDataSource: GenericTableViewDataSource<TCompanyTableViewCell, TCompanyAddress>?
+    fileprivate var searchDataSource: GenericTableViewDataSource<TCompanyTableViewCell, TCompanyAddress>?
     
-    private var favoriteDataSource: GenericTableViewDataSource<TCompanyTableViewCell, TCompanyAddress>?
+    fileprivate var favoriteDataSource: GenericTableViewDataSource<TCompanyTableViewCell, TCompanyAddress>?
     
-    private var companiesPage: TCompanyAddressesPage?
+    fileprivate var companiesPage: TCompanyAddressesPage?
     
-    private var searchCompaniesPage: TCompanyAddressesPage?
+    fileprivate var searchCompaniesPage: TCompanyAddressesPage?
     
-    private var pageNumber: Int = 1
+    fileprivate var pageNumber: Int = 1
     
-    private var searchPageNumer: Int = 1
+    fileprivate var searchPageNumer: Int = 1
     
-    private var pageSize: Int = 20
+    fileprivate var pageSize: Int = 20
     
-    private var canLoadNext = true
+    fileprivate var canLoadNext = true
     
-    private var searchCanLoadNext = true
+    fileprivate var searchCanLoadNext = true
     
-    private var loadingStatus = TLoadingStatusEnum.Idle
+    fileprivate var loadingStatus = TLoadingStatusEnum.idle
     
-    private var searchLoadingStatus = TLoadingStatusEnum.Idle
+    fileprivate var searchLoadingStatus = TLoadingStatusEnum.idle
     
-    private var favoriteLoadingStatus = TLoadingStatusEnum.Idle
+    fileprivate var favoriteLoadingStatus = TLoadingStatusEnum.idle
     
-    private let manager = NetworkReachabilityManager(host: "www.apple.com")
+    fileprivate let manager = NetworkReachabilityManager(host: "www.apple.com")
     
-    private let searchController = UISearchController(searchResultsController: nil)
+    fileprivate let searchController = UISearchController(searchResultsController: nil)
     
-    private var shouldShowSearchResults = false
+    fileprivate var shouldShowSearchResults = false
     
-    private var cancelPreviousResult = false
+    fileprivate var cancelPreviousResult = false
     
-    private var cancellationTokens = [NSOperation]()
+    fileprivate var cancellationTokens = [Operation]()
     
-    private var scheduleRefreshTimer: NSTimer?
+    fileprivate var scheduleRefreshTimer: Timer?
     
-    private var bookmarkButton = UIButton(type: .Custom)
+    fileprivate var bookmarkButton = UIButton(type: .custom)
     
     
     deinit {
         
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func viewDidLoad() {
@@ -90,9 +90,9 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
             
             switch status {
                 
-            case .Reachable(NetworkReachabilityManager.ConnectionType.EthernetOrWiFi):
+            case .reachable(NetworkReachabilityManager.ConnectionType.ethernetOrWiFi):
                 
-                if self.canLoadNext && self.loadingStatus == .Failed {
+                if self.canLoadNext && self.loadingStatus == .failed {
                     
                     self.loadCompanyAddress()
                 }
@@ -107,19 +107,19 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         manager?.startListening()
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "icon-map"),
-                                                                 style: .Plain,
+                                                                 style: .plain,
                                                                  target: self,
                                                                  action: #selector(CompanySearchTableViewController.openMap))
         
-        self.bookmarkButton.setImage(UIImage(named: "icon-star"), forState: .Normal)
-        self.bookmarkButton.setImage(UIImage(named: "icon-fullStar"), forState: .Selected)
-        self.bookmarkButton.addTarget(self, action: #selector(CompanySearchTableViewController.loadBookmarks), forControlEvents: .TouchUpInside)
+        self.bookmarkButton.setImage(UIImage(named: "icon-star"), for: UIControlState())
+        self.bookmarkButton.setImage(UIImage(named: "icon-fullStar"), for: .selected)
+        self.bookmarkButton.addTarget(self, action: #selector(CompanySearchTableViewController.loadBookmarks), for: .touchUpInside)
         self.bookmarkButton.sizeToFit()
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: self.bookmarkButton)
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "",
-                                                                style: .Plain,
+                                                                style: .plain,
                                                                 target: nil,
                                                                 action: nil)
         
@@ -139,9 +139,10 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         
         self.navigationItem.titleView = UIImageView(image: UIImage(named: "icon-logo"))
         
-        NSNotificationCenter.defaultCenter().addObserver(self,
-                                                         selector: #selector(CompanySearchTableViewController.onUIApplicationWillEnterForegroundNotification),
-                                                         name: UIApplicationWillEnterForegroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(CompanySearchTableViewController.onUIApplicationWillEnterForegroundNotification),
+                                               name: NSNotification.Name.UIApplicationWillEnterForeground,
+                                               object: nil)
         
         
 
@@ -155,19 +156,19 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         self.loadCompanyAddress()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         
         super.viewDidAppear(animated)
         
         // update for new items every 10 minutes
-        self.scheduleRefreshTimer = NSTimer.scheduledTimerWithTimeInterval(600,
+        self.scheduleRefreshTimer = Timer.scheduledTimer(timeInterval: 600,
                                                                            target: self,
                                                                            selector: #selector(CompanySearchTableViewController.manualRefresh),
                                                                            userInfo: nil,
                                                                            repeats: true)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         
         super.viewWillDisappear(animated)
         
@@ -179,24 +180,24 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         }
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         var item: GenericCollectionSectionItem<TCompanyAddress>!
         
         if shouldShowSearchResults == true {
             
-            let section = self.searchDataSource!.sections[indexPath.section]
-            item = section.items[indexPath.row]
+            let section = self.searchDataSource!.sections[(indexPath as NSIndexPath).section]
+            item = section.items[(indexPath as NSIndexPath).row]
         }
-        else if self.bookmarkButton.selected {
+        else if self.bookmarkButton.isSelected {
             
-            let section = self.favoriteDataSource!.sections[indexPath.section]
-            item = section.items[indexPath.row]
+            let section = self.favoriteDataSource!.sections[(indexPath as NSIndexPath).section]
+            item = section.items[(indexPath as NSIndexPath).row]
         }
         else {
             
-            let section = self.dataSource!.sections[indexPath.section]
-            item = section.items[indexPath.row]
+            let section = self.dataSource!.sections[(indexPath as NSIndexPath).section]
+            item = section.items[(indexPath as NSIndexPath).row]
         }
         
         if let controller = self.instantiateViewControllerWithIdentifierOrNibName("MenuController") as? TCompanyMenuTableViewController {
@@ -222,25 +223,25 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
     
     
     // Here is a magic to save height of current cell, otherwise you will get scrolling of table view content when cell will expand
-    override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         
         if shouldShowSearchResults {
             
-            if let height = self.searchDataSource?.sections[indexPath.section].items[indexPath.row].cellHeight {
+            if let height = self.searchDataSource?.sections[(indexPath as NSIndexPath).section].items[(indexPath as NSIndexPath).row].cellHeight {
                 
                 return height
             }
         }
-        else if self.bookmarkButton.selected {
+        else if self.bookmarkButton.isSelected {
             
-            if let height = self.favoriteDataSource?.sections[indexPath.section].items[indexPath.row].cellHeight {
+            if let height = self.favoriteDataSource?.sections[(indexPath as NSIndexPath).section].items[(indexPath as NSIndexPath).row].cellHeight {
                 
                 return height
             }
         }
         else {
             
-            if let height = self.dataSource?.sections[indexPath.section].items[indexPath.row].cellHeight {
+            if let height = self.dataSource?.sections[(indexPath as NSIndexPath).section].items[(indexPath as NSIndexPath).row].cellHeight {
                 
                 return height
             }
@@ -249,7 +250,7 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         return UITableViewAutomaticDimension
     }
     
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
         let viewCell = cell as! TCompanyTableViewCell
         
@@ -257,15 +258,15 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         
         if shouldShowSearchResults {
             
-            if let item = self.searchDataSource?.sections[indexPath.section].items[indexPath.row] {
+            if let item = self.searchDataSource?.sections[(indexPath as NSIndexPath).section].items[(indexPath as NSIndexPath).row] {
                 
                 item.cellHeight = viewCell.frame.height
                 getCompanyImage(item, viewCell: viewCell)
             }
         }
-        else if self.bookmarkButton.selected {
+        else if self.bookmarkButton.isSelected {
             
-            if let item = self.favoriteDataSource?.sections[indexPath.section].items[indexPath.row] {
+            if let item = self.favoriteDataSource?.sections[(indexPath as NSIndexPath).section].items[(indexPath as NSIndexPath).row] {
                 
                 item.cellHeight = viewCell.frame.height
                 getCompanyImage(item, viewCell: viewCell)
@@ -274,7 +275,7 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
             
         else {
             
-            if let item = self.dataSource?.sections[indexPath.section].items[indexPath.row] {
+            if let item = self.dataSource?.sections[(indexPath as NSIndexPath).section].items[(indexPath as NSIndexPath).row] {
                 
                 item.cellHeight = viewCell.frame.height
                 getCompanyImage(item, viewCell: viewCell)
@@ -284,33 +285,33 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         let layer = viewCell.shadowView.layer
         layer.shadowOffset = CGSize(width: 0, height: 1)
         layer.shadowOpacity = 0.5
-        layer.shadowPath = UIBezierPath(rect: layer.bounds).CGPath
+        layer.shadowPath = UIBezierPath(rect: layer.bounds).cgPath
     }
     
     func userLocationChanged() {
         
         self.userLocation = TLocationManager.sharedInstance.lastLocation
         
-        if self.userLocation != nil && self.loadingStatus != .Loading && self.canLoadNext {
+        if self.userLocation != nil && self.loadingStatus != .loading && self.canLoadNext {
             
             if let superview = self.view.superview {
                 
                 SwiftOverlays.showCenteredWaitOverlay(superview)
             }
             
-            self.loadingStatus = .Loading
+            self.loadingStatus = .loading
             
             self.pageNumber = 1
             
             // Try to load only first several companies related to user location and limit
             Api.sharedInstance.loadCompanyAddresses(
-                self.userLocation!,
+                location: self.userLocation!,
                 pageNumber: self.pageNumber,
                 pageSize: self.pageSize)
                 
                 .onSuccess(callback: { [unowned self] companyPage in
                     
-                    self.loadingStatus = .Loaded
+                    self.loadingStatus = .loaded
                     
                     if self.pageSize == companyPage.companies.count {
                         
@@ -337,7 +338,7 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
                     
                     }).onFailure(callback: { [unowned self] error in
                         
-                        self.loadingStatus = .Failed
+                        self.loadingStatus = .failed
                         
                         if let superview = self.view.superview {
                             
@@ -349,7 +350,7 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         }
     }
     
-    func loadCompanyAddress(forceRefresh: Bool = false) {
+    func loadCompanyAddress(_ forceRefresh: Bool = false) {
         
         if self.userLocation == nil {
             
@@ -364,23 +365,23 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
                     self.refreshControl?.endRefreshing()
                 }
                 
-                self.loadingStatus = .Failed
+                self.loadingStatus = .failed
                 
                 return
             }
         }
         
-        self.loadingStatus = .Loading
+        self.loadingStatus = .loading
         
         Api.sharedInstance.loadCompanyAddresses(
             
-            self.userLocation!,
+            location: self.userLocation!,
             pageNumber: self.pageNumber,
             pageSize: self.pageSize)
             
             .onSuccess(callback: { [unowned self] companyPage in
                 
-                self.loadingStatus = .Loaded
+                self.loadingStatus = .loaded
                 
                 if forceRefresh {
                     
@@ -411,7 +412,7 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
                         self.refreshControl?.endRefreshing()
                     }
                     
-                    self.loadingStatus = .Failed
+                    self.loadingStatus = .failed
                     print(error)
                 })
     }
@@ -434,7 +435,7 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
     
     func onUIApplicationWillEnterForegroundNotification() {
         
-        if canLoadNext && loadingStatus == .Failed {
+        if canLoadNext && loadingStatus == .failed {
             
             self.loadCompanyAddress()
         }
@@ -442,13 +443,13 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
     
     //MARK: - UISearchBar delegate implementation
 
-    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         
         shouldShowSearchResults = true
         reloadData()
     }
     
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         
         shouldShowSearchResults = false
         reloadData()
@@ -456,7 +457,7 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
     
     //MARK: - UISearchResultUpdating delegate implementation
     
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
+    func updateSearchResults(for searchController: UISearchController) {
         
         self.searchPageNumer = 1
         
@@ -465,7 +466,7 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
             token.cancel()
         }
         
-        let token = NSOperation()
+        let token = Operation()
         self.cancellationTokens.append(token)
         
         if let string = searchController.searchBar.text {
@@ -477,7 +478,7 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
     
     func manualRefresh() {
         
-        if self.bookmarkButton.selected {
+        if self.bookmarkButton.isSelected {
             
             self.loadFavoriteCompanyAddresses(true)
         }
@@ -488,7 +489,7 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         }
     }
     
-    func createFavoriteDataSource(page: TCompanyAddressesPage) {
+    func createFavoriteDataSource(_ page: TCompanyAddressesPage) {
         
         self.favoriteSection.items.removeAll()
         
@@ -507,14 +508,14 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         
         if self.userLocation == nil {
             
-            self.loadingStatus = .Failed
+            self.loadingStatus = .failed
             
             return
         }
         
-        self.bookmarkButton.selected = !self.bookmarkButton.selected
+        self.bookmarkButton.isSelected = !self.bookmarkButton.isSelected
         
-        if bookmarkButton.selected {
+        if bookmarkButton.isSelected {
             
             tableView.tableHeaderView = nil
             self.tableView.dataSource = self.favoriteDataSource
@@ -529,13 +530,13 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         }
     }
     
-    func loadFavoriteCompanyAddresses(forceRefresh: Bool = false) {
+    func loadFavoriteCompanyAddresses(_ forceRefresh: Bool = false) {
         
-        Api.sharedInstance.favoriteComanyAddresses(self.userLocation!)
+        Api.sharedInstance.favoriteComanyAddresses(location: self.userLocation!)
             
             .onSuccess(callback: { [unowned self] companyPage in
                 
-                self.loadingStatus = .Loaded
+                self.loadingStatus = .loaded
                 
                 if forceRefresh {
                     
@@ -565,20 +566,20 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
                         self.refreshControl?.endRefreshing()
                     }
                     
-                    self.loadingStatus = .Failed
+                    self.loadingStatus = .failed
                     print(error)
                 })
     }
     
     //MARK: - Private methods
     
-    private func setupRefreshControl() {
+    fileprivate func setupRefreshControl() {
         
         self.refreshControl = UIRefreshControl()
-        self.refreshControl?.addTarget(self, action: #selector(CompanySearchTableViewController.manualRefresh), forControlEvents: .ValueChanged)
+        self.refreshControl?.addTarget(self, action: #selector(CompanySearchTableViewController.manualRefresh), for: .valueChanged)
     }
     
-    private func getCompanyImage(item: GenericCollectionSectionItem<TCompanyAddress>, viewCell: TCompanyTableViewCell) {
+    fileprivate func getCompanyImage(_ item: GenericCollectionSectionItem<TCompanyAddress>, viewCell: TCompanyTableViewCell) {
         
         let company = item.item!
         
@@ -586,12 +587,13 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
             self.companyImages.filter({$0.id == company.companyImageId.value}).first {
             
             let filter = AspectScaledToFillSizeFilter(size: viewCell.companyImage.bounds.size)
-            viewCell.companyImage.af_setImageWithURL(NSURL(string: image.url)!,
-                                                     filter: filter, imageTransition: .CrossDissolve(0.5))
+            viewCell.companyImage.af_setImage(withURL: URL(string: image.url)!,
+                                              filter: filter,
+                                              imageTransition: .crossDissolve(0.5))
         }
     }
     
-    private func setupSearchController() {
+    fileprivate func setupSearchController() {
         
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
@@ -605,16 +607,16 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
     }
 
     
-    private func binding(cell: TCompanyTableViewCell, item: GenericCollectionSectionItem<TCompanyAddress>) {
+    fileprivate func binding(_ cell: TCompanyTableViewCell, item: GenericCollectionSectionItem<TCompanyAddress>) {
         
         let indexPath = item.indexPath
         
         if shouldShowSearchResults {
             
-            if indexPath.row + 10
-                >= self.searchDataSource!.sections[indexPath.section].items.count
+            if indexPath!.row + 10
+                >= self.searchDataSource!.sections[indexPath!.section].items.count
                 && self.searchCanLoadNext
-                && self.searchLoadingStatus != .Loading {
+                && self.searchLoadingStatus != .loading {
                 
                 guard let string = searchController.searchBar.text else {
                     
@@ -626,10 +628,10 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         }
         else {
             
-            if indexPath.row + 10
-                >= self.dataSource!.sections[indexPath.section].items.count
+            if indexPath!.row + 10
+                >= self.dataSource!.sections[indexPath!.section].items.count
                 && self.canLoadNext
-                && self.loadingStatus != .Loading {
+                && self.loadingStatus != .loading {
                 
                 self.loadCompanyAddress()
             }
@@ -645,18 +647,18 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         cell.ratingText.text = String(format:"%.1f", company.rating)
         cell.ratingProgress.setProgress(1 / 5 * company.rating, animated: false)
         cell.ratingProgress.trackFillColor = UIColor(hexString: kHexMainPinkColor)
-        cell.ratingProgress.hidden = false
+        cell.ratingProgress.isHidden = false
     }
     
-    private func loadCompanyAddress(query:String, cancellationToken: NSOperation? = nil) {
+    fileprivate func loadCompanyAddress(_ query:String, cancellationToken: Operation? = nil) {
         
         if self.userLocation == nil {
             
-            self.searchLoadingStatus = .Failed
+            self.searchLoadingStatus = .failed
             return
         }
         
-        self.searchLoadingStatus = .Loading
+        self.searchLoadingStatus = .loading
         
         if let superView = self.tableView.superview {
             
@@ -665,7 +667,7 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         
         Api.sharedInstance.loadCompanyAddresses(
             
-            self.userLocation!,
+            location: self.userLocation!,
             pageNumber: self.searchPageNumer,
             pageSize: self.pageSize,
             query: query)
@@ -681,7 +683,7 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
                     
                     self.cancellationTokens.remove(token)
                     
-                    if token.cancelled {
+                    if token.isCancelled {
                         
                         return
                     }
@@ -706,7 +708,7 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
                     self.searchCanLoadNext = false
                 }
                 
-                self.searchLoadingStatus = .Loaded
+                self.searchLoadingStatus = .loaded
                 
                 // apply received data
                 self.createSearchDataSource()
@@ -714,12 +716,12 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
                 
                 }).onFailure(callback: { error in
                     
-                    self.searchLoadingStatus = .Failed
+                    self.searchLoadingStatus = .failed
                     print(error)
                 })
     }
     
-    private func createSearchDataSource() {
+    fileprivate func createSearchDataSource() {
         
         if let page = self.searchCompaniesPage {
             
@@ -736,7 +738,7 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
     }
     
     
-    private func reloadData() {
+    fileprivate func reloadData() {
         
         self.tableView.dataSource = shouldShowSearchResults ? searchDataSource : dataSource
         self.tableView.reloadData()

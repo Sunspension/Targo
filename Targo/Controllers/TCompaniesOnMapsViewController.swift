@@ -15,9 +15,9 @@ import BrightFutures
 
 enum OpenMapsReasonEnum {
     
-    case AllCompanies
+    case allCompanies
     
-    case OneCompany
+    case oneCompany
 }
 
 
@@ -36,11 +36,11 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
     @IBOutlet weak var companyImage: UIImageView!
 
     
-    private var userLocation: CLLocation?
+    fileprivate var userLocation: CLLocation?
     
-    private var loadingStatus = TLoadingStatusEnum.Idle
+    fileprivate var loadingStatus = TLoadingStatusEnum.idle
     
-    private var mapsMarkers = Array<GMSMarker>()
+    fileprivate var mapsMarkers = Array<GMSMarker>()
     
     var images: [TImage]?
     
@@ -50,9 +50,9 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
     
     var companies: [TCompanyAddress]?
     
-    var reason = OpenMapsReasonEnum.AllCompanies
+    var reason = OpenMapsReasonEnum.allCompanies
     
-    var failedtimer: NSTimer?
+    var failedtimer: Timer?
     
 
     deinit {
@@ -64,21 +64,21 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
         super.viewDidLoad()
         
         mapView.delegate = self
-        mapView.myLocationEnabled = true
-        mapView.addObserver(self, forKeyPath: "myLocation", options: .New, context: nil)
+        mapView.isMyLocationEnabled = true
+        mapView.addObserver(self, forKeyPath: "myLocation", options: .new, context: nil)
         
         self.title = "maps_title".localized
         
         self.navigationItem.titleView = UIImageView(image: UIImage(named: "icon-logo"))
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
-        self.mapView.bringSubviewToFront(self.companyView)
+        self.mapView.bringSubview(toFront: self.companyView)
         self.companyView.alpha = 0
         
         TLocationManager.sharedInstance.subscribeObjectForLocationChange(self,
                                                                          selector: #selector(TCompaniesOnMapsViewController.userLocationChanged))
         
-        if self.reason == .OneCompany {
+        if self.reason == .oneCompany {
             
             self.addMarkers()
         }
@@ -88,7 +88,7 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
         }
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         
         super.viewWillDisappear(animated)
         
@@ -98,7 +98,7 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
     
     func startFailedTimer() {
         
-        self.failedtimer = NSTimer.scheduledTimerWithTimeInterval(15,
+        self.failedtimer = Timer.scheduledTimer(timeInterval: 15,
                                                                   target: self,
                                                                   selector: #selector(TCompaniesOnMapsViewController.onFailedLoadCompaniesTimerEvent),
                                                                   userInfo: nil,
@@ -109,34 +109,34 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
         
         self.failedtimer?.invalidate()
         
-        if self.loadingStatus == .Loading {
+        if self.loadingStatus == .loading {
             
             return
         }
         
-        self.loadCompanies()
+        let _ = self.loadCompanies()
     }
     
     func loadCompanies() -> Future<TCompanyAddressesPage, TargoError> {
         
         if self.userLocation == nil {
             
-            self.loadingStatus = .Failed
+            self.loadingStatus = .failed
             
             self.startFailedTimer()
             
             let p = Promise<TCompanyAddressesPage, TargoError>()
-            p.failure(TargoError.UndefinedError(message: "User location is nil"))
+            p.failure(TargoError.undefinedError(message: "User location is nil"))
             
             return p.future
         }
         
-        self.loadingStatus = .Loading
+        self.loadingStatus = .loading
         
         showWaitOverlay()
         
         return Api.sharedInstance.loadCompanyAddresses(
-            self.userLocation!,
+            location: self.userLocation!,
             pageNumber: 1,
             pageSize: 1000,
             query: nil,
@@ -146,7 +146,7 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
                 
                 self.removeAllOverlays()
                 
-                self.loadingStatus = .Loaded
+                self.loadingStatus = .loaded
                 
                 self.images = companyPage.images
                 self.companies = companyPage.companies
@@ -155,7 +155,7 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
                 
                 }).onFailure(callback: { [unowned self] error in
                     
-                    self.loadingStatus = .Failed
+                    self.loadingStatus = .failed
                     
                     self.startFailedTimer()
                     self.removeAllOverlays()
@@ -183,57 +183,57 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
                 marker.snippet = company.companyDescription
                 marker.userData = company
                 marker.map = self.mapView
-                marker.icon = GMSMarker.markerImageWithColor(UIColor.redColor())
+                marker.icon = GMSMarker.markerImage(with: UIColor.red)
                 marker.appearAnimation = kGMSMarkerAnimationPop
                 
                 self.mapsMarkers.append(marker)
                 
-                if reason == .OneCompany {
+                if reason == .oneCompany {
                     
                     self.displayCompanyInfo(marker)
-                    self.mapView.camera = GMSCameraPosition.cameraWithTarget(marker.position, zoom: 13)
+                    self.mapView.camera = GMSCameraPosition.camera(withTarget: marker.position, zoom: 13)
                 }
             }
         }
     }
     
-    func mapView(mapView: GMSMapView, didTapMarker marker: GMSMarker) -> Bool {
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         
-        self.selectedMarker?.icon = GMSMarker.markerImageWithColor(UIColor.redColor())
+        self.selectedMarker?.icon = GMSMarker.markerImage(with: UIColor.red)
         
         self.displayCompanyInfo(marker)
         
         return true
     }
     
-    func mapView(mapView: GMSMapView, didTapAtCoordinate coordinate: CLLocationCoordinate2D) {
+    func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
         
         self.companyView.alpha = 0
-        self.selectedMarker?.icon = GMSMarker.markerImageWithColor(UIColor.redColor())
+        self.selectedMarker?.icon = GMSMarker.markerImage(with: UIColor.red)
         self.selectedMarker = nil
     }
     
     func userLocationChanged() {
         
         self.userLocation = TLocationManager.sharedInstance.lastLocation
-        self.loadCompanies()
+        let _ = self.loadCompanies()
     }
     
-    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         
         if let newValue = change {
             
-            if let location: CLLocation = newValue[NSKeyValueChangeNewKey] as? CLLocation {
+            if let location: CLLocation = newValue[NSKeyValueChangeKey.newKey] as? CLLocation {
                 
-                if self.reason == .AllCompanies && self.loadingStatus != .Loading {
+                if self.reason == .allCompanies && self.loadingStatus != .loading {
                     
                     self.userLocation = location
                     
-                    self.loadCompanies().andThen(callback: { _ in
+                    let _ = self.loadCompanies().andThen(callback: { _ in
                         
-                        self.mapView.camera = GMSCameraPosition.cameraWithTarget(location.coordinate, zoom: 13)
+                        self.mapView.camera = GMSCameraPosition.camera(withTarget: location.coordinate, zoom: 13)
                         
-                        UIView.animateWithDuration(0.5, delay: 0, options: .CurveEaseInOut, animations: {
+                        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseInOut, animations: {
                             
                             self.mapView.alpha = 1
                             
@@ -250,9 +250,9 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
         }
     }
     
-    @IBAction func openCompanyInfo(sender: AnyObject) {
+    @IBAction func openCompanyInfo(_ sender: AnyObject) {
 
-        guard self.reason != .OneCompany else {
+        guard self.reason != .oneCompany else {
             
             return
         }
@@ -280,7 +280,7 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
                 
                 controller.openMapNavigationAction = {
                     
-                    self.navigationController?.popViewControllerAnimated(true)
+                    let _ = self.navigationController?.popViewController(animated: true)
                 }
             }
             
@@ -290,16 +290,16 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
     
     // MARK: - Private methods
     
-    private func displayCompanyInfo(marker: GMSMarker) {
+    fileprivate func displayCompanyInfo(_ marker: GMSMarker) {
         
-        marker.icon = GMSMarker.markerImageWithColor(UIColor(hexString: kHexMainPinkColor))
+        marker.icon = GMSMarker.markerImage(with: UIColor(hexString: kHexMainPinkColor))
         let company = marker.userData as! TCompanyAddress
         
         let transition = CATransition()
         transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
         transition.type = kCATransitionFade
         transition.duration = 0.3
-        self.companyView.layer.addAnimation(transition, forKey: "setInfo")
+        self.companyView.layer.add(transition, forKey: "setInfo")
         
         self.companyTitle.text = company.companyTitle
         self.companyAddress.text = company.title
@@ -308,14 +308,14 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
         if let image = self.images?.filter({$0.id == company.companyImageId.value}).first {
             
             let filter = AspectScaledToFillSizeFilter(size: self.companyImage.frame.size)
-            self.companyImage.af_setImageWithURL(NSURL(string: image.url)!, filter: filter, imageTransition: .CrossDissolve(0.5))
+            self.companyImage.af_setImage(withURL: URL(string: image.url)!, filter: filter, imageTransition: .crossDissolve(0.5))
         }
         
         if (self.companyView.layer.shadowPath == nil) {
             
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 
-                self.companyView.layer.shadowPath = UIBezierPath(rect: self.companyView.layer.bounds).CGPath
+                self.companyView.layer.shadowPath = UIBezierPath(rect: self.companyView.layer.bounds).cgPath
                 self.companyView.layer.shadowOffset = CGSize(width: 2, height: 1)
                 self.companyView.layer.shadowOpacity = 0.5
             }

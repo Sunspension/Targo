@@ -15,7 +15,7 @@ class TServerError: NSObject, Mappable {
     
     var errors = [TError]()
     
-    required convenience init?(_ map: Map) {
+    required convenience init?(map: Map) {
         
         self.init()
     }
@@ -32,7 +32,7 @@ class TError: Mappable {
     var field: String = ""
     var message: String = ""
     
-    required convenience init?(_ map: Map) {
+    required convenience init?(map: Map) {
         
         self.init()
     }

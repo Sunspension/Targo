@@ -11,11 +11,11 @@ import ObjectMapper
 
 enum PaymentStatus: Int {
     
-    case New = 1
-    case Ready
-    case Processing
-    case Complete
-    case Error
+    case new = 1
+    case ready
+    case processing
+    case complete
+    case error
 }
 
 class TTestOrder: NSObject, Mappable {
@@ -39,7 +39,7 @@ class TTestOrder: NSObject, Mappable {
     var url = ""
     
     
-    required convenience init?(_ map: Map) {
+    required convenience init?(map: Map) {
         
         self.init()
     }

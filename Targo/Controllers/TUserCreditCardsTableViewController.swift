@@ -15,10 +15,10 @@ class TUserCreditCardsTableViewController: UITableViewController {
     
     var cards: [TCreditCard]?
     
-    var selectedAction: ((cardIndex: Int) -> Void)?
+    var selectedAction: ((_ cardIndex: Int) -> Void)?
     
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
         
@@ -33,7 +33,7 @@ class TUserCreditCardsTableViewController: UITableViewController {
         self.setup()
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "",
-                                                                style: .Plain,
+                                                                style: .plain,
                                                                 target: nil,
                                                                 action: nil)
         
@@ -55,16 +55,16 @@ class TUserCreditCardsTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
         
-        let item = self.dataSource.sections[indexPath.section].items[indexPath.row]
+        let item = self.dataSource.sections[(indexPath as NSIndexPath).section].items[(indexPath as NSIndexPath).row]
         
         guard item.itemType != nil else {
             
-            self.selectedAction?(cardIndex: indexPath.row)
-            self.navigationController?.popViewControllerAnimated(true)
+            self.selectedAction?((indexPath as NSIndexPath).row)
+            let _ = self.navigationController?.popViewController(animated: true)
             return
         }
         
@@ -74,7 +74,7 @@ class TUserCreditCardsTableViewController: UITableViewController {
         }
     }
 
-    private func createDataSource() {
+    fileprivate func createDataSource() {
         
         self.dataSource.sections.removeAll()
         
@@ -89,7 +89,7 @@ class TUserCreditCardsTableViewController: UITableViewController {
                                                                     let viewCell = cell as! TUserCreditCardTableViewCell
                                                                     let card = item.item as! TCreditCard
                                                                     viewCell.title.text = card.mask
-                                                                    viewCell.selectionStyle = .None
+                                                                    viewCell.selectionStyle = .none
                                                                     
                                                                     switch card.type {
                                                                         
@@ -120,14 +120,14 @@ class TUserCreditCardsTableViewController: UITableViewController {
                                                                 let viewCell = cell as! TUserCreditCardTableViewCell
                                                                 viewCell.title.text = "credit_card_add_new_one".localized
                                                                 viewCell.icon.image = UIImage(named: "icon-new-card")
-                                                                viewCell.accessoryType = .DisclosureIndicator
+                                                                viewCell.accessoryType = .disclosureIndicator
                                                                 
         })
         
         self.dataSource.sections.append(section)
     }
     
-    private func loadCards() {
+    fileprivate func loadCards() {
         
         Api.sharedInstance.loadCreditCards()
             .onSuccess { [weak self] cards in

@@ -78,7 +78,7 @@ class TCompanyAddress: Object, Mappable {
     }
     
     
-    required convenience init?(_ map: Map) {
+    required convenience init?(map: Map) {
         
         self.init()
     }
@@ -122,7 +122,7 @@ class TCompanyAddress: Object, Mappable {
         
         let transform = TransformOf<List<RealmInt>, [Int]>(fromJSON: { (value: [Int]?) -> List<RealmInt>? in
             
-            if let time = value where time.count == 2 {
+            if let time = value , time.count == 2 {
                 
                 let list = List<RealmInt>()
                 
@@ -158,7 +158,7 @@ class TCompanyAddress: Object, Mappable {
         var workingTime = [[String]]()
         workingTime <- map["work_time"]
         
-        self.backingWorkingTime.appendContentsOf(workingTime.map({ value in
+        self.backingWorkingTime.append(objectsIn: workingTime.map({ value in
             TCompanyWorkingDay(begin: value[0], end: value[1]) }))
     }
 }

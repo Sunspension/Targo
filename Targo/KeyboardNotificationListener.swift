@@ -23,37 +23,37 @@ class KeyboardNotificationListener: NSObject {
         self.tableView = tableView
         self.contentInset = tableView.contentInset
         
-        NSNotificationCenter.defaultCenter().addObserver(self,
+        NotificationCenter.default.addObserver(self,
                                                          selector: #selector(KeyboardNotificationListener.keyboardWillShow(_:)),
-                                                         name: UIKeyboardWillShowNotification,
+                                                         name: NSNotification.Name.UIKeyboardWillShow,
                                                          object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self,
+        NotificationCenter.default.addObserver(self,
                                                          selector: #selector(KeyboardNotificationListener.keyboardWillHide(_:)),
-                                                         name: UIKeyboardWillHideNotification,
+                                                         name: NSNotification.Name.UIKeyboardWillHide,
                                                          object: nil)
     }
     
     deinit {
         
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
     
-    func keyboardWillShow(notification: NSNotification) {
+    func keyboardWillShow(_ notification: Notification) {
         
-        if let info = notification.userInfo {
+        if let info = (notification as NSNotification).userInfo {
             
-            let size = info[UIKeyboardFrameBeginUserInfoKey]?.CGRectValue().size
-            let contentInset = UIEdgeInsetsMake(0, 0, size!.height, 0)
+            let size = (info[UIKeyboardFrameBeginUserInfoKey] as AnyObject).cgRectValue.size
+            let contentInset = UIEdgeInsetsMake(0, 0, size.height, 0)
             self.tableView?.contentInset = contentInset
             self.tableView?.scrollIndicatorInsets = contentInset
         }
     }
     
-    func keyboardWillHide(notification: NSNotification) {
+    func keyboardWillHide(_ notification: Notification) {
         
-        self.tableView?.contentInset = self.contentInset ?? UIEdgeInsetsZero
-        self.tableView?.scrollIndicatorInsets = self.contentInset ?? UIEdgeInsetsZero
+        self.tableView?.contentInset = self.contentInset ?? UIEdgeInsets.zero
+        self.tableView?.scrollIndicatorInsets = self.contentInset ?? UIEdgeInsets.zero
     }
 }

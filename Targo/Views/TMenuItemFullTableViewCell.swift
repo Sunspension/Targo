@@ -8,6 +8,7 @@
 
 import UIKit
 import Bond
+import ReactiveKit
 
 class TMenuItemFullTableViewCell: TBaseTableViewCell {
 
@@ -40,8 +41,8 @@ class TMenuItemFullTableViewCell: TBaseTableViewCell {
         super.awakeFromNib()
         
         buttonCheck.tintColor = UIColor(hexString: kHexMainPinkColor)
-        buttonMinus.imageView?.contentMode = .ScaleAspectFit
-        buttonPlus.imageView?.contentMode = .ScaleAspectFit
-        buttonMore.setTitleColor(UIColor(hexString: kHexMainPinkColor), forState: .Normal)
+        buttonMinus.imageView?.contentMode = .scaleAspectFit
+        buttonPlus.imageView?.contentMode = .scaleAspectFit
+        buttonMore.setTitleColor(UIColor(hexString: kHexMainPinkColor), for: .normal)
     }
 }

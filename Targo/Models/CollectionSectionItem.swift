@@ -10,13 +10,13 @@ import UIKit
 
 class CollectionSectionItem: NSObject {
 
-    private (set) var defaultcell: Bool = false
+    fileprivate (set) var defaultcell: Bool = false
     
-    private (set) var cellStyle: UITableViewCellStyle?
+    fileprivate (set) var cellStyle: UITableViewCellStyle?
     
-    private (set) var firstReusableIdentifierOrNibName: String?
+    fileprivate (set) var firstReusableIdentifierOrNibName: String?
     
-    private (set) var secondReusableIdentifierOrNibName: String?
+    fileprivate (set) var secondReusableIdentifierOrNibName: String?
     
     
     var item: Any?
@@ -39,9 +39,9 @@ class CollectionSectionItem: NSObject {
     
     var hasError = false
     
-    var indexPath: NSIndexPath!
+    var indexPath: IndexPath!
     
-    var bindingAction: ((cell: UITableViewCell, item: CollectionSectionItem) -> Void)!
+    var bindingAction: ((_ cell: UITableViewCell, _ item: CollectionSectionItem) -> Void)?
     
     var swappable = false
     

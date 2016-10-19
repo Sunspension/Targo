@@ -25,7 +25,7 @@ class TFeedItem: NSObject, Mappable {
     
     var companyId = 0
     
-    required convenience init?(_ map: Map) {
+    required convenience init?(map: Map) {
         
         self.init()
     }

@@ -6,44 +6,46 @@
 //  Copyright © 2016 Targo. All rights reserved.
 //
 
-enum TargoError: ErrorType {
+enum TargoError: Error {
 
     static let domain = "com.targo.error";
-    
-    case DataSerializationFailed(failureReason: String)
-    
-    case ServerError(failureReason: TServerError)
-    
-    case BadRequest(failureReason: TBadRequest)
-    
-    case UserLoginFailed
-    
-    case UserLoadingFailed
-    
-    case CompanyPageLoadingFailed
-    
-    case CompanyMenuPageLoadingFailed
-    
-    case UserDeauthorizationFailed
-    
-    case DeviceTypeBlank
-    
-    case DeviceTokenBlank
-    
-    case TestOrderError
-    
-    case CreditCardsLoadingError
-    
-    case UndefinedError(message: String)
 
-    case ShopOrderError
+    case error(error: Error)
+    
+    case dataSerializationFailed(failureReason: String)
+    
+    case serverError(failureReason: TServerError)
+    
+    case badRequest(failureReason: TBadRequest)
+    
+    case userLoginFailed
+    
+    case userLoadingFailed
+    
+    case companyPageLoadingFailed
+    
+    case companyMenuPageLoadingFailed
+    
+    case userDeauthorizationFailed
+    
+    case deviceTypeBlank
+    
+    case deviceTokenBlank
+    
+    case testOrderError
+    
+    case creditCardsLoadingError
+    
+    case undefinedError(message: String)
+
+    case shopOrderError
     
     
     var message: String {
         
         switch self {
             
-        case .DeviceTokenBlank:
+        case .deviceTokenBlank:
             
             return "Device token is blank."
             
@@ -61,13 +63,16 @@ enum TargoError: ErrorType {
         
         switch self {
             
-        case .DataSerializationFailed(let message):
+        case .dataSerializationFailed(let message):
             
             return message
             
-        case .BadRequest(let failureReason):
+        case .badRequest(let failureReason):
             
             return failureReason.message.isEmpty ? failureReason.name :failureReason.message
+            
+        case .error(let error):
+            return error.localizedDescription
             
         default:
             return ""
@@ -78,11 +83,11 @@ enum TargoError: ErrorType {
         
         switch self {
             
-        case .BadRequest(let failureReason):
+        case .badRequest(let failureReason):
             
             return failureReason
             
-        case .ServerError(let failureReason):
+        case .serverError(let failureReason):
             
             return failureReason
             

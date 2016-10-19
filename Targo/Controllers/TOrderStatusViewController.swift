@@ -13,11 +13,11 @@ import Bond
 
 enum OrderStatusOpenReasonEnum {
     
-    case Undefined
+    case undefined
     
-    case AfterOrder
+    case afterOrder
     
-    case OpenOrderDetails
+    case openOrderDetails
 }
 
 
@@ -51,7 +51,7 @@ class TOrderStatusViewController: UIViewController {
     
     var companyImage: TImage?
     
-    var reason: OrderStatusOpenReasonEnum = .Undefined
+    var reason: OrderStatusOpenReasonEnum = .undefined
     
     
     deinit {
@@ -64,7 +64,7 @@ class TOrderStatusViewController: UIViewController {
         super.viewWillLayoutSubviews()
         
         self.companyUIImage.makeCircular()
-        self.companyUIImage.layer.borderColor = UIColor.whiteColor().CGColor
+        self.companyUIImage.layer.borderColor = UIColor.white.cgColor
         self.companyUIImage.layer.borderWidth = 4
         
         self.statusIndicator1.makeCircular()
@@ -78,19 +78,19 @@ class TOrderStatusViewController: UIViewController {
         super.viewDidLoad()
         
         self.cancelLabel.text = "order_cancel_order".localized
-        self.cancelOrder.addTarget(self, action: #selector(TOrderStatusViewController.cancelOrderAction), forControlEvents: .TouchUpInside)
+        self.cancelOrder.addTarget(self, action: #selector(TOrderStatusViewController.cancelOrderAction), for: .touchUpInside)
         
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "icon-bill"),
-                                                                 style: .Plain,
+                                                                 style: .plain,
                                                                  target: self,
                                                                  action: #selector(TOrderStatusViewController.openBill))
         
-        if self.reason == .AfterOrder {
+        if self.reason == .afterOrder {
             
             self.navigationItem.setHidesBackButton(true, animated: false)
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "action_close".localized,
-                                                                    style: .Plain,
+                                                                    style: .plain,
                                                                     target: self,
                                                                     action: #selector(TOrderStatusViewController.backAction))
         }
@@ -106,7 +106,7 @@ class TOrderStatusViewController: UIViewController {
         if let companyImage =  self.companyImage {
             
             let filter = AspectScaledToFillSizeFilter(size: self.companyUIImage.frame.size)
-            self.companyUIImage.af_setImageWithURL(NSURL(string: companyImage.url)!, filter: filter)
+            self.companyUIImage.af_setImage(withURL: URL(string: companyImage.url)!, filter: filter)
         }
         
 //        let transition = CATransition()
@@ -116,7 +116,7 @@ class TOrderStatusViewController: UIViewController {
 //        self.orderStatusDescription.layer.addAnimation(transition, forKey: "setStatus")
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
         
@@ -126,20 +126,20 @@ class TOrderStatusViewController: UIViewController {
     func cancelOrderAction() {
         
         if let order = self.shopOrder
-            where order.orderStatus != ShopOrderStatusEnum.CanceledByUser.rawValue {
+            , order.orderStatus != ShopOrderStatusEnum.canceledByUser.rawValue {
             
             if let superview = self.view.superview {
                 
                 SwiftOverlays.showCenteredWaitOverlay(superview)
             }
             
-            Api.sharedInstance.cancelOrderByUser(order.id)
+            Api.sharedInstance.cancelOrderByUser(orderId: order.id)
                 
                 .onSuccess(callback: {[weak self] order in
                     
                     self?.setOrderStatus(order.orderStatus)
                     
-                    NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: kTargoUserDidCancelOrderNotification, object: nil))
+                    NotificationCenter.default.post(Notification(name: Notification.Name(rawValue: kTargoUserDidCancelOrderNotification), object: nil))
                     
                     if let superview = self?.view.superview {
                         
@@ -160,7 +160,7 @@ class TOrderStatusViewController: UIViewController {
     
     func backAction() {
         
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        let _ = self.navigationController?.popToRootViewController(animated: true)
     }
     
     func openBill() {
@@ -189,22 +189,22 @@ class TOrderStatusViewController: UIViewController {
         if let order = self.shopOrder {
             
             guard let status = ShopOrderStatusEnum(rawValue: order.orderStatus)
-                where status != .Canceled
-                    && status != .Finished
-                    && status != .CanceledByUser else {
+                , status != .canceled
+                    && status != .finished
+                    && status != .canceledByUser else {
                     
                     self.setOrderStatus(order.orderStatus)
                     return
             }
             
-            Api.sharedInstance.checkShopOrderStatus(order.id)
+            Api.sharedInstance.checkShopOrderStatus(orderStatus: order.id)
                 
                 .onSuccess(callback: {[weak self] shopOrder in
                     
                     self?.shopOrder = shopOrder
                     self?.setOrderStatus(shopOrder.orderStatus)
                     
-                    if shopOrder.orderStatus == ShopOrderStatusEnum.Finished.rawValue {
+                    if shopOrder.orderStatus == ShopOrderStatusEnum.finished.rawValue {
                         
                         if let controller = self?.instantiateViewControllerWithIdentifierOrNibName("OrderFinished") as? TOrderFinishedViewController {
                             
@@ -215,13 +215,13 @@ class TOrderStatusViewController: UIViewController {
                         }
                     }
                     
-                    NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: kTargoDidLoadOrdersNotification, object: nil))
+                    NotificationCenter.default.post(Notification(name: Notification.Name(rawValue: kTargoDidLoadOrdersNotification), object: nil))
                     
                     if let status = ShopOrderStatusEnum(rawValue: shopOrder.orderStatus)
-                        where status != .Canceled && status != .Finished {
+                        , status != .canceled && status != .finished {
                         
-                        self?.performSelector(#selector(TOrderStatusViewController.checkOrderStatus),
-                            withObject: nil,
+                        self?.perform(#selector(TOrderStatusViewController.checkOrderStatus),
+                                      with: nil,
                             afterDelay: 5)
                     }
                     
@@ -232,152 +232,152 @@ class TOrderStatusViewController: UIViewController {
         }
     }
     
-    private func setOrderStatus(orderSatus: Int) {
+    fileprivate func setOrderStatus(_ orderSatus: Int) {
         
         let status = ShopOrderStatusEnum(rawValue: orderSatus)!
         
         switch status {
             
             // 1
-        case .New:
+        case .new:
             
             changeStatusText("order_status_new".localized)
-            statusIndicator1.backgroundColor = UIColor.lightGrayColor()
-            statusIndicator2.backgroundColor = UIColor.lightGrayColor()
-            statusIndicator3.backgroundColor = UIColor.lightGrayColor()
-            statusIndicator4.backgroundColor = UIColor.lightGrayColor()
-            self.cancelOrder.hidden = false
-            self.cancelLabel.hidden = false
+            statusIndicator1.backgroundColor = UIColor.lightGray
+            statusIndicator2.backgroundColor = UIColor.lightGray
+            statusIndicator3.backgroundColor = UIColor.lightGray
+            statusIndicator4.backgroundColor = UIColor.lightGray
+            self.cancelOrder.isHidden = false
+            self.cancelLabel.isHidden = false
             
             break
             
             // 2
-        case .CanceledByUser:
+        case .canceledByUser:
             
 //            orderStatusImage.image = UIImage(named: "icon-canceled")
             changeStatusText("order_status_canceled_by_user".localized)
 //            orderStatusDescription.text = "order_status_canceled_by_user".localized
-            statusIndicator1.backgroundColor = UIColor.lightGrayColor()
-            statusIndicator2.backgroundColor = UIColor.lightGrayColor()
-            statusIndicator3.backgroundColor = UIColor.lightGrayColor()
-            statusIndicator4.backgroundColor = UIColor.lightGrayColor()
-            self.cancelOrder.hidden = true
-            self.cancelLabel.hidden = true
+            statusIndicator1.backgroundColor = UIColor.lightGray
+            statusIndicator2.backgroundColor = UIColor.lightGray
+            statusIndicator3.backgroundColor = UIColor.lightGray
+            statusIndicator4.backgroundColor = UIColor.lightGray
+            self.cancelOrder.isHidden = true
+            self.cancelLabel.isHidden = true
             
             break
             
             // 3
-        case .View:
+        case .view:
             
 //            orderStatusImage.image = UIImage(named: "icon-success")
             changeStatusText("order_status_seen".localized)
 //            orderStatusDescription.text = "order_status_seen".localized
-            statusIndicator1.backgroundColor = UIColor.whiteColor()
-            statusIndicator2.backgroundColor = UIColor.lightGrayColor()
-            statusIndicator3.backgroundColor = UIColor.lightGrayColor()
-            statusIndicator4.backgroundColor = UIColor.lightGrayColor()
-            self.cancelOrder.hidden = false
-            self.cancelLabel.hidden = false
+            statusIndicator1.backgroundColor = UIColor.white
+            statusIndicator2.backgroundColor = UIColor.lightGray
+            statusIndicator3.backgroundColor = UIColor.lightGray
+            statusIndicator4.backgroundColor = UIColor.lightGray
+            self.cancelOrder.isHidden = false
+            self.cancelLabel.isHidden = false
             
             break
 
             // 4
-        case .Canceled:
+        case .canceled:
             
 //            orderStatusImage.image = UIImage(named: "icon-canceled")
             
             changeStatusText("order_status_canceled".localized)
-            statusIndicator1.backgroundColor = UIColor.whiteColor()
-            statusIndicator2.backgroundColor = UIColor.lightGrayColor()
-            statusIndicator3.backgroundColor = UIColor.lightGrayColor()
-            statusIndicator4.backgroundColor = UIColor.lightGrayColor()
-            self.cancelOrder.hidden = true
-            self.cancelLabel.hidden = true
+            statusIndicator1.backgroundColor = UIColor.white
+            statusIndicator2.backgroundColor = UIColor.lightGray
+            statusIndicator3.backgroundColor = UIColor.lightGray
+            statusIndicator4.backgroundColor = UIColor.lightGray
+            self.cancelOrder.isHidden = true
+            self.cancelLabel.isHidden = true
             
             break
 
             // 5
-        case .Processing:
+        case .processing:
             
 //            orderStatusImage.image = UIImage(named: "icon-clock")
             changeStatusText("order_status_processing".localized)
 //            orderStatusDescription.text = "order_status_processing".localized
-            statusIndicator1.backgroundColor = UIColor.whiteColor()
-            statusIndicator2.backgroundColor = UIColor.whiteColor()
-            statusIndicator3.backgroundColor = UIColor.lightGrayColor()
-            statusIndicator4.backgroundColor = UIColor.lightGrayColor()
-            self.cancelOrder.hidden = true
-            self.cancelLabel.hidden = true
+            statusIndicator1.backgroundColor = UIColor.white
+            statusIndicator2.backgroundColor = UIColor.white
+            statusIndicator3.backgroundColor = UIColor.lightGray
+            statusIndicator4.backgroundColor = UIColor.lightGray
+            self.cancelOrder.isHidden = true
+            self.cancelLabel.isHidden = true
             
             break
             
             // 6
-        case .Complete:
+        case .complete:
             
 //            orderStatusImage.image = UIImage(named: "icon-cutlery")
             changeStatusText("order_status_ready".localized)
 //            orderStatusDescription.text = "order_status_ready".localized
-            statusIndicator1.backgroundColor = UIColor.whiteColor()
-            statusIndicator2.backgroundColor = UIColor.whiteColor()
-            statusIndicator3.backgroundColor = UIColor.whiteColor()
-            statusIndicator4.backgroundColor = UIColor.lightGrayColor()
-            self.cancelOrder.hidden = true
-            self.cancelLabel.hidden = true
+            statusIndicator1.backgroundColor = UIColor.white
+            statusIndicator2.backgroundColor = UIColor.white
+            statusIndicator3.backgroundColor = UIColor.white
+            statusIndicator4.backgroundColor = UIColor.lightGray
+            self.cancelOrder.isHidden = true
+            self.cancelLabel.isHidden = true
             
             break;
             
             // 7
-        case .Finished:
+        case .finished:
             
 //            orderStatusImage.image = UIImage(named: "icon-cutlery")
             changeStatusText("order_status_finished".localized)
 //            orderStatusDescription.text = "order_status_finished".localized
-            statusIndicator1.backgroundColor = UIColor.whiteColor()
-            statusIndicator2.backgroundColor = UIColor.whiteColor()
-            statusIndicator3.backgroundColor = UIColor.whiteColor()
-            statusIndicator4.backgroundColor = UIColor.whiteColor()
-            self.cancelOrder.hidden = true
-            self.cancelLabel.hidden = true
+            statusIndicator1.backgroundColor = UIColor.white
+            statusIndicator2.backgroundColor = UIColor.white
+            statusIndicator3.backgroundColor = UIColor.white
+            statusIndicator4.backgroundColor = UIColor.white
+            self.cancelOrder.isHidden = true
+            self.cancelLabel.isHidden = true
             
             break
             
             // 8
-        case .PaySuccess:
+        case .paySuccess:
             
 //            orderStatusImage.image = nil
             changeStatusText("order_status_pay_success".localized)
 //            orderStatusDescription.text = "order_status_pay_success".localized
-            statusIndicator1.backgroundColor = UIColor.whiteColor()
-            statusIndicator2.backgroundColor = UIColor.whiteColor()
-            statusIndicator3.backgroundColor = UIColor.lightGrayColor()
-            statusIndicator4.backgroundColor = UIColor.lightGrayColor()
-            self.cancelOrder.hidden = true
-            self.cancelLabel.hidden = true
+            statusIndicator1.backgroundColor = UIColor.white
+            statusIndicator2.backgroundColor = UIColor.white
+            statusIndicator3.backgroundColor = UIColor.lightGray
+            statusIndicator4.backgroundColor = UIColor.lightGray
+            self.cancelOrder.isHidden = true
+            self.cancelLabel.isHidden = true
             
             break
             
             // 9
-        case .PayError:
+        case .payError:
             
 //            orderStatusImage.image = nil
             changeStatusText("order_status_pay_error".localized)
 //            orderStatusDescription.text = "order_status_pay_error".localized
-            statusIndicator1.backgroundColor = UIColor.whiteColor()
-            statusIndicator2.backgroundColor = UIColor.whiteColor()
-            statusIndicator3.backgroundColor = UIColor.lightGrayColor()
-            statusIndicator4.backgroundColor = UIColor.lightGrayColor()
-            self.cancelOrder.hidden = true
-            self.cancelLabel.hidden = true
+            statusIndicator1.backgroundColor = UIColor.white
+            statusIndicator2.backgroundColor = UIColor.white
+            statusIndicator3.backgroundColor = UIColor.lightGray
+            statusIndicator4.backgroundColor = UIColor.lightGray
+            self.cancelOrder.isHidden = true
+            self.cancelLabel.isHidden = true
             
             break
         }
     }
     
-    private func changeStatusText(text: String) {
+    fileprivate func changeStatusText(_ text: String) {
         
-        UIView.transitionWithView(orderStatusDescription,
+        UIView.transition(with: orderStatusDescription,
                                   duration: 0.3,
-                                  options: [.TransitionCrossDissolve],
+                                  options: [.transitionCrossDissolve],
                                   animations: {
                                     
                                     self.orderStatusDescription.text = text

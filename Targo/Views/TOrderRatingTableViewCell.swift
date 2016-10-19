@@ -7,11 +7,10 @@
 //
 
 import UIKit
-import Bond
 
 class TOrderRatingTableViewCell: UITableViewCell {
 
-    private var privateRating = 0
+    fileprivate var privateRating = 0
     
     @IBOutlet weak var star1: UIButton!
     
@@ -41,7 +40,7 @@ class TOrderRatingTableViewCell: UITableViewCell {
         }
     }
     
-    var ratingDidSetAction: ((value: Int) -> Void)?
+    var ratingDidSetAction: ((_ value: Int) -> Void)?
     
     var unratedColor: UIColor?
     
@@ -53,122 +52,80 @@ class TOrderRatingTableViewCell: UITableViewCell {
         
         resetRating()
         
-        star1.addTarget(self, action: #selector(self.ratingDidSet(_:)), forControlEvents: .TouchUpInside)
-        star2.addTarget(self, action: #selector(self.ratingDidSet(_:)), forControlEvents: .TouchUpInside)
-        star3.addTarget(self, action: #selector(self.ratingDidSet(_:)), forControlEvents: .TouchUpInside)
-        star4.addTarget(self, action: #selector(self.ratingDidSet(_:)), forControlEvents: .TouchUpInside)
-        star5.addTarget(self, action: #selector(self.ratingDidSet(_:)), forControlEvents: .TouchUpInside)
+        star1.addTarget(self, action: #selector(self.ratingDidSet(_:)), for: .touchUpInside)
+        star2.addTarget(self, action: #selector(self.ratingDidSet(_:)), for: .touchUpInside)
+        star3.addTarget(self, action: #selector(self.ratingDidSet(_:)), for: .touchUpInside)
+        star4.addTarget(self, action: #selector(self.ratingDidSet(_:)), for: .touchUpInside)
+        star5.addTarget(self, action: #selector(self.ratingDidSet(_:)), for: .touchUpInside)
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
     
-    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
-        
-        if let newValue = change {
-            
-            let value = newValue["new"] as! Bool
-            
-            let button = object as! UIButton
-            
-            switch button.tag {
-                
-            case 5:
-                
-                self.star4.selected = value
-                break
-                
-            case 4:
-                
-                self.star3.selected = value
-                self.star5.selected = value
-                break
-                
-            case 3:
-                
-                self.star2.selected = value
-                break
-            
-            case 2:
-                
-                self.star1.selected = value
-                break
-                
-            case 1:
-                self
-                
-            default:
-                break
-            }
-            
-            button.tintColor = button.selected ? ratedColor : unratedColor
-        }
-    }
-    
-    func ratingDidSet(sender: UIButton) {
+    func ratingDidSet(_ sender: UIButton) {
         
         self.privateRating = sender.tag
-        self.ratingDidSetAction?(value: sender.tag)
+        self.ratingDidSetAction?(sender.tag)
         
-        sender.selected = true
+        sender.isSelected = true
         
         switch sender.tag {
             
         case 5:
             
             // On
-            self.star4.selected = true
-            self.star3.selected = true
-            self.star2.selected = true
-            self.star1.selected = true
+            self.star4.isSelected = true
+            self.star3.isSelected = true
+            self.star2.isSelected = true
+            self.star1.isSelected = true
             
             break
             
         case 4:
             
             // On
-            self.star3.selected = true
-            self.star2.selected = true
-            self.star1.selected = true
+            self.star3.isSelected = true
+            self.star2.isSelected = true
+            self.star1.isSelected = true
             
             // Off
-            self.star5.selected = false
+            self.star5.isSelected = false
             
             break
             
         case 3:
             
             // On
-            self.star2.selected = true
-            self.star1.selected = true
+            self.star2.isSelected = true
+            self.star1.isSelected = true
             
             // Off
-            self.star4.selected = false
-            self.star5.selected = false
+            self.star4.isSelected = false
+            self.star5.isSelected = false
             
             break
             
         case 2:
             
             // On
-            self.star1.selected = true
+            self.star1.isSelected = true
             
             // Off
-            self.star3.selected = false
-            self.star4.selected = false
-            self.star5.selected = false
+            self.star3.isSelected = false
+            self.star4.isSelected = false
+            self.star5.isSelected = false
             
             break
             
         case 1:
             
-            self.star2.selected = false
-            self.star3.selected = false
-            self.star4.selected = false
-            self.star5.selected = false
+            self.star2.isSelected = false
+            self.star3.isSelected = false
+            self.star4.isSelected = false
+            self.star5.isSelected = false
             
         default:
             break
@@ -177,11 +134,11 @@ class TOrderRatingTableViewCell: UITableViewCell {
         for view in stack.arrangedSubviews {
             
             let button = view as! UIButton
-            button.tintColor = button.selected ? ratedColor : unratedColor
+            button.tintColor = button.isSelected ? ratedColor : unratedColor
         }
     }
     
-    private func setRating(value: Int) {
+    fileprivate func setRating(_ value: Int) {
         
         if value == 0 {
             
@@ -193,7 +150,7 @@ class TOrderRatingTableViewCell: UITableViewCell {
         ratingDidSet(button)
     }
     
-    private func resetRating() {
+    fileprivate func resetRating() {
         
         for index in 0...stack.arrangedSubviews.count - 1 {
             

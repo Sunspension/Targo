@@ -8,13 +8,8 @@
 
 import UIKit
 
-import DynamicColor
 import SHSPhoneComponent
-//import BSErrorMessageView
-import AlamofireObjectMapper
-//import RealmSwift
-import BrightFutures
-import Result
+import DynamicColor
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
 
@@ -36,15 +31,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         super.viewDidLoad()
         
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
-        separator.backgroundColor = UIColor.lightGrayColor()
+        separator.backgroundColor = UIColor.lightGray
         
         phoneNumber.formatter.setDefaultOutputPattern(" (###) ### ####")
         phoneNumber.formatter.prefix = "+7"
         phoneNumber.becomeFirstResponder()
         phoneNumber.tintColor = DynamicColor(hexString: kHexMainPinkColor)
-        phoneNumber.textDidChangeBlock = { (textfield: UITextField!) in
+        
+        phoneNumber.textDidChangeBlock = { textfield in
             
             if self.phoneNumber.phoneNumber().characters.count < 11 {
                 
@@ -61,7 +57,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         password.delegate = self
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
         self.setup()
@@ -73,12 +69,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
     }
 
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         self.view.endEditing(true)
     }
     
-    @IBAction func registrationAction(sender: AnyObject) {
+    @IBAction func registrationAction(_ sender: AnyObject) {
         
         let controller = self.instantiateViewControllerWithIdentifierOrNibName("RegistrationPhone")
         
@@ -88,7 +84,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    @IBAction func loginAction(sender: AnyObject) {
+    @IBAction func loginAction(_ sender: AnyObject) {
      
         self.phoneNumber.resignFirstResponder()
         self.password.resignFirstResponder()
@@ -103,11 +99,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 //            return
 //        }
         
-        Api.sharedInstance.userLogin(phoneNumber, code: code!)
+        Api.sharedInstance.userLogin(phoneNumber: phoneNumber!, code: code!)
             
             .onSuccess { user in
                 
-                NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: kTargoUserLoggedInSuccessfully, object: nil))
+                NotificationCenter.default.post(Notification(name: Notification.Name(rawValue: kTargoUserLoggedInSuccessfully)))
                 
                 print("User with user id: \(user.id) successfully logged in")
                 
@@ -117,7 +113,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
 //        textField.bs_hideError()
         return true

@@ -11,20 +11,21 @@ import SwiftOverlays
 import ActionSheetPicker_3_0
 import Timepiece
 import Bond
+import ReactiveKit
 
 private enum ItemTypeEnum : Int {
     
-    case PaymentMetod = 1
+    case paymentMetod = 1
     
-    case AddNewCard
+    case addNewCard
     
-    case OrderTime
+    case orderTime
  
-    case NumberOfPersons
+    case numberOfPersons
     
-    case DeliveryType
+    case deliveryType
     
-    case OrderDescription
+    case orderDescription
 }
 
 
@@ -50,7 +51,7 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
     
     var loading = false
     
-    var preparedDate: NSDate?
+    var preparedDate: Date?
     
     var bag = DisposeBag()
     
@@ -62,7 +63,7 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
     deinit {
         
         print("\(typeName(self)) \(#function)")
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func viewDidLoad() {
@@ -76,29 +77,29 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
         tableView.tableFooterView = UIView()
         tableView.contentInset = UIEdgeInsetsMake(0, 0, 20, 0)
         
-        tableView.registerNib(UINib(nibName: "TDetailsTableViewCell", bundle: nil),
+        tableView.register(UINib(nibName: "TDetailsTableViewCell", bundle: nil),
                               forCellReuseIdentifier: "DetailsCell")
         
-        tableView.registerNib(UINib(nibName: "TOrderDescriptionTableViewCell", bundle: nil),
+        tableView.register(UINib(nibName: "TOrderDescriptionTableViewCell", bundle: nil),
                               forCellReuseIdentifier: "OrderDescriptionCell")
         
-        tableView.registerNib(UINib(nibName: "TOrderNumberOfPersons", bundle: nil),
+        tableView.register(UINib(nibName: "TOrderNumberOfPersons", bundle: nil),
                               forCellReuseIdentifier: "NumberOfPersonsCell")
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "",
-                                                                style: .Plain,
+                                                                style: .plain,
                                                                 target: nil,
                                                                 action: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self,
+        NotificationCenter.default.addObserver(self,
                                                          selector: #selector(TOrderReviewViewController.onDidAddCardNotification),
-                                                         name: kTargoDidAddNewCardNotification,
+                                                         name: NSNotification.Name(rawValue: kTargoDidAddNewCardNotification),
                                                          object: nil)
         let button = self.makeOrder
         
-        button.addTarget(self, action: #selector(TOrderReviewViewController.sendOrder),
-                         forControlEvents: .TouchUpInside)
-        button.setTitle("order_make_order_button_title".localized, forState: .Normal)
+        button?.addTarget(self, action: #selector(TOrderReviewViewController.sendOrder),
+                         for: .touchUpInside)
+        button?.setTitle("order_make_order_button_title".localized, for: UIControlState())
         
         self.setStyleToOrderButton()
         
@@ -106,7 +107,7 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
     }
     
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         
         super.viewDidAppear(animated)
         
@@ -125,7 +126,7 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
     
     //MARK: - UITextView delegate implementation
     
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         
         guard text != "\n" else {
             
@@ -181,27 +182,27 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
     
     // MARK: - Private methods
     
-    private func setStyleToOrderButton() {
+    fileprivate func setStyleToOrderButton() {
         
-        dispatch_async(dispatch_get_main_queue()) { 
+        DispatchQueue.main.async { 
             
             let button = self.makeOrder
             
-            button.layer.borderColor = UIColor.whiteColor().CGColor
-            button.layer.borderWidth = 3
-            button.titleLabel?.textAlignment = .Center
-            button.backgroundColor = UIColor(hexString: kHexMainPinkColor)
+            button?.layer.borderColor = UIColor.white.cgColor
+            button?.layer.borderWidth = 3
+            button?.titleLabel?.textAlignment = .center
+            button?.backgroundColor = UIColor(hexString: kHexMainPinkColor)
             
-            let radius = button.layer.bounds.width / 2
+            let radius = (button?.layer.bounds.width)! / 2
             
-            button.layer.cornerRadius = radius
-            button.layer.shadowPath = UIBezierPath(roundedRect: button.layer.bounds, cornerRadius: radius).CGPath
-            button.layer.shadowOffset = CGSize(width:0, height: 1)
-            button.layer.shadowOpacity = 0.5
+            button?.layer.cornerRadius = radius
+            button?.layer.shadowPath = UIBezierPath(roundedRect: (button?.layer.bounds)!, cornerRadius: radius).cgPath
+            button?.layer.shadowOffset = CGSize(width:0, height: 1)
+            button?.layer.shadowOpacity = 0.5
         }
     }
     
-    private func createDataSource() {
+    fileprivate func createDataSource() {
         
         let section = CollectionSection()
         
@@ -223,7 +224,7 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
                                                                         viewCell.title.text = good.item.title
                                                                         viewCell.details.text = good.item.goodDescription
                                                                         viewCell.sum.text = String(good.count) + " x " + String(good.item.price) + " \u{20BD}"
-                                                                        viewCell.selectionStyle = .None
+                                                                        viewCell.selectionStyle = .none
                 })
             }
             
@@ -234,16 +235,16 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
                                                                     let viewCell = cell as! TOrderTotalPriceTableViewCell
                                                                     viewCell.details.text = "order_review_total_price".localized
                                                                     viewCell.price.text = String(item.item as! Int) + " \u{20BD}"
-                                                                    viewCell.selectionStyle = .None
+                                                                    viewCell.selectionStyle = .none
             })
             
-            if let cards = self.cards where cards.count > 0 {
+            if let cards = self.cards , cards.count > 0 {
                 
                 self.selectedCardIndex = cards.count - 1
                 
                 section.initializeCellWithReusableIdentifierOrNibName("PaymentMethodCell",
                                                                       item: cards.last,
-                                                                      itemType: ItemTypeEnum.PaymentMetod,
+                                                                      itemType: ItemTypeEnum.paymentMetod,
                                                                       bindingAction: { (cell, item) in
                                                                         
                                                                         let viewCell = cell as! TPaymentMethodTableViewCell
@@ -276,7 +277,7 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
                 
                 section.initializeCellWithReusableIdentifierOrNibName("PaymentMethodCell",
                                                                       item: nil,
-                                                                      itemType: ItemTypeEnum.AddNewCard,
+                                                                      itemType: ItemTypeEnum.addNewCard,
                                                                       bindingAction: { (cell, item) in
                                                                         
                                                                         let viewCell = cell as! TPaymentMethodTableViewCell
@@ -290,25 +291,37 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
             
             section.initializeCellWithReusableIdentifierOrNibName("DeliveryCell",
                                                                   item: nil,
-                                                                  itemType: ItemTypeEnum.DeliveryType,
+                                                                  itemType: ItemTypeEnum.deliveryType,
                                                                   bindingAction: { (cell, item) in
                                                                     
                                                                     let viewCell = cell as! TDeliveryMethodTableViewCell
                                                                     
                                                                     viewCell.deliveryMethod.tintColor = UIColor(hexString: kHexMainPinkColor)
-                                                                    viewCell.selectionStyle = .None
-                                                                    viewCell.deliveryMethod.setTitle("order_not_chosen".localized, forSegmentAtIndex: 0)
-                                                                    viewCell.deliveryMethod.setTitle("order_take_away".localized, forSegmentAtIndex: 1)
-                                                                    viewCell.deliveryMethod.setTitle("order_take_inside".localized, forSegmentAtIndex: 2)
-                                                                    viewCell.deliveryMethod.bnd_selectedSegmentIndex.observe({[weak self] index in
+                                                                    viewCell.selectionStyle = .none
+                                                                    viewCell.deliveryMethod.setTitle("order_not_chosen".localized, forSegmentAt: 0)
+                                                                    viewCell.deliveryMethod.setTitle("order_take_away".localized, forSegmentAt: 1)
+                                                                    viewCell.deliveryMethod.setTitle("order_take_inside".localized, forSegmentAt: 2)
+                                                                    
+                                                                    let _ = viewCell.deliveryMethod
+                                                                        .bnd_selectedSegmentIndex
+                                                                        .observe(with: { (event: Event<Int, NoError>) in
                                                                         
-                                                                        self?.serviceId = index
+                                                                        switch event {
+                                                                            
+                                                                        case .next(let index):
+                                                                            
+                                                                            self.serviceId = index
+                                                                            break
+                                                                            
+                                                                            default:
+                                                                            break
+                                                                        }
                                                                     })
                 })
             
             section.initializeCellWithReusableIdentifierOrNibName("NumberOfPersonsCell",
                                                                   item: nil,
-                                                                  itemType: ItemTypeEnum.NumberOfPersons,
+                                                                  itemType: ItemTypeEnum.numberOfPersons,
                                                                   bindingAction: { (cell, item) in
                                                                     
                                                                     let viewCell = cell as! TOrderNumberOfPersons
@@ -321,7 +334,7 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
                                                                     viewCell.title.text = "order_number_of_persons_title".localized
                                                                     viewCell.quantityLabel.text = String(item.userData as! Int)
                                                                     
-                                                                    viewCell.buttonPlus.bnd_tap.observe({
+                                                                    viewCell.buttonPlus.bnd_tap.observe(with: {_ in 
                                                                         
                                                                         var count = item.userData as! Int
                                                                         count += 1
@@ -330,9 +343,9 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
                                                                         
                                                                     }).disposeIn(viewCell.bag)
                                                                     
-                                                                    viewCell.buttonMinus.bnd_tap.observe({
+                                                                    viewCell.buttonMinus.bnd_tap.observe(with: {_ in 
                                                                         
-                                                                        if let count = item.userData as? Int where count > 1 {
+                                                                        if let count = item.userData as? Int , count > 1 {
                                                                             
                                                                             var quantity = count
                                                                             quantity -= 1
@@ -346,7 +359,7 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
             
             section.initializeCellWithReusableIdentifierOrNibName("DetailsCell",
                                                                   item: nil,
-                                                                  itemType: ItemTypeEnum.OrderTime,
+                                                                  itemType: ItemTypeEnum.orderTime,
                                                                   bindingAction: { (cell, item) in
                                                                     
                                                                     let viewCell = cell as! TDetailsTableViewCell
@@ -357,7 +370,7 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
             
             section.initializeCellWithReusableIdentifierOrNibName("OrderDescriptionCell",
                                                                   item: nil,
-                                                                  itemType: ItemTypeEnum.OrderDescription,
+                                                                  itemType: ItemTypeEnum.orderDescription,
                                                                   bindingAction: { (cell, item) in
                                                                     
                                                                     let viewCell = cell as! TOrderDescriptionTableViewCell
@@ -365,10 +378,10 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
                                                                     viewCell.title.text = "order_description_title".localized
                                                                     let layer = viewCell.textView.layer
                                                                     layer.borderWidth = 1
-                                                                    layer.borderColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 0.8).CGColor
+                                                                    layer.borderColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 0.8).cgColor
                                                                     
                                                                     viewCell.textView.tintColor = UIColor(hexString: kHexMainPinkColor)
-                                                                    viewCell.textView.userInteractionEnabled = false
+                                                                    viewCell.textView.isUserInteractionEnabled = false
                                                                     viewCell.textView.delegate = self
                 })
             
@@ -377,11 +390,11 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
         dataSource.sections.append(section)
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
         
-        let item = self.dataSource.sections[indexPath.section].items[indexPath.row]
+        let item = self.dataSource.sections[(indexPath as NSIndexPath).section].items[(indexPath as NSIndexPath).row]
         
         guard item.itemType != nil else {
             
@@ -392,7 +405,7 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
         
         switch type {
             
-        case .PaymentMetod:
+        case .paymentMetod:
             
             if let controller = self.instantiateViewControllerWithIdentifierOrNibName("UserCreditCards")
                 as? TUserCreditCardsTableViewController {
@@ -403,7 +416,7 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
                     
                     self.selectedCardIndex = cardIndex
                     
-                    let viewCell = tableView.cellForRowAtIndexPath(indexPath) as! TPaymentMethodTableViewCell
+                    let viewCell = tableView.cellForRow(at: indexPath) as! TPaymentMethodTableViewCell
                     let card = self.cards![cardIndex]
                     viewCell.details.text = card.mask
                     
@@ -432,7 +445,7 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
             
             break
             
-        case .AddNewCard:
+        case .addNewCard:
             
             if let controller = self.instantiateViewControllerWithIdentifierOrNibName("AddCreditCard") {
                 
@@ -441,32 +454,32 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
             
             break
             
-        case .OrderTime:
+        case .orderTime:
             
-            let components = NSDateComponents()
-            components.setValue(1, forComponent: .Hour)
+            let components = DateComponents()
+            (components as NSDateComponents).setValue(1, forComponent: .hour)
             
-            let expirationDate = NSCalendar.currentCalendar().dateByAddingComponents(components, toDate: NSDate(),
-                                                                                     options: NSCalendarOptions(rawValue: 0))
+            let expirationDate = (Calendar.current as NSCalendar).date(byAdding: components, to: Date(),
+                                                                                     options: NSCalendar.Options(rawValue: 0))
             
-            let viewCell = tableView.cellForRowAtIndexPath(item.indexPath) as! TDetailsTableViewCell
+            let viewCell = tableView.cellForRow(at: item.indexPath as IndexPath) as! TDetailsTableViewCell
             
-            ActionSheetDatePicker.showPickerWithTitle("order_time_title".localized,
-                                                      datePickerMode: .Time,
+            ActionSheetDatePicker.show(withTitle: "order_time_title".localized,
+                                                      datePickerMode: .time,
                                                       selectedDate: self.preparedDate ?? expirationDate,
                                                       minimumDate: expirationDate,
                                                       maximumDate: expirationDate?.endOfDay,
                                                       doneBlock: {[weak self] (picker, selectedDate, view) in
                                                         
-                                                        self?.preparedDate = selectedDate as? NSDate;
+                                                        self?.preparedDate = selectedDate as? Date;
                                                         
                                                         if let date = selectedDate {
                                                             
                                                             viewCell.details.text = date.stringFromFormat("HH:mm")
-                                                            viewCell.details.textColor = UIColor.blackColor()
+                                                            viewCell.details.textColor = UIColor.black
                                                         }
                                                         
-                }, cancelBlock: { picker in
+                }, cancel: { picker in
                     
                     
                 }, origin: self.view.superview)
@@ -504,11 +517,11 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
             //
             //            break
             
-        case .OrderDescription:
+        case .orderDescription:
             
-            let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! TOrderDescriptionTableViewCell
+            let cell = self.tableView.cellForRow(at: indexPath) as! TOrderDescriptionTableViewCell
             cell.textView.becomeFirstResponder()
-            self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Middle, animated: true)
+            self.tableView.scrollToRow(at: indexPath, at: .middle, animated: true)
             
             break
             
@@ -517,7 +530,7 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
         }
     }
     
-    func sendOrder(sender: AnyObject) {
+    func sendOrder(_ sender: AnyObject) {
         
         guard self.cards != nil && self.company != nil else {
             
@@ -546,9 +559,9 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
         
         self.showWaitOverlay()
         
-        let numberOfPersons = self.dataSource.sections.flatMap({ $0.items.filter({ $0.itemType as? ItemTypeEnum == ItemTypeEnum.NumberOfPersons }) }).first
+        let numberOfPersons = self.dataSource.sections.flatMap({ $0.items.filter({ $0.itemType as? ItemTypeEnum == ItemTypeEnum.numberOfPersons }) }).first
         
-        Api.sharedInstance.makeShopOrder(card.id,
+        Api.sharedInstance.makeShopOrder(cardId: card.id,
             items: items,
             addressId: self.company!.id,
             serviceId: self.serviceId,
@@ -560,14 +573,14 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
                 
                 self?.removeAllOverlays()
                 
-                NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: kTargoDidLoadOrdersNotification, object: nil))
+                NotificationCenter.default.post(Notification(name: Notification.Name(rawValue: kTargoDidLoadOrdersNotification), object: nil))
                 
                 if let controller = self?.instantiateViewControllerWithIdentifierOrNibName("OrderStatus") as? TOrderStatusViewController {
                     
                     controller.companyName = self?.company?.companyTitle
                     controller.shopOrder = shopOrder
                     controller.companyImage = self?.companyImage
-                    controller.reason = .AfterOrder
+                    controller.reason = .afterOrder
                     
                     self?.navigationController?.pushViewController(controller, animated: true)
                 }
@@ -576,10 +589,10 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
                 
                 self?.removeAllOverlays()
                 
-                let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .Alert)
-                let action = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+                let action = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                 alert.addAction(action)
-                self?.presentViewController(alert, animated: true, completion: nil)
+                self?.present(alert, animated: true, completion: nil)
                 
         }
     }

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		280234C07102419763E9F91A /* Pods_Targo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EFAD6BD7514B14022B0BD1B /* Pods_Targo.framework */; };
-		D40301741D397F5100B7B610 /* HTTPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40301731D397F5100B7B610 /* HTTPManager.swift */; };
 		D40301761D39839C00B7B610 /* ListTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40301751D39839C00B7B610 /* ListTransform.swift */; };
 		D403017A1D39936A00B7B610 /* TShopGood.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40301791D39936A00B7B610 /* TShopGood.swift */; };
 		D4036A0F1D36CE8200CA8E38 /* TCompany.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4036A0E1D36CE8200CA8E38 /* TCompany.swift */; };
@@ -105,7 +104,6 @@
 		D4EE59651D3AFDE30002022F /* TOrdersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EE59641D3AFDE30002022F /* TOrdersTableViewController.swift */; };
 		D4EE59671D3AFE1E0002022F /* TFeedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EE59661D3AFE1E0002022F /* TFeedTableViewController.swift */; };
 		D4EE59691D3AFEE90002022F /* TCompanyMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EE59681D3AFEE90002022F /* TCompanyMenuTableViewController.swift */; };
-		D4EE596B1D3AFFA60002022F /* AlamofireExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EE596A1D3AFFA60002022F /* AlamofireExtensions.swift */; };
 		D4F2136E1D6E55D000D94B62 /* TBillCompanyNameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F2136D1D6E55D000D94B62 /* TBillCompanyNameTableViewCell.swift */; };
 		D4F213701D6E570100D94B62 /* TBillMenuItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F2136F1D6E570100D94B62 /* TBillMenuItemTableViewCell.swift */; };
 		D4F464D31D40096A009015FC /* TCompanyMenuPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F464D21D40096A009015FC /* TCompanyMenuPage.swift */; };
@@ -134,7 +132,6 @@
 		24123079AD1A2AFA6B2F5FA0 /* Pods-Targo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Targo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Targo/Pods-Targo.release.xcconfig"; sourceTree = "<group>"; };
 		4323934D0920EDEB476CFDE6 /* Pods-Targo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Targo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Targo/Pods-Targo.debug.xcconfig"; sourceTree = "<group>"; };
 		7EFAD6BD7514B14022B0BD1B /* Pods_Targo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Targo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D40301731D397F5100B7B610 /* HTTPManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPManager.swift; sourceTree = "<group>"; };
 		D40301751D39839C00B7B610 /* ListTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTransform.swift; sourceTree = "<group>"; };
 		D40301791D39936A00B7B610 /* TShopGood.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TShopGood.swift; path = Targo/Models/Menu/TShopGood.swift; sourceTree = SOURCE_ROOT; };
 		D4036A0E1D36CE8200CA8E38 /* TCompany.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TCompany.swift; path = Models/Company/TCompany.swift; sourceTree = "<group>"; };
@@ -236,7 +233,6 @@
 		D4EE59641D3AFDE30002022F /* TOrdersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TOrdersTableViewController.swift; sourceTree = "<group>"; };
 		D4EE59661D3AFE1E0002022F /* TFeedTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFeedTableViewController.swift; sourceTree = "<group>"; };
 		D4EE59681D3AFEE90002022F /* TCompanyMenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCompanyMenuTableViewController.swift; sourceTree = "<group>"; };
-		D4EE596A1D3AFFA60002022F /* AlamofireExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlamofireExtensions.swift; sourceTree = "<group>"; };
 		D4F2136D1D6E55D000D94B62 /* TBillCompanyNameTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TBillCompanyNameTableViewCell.swift; sourceTree = "<group>"; };
 		D4F2136F1D6E570100D94B62 /* TBillMenuItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TBillMenuItemTableViewCell.swift; sourceTree = "<group>"; };
 		D4F464D21D40096A009015FC /* TCompanyMenuPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TCompanyMenuPage.swift; path = Targo/Models/Menu/TCompanyMenuPage.swift; sourceTree = SOURCE_ROOT; };
@@ -552,7 +548,6 @@
 				D45AC7121D74E83F001BF90B /* UIImage+ImageEffects.h */,
 				D45AC7131D74E83F001BF90B /* UIImage+ImageEffects.m */,
 				E57C7E891D22B60D00F9A0FC /* Constants.swift */,
-				D40301731D397F5100B7B610 /* HTTPManager.swift */,
 				D40301751D39839C00B7B610 /* ListTransform.swift */,
 				D4B9C1EA1D723D6400BC4571 /* InterOperation.swift */,
 				D45AC70E1D74E6BF001BF90B /* Targo-Bridging-Header.h */,
@@ -643,7 +638,6 @@
 			isa = PBXGroup;
 			children = (
 				D4F84B421D24591300263D1A /* AppExtensions.swift */,
-				D4EE596A1D3AFFA60002022F /* AlamofireExtensions.swift */,
 				E5F457141DA4E8EE00821AD1 /* CompanyAddressExtension.swift */,
 			);
 			name = Extensions;
@@ -870,7 +864,6 @@
 				D4F2136E1D6E55D000D94B62 /* TBillCompanyNameTableViewCell.swift in Sources */,
 				D46DEC771D62582000B4716B /* GenericCollectionSectionItem.swift in Sources */,
 				D4EE59651D3AFDE30002022F /* TOrdersTableViewController.swift in Sources */,
-				D4EE596B1D3AFFA60002022F /* AlamofireExtensions.swift in Sources */,
 				D469B2361D8EAF2600D41DC6 /* TFeedItem.swift in Sources */,
 				D40301761D39839C00B7B610 /* ListTransform.swift in Sources */,
 				D4B81B3C1D4FF22300F9103C /* TBadRequest.swift in Sources */,
@@ -932,7 +925,6 @@
 				D4F6E2A71D560FF20067F9BA /* TCreditCard.swift in Sources */,
 				D4A3920A1D6BBBF2005B2047 /* THistoryOrderItemTableViewCell.swift in Sources */,
 				D4B96F7B1D244DBA00294A4B /* PRemoteServerV1.swift in Sources */,
-				D40301741D397F5100B7B610 /* HTTPManager.swift in Sources */,
 				D4EE59601D3AC98A0002022F /* TCompanyImage.swift in Sources */,
 				D447B6011DA9055C0002B91A /* TSettingsPhoneTableViewCell.swift in Sources */,
 				D41F59CA1D32C6F00075568D /* GenericCollectionSection.swift in Sources */,
@@ -1087,7 +1079,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Targo/Targo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -1113,7 +1105,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Targo/Targo-Bridging-Header.h";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

@@ -1,69 +1,67 @@
-platform :ios, ‘8.4’
+platform :ios, ‘9.3’
 use_frameworks!
+source 'https://github.com/CocoaPods/Specs.git'
 
 target 'Targo' do
 
 #Network
-pod 'Alamofire', '~> 3.4'
+pod 'Alamofire', '~> 4.0'
 
 #PhoneNumbers
-pod 'PhoneNumberKit', '~> 0.8'
+pod 'PhoneNumberKit', '~> 1.0'
 pod 'SHSPhoneComponent'
 
 #Colors
-pod 'DynamicColor', '~> 2.4.0'
+pod 'DynamicColor', '~> 3.1.0'
 
 #JSON
-pod 'ObjectMapper', '~> 1.3'
-pod 'AlamofireObjectMapper', '~> 3.0'
+pod 'ObjectMapper', '~> 2.1'
+
+pod 'AlamofireObjectMapper', '~> 4.0'
 
 #Images
-pod 'AlamofireImage', '~> 2.0'
+pod 'AlamofireImage', '~> 3.1'
 
 #DB
-#pod 'RealmSwift'
-
-pod 'Realm', git: 'https://github.com/realm/realm-cocoa.git', branch: 'master', submodules: true
-pod 'RealmSwift', git: 'https://github.com/realm/realm-cocoa.git', branch: 'master', submodules: true
+pod 'RealmSwift'
 
 #UI
-pod 'SwiftOverlays', '~> 2.0.0'
+pod 'SwiftOverlays', :git => 'https://github.com/peterprokop/SwiftOverlays', :branch => 'swift-3.0'
+
 pod 'SCLAlertView'
 pod 'CircleProgressView', :git => 'https://github.com/CardinalNow/iOS-CircleProgressView.git'
 pod 'ActionSheetPicker-3.0'
 #pod 'BRYXBanner'
 #pod 'Toast-Swift', '~> 2.0.0'
-pod 'LNRSimpleNotifications', :git => 'https://github.com/LISNR/LNRSimpleNotifications.git', :branch => 'swift2.3'
+pod 'LNRSimpleNotifications', :git => 'https://github.com/LISNR/LNRSimpleNotifications.git', :branch => 'swift3'
 
 #Date
 pod 'Timepiece'
 
 #Text
-pod 'SwiftString'
+#pod 'SwiftString'
 
 #Keychain
-pod 'KeychainSwift', '~> 3.0'
+pod 'KeychainSwift', '~> 7.0'
 
 #Events
 pod 'BrightFutures'
-pod 'Bond', '~> 4.0'
+pod 'Bond', '~> 5.0-beta9'
 
 #Loggin
-pod 'Timberjack', '~> 0.0'
 
 #Menu
 #pod 'SideMenu'
 
 #Maps
-source 'https://github.com/CocoaPods/Specs.git'
 pod 'GoogleMaps'
 
-post_install do |installer|
-    installer.pods_project.targets.each do |target|
-        target.build_configurations.each do |config|
-            config.build_settings['SWIFT_VERSION'] = '2.3'
-        end
-    end
-end
+#post_install do |installer|
+#    installer.pods_project.targets.each do |target|
+#        target.build_configurations.each do |config|
+#            config.build_settings['SWIFT_VERSION'] = '3.0'
+#        end
+#    end
+#end
 
 end

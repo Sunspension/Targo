@@ -20,7 +20,7 @@ class TBaseTableViewCell: UITableViewCell {
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
@@ -31,9 +31,9 @@ class TBaseTableViewCell: UITableViewCell {
         self.separator.removeFromSuperlayer()
     }
 
-    func addSeparator(leftMargin: CGFloat = 0, color: UIColor = UIColor.lightGrayColor()) {
+    func addSeparator(_ leftMargin: CGFloat = 0, color: UIColor = UIColor.lightGray) {
         
-        self.separator.backgroundColor = color.CGColor
+        self.separator.backgroundColor = color.cgColor
         self.leftMargin = leftMargin
         self.contentView.layer.addSublayer(self.separator)
     }

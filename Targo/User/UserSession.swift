@@ -16,7 +16,7 @@ class UserSession: Object, Mappable {
     
     dynamic var sid = ""
     
-    required convenience init?(_ map: Map) {
+    required convenience init?(map: Map) {
         
         self.init()
     }

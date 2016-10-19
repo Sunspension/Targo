@@ -13,31 +13,31 @@ import SwiftOverlays
 
 private enum ItemTypeEnum {
     
-    case FistName
+    case fistName
     
-    case LastName
+    case lastName
     
-    case Email
+    case email
     
-    case Phone
+    case phone
     
     var description: String {
         
         switch self {
             
-        case .FistName:
+        case .fistName:
             
             return "settings_user_first_name".localized
             
-        case .LastName:
+        case .lastName:
             
             return "settings_user_last_name".localized
             
-        case .Phone:
+        case .phone:
             
             return "settings_user_phone".localized
             
-        case .Email:
+        case .email:
             
             return "settings_user_email".localized
         }
@@ -75,12 +75,12 @@ class TSettingsTableViewController: UITableViewController, UITextFieldDelegate {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(TSettingsTableViewController.onTapAction))
         self.tableView.addGestureRecognizer(tapGesture)
         
-        self.user = self.realm.objects(User).first
+        self.user = self.realm.objects(User.self).first
         
         let personalDataSection = CollectionSection(title: "settings_personal_data_title".localized)
         self.dataSource.sections.append(personalDataSection)
         
-        let personalItems = [ItemTypeEnum.FistName, ItemTypeEnum.LastName]
+        let personalItems = [ItemTypeEnum.fistName, ItemTypeEnum.lastName]
         
         for item in personalItems {
             
@@ -95,12 +95,12 @@ class TSettingsTableViewController: UITableViewController, UITextFieldDelegate {
         
         contactDataSection.initializeCellWithReusableIdentifierOrNibName("SettingsPhoneCell",
                                                                          item: self.user,
-                                                                         itemType: ItemTypeEnum.Phone,
+                                                                         itemType: ItemTypeEnum.phone,
                                                                          bindingAction: self.binding)
         
         contactDataSection.initializeCellWithReusableIdentifierOrNibName("SettingsCell",
                                                                          item: self.user,
-                                                                         itemType: ItemTypeEnum.Email,
+                                                                         itemType: ItemTypeEnum.email,
                                                                          bindingAction: self.binding)
         
         // Uncomment the following line to preserve selection between presentations
@@ -108,7 +108,7 @@ class TSettingsTableViewController: UITableViewController, UITextFieldDelegate {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "action_save".localized,
-                                                                 style: .Done,
+                                                                 style: .done,
                                                                  target: self,
                                                                  action: #selector(TSettingsTableViewController.saveAction))
         
@@ -120,7 +120,7 @@ class TSettingsTableViewController: UITableViewController, UITextFieldDelegate {
         self.view.endEditing(true)
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         self.view.endEditing(true)
         return true
@@ -134,7 +134,7 @@ class TSettingsTableViewController: UITableViewController, UITextFieldDelegate {
             
             for item in section.items {
                 
-                item.validation?()
+                let _ = item.validation?()
             }
         }
         
@@ -149,7 +149,7 @@ class TSettingsTableViewController: UITableViewController, UITextFieldDelegate {
                 SwiftOverlays.showCenteredWaitOverlay(superview)
             }
             
-            Api.sharedInstance.updateUserInformation(self.user!.id,
+            Api.sharedInstance.updateUserInformation(userId: self.user!.id,
                                                      firstName: user.firstName,
                                                      lastName: user.lastName,
                                                      email: user.email)
@@ -165,10 +165,9 @@ class TSettingsTableViewController: UITableViewController, UITextFieldDelegate {
                         self.realm.add(user, update: true)
                     })
                     
-                    NSNotificationCenter.defaultCenter()
-                        .postNotificationName(kTargoDidUpdateUserProfileNotification, object: nil)
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: kTargoDidUpdateUserProfileNotification), object: nil)
                     
-                    self.navigationController?.popViewControllerAnimated(true)
+                    let _ = self.navigationController?.popViewController(animated: true)
                 })
                 .onFailure(callback: { (error) in
                     
@@ -184,16 +183,16 @@ class TSettingsTableViewController: UITableViewController, UITextFieldDelegate {
         }
         else {
             
-            self.navigationController?.popViewControllerAnimated(true)
+            let _ = self.navigationController?.popViewController(animated: true)
         }
     }
     
     
     //MARK: - Private methods
     
-    private func binding(cell: UITableViewCell, item: CollectionSectionItem) {
+    fileprivate func binding(_ cell: UITableViewCell, item: CollectionSectionItem) {
         
-        cell.selectionStyle = .None
+        cell.selectionStyle = .none
         
         let user = item.item as! User
         
@@ -201,7 +200,7 @@ class TSettingsTableViewController: UITableViewController, UITextFieldDelegate {
         
         switch type {
             
-        case .FistName:
+        case .fistName:
             
             let viewCell = cell as! TSettingsTableViewCell
             viewCell.title.text = type.description
@@ -223,7 +222,7 @@ class TSettingsTableViewController: UITableViewController, UITextFieldDelegate {
             
             break
             
-        case .LastName:
+        case .lastName:
             
             let viewCell = cell as! TSettingsTableViewCell
             viewCell.title.text = type.description
@@ -245,18 +244,18 @@ class TSettingsTableViewController: UITableViewController, UITextFieldDelegate {
             
             break
             
-        case .Phone:
+        case .phone:
             
             let viewCell = cell as! TSettingsPhoneTableViewCell
             viewCell.title.text = type.description
             viewCell.data.text = String(user.phone.characters.dropFirst())
             viewCell.data.formatter.setDefaultOutputPattern(" (###) ### ####")
             viewCell.data.formatter.prefix = "+7"
-            viewCell.data.userInteractionEnabled = false
+            viewCell.data.isUserInteractionEnabled = false
             
             break
             
-        case .Email:
+        case .email:
             
             let viewCell = cell as! TSettingsTableViewCell
             viewCell.title.text = type.description

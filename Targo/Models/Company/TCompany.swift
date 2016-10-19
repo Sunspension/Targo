@@ -36,7 +36,7 @@ class TCompany: Object, Mappable {
     
     dynamic var rating = 0.0
     
-    required convenience init?(_ map: Map) {
+    required convenience init?(map: Map) {
         
         self.init()
     }

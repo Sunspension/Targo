@@ -28,7 +28,7 @@ class TImage: Object, Mappable {
     
     let deletedAt = RealmOptional<Bool>()
     
-    required convenience init?(_ map: Map) {
+    required convenience init?(map: Map) {
         
         self.init()
     }
