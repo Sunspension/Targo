@@ -46,7 +46,7 @@ pod 'KeychainSwift', '~> 7.0'
 
 #Events
 pod 'BrightFutures'
-pod 'Bond', '~> 5.0-beta9'
+pod 'Bond', '~> 5.0-beta10'
 
 #Loggin
 
@@ -56,12 +56,12 @@ pod 'Bond', '~> 5.0-beta9'
 #Maps
 pod 'GoogleMaps'
 
-#post_install do |installer|
-#    installer.pods_project.targets.each do |target|
-#        target.build_configurations.each do |config|
-#            config.build_settings['SWIFT_VERSION'] = '3.0'
-#        end
-#    end
-#end
+post_install do |installer|
+    installer.pods_project.targets.each do |target|
+        target.build_configurations.each do |config|
+            config.build_settings['SWIFT_VERSION'] = '3.0'
+        end
+    end
+end
 
 end

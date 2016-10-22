@@ -41,7 +41,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
     
     var showButtonInfo: Bool = false
     
-    let orderItems = MutableObservableArray<CollectionSectionItem>()
+    let orderItems = MutableObservableArray([CollectionSectionItem]())
 
     var cellHeightDictionary = [IndexPath : CGFloat]()
     
@@ -57,7 +57,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
     
         var goods = Array<(item: TShopGood, count: Int)>()
         
-        for item in self.orderItems {
+        for item in orderItems {
             
             let quantity = item.userData as! Int
             let good = item.item as! TShopGood
@@ -98,13 +98,13 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         
         self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 20, 0)
         
-        self.bag = self.orderItems.observe { event in
+        self.bag = self.orderItems.observeNext(with: { event in
             
             UIView.beginAnimations("buton", context: nil)
             
             UIView.animate(withDuration: 0.2, animations: {
                 
-                if self.orderItems.count == 0 {
+                if event.dataSource.count == 0 {
                     
                     self.buttonMakeOrder.isEnabled = false
                     self.buttonMakeOrder.alpha = 0.5
@@ -117,7 +117,28 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
             })
             
             UIView.commitAnimations()
-        }
+        })
+        
+//        self.bag = self.observableOrderItems.observe { event in
+//            
+//            UIView.beginAnimations("buton", context: nil)
+//            
+//            UIView.animate(withDuration: 0.2, animations: {
+//                
+//                if self.orderItems.count == 0 {
+//                    
+//                    self.buttonMakeOrder.isEnabled = false
+//                    self.buttonMakeOrder.alpha = 0.5
+//                }
+//                else {
+//                    
+//                    self.buttonMakeOrder.isEnabled = true
+//                    self.buttonMakeOrder.alpha = 1
+//                }
+//            })
+//            
+//            UIView.commitAnimations()
+//        }
         
         if showButtonInfo {
             

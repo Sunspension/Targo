@@ -473,7 +473,7 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
                                                         
                                                         self?.preparedDate = selectedDate as? Date;
                                                         
-                                                        if let date = selectedDate {
+                                                        if let date = selectedDate as? Date {
                                                             
                                                             viewCell.details.text = date.stringFromFormat("HH:mm")
                                                             viewCell.details.textColor = UIColor.black

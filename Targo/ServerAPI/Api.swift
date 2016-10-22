@@ -31,7 +31,14 @@ struct Api {
             
             .responseJSON { response in
                 
-                print(response.result.value)
+                if let error = response.result.error {
+                    
+                    print("Response error: \(error)")
+                }
+                else {
+                    
+                    print("Response result: \(response.result.value)")
+                }
             }
             .responseObject(mapToObject: TBadRequest(), completionHandler: { (response: DataResponse<TBadRequest>) in
                 
@@ -40,7 +47,7 @@ struct Api {
             .validate()
             .responseObject(keyPath: "data", completionHandler: { (response: DataResponse<TAuthorizationResponse>) in
                 
-                guard let _ = response.result.value else {
+                guard response.result.error == nil else {
                     
                     p.failure(UserRegistrationError.uknownError(description: response.result.error!.localizedDescription))
                     return
@@ -130,12 +137,19 @@ struct Api {
                 
                 .responseJSON { response in
                     
-                    print(response.result.value)
+                    if let error = response.result.error {
+                        
+                        print("Response error: \(error)")
+                    }
+                    else {
+                        
+                        print("Response result: \(response.result.value)")
+                    }
                 }
                 .validate()
                 .responseObject(keyPath: "data", completionHandler: { (response: DataResponse<UserSession>) in
                     
-                    guard let _ = response.result.error else {
+                    guard response.result.error == nil else {
                         
                         p.failure(.error(error: response.result.error!))
                         return
@@ -228,12 +242,19 @@ struct Api {
             
             .responseJSON { response in
                 
-                print(response.result.value)
+                if let error = response.result.error {
+                    
+                    print("Response error: \(error)")
+                }
+                else {
+                    
+                    print("Response result: \(response.result.value)")
+                }
             }
             .validate()
             .responseObject(keyPath: "data") { (response: DataResponse<UserSession>) in
                 
-                guard let _ = response.result.error else {
+                guard response.result.error == nil else {
                     
                     p.failure(.error(error: response.result.error!))
                     return
@@ -285,11 +306,18 @@ struct Api {
                 
                 .responseJSON { response in
                     
-                    print(response.result.value)
+                    if let error = response.result.error {
+                        
+                        print("Response error: \(error)")
+                    }
+                    else {
+                        
+                        print("Response result: \(response.result.value)")
+                    }
                 }
                 .responseObject(keyPath: "data") { (response: DataResponse<User>) in
                     
-                    guard let _ = response.result.value else {
+                    guard response.result.error == nil else {
                         
                         p.failure(.error(error: response.result.error!))
                         return
@@ -323,11 +351,18 @@ struct Api {
             
             .responseJSON { response in
                 
-                print(response.result.value)
+                if let error = response.result.error {
+                    
+                    print("Response error: \(error)")
+                }
+                else {
+                    
+                    print("Response result: \(response.result.value)")
+                }
             }
             .responseObject(keyPath: "data") { (response: DataResponse<TCompanyAddressesPage>) in
                 
-                guard let _ = response.result.value else {
+                guard response.result.error == nil else {
                     
                     p.failure(.error(error: response.result.error!))
                     return
@@ -350,11 +385,18 @@ struct Api {
             
             .responseJSON { response in
                 
-                print(response.result.value)
+                if let error = response.result.error {
+                    
+                    print("Response error: \(error)")
+                }
+                else {
+                    
+                    print("Response result: \(response.result.value)")
+                }
             }
             .responseObject(keyPath: "data") { (response: DataResponse<TCompanyMenuPage>) in
                 
-                guard let _ = response.result.value else {
+                guard response.result.error == nil else {
                     
                     p.failure(.error(error: response.result.error!))
                     return
@@ -375,11 +417,18 @@ struct Api {
             
             .responseJSON { response in
                 
-                print(response.result.value)
+                if let error = response.result.error {
+                    
+                    print("Response error: \(error)")
+                }
+                else {
+                    
+                    print("Response result: \(response.result.value)")
+                }
             }
             .responseObject(keyPath: "data") { (response: DataResponse<TTestOrder>) in
                 
-                guard let _ = response.result.value else {
+                guard response.result.error == nil else {
                     
                     p.failure(.error(error: response.result.error!))
                     return
@@ -399,11 +448,18 @@ struct Api {
             
             .responseJSON { response in
                 
-                print(response.result.value)
+                if let error = response.result.error {
+                    
+                    print("Response error: \(error)")
+                }
+                else {
+                    
+                    print("Response result: \(response.result.value)")
+                }
             }
             .responseObject(keyPath: "data") { (response: DataResponse<TTestOrder>) in
                 
-                guard let _ = response.result.value else {
+                guard response.result.error == nil else {
                     
                     p.failure(.error(error: response.result.error!))
                     return
@@ -423,11 +479,18 @@ struct Api {
             
             .responseJSON { response in
                 
-                print(response.result.value)
+                if let error = response.result.error {
+                    
+                    print("Response error: \(error)")
+                }
+                else {
+                    
+                    print("Response result: \(response.result.value)")
+                }
             }
             .responseArray(keyPath: "data.card") { (response: DataResponse<[TCreditCard]>) in
                 
-                guard let _ = response.result.value else {
+                guard response.result.error == nil else {
                     
                     p.failure(.error(error: response.result.error!))
                     return
@@ -459,7 +522,14 @@ struct Api {
             
             .responseJSON { response in
                 
-                print(response.result.value)
+                if let error = response.result.error {
+                    
+                    print("Response error: \(error)")
+                }
+                else {
+                    
+                    print("Response result: \(response.result.value)")
+                }
                 
 //                let request = String(data: response.request!.HTTPBody!, encoding: String.Encoding.utf8)
 //
@@ -467,7 +537,7 @@ struct Api {
                 
             }.responseObject(keyPath: "data") { (response: DataResponse<TShopOrder>) in
                 
-                guard let _ = response.result.value else {
+                guard response.result.error == nil else {
                     
                     p.failure(.error(error: response.result.error!))
                     return
@@ -494,11 +564,18 @@ struct Api {
             
             .responseJSON { response in
                 
-                print(response.result.value)
+                if let error = response.result.error {
+                    
+                    print("Response error: \(error)")
+                }
+                else {
+                    
+                    print("Response result: \(response.result.value)")
+                }
                 
             }.responseObject(keyPath: "data") { (response: DataResponse<TShopOrder>) in
                 
-                guard let _ = response.result.value else {
+                guard response.result.error == nil else {
                     
                     p.failure(.error(error: response.result.error!))
                     return
@@ -525,11 +602,18 @@ struct Api {
             
             .responseJSON { response in
                 
-                print(response.result.value)
+                if let error = response.result.error {
+                    
+                    print("Response error: \(error)")
+                }
+                else {
+                    
+                    print("Response result: \(response.result.value)")
+                }
                 
             }.responseObject(keyPath: "data") { (response: DataResponse<TCompany>) in
                 
-                guard let _ = response.result.value else {
+                guard response.result.error == nil else {
                     
                     p.failure(.error(error: response.result.error!))
                     return
@@ -549,11 +633,18 @@ struct Api {
             
             .responseJSON { response in
                 
-                print(response.result.value)
+                if let error = response.result.error {
+                    
+                    print("Response error: \(error)")
+                }
+                else {
+                    
+                    print("Response result: \(response.result.value)")
+                }
                 
             }.responseArray(keyPath: "data.company") { (response: DataResponse<[TCompany]>) in
                 
-                guard let _ = response.result.value else {
+                guard response.result.error == nil else {
                     
                     p.failure(.error(error: response.result.error!))
                     return
@@ -574,11 +665,18 @@ struct Api {
             
             .responseJSON { response in
                 
-                print(response.result.value)
+                if let error = response.result.error {
+                    
+                    print("Response error: \(error)")
+                }
+                else {
+                    
+                    print("Response result: \(response.result.value)")
+                }
                 
             }.responseObject(keyPath: "data.image") { (response: DataResponse<TImage>) in
                 
-                guard let _ = response.result.value else {
+                guard response.result.error == nil else {
                     
                     p.failure(.error(error: response.result.error!))
                     return
@@ -598,11 +696,18 @@ struct Api {
             
             .responseJSON { response in
             
-                print(response.result.value)
+                if let error = response.result.error {
+                    
+                    print("Response error: \(error)")
+                }
+                else {
+                    
+                    print("Response result: \(response.result.value)")
+                }
                 
             }.responseArray(keyPath: "data.image") { (response: DataResponse<[TImage]>) in
                 
-                guard let _ = response.result.value else {
+                guard response.result.error == nil else {
                     
                     p.failure(.error(error: response.result.error!))
                     return
@@ -622,11 +727,18 @@ struct Api {
             
             .responseJSON { response in
             
-                print(response.result.value)
+                if let error = response.result.error {
+                    
+                    print("Response error: \(error)")
+                }
+                else {
+                    
+                    print("Response result: \(response.result.value)")
+                }
             
             }.responseArray(keyPath: "data.shop-order") { (response: DataResponse<[TShopOrder]>) in
                 
-                guard let _ = response.result.value else {
+                guard response.result.error == nil else {
                     
                     p.failure(.error(error: response.result.error!))
                     return
@@ -646,11 +758,18 @@ struct Api {
             
             .responseJSON { response in
                 
-                print(response.result.value)
+                if let error = response.result.error {
+                    
+                    print("Response error: \(error)")
+                }
+                else {
+                    
+                    print("Response result: \(response.result.value)")
+                }
                 
             }.responseArray(keyPath: "data.shop-order") { (response: DataResponse<[TShopOrder]>) in
                 
-                guard let _ = response.result.value else {
+                guard response.result.error == nil else {
                     
                     p.failure(.error(error: response.result.error!))
                     return
@@ -670,11 +789,18 @@ struct Api {
             
             .responseJSON { response in
             
-                print(response.result.value)
+                if let error = response.result.error {
+                    
+                    print("Response error: \(error)")
+                }
+                else {
+                    
+                    print("Response result: \(response.result.value)")
+                }
                 
             }.responseObject(keyPath: "data") { (response: DataResponse<TShopOrder>) in
                 
-                guard let _ = response.result.value else {
+                guard response.result.error == nil else {
                     
                     p.failure(.error(error: response.result.error!))
                     return
@@ -701,11 +827,18 @@ struct Api {
             
             .responseJSON { response in
             
-                print(response.result.value)
+                if let error = response.result.error {
+                    
+                    print("Response error: \(error)")
+                }
+                else {
+                    
+                    print("Response result: \(response.result.value)")
+                }
             }
             .responseObject(keyPath: "data") { (response: DataResponse<TFeedPage>) in
              
-                guard let _ = response.result.value else {
+                guard response.result.error == nil else {
                     
                     p.failure(.error(error: response.result.error!))
                     return
@@ -725,11 +858,18 @@ struct Api {
             
             .responseJSON { response in
             
-                print(response.result.value)
+                if let error = response.result.error {
+                    
+                    print("Response error: \(error)")
+                }
+                else {
+                    
+                    print("Response result: \(response.result.value)")
+                }
             }
             .responseObject { (response: DataResponse<TAddRemoveBookmarkResponse>) in
                 
-                guard let _ = response.result.value else {
+                guard response.result.error == nil else {
                     
                     p.failure(.error(error: response.result.error!))
                     return
@@ -749,11 +889,18 @@ struct Api {
             
             .responseJSON { response in
                 
-                print(response.result.value)
+                if let error = response.result.error {
+                    
+                    print("Response error: \(error)")
+                }
+                else {
+                    
+                    print("Response result: \(response.result.value)")
+                }
             }
             .responseObject { (response: DataResponse<TAddRemoveBookmarkResponse>) in
                 
-                guard let _ = response.result.value else {
+                guard response.result.error == nil else {
                     
                     p.failure(.error(error: response.result.error!))
                     return
@@ -773,11 +920,18 @@ struct Api {
             
             .responseJSON { response in
                 
-                print(response.result.value)
+                if let error = response.result.error {
+                    
+                    print("Response error: \(error)")
+                }
+                else {
+                    
+                    print("Response result: \(response.result.value)")
+                }
             }
             .responseObject(keyPath: "data") { (response: DataResponse<TCompanyAddressesPage>) in
                 
-                guard let _ = response.result.value else {
+                guard response.result.error == nil else {
                     
                     p.failure(.error(error: response.result.error!))
                     return
@@ -814,7 +968,7 @@ struct Api {
                     }
                     .responseObject(keyPath: "data") { (response: DataResponse<TImageUploadResponse>) in
                         
-                        guard let _ = response.result.value else {
+                        guard response.result.error == nil else {
                             
                             p.failure(.error(error: response.result.error!))
                             return
@@ -841,11 +995,18 @@ struct Api {
             
             .responseJSON { response in
                 
-                print(response.result.value)
+                if let error = response.result.error {
+                    
+                    print("Response error: \(error)")
+                }
+                else {
+                    
+                    print("Response result: \(response.result.value)")
+                }
             }
             .responseObject(keyPath: "data") { (response: DataResponse<User>) in
                 
-                guard let _ = response.result.value else {
+                guard response.result.error == nil else {
                     
                     p.failure(.error(error: response.result.error!))
                     return
@@ -865,11 +1026,18 @@ struct Api {
             
             .responseJSON { response in
                 
-                print(response.result.value)
+                if let error = response.result.error {
+                    
+                    print("Response error: \(error)")
+                }
+                else {
+                    
+                    print("Response result: \(response.result.value)")
+                }
             }
             .responseObject(keyPath: "data") { (response: DataResponse<User>) in
                 
-                guard let _ = response.result.value else {
+                guard response.result.error == nil else {
                     
                     p.failure(.error(error: response.result.error!))
                     return
@@ -889,11 +1057,18 @@ struct Api {
             
             .responseJSON { response in
                 
-                print(response.result.value)
+                if let error = response.result.error {
+                    
+                    print("Response error: \(error)")
+                }
+                else {
+                    
+                    print("Response result: \(response.result.value)")
+                }
             }
             .responseObject(keyPath: "data") { (response: DataResponse<TShopOrder>) in
                 
-                guard let _ = response.result.value else {
+                guard response.result.error == nil else {
                     
                     p.failure(.error(error: response.result.error!))
                     return
