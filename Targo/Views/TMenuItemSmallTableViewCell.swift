@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Bond
+import ReactiveKit
 
 class TMenuItemSmallTableViewCell: TBaseTableViewCell {
 
@@ -18,11 +20,20 @@ class TMenuItemSmallTableViewCell: TBaseTableViewCell {
     
     @IBOutlet weak var buttonCheck: UIButton!
     
+    var bag = DisposeBag()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        
         // Initialization code
     }
+    
+    override func prepareForReuse() {
+        
+        bag.dispose()
+    }
 
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

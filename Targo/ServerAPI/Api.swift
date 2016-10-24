@@ -42,9 +42,12 @@ struct Api {
             }
             .responseObject(mapToObject: TBadRequest(), completionHandler: { (response: DataResponse<TBadRequest>) in
                 
-                
+                if let error = response.result.error {
+                    
+                    print("Response error: \(error)")
+                }
             })
-            .validate()
+            .validate(self.validator)
             .responseObject(keyPath: "data", completionHandler: { (response: DataResponse<TAuthorizationResponse>) in
                 
                 guard response.result.error == nil else {
@@ -1078,5 +1081,27 @@ struct Api {
         }
         
         return p.future
+    }
+    
+    fileprivate func validator(_ validation: (URLRequest?, HTTPURLResponse, Data?)) -> Request.ValidationResult {
+        
+        if let data = validation.2 {
+            
+            do {
+                
+                let json = try JSONSerialization.jsonObject(with: data, options: []) as! [String : Any]
+                
+                guard json["user_id"] != nil else {
+                    
+                    return Request.ValidationResult.failure(TargoError.unAuthorizedRequest)
+                }
+            }
+            catch {
+                
+                return Request.ValidationResult.failure(TargoError.dataSerializationFailed(failureReason: "Serializaation data to JSON failed"))
+            }
+        }
+        
+        return .success
     }
 }

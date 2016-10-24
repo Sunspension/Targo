@@ -40,7 +40,6 @@ class TMenuItemFullTableViewCell: TBaseTableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        buttonCheck.tintColor = UIColor(hexString: kHexMainPinkColor)
         buttonMinus.imageView?.contentMode = .scaleAspectFit
         buttonPlus.imageView?.contentMode = .scaleAspectFit
         buttonMore.setTitleColor(UIColor(hexString: kHexMainPinkColor), for: .normal)

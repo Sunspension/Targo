@@ -10,6 +10,8 @@ enum TargoError: Error {
 
     static let domain = "com.targo.error";
 
+    case unAuthorizedRequest
+    
     case error(error: Error)
     
     case dataSerializationFailed(failureReason: String)
@@ -39,6 +41,16 @@ enum TargoError: Error {
     case undefinedError(message: String)
 
     case shopOrderError
+    
+    case toManyAuthorizationCodeRequest
+    
+    case blankPhoneNumber
+    
+    case blankDeviceType
+    
+    case blankDeviceToken
+    
+    case wrongCode
     
     
     var message: String {
@@ -97,3 +109,48 @@ enum TargoError: Error {
     }
 }
 
+//enum UserRegistrationErrort: TargoError {
+//    
+//    case uknownError(description: String)
+//    
+//    case toManyAuthorizationCodeRequest
+//    
+//    case blankPhoneNumber
+//    
+//    case blankDeviceType
+//    
+//    case blankDeviceToken
+//    
+//    case wrongCode
+//    
+//    
+//    var message: String {
+//        
+//        switch self {
+//            
+//        case .uknownError(let description):
+//            
+//            return description
+//            
+//        case .toManyAuthorizationCodeRequest:
+//            
+//            return "authorization_to_many_code_request".localized
+//            
+//        case .blankPhoneNumber:
+//            
+//            return "authorization_blank_phone".localized
+//            
+//        case .blankDeviceType:
+//            
+//            return "authorization_blank_device_type".localized
+//            
+//        case .blankDeviceToken:
+//            
+//            return "authorization_blank_device_token".localized
+//            
+//        case .wrongCode:
+//            
+//            return "authorization_uknown_code".localized
+//        }
+//    }
+//}

@@ -18,6 +18,13 @@ private enum SectionTypeEnum: Int {
     case companyInfo = 001
 }
 
+private struct MenuItemState {
+    
+    var checked: Bool = false
+    
+    var quantity: Int = 0
+}
+
 
 class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
 
@@ -59,7 +66,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         
         for item in orderItems {
             
-            let quantity = item.userData as! Int
+            let quantity = (item.userData as! MenuItemState).quantity
             let good = item.item as! TShopGood
             
             goods.append((item: good, count: quantity))
@@ -249,7 +256,14 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
                                                                                     self.loadCompanyMenu()
                                                                                 }
                                                                                 
+                                                                                cell.layoutIfNeeded()
+                                                                                
                                                                                 if item.swappable {
+                                                                                    
+                                                                                    if item.userData == nil {
+                                                                                        
+                                                                                        item.userData = MenuItemState()
+                                                                                    }
                                                                                     
                                                                                     if !item.selected {
                                                                                         
@@ -261,13 +275,90 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
                                                                                         viewCell.goodDescription.text = itemGood.goodDescription
                                                                                         viewCell.price.text = String(itemGood.price) + " \u{20BD}"
                                                                                         viewCell.selectionStyle = .none
+                                                                                        
+                                                                                        let checked = (item.userData as! MenuItemState).checked
+                                                                                        viewCell.buttonCheck.tintColor = checked ?
+                                                                                            UIColor(hexString: kHexMainPinkColor) : UIColor.lightGray
+                                                                                        
+                                                                                        viewCell.buttonCheck.bnd_tap.observe(with: { _ in
+                                                                                            
+                                                                                            var indices = [IndexPath]()
+                                                                                            
+                                                                                            var itemState = item.userData as! MenuItemState
+                                                                                            itemState.checked = !itemState.checked
+                                                                                            
+                                                                                            indices.append(item.indexPath)
+                                                                                            
+                                                                                            if itemState.checked {
+                                                                                                
+                                                                                                itemState.quantity = 1
+                                                                                                self.orderItems.append(item)
+                                                                                                
+                                                                                                if !item.selected {
+                                                                                                    
+                                                                                                    item.selected = true
+                                                                                                    
+                                                                                                    for section in self.dataSource.sections {
+                                                                                                        
+                                                                                                        for other in section.items {
+                                                                                                            
+                                                                                                            if other != item && other.selected == true {
+                                                                                                                
+                                                                                                                other.selected = false
+                                                                                                                indices.append(other.indexPath)
+                                                                                                            }
+                                                                                                        }
+                                                                                                    }
+                                                                                                }
+                                                                                            }
+                                                                                            else {
+                                                                                                
+                                                                                                if let index = self.orderItems.index(of: item) {
+                                                                                                
+                                                                                                    itemState.quantity = 0
+                                                                                                    self.orderItems.remove(at: index)
+                                                                                                }
+                                                                                            }
+                                                                                            
+                                                                                            item.userData = itemState
+                                                                                            
+                                                                                            self.tableView.reloadRows(at: indices, with: .fade)
+                                                                                            
+                                                                                        }).disposeIn(viewCell.bag)
                                                                                     }
                                                                                     else {
                                                                                         
                                                                                         let itemGood = item.item as! TShopGood
                                                                                         let viewCell = cell as! TMenuItemFullTableViewCell
                                                                                         
-                                                                                        viewCell.layoutIfNeeded()
+                                                                                        let checked = (item.userData as! MenuItemState).checked
+                                                                                        viewCell.buttonCheck.tintColor = checked ?
+                                                                                            UIColor(hexString: kHexMainPinkColor) : UIColor.lightGray
+                                                                                        
+                                                                                        viewCell.buttonCheck.bnd_tap.observe(with: { _ in
+                                                                                            
+                                                                                            var itemState = item.userData as! MenuItemState
+                                                                                            itemState.checked = !itemState.checked
+                                                                                            
+                                                                                            if itemState.checked {
+                                                                                                
+                                                                                                itemState.quantity = 1
+                                                                                                self.orderItems.append(item)
+                                                                                            }
+                                                                                            else {
+                                                                                                
+                                                                                                if let index = self.orderItems.index(of: item) {
+                                                                                                    
+                                                                                                    itemState.quantity = 0
+                                                                                                    self.orderItems.remove(at: index)
+                                                                                                }
+                                                                                            }
+                                                                                            
+                                                                                            item.userData = itemState
+                                                                                            
+                                                                                            self.tableView.reloadRows(at: [indexPath], with: .fade)
+                                                                                            
+                                                                                        }).disposeIn(viewCell.bag)
                                                                                         
                                                                                         viewCell.buttonMore.setTitle("menu_more_ddetails".localized, for: UIControlState())
                                                                                         viewCell.quantityTitle.text = "menu_quantity".localized
@@ -278,30 +369,46 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
                                                                                         viewCell.price.text = String(itemGood.price) + " \u{20BD}"
                                                                                         viewCell.selectionStyle = .none
                                                                                         
-                                                                                        if item.userData == nil {
-                                                                                            
-                                                                                            item.userData = 1
-                                                                                        }
+                                                                                        let quantity = (item.userData as! MenuItemState).quantity
                                                                                         
-                                                                                        viewCell.quantity.text = String(item.userData as! Int)
+                                                                                        viewCell.quantity.text = String(quantity)
                                                                                         
                                                                                         viewCell.buttonPlus.bnd_tap.observe(with: {_ in
+                                                                                        
+                                                                                            var itemState = item.userData as! MenuItemState
+                                                                                            itemState.quantity += 1
                                                                                             
-                                                                                            var count = item.userData as! Int
-                                                                                            count += 1
-                                                                                            item.userData = count
-                                                                                            viewCell.quantity.text = String(count)
+                                                                                            if itemState.quantity == 1 {
+                                                                                                
+                                                                                                viewCell.buttonCheck.tintColor =
+                                                                                                    UIColor(hexString: kHexMainPinkColor)
+                                                                                                self.orderItems.append(item)
+                                                                                            }
+                                                                                            
+                                                                                            item.userData = itemState
+                                                                                            viewCell.quantity.text = String(itemState.quantity)
                                                                                             
                                                                                         }).disposeIn(viewCell.bag)
                                                                                         
                                                                                         viewCell.buttonMinus.bnd_tap.observe(with: {_ in 
                                                                                             
-                                                                                            if let count = item.userData as? Int , count > 1 {
+                                                                                            var itemState = item.userData as! MenuItemState
+                                                                                            
+                                                                                            if itemState.quantity > 0 {
+                                                                                            
+                                                                                                itemState.quantity -= 1
                                                                                                 
-                                                                                                var quantity = count
-                                                                                                quantity -= 1
-                                                                                                item.userData = quantity
-                                                                                                viewCell.quantity.text = String(quantity)
+                                                                                                if itemState.quantity == 0 {
+                                                                                                    
+                                                                                                    if let index = self.orderItems.index(of: item) {
+                                                                                                        
+                                                                                                        viewCell.buttonCheck.tintColor = UIColor.lightGray
+                                                                                                        self.orderItems.remove(at: index)
+                                                                                                    }
+                                                                                                }
+                                                                                                
+                                                                                                item.userData = itemState
+                                                                                                viewCell.quantity.text = String(itemState.quantity)
                                                                                             }
                                                                                             
                                                                                         }).disposeIn(viewCell.bag)
@@ -427,34 +534,38 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if (indexPath as NSIndexPath).section == 0 {
+        if indexPath.section == 0 {
             
             return
         }
         
-        let section = self.dataSource.sections[(indexPath as NSIndexPath).section]
+        let section = self.dataSource.sections[indexPath.section]
         
         if section.sectionType == nil {
             
             return
         }
         
-        let item = section.items[(indexPath as NSIndexPath).row]
+        var indices = [IndexPath]()
+        
+        let item = section.items[indexPath.row]
         item.selected = !item.selected
         
-        if item.selected {
+        indices.append(item.indexPath)
+        
+        for section in self.dataSource.sections {
             
-            self.orderItems.append(item)
-        }
-        else {
-            
-            if let index = self.orderItems.index(of: item) {
+            for other in section.items {
                 
-                self.orderItems.remove(at: index)
+                if other != item  && other.selected == true {
+                    
+                    other.selected = false
+                    indices.append(other.indexPath)
+                }
             }
         }
-
-        tableView.reloadRows(at: [indexPath], with: .fade)
+        
+        tableView.reloadRows(at: indices, with: .fade)
     }
     
     
