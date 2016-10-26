@@ -47,7 +47,7 @@ struct Api {
                     print("Response error: \(error)")
                 }
             })
-            .validate(self.validator)
+            .validate()
             .responseObject(keyPath: "data", completionHandler: { (response: DataResponse<TAuthorizationResponse>) in
                 
                 guard response.result.error == nil else {
@@ -1095,6 +1095,8 @@ struct Api {
                     
                     return Request.ValidationResult.failure(TargoError.unAuthorizedRequest)
                 }
+                
+                return .success
             }
             catch {
                 
