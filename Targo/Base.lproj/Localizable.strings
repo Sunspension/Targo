@@ -119,7 +119,9 @@
 
 "order_description_title" = "Order description";
 
-"order_make_order_button_title" = "Make\norder";
+"order_make_order_button_title" = "Make order";
+
+"order_make_order_button_title_new_line" = "Make \norder";
 
 "order_number_of_persons_title" = "Number of persons";
 

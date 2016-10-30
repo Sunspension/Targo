@@ -38,7 +38,7 @@ class CollectionSection: NSObject {
         self.items.append(item)
     }
     
-    func initializeCellWithReusableIdentifierOrNibName(_ identifierOrNibName: String,
+    func initializeCellWithReusableIdentifierOrNibName(identifier identifierOrNibName: String,
                                                        item: Any?,
                                                        itemType: Any? = nil,
                                                        bindingAction: @escaping (_ cell:UITableViewCell, _ item: CollectionSectionItem) -> Void) {
@@ -49,8 +49,8 @@ class CollectionSection: NSObject {
         self.items.append(item)
     }
     
-    func initializeSwappableCellWithReusableIdentifierOrNibName(_ firstIdentifierOrNibName: String,
-                                                                secondIdentifierOrNibName: String,
+    func initializeSwappableCellWithReusableIdentifierOrNibName(firstIdentifier firstIdentifierOrNibName: String,
+                                                                secondIdentifier secondIdentifierOrNibName: String,
                                                                 item: Any?,
                                                                 itemType: Any? = nil,
                                                                 bindingAction: @escaping (_ cell:UITableViewCell, _ item: CollectionSectionItem) -> Void) {

@@ -33,7 +33,7 @@ class TOrderBillTableViewController: UITableViewController {
         
         let section = CollectionSection()
         
-        section.initializeCellWithReusableIdentifierOrNibName("BillCompanyNameCell",
+        section.initializeCellWithReusableIdentifierOrNibName(identifier: "BillCompanyNameCell",
                                                               item: self.shopOrder) { (cell, item) in
                                                                 
                                                                 let viewCell = cell as! TBillCompanyNameTableViewCell
@@ -60,7 +60,7 @@ class TOrderBillTableViewController: UITableViewController {
             for item in order.items {
                 
                 totalPrice += item.count * item.price
-                section.initializeCellWithReusableIdentifierOrNibName("BillMenuItemCell",
+                section.initializeCellWithReusableIdentifierOrNibName(identifier: "BillMenuItemCell",
                                                                       item: item) { (cell, item) in
                                                                         
                                                                         let viewCell = cell as! TBillMenuItemTableViewCell
@@ -73,7 +73,7 @@ class TOrderBillTableViewController: UITableViewController {
             }
         }
         
-        section.initializeCellWithReusableIdentifierOrNibName("BillCompanyNameCell",
+        section.initializeCellWithReusableIdentifierOrNibName(identifier: "BillCompanyNameCell",
                                                               item: nil, itemType: 1) { (cell, item) in
                                                                 
                                                                 let viewCell = cell as! TBillCompanyNameTableViewCell

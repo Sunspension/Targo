@@ -82,7 +82,7 @@ class TUserCreditCardsTableViewController: UITableViewController {
         
         for card in self.cards! {
             
-            section.initializeCellWithReusableIdentifierOrNibName("UserCardCell",
+            section.initializeCellWithReusableIdentifierOrNibName(identifier: "UserCardCell",
                                                                   item: card,
                                                                   bindingAction: { (cell, item) in
                                                                     
@@ -112,7 +112,7 @@ class TUserCreditCardsTableViewController: UITableViewController {
             })
         }
         
-        section.initializeCellWithReusableIdentifierOrNibName("UserCardCell",
+        section.initializeCellWithReusableIdentifierOrNibName(identifier: "UserCardCell",
                                                               item: nil,
                                                               itemType: 1,
                                                               bindingAction: { (cell, item) in

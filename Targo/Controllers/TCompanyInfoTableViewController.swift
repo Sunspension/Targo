@@ -137,7 +137,7 @@ class TCompanyInfoTableViewController: UITableViewController {
                 button?.isHidden = false
                 button?.addTarget(self, action: #selector(TCompanyInfoTableViewController.openCompanyMenu),
                                  for: .touchUpInside)
-                button?.setTitle("order_make_order_button_title".localized, for: UIControlState())
+                button?.setTitle("order_make_order_button_title_new_line".localized, for: UIControlState())
                 
                 return header
             }
@@ -150,18 +150,17 @@ class TCompanyInfoTableViewController: UITableViewController {
             
             if let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: self.companyContactsIdentifier) as? TCompanyInfoContactsHeader {
                 
-                header.buttonPhone.setTitle(self.company!.companyPhone, for: UIControlState())
-                header.buttonPhone.alignImageAndTitleVertically()
+//                header.buttonPhone.setTitle(self.company!.companyPhone, for: UIControlState())
+//                header.buttonPhone.alignImageAndTitleVertically()
                 header.buttonPhone.addTarget(self, action: #selector(TCompanyInfoTableViewController.makeCall), for: .touchUpInside)
                 
-                header.buttonLocation.setTitle(self.company?.title, for: UIControlState())
-                header.buttonLocation.alignImageAndTitleVertically()
+//                header.buttonLocation.setTitle(self.company?.title, for: UIControlState())
+//                header.buttonLocation.alignImageAndTitleVertically()
                 header.buttonLocation.addTarget(self, action: #selector(TCompanyInfoTableViewController.openMapAction), for: .touchUpInside)
                 
-                header.buttonLink.setTitle(!self.company!.companySite.isEmpty ? self.company!.companySite : "www.google.com", for: UIControlState())
-                header.buttonLink.alignImageAndTitleVertically()
+//                header.buttonLink.setTitle(!self.company!.companySite.isEmpty ? self.company!.companySite : "www.google.com", for: UIControlState())
+//                header.buttonLink.alignImageAndTitleVertically()
                 header.buttonLink.addTarget(self, action: #selector(TCompanyInfoTableViewController.openURL), for: .touchUpInside)
-                
                 header.background.backgroundColor = UIColor(hexString: kHexMainPinkColor)
                 return header
             }
@@ -185,7 +184,7 @@ class TCompanyInfoTableViewController: UITableViewController {
             
         case 2:
             
-            return 80
+            return 60
             
         default:
              return 0.01
@@ -321,7 +320,7 @@ class TCompanyInfoTableViewController: UITableViewController {
         let section = CollectionSection()
         section.sectionType = InfoSectionEnum.companyImage
         
-        section.initializeCellWithReusableIdentifierOrNibName("CompanyImageMenu", item: self.companyImage) { (cell, item) in
+        section.initializeCellWithReusableIdentifierOrNibName(identifier: "CompanyImageMenu", item: self.companyImage) { (cell, item) in
             
             let viewCell = cell as! TCompanyImageMenuTableViewCell
             
@@ -343,6 +342,8 @@ class TCompanyInfoTableViewController: UITableViewController {
                 }
             }
             
+            viewCell.point.backgroundColor = UIColor.green
+            
             viewCell.selectionStyle = .none
         }
         
@@ -358,7 +359,7 @@ class TCompanyInfoTableViewController: UITableViewController {
             
             let day = calendar.weekdaySymbols[weekDay]
             
-            workingHoursSection.initializeCellWithReusableIdentifierOrNibName("WorkingHoursCell",
+            workingHoursSection.initializeCellWithReusableIdentifierOrNibName(identifier: "WorkingHoursCell",
                                                                               item: day,
                                                                               bindingAction: { (cell, item) in
                                                                                 
@@ -379,7 +380,7 @@ class TCompanyInfoTableViewController: UITableViewController {
         let aboutSection = CollectionSection()
         aboutSection.sectionType = InfoSectionEnum.additionalInfo
         
-        aboutSection.initializeCellWithReusableIdentifierOrNibName(self.companyAboutIdentifier,
+        aboutSection.initializeCellWithReusableIdentifierOrNibName(identifier: self.companyAboutIdentifier,
                                                                    item: self.company?.companyDescription) { (cell, item) in
                                                                     
                                                                     let viewCell = cell as! TCompanyAboutTableViewCell

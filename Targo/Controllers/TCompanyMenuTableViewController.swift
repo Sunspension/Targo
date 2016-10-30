@@ -166,6 +166,11 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         self.tableView.register(UINib(nibName: "TMenuItemFullTableViewCell", bundle: nil),
                                    forCellReuseIdentifier: "MenuItemFullCell")
         
+        let name = String(describing: TCompanyMenuCompanyImageTableViewCell.self)
+        
+        self.tableView.register(UINib(nibName: name, bundle: nil),
+                                forCellReuseIdentifier: TCompanyMenuCompanyImageTableViewCell.reusableIdentifier())
+        
         self.loadCompanyMenu()
         
         // Uncomment the following line to preserve selection between presentations
@@ -240,8 +245,8 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
                 self.dataSource.sections.append(section!)
             }
             
-            section!.initializeSwappableCellWithReusableIdentifierOrNibName("MenuItemSmallCell",
-                                                                            secondIdentifierOrNibName: "MenuItemFullCell",
+            section!.initializeSwappableCellWithReusableIdentifierOrNibName(firstIdentifier: "MenuItemSmallCell",
+                                                                            secondIdentifier: "MenuItemFullCell",
                                                                             item: good,
                                                                             bindingAction: { (cell, item) in
                                                                                 
@@ -429,43 +434,82 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         let section = CollectionSection()
         section.sectionType = SectionTypeEnum.companyInfo
         
-        section.initializeCellWithReusableIdentifierOrNibName("CompanyImageMenu", item: self.companyImage) { (cell, item) in
-            
-            let viewCell = cell as! TCompanyImageMenuTableViewCell
-            
-            viewCell.layoutIfNeeded()
-            
-            viewCell.point.isHidden = true
-            viewCell.title.isHidden = true
-            
-            if let companyImage = item.item as? TImage {
+        section.initializeCellWithReusableIdentifierOrNibName(
+            identifier: TCompanyMenuCompanyImageTableViewCell.reusableIdentifier(),
+            item: self.companyImage) { (cell, item) in
+    
+                let viewCell = cell as! TCompanyMenuCompanyImageTableViewCell
                 
-                let filter = AspectScaledToFillSizeFilter(size: viewCell.companyImage.bounds.size)
-                viewCell.companyImage.af_setImage(withURL: URL(string: companyImage.url)!, filter: filter)
-            }
-            
-            viewCell.selectionStyle = .none
-        }
-        
-        section.initializeCellWithReusableIdentifierOrNibName("WorkingTimeViewCell", item: company) { (cell, item) in
-            
-            let viewCell = cell as! TWorkingTimeTableViewCell
-            viewCell.selectionStyle = .none
-            
-            if let company = item.item as? TCompanyAddress , company.averageOrderTime.count == 2 {
+                viewCell.selectionStyle = .none
+                viewCell.layoutIfNeeded()
                 
-                let min = company.averageOrderTime[0].value
-                let max = company.averageOrderTime[1].value
+                let color1 = UIColor(red: 0, green: 0, blue: 0, alpha: 0).cgColor
+                let color2 = UIColor(red: 0, green: 0, blue: 0, alpha: 0.7).cgColor
                 
-                if let workingHours = self.company!.todayWorkingHours {
+                viewCell.gradientView.gradientLayer.colors = [color1, color2]
+                viewCell.gradientView.gradientLayer.locations = [0.7, 1]
+                
+                if let companyImage = item.item as? TImage {
                     
-                    if workingHours.count == 2 {
+                    let filter = AspectScaledToFillSizeFilter(size: viewCell.companyImage.bounds.size)
+                    viewCell.companyImage.af_setImage(withURL: URL(string: companyImage.url)!, filter: filter)
+                }
+                
+                if let company = self.company, company.averageOrderTime.count == 2 {
+                    
+                    let min = company.averageOrderTime[0].value
+                    let max = company.averageOrderTime[1].value
+                    
+                    if let workingHours = self.company!.todayWorkingHours {
                         
-                        viewCell.setWorkingTimeAndHandlingOrder("\(workingHours[0]) - \(workingHours[1])", handlingOrder: "\(min) - \(max) " + "minutes".localized)
+                        if workingHours.count == 2 {
+                            
+                            viewCell.workingHours.text = workingHours[0] + " - " + workingHours[1]
+                            viewCell.handlingTime.text = String(min) + " - " + String(max) + " " + "minutes".localized
+                            viewCell.pointView.backgroundColor = UIColor.green
+                            viewCell.iconImage.image = UIImage(named: "icon-time")!.imageWithColor(UIColor.white)
+                        }
                     }
                 }
-            }
         }
+        
+//        section.initializeCellWithReusableIdentifierOrNibName(identifier: "CompanyImageMenu", item: self.companyImage) { (cell, item) in
+//            
+//            let viewCell = cell as! TCompanyImageMenuTableViewCell
+//            
+//            viewCell.layoutIfNeeded()
+//            
+//            viewCell.point.isHidden = true
+//            viewCell.title.isHidden = true
+//            
+//            if let companyImage = item.item as? TImage {
+//                
+//                let filter = AspectScaledToFillSizeFilter(size: viewCell.companyImage.bounds.size)
+//                viewCell.companyImage.af_setImage(withURL: URL(string: companyImage.url)!, filter: filter)
+//            }
+//            
+//            viewCell.selectionStyle = .none
+//        }
+//        
+//        section.initializeCellWithReusableIdentifierOrNibName(identifier: "WorkingTimeViewCell", item: company) { (cell, item) in
+//            
+//            let viewCell = cell as! TWorkingTimeTableViewCell
+//            viewCell.selectionStyle = .none
+//            
+//            if let company = item.item as? TCompanyAddress , company.averageOrderTime.count == 2 {
+//                
+//                let min = company.averageOrderTime[0].value
+//                let max = company.averageOrderTime[1].value
+//                
+//                if let workingHours = self.company!.todayWorkingHours {
+//                    
+//                    if workingHours.count == 2 {
+//                        
+//                        viewCell.setWorkingTimeAndHandlingOrder("\(workingHours[0]) - \(workingHours[1])", handlingOrder: "\(min) - \(max) " + "minutes".localized)
+//                    }
+//                }
+//            }
+//        }
         
         self.dataSource.sections.append(section)
         self.addGoods()

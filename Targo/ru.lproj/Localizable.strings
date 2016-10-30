@@ -118,7 +118,9 @@
 
 "order_description_title" = "Коментарий к заказу";
 
-"order_make_order_button_title" = "Сделать\nзаказ";
+"order_make_order_button_title" = "Сделать заказ";
+
+"order_make_order_button_title_new_line" = "Сделать \nзаказ";
 
 "order_number_of_persons_title" = "Количество персон";
 

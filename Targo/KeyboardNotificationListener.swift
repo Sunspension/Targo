@@ -19,19 +19,19 @@ class KeyboardNotificationListener: NSObject {
     init(tableView: UITableView) {
         
         super.init()
-    
+        
         self.tableView = tableView
         self.contentInset = tableView.contentInset
         
         NotificationCenter.default.addObserver(self,
-                                                         selector: #selector(KeyboardNotificationListener.keyboardWillShow(_:)),
-                                                         name: NSNotification.Name.UIKeyboardWillShow,
-                                                         object: nil)
+                                               selector: #selector(KeyboardNotificationListener.keyboardWillShow(_:)),
+                                               name: NSNotification.Name.UIKeyboardWillShow,
+                                               object: nil)
         
         NotificationCenter.default.addObserver(self,
-                                                         selector: #selector(KeyboardNotificationListener.keyboardWillHide(_:)),
-                                                         name: NSNotification.Name.UIKeyboardWillHide,
-                                                         object: nil)
+                                               selector: #selector(KeyboardNotificationListener.keyboardWillHide(_:)),
+                                               name: NSNotification.Name.UIKeyboardWillHide,
+                                               object: nil)
     }
     
     deinit {
@@ -42,10 +42,9 @@ class KeyboardNotificationListener: NSObject {
     
     func keyboardWillShow(_ notification: Notification) {
         
-        if let info = (notification as NSNotification).userInfo {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size {
             
-            let size = (info[UIKeyboardFrameBeginUserInfoKey] as AnyObject).cgRectValue.size
-            let contentInset = UIEdgeInsetsMake(0, 0, size.height, 0)
+            let contentInset = UIEdgeInsetsMake(0, 0, keyboardSize.height, 0)
             self.tableView?.contentInset = contentInset
             self.tableView?.scrollIndicatorInsets = contentInset
         }

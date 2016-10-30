@@ -154,7 +154,7 @@ class TFeedTableViewController: UITableViewController {
                 
                 if company.alias == "targo" {
                     
-                    section.initializeCellWithReusableIdentifierOrNibName("TargoNews", item: item, bindingAction: { (cell, item) in
+                    section.initializeCellWithReusableIdentifierOrNibName(identifier: "TargoNews", item: item, bindingAction: { (cell, item) in
                         
                         if item.indexPath.row + 10
                             >= self.dataSource.sections[item.indexPath.section].items.count
@@ -189,7 +189,7 @@ class TFeedTableViewController: UITableViewController {
                 }
                 else {
                     
-                    section.initializeCellWithReusableIdentifierOrNibName("CompanyNews", item: item, bindingAction: { (cell, item) in
+                    section.initializeCellWithReusableIdentifierOrNibName(identifier: "CompanyNews", item: item, bindingAction: { (cell, item) in
                         
                         if item.indexPath.row + 10
                             >= self.dataSource.sections[item.indexPath.section].items.count

@@ -78,13 +78,13 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
         tableView.contentInset = UIEdgeInsetsMake(0, 0, 20, 0)
         
         tableView.register(UINib(nibName: "TDetailsTableViewCell", bundle: nil),
-                              forCellReuseIdentifier: "DetailsCell")
+                           forCellReuseIdentifier: "DetailsCell")
         
         tableView.register(UINib(nibName: "TOrderDescriptionTableViewCell", bundle: nil),
-                              forCellReuseIdentifier: "OrderDescriptionCell")
+                           forCellReuseIdentifier: "OrderDescriptionCell")
         
         tableView.register(UINib(nibName: "TOrderNumberOfPersons", bundle: nil),
-                              forCellReuseIdentifier: "NumberOfPersonsCell")
+                           forCellReuseIdentifier: "NumberOfPersonsCell")
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "",
                                                                 style: .plain,
@@ -92,16 +92,14 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
                                                                 action: nil)
         
         NotificationCenter.default.addObserver(self,
-                                                         selector: #selector(TOrderReviewViewController.onDidAddCardNotification),
-                                                         name: NSNotification.Name(rawValue: kTargoDidAddNewCardNotification),
-                                                         object: nil)
-        let button = self.makeOrder
+                                               selector: #selector(TOrderReviewViewController.onDidAddCardNotification),
+                                               name: NSNotification.Name(rawValue: kTargoDidAddNewCardNotification),
+                                               object: nil)
         
-        button?.addTarget(self, action: #selector(TOrderReviewViewController.sendOrder),
-                         for: .touchUpInside)
-        button?.setTitle("order_make_order_button_title".localized, for: UIControlState())
-        
-        self.setStyleToOrderButton()
+        self.makeOrder.addTarget(self, action: #selector(TOrderReviewViewController.sendOrder),
+                                 for: .touchUpInside)
+        self.makeOrder.setTitle("order_make_order_button_title".localized, for: UIControlState())
+        self.makeOrder.backgroundColor = UIColor(hexString: kHexMainPinkColor)
         
         self.loadCards()
     }
@@ -214,7 +212,7 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
                 
                 totalPrice += item.count * item.item.price
                 
-                section.initializeCellWithReusableIdentifierOrNibName("OrderItemCell",
+                section.initializeCellWithReusableIdentifierOrNibName(identifier: "OrderItemCell",
                                                                       item: item,
                                                                       bindingAction: { (cell, item) in
                                                                         
@@ -228,7 +226,7 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
                 })
             }
             
-            section.initializeCellWithReusableIdentifierOrNibName("OrderTotalPriceCell",
+            section.initializeCellWithReusableIdentifierOrNibName(identifier: "OrderTotalPriceCell",
                                                                   item: totalPrice,
                                                                   bindingAction: { (cell, item) in
                                                                     
@@ -242,7 +240,7 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
                 
                 self.selectedCardIndex = cards.count - 1
                 
-                section.initializeCellWithReusableIdentifierOrNibName("PaymentMethodCell",
+                section.initializeCellWithReusableIdentifierOrNibName(identifier: "PaymentMethodCell",
                                                                       item: cards.last,
                                                                       itemType: ItemTypeEnum.paymentMetod,
                                                                       bindingAction: { (cell, item) in
@@ -275,7 +273,7 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
             }
             else {
                 
-                section.initializeCellWithReusableIdentifierOrNibName("PaymentMethodCell",
+                section.initializeCellWithReusableIdentifierOrNibName(identifier: "PaymentMethodCell",
                                                                       item: nil,
                                                                       itemType: ItemTypeEnum.addNewCard,
                                                                       bindingAction: { (cell, item) in
@@ -289,7 +287,7 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
                 })
             }
             
-            section.initializeCellWithReusableIdentifierOrNibName("DeliveryCell",
+            section.initializeCellWithReusableIdentifierOrNibName(identifier: "DeliveryCell",
                                                                   item: nil,
                                                                   itemType: ItemTypeEnum.deliveryType,
                                                                   bindingAction: { (cell, item) in
@@ -319,7 +317,7 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
                                                                     })
                 })
             
-            section.initializeCellWithReusableIdentifierOrNibName("NumberOfPersonsCell",
+            section.initializeCellWithReusableIdentifierOrNibName(identifier: "NumberOfPersonsCell",
                                                                   item: nil,
                                                                   itemType: ItemTypeEnum.numberOfPersons,
                                                                   bindingAction: { (cell, item) in
@@ -357,7 +355,7 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
 
             })
             
-            section.initializeCellWithReusableIdentifierOrNibName("DetailsCell",
+            section.initializeCellWithReusableIdentifierOrNibName(identifier: "DetailsCell",
                                                                   item: nil,
                                                                   itemType: ItemTypeEnum.orderTime,
                                                                   bindingAction: { (cell, item) in
@@ -368,7 +366,7 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
                                                                     viewCell.details.text = "order_time_place_holder".localized
             })
             
-            section.initializeCellWithReusableIdentifierOrNibName("OrderDescriptionCell",
+            section.initializeCellWithReusableIdentifierOrNibName(identifier: "OrderDescriptionCell",
                                                                   item: nil,
                                                                   itemType: ItemTypeEnum.orderDescription,
                                                                   bindingAction: { (cell, item) in

@@ -84,7 +84,7 @@ class TSettingsTableViewController: UITableViewController, UITextFieldDelegate {
         
         for item in personalItems {
             
-            personalDataSection.initializeCellWithReusableIdentifierOrNibName("SettingsCell",
+            personalDataSection.initializeCellWithReusableIdentifierOrNibName(identifier: "SettingsCell",
                                                                               item: self.user,
                                                                               itemType: item,
                                                                               bindingAction: self.binding)
@@ -93,12 +93,12 @@ class TSettingsTableViewController: UITableViewController, UITextFieldDelegate {
         let contactDataSection = CollectionSection(title: "settings_contact_data_title".localized)
         self.dataSource.sections.append(contactDataSection)
         
-        contactDataSection.initializeCellWithReusableIdentifierOrNibName("SettingsPhoneCell",
+        contactDataSection.initializeCellWithReusableIdentifierOrNibName(identifier: "SettingsPhoneCell",
                                                                          item: self.user,
                                                                          itemType: ItemTypeEnum.phone,
                                                                          bindingAction: self.binding)
         
-        contactDataSection.initializeCellWithReusableIdentifierOrNibName("SettingsCell",
+        contactDataSection.initializeCellWithReusableIdentifierOrNibName(identifier: "SettingsCell",
                                                                          item: self.user,
                                                                          itemType: ItemTypeEnum.email,
                                                                          bindingAction: self.binding)

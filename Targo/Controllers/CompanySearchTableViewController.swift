@@ -309,7 +309,7 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
                 pageNumber: self.pageNumber,
                 pageSize: self.pageSize)
                 
-                .onSuccess(callback: { [unowned self] companyPage in
+                .onSuccess(callback: { companyPage in
                     
                     self.loadingStatus = .loaded
                     
@@ -336,7 +336,7 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
                     self.createDataSource()
                     self.tableView.reloadData()
                     
-                    }).onFailure(callback: { [unowned self] error in
+                    }).onFailure(callback: { error in
                         
                         self.loadingStatus = .failed
                         
@@ -369,6 +369,11 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
                 
                 return
             }
+        }
+        
+        guard self.userLocation != nil else {
+            
+            return
         }
         
         self.loadingStatus = .loading

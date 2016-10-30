@@ -52,7 +52,7 @@ class TFeedDetailsTableViewController: UITableViewController {
         
         if company.alias == "targo" {
             
-            section.initializeCellWithReusableIdentifierOrNibName("TagoNewsDetails",
+            section.initializeCellWithReusableIdentifierOrNibName(identifier: "TagoNewsDetails",
                                                                   item: self.news,
                                                                   bindingAction: { (cell, item) in
                                                                     
@@ -76,7 +76,7 @@ class TFeedDetailsTableViewController: UITableViewController {
         }
         else {
             
-            section.initializeCellWithReusableIdentifierOrNibName("CompanyNewsDetails",
+            section.initializeCellWithReusableIdentifierOrNibName(identifier: "CompanyNewsDetails",
                                                                   item: self.news,
                                                                   bindingAction: { (cell, item) in
                                                                     

@@ -33,7 +33,9 @@ class TCompanyImageMenuTableViewCell: UITableViewCell {
                 
                 let newImage = change[NSKeyValueChangeKey.newKey] as! UIImage
                 
-                self.companyImage.image = newImage.applyBlur(withRadius: 4, tintColor: UIColor(red: 33 / 255, green: 21 / 255, blue: 100 / 255, alpha: 0.65), saturationDeltaFactor: 1, maskImage: nil)
+                self.companyImage.image = newImage.applyBlur(withRadius: 4, tintColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0.5), saturationDeltaFactor: 1, maskImage: nil)
+                
+//                self.companyImage.image = newImage.applyBlur(withRadius: 4, tintColor: UIColor(red: 33 / 255, green: 21 / 255, blue: 100 / 255, alpha: 0.65), saturationDeltaFactor: 1, maskImage: nil)
             }
         }
     }

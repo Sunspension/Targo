@@ -966,7 +966,7 @@ struct Api {
                         }
                         else {
                             
-                            print(response.result.value)
+                            print(response.result.value!)
                         }
                     }
                     .responseObject(keyPath: "data") { (response: DataResponse<TImageUploadResponse>) in

@@ -125,7 +125,7 @@ class UserProfileTableViewController: UITableViewController, UIImagePickerContro
             cell.textLabel?.text = item.item as? String
         }
         
-        userInfo.initializeCellWithReusableIdentifierOrNibName(headerIdentifier,
+        userInfo.initializeCellWithReusableIdentifierOrNibName(identifier: headerIdentifier,
                                                                item: nil,
                                                                itemType: ItemTypeEnum.userInfo,
                                                                bindingAction: headerCellBinding)

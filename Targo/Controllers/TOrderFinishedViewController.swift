@@ -45,7 +45,7 @@ class TOrderFinishedViewController: UIViewController {
         
         let section = CollectionSection()
         
-        section.initializeCellWithReusableIdentifierOrNibName("OrderCompanyNameCell",
+        section.initializeCellWithReusableIdentifierOrNibName(identifier: "OrderCompanyNameCell",
                                                               item: self.shopOrder) { (cell, item) in
                                                                 
                                                                 let viewCell = cell as! TBillCompanyNameTableViewCell
@@ -72,7 +72,7 @@ class TOrderFinishedViewController: UIViewController {
             for item in order.items {
                 
                 totalPrice += item.count * item.price
-                section.initializeCellWithReusableIdentifierOrNibName("OrderMenuItemCell",
+                section.initializeCellWithReusableIdentifierOrNibName(identifier: "OrderMenuItemCell",
                                                                       item: item) { (cell, item) in
                                                                         
                                                                         let viewCell = cell as! TBillMenuItemTableViewCell
@@ -85,7 +85,7 @@ class TOrderFinishedViewController: UIViewController {
             }
         }
         
-        section.initializeCellWithReusableIdentifierOrNibName("OrderCompanyNameCell",
+        section.initializeCellWithReusableIdentifierOrNibName(identifier: "OrderCompanyNameCell",
                                                               item: nil, itemType: 1) { (cell, item) in
                                                                 
                                                                 let viewCell = cell as! TBillCompanyNameTableViewCell
@@ -97,7 +97,7 @@ class TOrderFinishedViewController: UIViewController {
                                                                 viewCell.contentView.backgroundColor = color
         }
         
-        section.initializeCellWithReusableIdentifierOrNibName("OrderRatingCell", item: nil) { (cell, item) in
+        section.initializeCellWithReusableIdentifierOrNibName(identifier: "OrderRatingCell", item: nil) { (cell, item) in
             
             let viewCell = cell as! TOrderRatingTableViewCell
             viewCell.unratedColor = UIColor.lightGray
