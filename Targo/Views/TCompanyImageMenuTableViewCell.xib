@@ -13,27 +13,27 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CompanyImageMenu" rowHeight="179" id="KGk-i7-Jjw" customClass="TCompanyImageMenuTableViewCell" customModule="Targo" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="179"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CompanyImageMenu" rowHeight="141" id="KGk-i7-Jjw" customClass="TCompanyImageMenuTableViewCell" customModule="Targo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="141"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="178"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="140.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Qhf-ky-rES">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="180"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="140"/>
                         <constraints>
-                            <constraint firstAttribute="width" secondItem="Qhf-ky-rES" secondAttribute="height" multiplier="16:9" id="Uap-gk-9EN"/>
+                            <constraint firstAttribute="width" secondItem="Qhf-ky-rES" secondAttribute="height" multiplier="16:7" id="Uap-gk-9EN"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Today we are opened" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="el2-ko-jRE">
-                        <rect key="frame" x="8" y="81" width="304" height="18"/>
+                        <rect key="frame" x="8" y="61" width="304" height="18"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5M4-xM-BrN">
-                        <rect key="frame" x="153" y="50" width="15" height="15"/>
+                        <rect key="frame" x="153" y="30" width="15" height="15"/>
                         <color key="backgroundColor" red="0.13333333333333333" green="0.5607843137254902" blue="0.23921568627450981" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="Gkg-7E-fr2"/>
@@ -58,7 +58,7 @@
                 <outlet property="point" destination="5M4-xM-BrN" id="wZT-75-4HE"/>
                 <outlet property="title" destination="el2-ko-jRE" id="N0D-ig-NGR"/>
             </connections>
-            <point key="canvasLocation" x="328" y="393.5"/>
+            <point key="canvasLocation" x="328" y="374.5"/>
         </tableViewCell>
     </objects>
 </document>

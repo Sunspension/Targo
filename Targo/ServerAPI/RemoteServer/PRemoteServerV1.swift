@@ -40,9 +40,9 @@ protocol PRemoteServerV1 {
     
     func checkShopOrderStatus(orderStatus: Int) -> DataRequest
     
-    func loadCompanyById(companyId: Int) -> DataRequest
+    func loadCompany(companyId: Int) -> DataRequest
     
-    func loadCompaniesByIds(companiesIds: [Int]) -> DataRequest
+    func loadCompanies(companiesIds: [Int]) -> DataRequest
     
     func loadImageById(imageId: Int) -> DataRequest
     

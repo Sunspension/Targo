@@ -47,12 +47,15 @@ class UserProfileTableViewController: UITableViewController, UIImagePickerContro
     override func viewWillDisappear(_ animated: Bool) {
         
         super.viewWillDisappear(animated)
+        UIApplication.shared.statusBarStyle = .lightContent
         self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
+        
+        UIApplication.shared.statusBarStyle = .default
         self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
     

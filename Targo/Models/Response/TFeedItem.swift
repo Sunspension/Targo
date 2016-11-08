@@ -25,6 +25,8 @@ class TFeedItem: NSObject, Mappable {
     
     var companyId = 0
     
+    var actionId = 0
+    
     required convenience init?(map: Map) {
         
         self.init()
@@ -34,6 +36,7 @@ class TFeedItem: NSObject, Mappable {
         
         id <- map["id"]
         title <- map["title"]
+        actionId <- map["action_id"]
         feedItemDescription <- map["description"]
         imageIds <- map["image_ids"]
         createdAt <- map["created_at"]

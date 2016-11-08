@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GMSServices.provideAPIKey("AIzaSyBj0pr7Cxm3b4tsM9O1gyIXdguRHvMmeW0")
         
         var config = Realm.Configuration()
-        config.schemaVersion = 12
+        config.schemaVersion = 15
         config.migrationBlock = { (migration: Migration, oldSchemaVersion: UInt64) in
         
             if oldSchemaVersion < 1 {
@@ -108,6 +108,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.logoutAction), name: NSNotification.Name(rawValue: kTargoUserLoggedOutSuccessfully), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.loginAction), name: NSNotification.Name(rawValue: kTargoUserLoggedInSuccessfully), object: nil)
+        
+        UIApplication.shared.statusBarStyle = .lightContent
         
         return true
     }

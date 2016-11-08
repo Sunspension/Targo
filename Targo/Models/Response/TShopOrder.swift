@@ -12,7 +12,9 @@ import RealmSwift
 
 enum ShopOrderStatusEnum: Int {
     
-    case new = 1
+    case undefined
+    
+    case new
     
     case canceledByUser
     

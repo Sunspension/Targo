@@ -28,21 +28,13 @@ class TOrderStatusViewController: UIViewController {
     
     @IBOutlet weak var companyUIImage: UIImageView!
     
-    @IBOutlet weak var statusIndicator1: UIView!
-    
-    @IBOutlet weak var statusIndicator2: UIView!
-    
-    @IBOutlet weak var statusIndicator3: UIView!
-    
-    @IBOutlet weak var statusIndicator4: UIView!
-    
-//    @IBOutlet weak var orderStatusImage: UIImageView!
-    
     @IBOutlet weak var orderStatusDescription: UILabel!
     
     @IBOutlet weak var cancelOrder: UIButton!
     
     @IBOutlet weak var cancelLabel: UILabel!
+    
+    @IBOutlet weak var timerLabel: UILabel!
     
     
     var shopOrder: TShopOrder?
@@ -53,26 +45,17 @@ class TOrderStatusViewController: UIViewController {
     
     var reason: OrderStatusOpenReasonEnum = .undefined
     
+    var countDownTimer: CountdownTimer?
+    
+    let downloader = ImageDownloader()
+    
+    var previousOrderStatus: Int = 0
+    
     
     deinit {
         
         print("\(typeName(self)) \(#function)")
     }
-    
-    override func viewWillLayoutSubviews() {
-        
-        super.viewWillLayoutSubviews()
-        
-        self.companyUIImage.makeCircular()
-        self.companyUIImage.layer.borderColor = UIColor.white.cgColor
-        self.companyUIImage.layer.borderWidth = 4
-        
-        self.statusIndicator1.makeCircular()
-        self.statusIndicator2.makeCircular()
-        self.statusIndicator3.makeCircular()
-        self.statusIndicator4.makeCircular()
-    }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -106,7 +89,28 @@ class TOrderStatusViewController: UIViewController {
         if let companyImage =  self.companyImage {
             
             let filter = AspectScaledToFillSizeFilter(size: self.companyUIImage.frame.size)
-            self.companyUIImage.af_setImage(withURL: URL(string: companyImage.url)!, filter: filter)
+            
+            let urlRequest = URLRequest(url: URL(string: companyImage.url)!)
+            
+            self.downloader.download(urlRequest, filter: filter) { response in
+                
+                guard response.result.value != nil else {
+                    
+                    return
+                }
+                
+                self.companyUIImage.image =
+                    response.result.value!.applyBlur(withRadius: 1,
+                                                     tintColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0.4),
+                                                     saturationDeltaFactor: 1,
+                                                     maskImage: nil)
+                DispatchQueue.main.async(execute: { 
+                    
+                    self.companyUIImage.makeCircular()
+                    self.companyUIImage.layer.borderColor = UIColor.white.cgColor
+                    self.companyUIImage.layer.borderWidth = 5
+                })
+            }
         }
         
 //        let transition = CATransition()
@@ -121,6 +125,22 @@ class TOrderStatusViewController: UIViewController {
         super.viewWillAppear(animated)
         
         self.checkOrderStatus()
+    }
+    
+    func makeAttributedTimeString(time: String) -> NSAttributedString {
+        
+//        let minutes = "minutes".localized
+        let attrubuteTime = [NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: UIFont.systemFont(ofSize: 80)]
+        
+//        let attrubuteMinutes = [NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: UIFont.systemFont(ofSize: 30)]
+        
+        let text1 = NSAttributedString(string: time, attributes: attrubuteTime)
+//        let text2 = NSAttributedString(string: minutes, attributes: attrubuteMinutes)
+        
+        let attributedText = NSMutableAttributedString(attributedString: text1)
+//        attributedText.append(text2)
+        
+        return attributedText
     }
     
     func cancelOrderAction() {
@@ -232,6 +252,31 @@ class TOrderStatusViewController: UIViewController {
         }
     }
     
+    fileprivate func enableTimerIfNeeded() {
+        
+        if let preparedTime = self.shopOrder?.prepared {
+            
+            let formatter = DateFormatter()
+            formatter.dateFormat = kDateTimeFormat
+            
+            if let orderTime = formatter.date(from: preparedTime)?.timeIntervalSinceNow {
+                
+                if orderTime > 0 {
+                    
+                    countDownTimer = CountdownTimer(seconds: orderTime, callBack: {[weak self] time in
+                        
+                        if let time = time {
+                            
+                            self?.timerLabel.attributedText = self?.makeAttributedTimeString(time: time)
+                        }
+                    })
+                    
+                    countDownTimer?.startTimer()
+                }
+            }
+        }
+    }
+    
     fileprivate func setOrderStatus(_ orderSatus: Int) {
         
         let status = ShopOrderStatusEnum(rawValue: orderSatus)!
@@ -242,10 +287,6 @@ class TOrderStatusViewController: UIViewController {
         case .new:
             
             changeStatusText("order_status_new".localized)
-            statusIndicator1.backgroundColor = UIColor.lightGray
-            statusIndicator2.backgroundColor = UIColor.lightGray
-            statusIndicator3.backgroundColor = UIColor.lightGray
-            statusIndicator4.backgroundColor = UIColor.lightGray
             self.cancelOrder.isHidden = false
             self.cancelLabel.isHidden = false
             
@@ -254,13 +295,7 @@ class TOrderStatusViewController: UIViewController {
             // 2
         case .canceledByUser:
             
-//            orderStatusImage.image = UIImage(named: "icon-canceled")
             changeStatusText("order_status_canceled_by_user".localized)
-//            orderStatusDescription.text = "order_status_canceled_by_user".localized
-            statusIndicator1.backgroundColor = UIColor.lightGray
-            statusIndicator2.backgroundColor = UIColor.lightGray
-            statusIndicator3.backgroundColor = UIColor.lightGray
-            statusIndicator4.backgroundColor = UIColor.lightGray
             self.cancelOrder.isHidden = true
             self.cancelLabel.isHidden = true
             
@@ -269,13 +304,7 @@ class TOrderStatusViewController: UIViewController {
             // 3
         case .view:
             
-//            orderStatusImage.image = UIImage(named: "icon-success")
             changeStatusText("order_status_seen".localized)
-//            orderStatusDescription.text = "order_status_seen".localized
-            statusIndicator1.backgroundColor = UIColor.white
-            statusIndicator2.backgroundColor = UIColor.lightGray
-            statusIndicator3.backgroundColor = UIColor.lightGray
-            statusIndicator4.backgroundColor = UIColor.lightGray
             self.cancelOrder.isHidden = false
             self.cancelLabel.isHidden = false
             
@@ -284,13 +313,7 @@ class TOrderStatusViewController: UIViewController {
             // 4
         case .canceled:
             
-//            orderStatusImage.image = UIImage(named: "icon-canceled")
-            
             changeStatusText("order_status_canceled".localized)
-            statusIndicator1.backgroundColor = UIColor.white
-            statusIndicator2.backgroundColor = UIColor.lightGray
-            statusIndicator3.backgroundColor = UIColor.lightGray
-            statusIndicator4.backgroundColor = UIColor.lightGray
             self.cancelOrder.isHidden = true
             self.cancelLabel.isHidden = true
             
@@ -298,29 +321,22 @@ class TOrderStatusViewController: UIViewController {
 
             // 5
         case .processing:
-            
-//            orderStatusImage.image = UIImage(named: "icon-clock")
-            changeStatusText("order_status_processing".localized)
-//            orderStatusDescription.text = "order_status_processing".localized
-            statusIndicator1.backgroundColor = UIColor.white
-            statusIndicator2.backgroundColor = UIColor.white
-            statusIndicator3.backgroundColor = UIColor.lightGray
-            statusIndicator4.backgroundColor = UIColor.lightGray
-            self.cancelOrder.isHidden = true
-            self.cancelLabel.isHidden = true
+
+            if previousOrderStatus != ShopOrderStatusEnum.processing.rawValue {
+                
+                self.previousOrderStatus = status.rawValue
+                changeStatusText("order_status_processing".localized)
+                self.cancelOrder.isHidden = true
+                self.cancelLabel.isHidden = true
+                self.enableTimerIfNeeded()
+            }
             
             break
             
             // 6
         case .complete:
-            
-//            orderStatusImage.image = UIImage(named: "icon-cutlery")
+
             changeStatusText("order_status_ready".localized)
-//            orderStatusDescription.text = "order_status_ready".localized
-            statusIndicator1.backgroundColor = UIColor.white
-            statusIndicator2.backgroundColor = UIColor.white
-            statusIndicator3.backgroundColor = UIColor.white
-            statusIndicator4.backgroundColor = UIColor.lightGray
             self.cancelOrder.isHidden = true
             self.cancelLabel.isHidden = true
             
@@ -329,13 +345,7 @@ class TOrderStatusViewController: UIViewController {
             // 7
         case .finished:
             
-//            orderStatusImage.image = UIImage(named: "icon-cutlery")
             changeStatusText("order_status_finished".localized)
-//            orderStatusDescription.text = "order_status_finished".localized
-            statusIndicator1.backgroundColor = UIColor.white
-            statusIndicator2.backgroundColor = UIColor.white
-            statusIndicator3.backgroundColor = UIColor.white
-            statusIndicator4.backgroundColor = UIColor.white
             self.cancelOrder.isHidden = true
             self.cancelLabel.isHidden = true
             
@@ -343,14 +353,8 @@ class TOrderStatusViewController: UIViewController {
             
             // 8
         case .paySuccess:
-            
-//            orderStatusImage.image = nil
+        
             changeStatusText("order_status_pay_success".localized)
-//            orderStatusDescription.text = "order_status_pay_success".localized
-            statusIndicator1.backgroundColor = UIColor.white
-            statusIndicator2.backgroundColor = UIColor.white
-            statusIndicator3.backgroundColor = UIColor.lightGray
-            statusIndicator4.backgroundColor = UIColor.lightGray
             self.cancelOrder.isHidden = true
             self.cancelLabel.isHidden = true
             
@@ -359,16 +363,13 @@ class TOrderStatusViewController: UIViewController {
             // 9
         case .payError:
             
-//            orderStatusImage.image = nil
             changeStatusText("order_status_pay_error".localized)
-//            orderStatusDescription.text = "order_status_pay_error".localized
-            statusIndicator1.backgroundColor = UIColor.white
-            statusIndicator2.backgroundColor = UIColor.white
-            statusIndicator3.backgroundColor = UIColor.lightGray
-            statusIndicator4.backgroundColor = UIColor.lightGray
             self.cancelOrder.isHidden = true
             self.cancelLabel.isHidden = true
             
+            break
+            
+        default:
             break
         }
     }

@@ -59,6 +59,8 @@ class TCompanyAddress: Object, Mappable {
     
     dynamic var isFavorite = false
     
+    dynamic var discount = 0
+    
     let backingWorkingTime = List<TCompanyWorkingDay>()
 
     var averageOrderTime = List<RealmInt>()
@@ -119,6 +121,7 @@ class TCompanyAddress: Object, Mappable {
         distance <- map["dist"]
         rating <- map["company_rating"]
         isFavorite <- map["is_favorite"]
+        discount <- map["discount_percent"]
         
         let transform = TransformOf<List<RealmInt>, [Int]>(fromJSON: { (value: [Int]?) -> List<RealmInt>? in
             

@@ -597,11 +597,11 @@ struct Api {
         return p.future
     }
     
-    func loadCompanyById(companyId: Int) -> Future<TCompany, TargoError> {
+    func loadCompany(companyId: Int) -> Future<TCompany, TargoError> {
         
         let p = Promise<TCompany, TargoError>()
         
-        server.loadCompanyById(companyId: companyId)
+        server.loadCompany(companyId: companyId)
             
             .responseJSON { response in
                 
@@ -628,11 +628,11 @@ struct Api {
         return p.future
     }
     
-    func loadCompaniesByIds(companiesIds: [Int]) -> Future<[TCompany], TargoError> {
+    func loadCompanies(companiesIds: [Int]) -> Future<[TCompany], TargoError> {
         
         let p = Promise<[TCompany], TargoError>()
         
-        server.loadCompaniesByIds(companiesIds: companiesIds)
+        server.loadCompanies(companiesIds: companiesIds)
             
             .responseJSON { response in
                 

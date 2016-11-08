@@ -129,6 +129,8 @@
 
 "order_rating_set_error" = "Can't send your vote";
 
+"order_targo_discount" = "Targo discount";
+
 "search_place_holder" = "Find your favorite place";
 
 "feed_title" = "Feed";
@@ -169,3 +171,7 @@
 "settings_contact_data_title" = "Contact data";
 
 "settings_user_update_profile_error" = "Couldn't save changes";
+
+"feed_open_menu_action" = "Open menu";
+
+"feed_open_company_info_action" = "Open company info";

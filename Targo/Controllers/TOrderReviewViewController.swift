@@ -226,8 +226,18 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
                 })
             }
             
+            section.initializeDefaultCell(cellStyle: .value1,
+                                          item: self.company,
+                                          bindingAction: { (cell, item) in
+                                            
+                                            let company = item.item as! TCompanyAddress
+                                            cell.textLabel?.text = "order_targo_discount".localized
+                                            cell.detailTextLabel?.text = "- \(company.discount)%"
+                                            cell.detailTextLabel?.textColor = UIColor(hexString: kHexMainPinkColor)
+            })
+            
             section.initializeCellWithReusableIdentifierOrNibName(identifier: "OrderTotalPriceCell",
-                                                                  item: totalPrice,
+                                                                  item: totalPrice - Int((Double(totalPrice) * (Double(self.company!.discount) / 100))),
                                                                   bindingAction: { (cell, item) in
                                                                     
                                                                     let viewCell = cell as! TOrderTotalPriceTableViewCell
@@ -483,37 +493,6 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
                 }, origin: self.view.superview)
             
             break
-            
-            
-            //        case .DeliveryType:
-            //
-            //            let alert = UIAlertController(title: "order_how_to_eat".localized, message: "", preferredStyle: .ActionSheet)
-            //
-            //            let takeAwayAction = UIAlertAction(title: "order_take_away".localized, style: .Default, handler: { action in
-            //
-            //                self.serviceId = 1
-            //                let viewCell = tableView.cellForRowAtIndexPath(item.indexPath) as! TDetailsTableViewCell
-            //                viewCell.details.text = "order_take_away".localized
-            //                viewCell.details.textColor = UIColor.blackColor()
-            //            })
-            //
-            //            let eatInsideAction = UIAlertAction(title: "order_take_inside".localized, style: .Default, handler: { action in
-            //
-            //                self.serviceId = 2
-            //                let viewCell = tableView.cellForRowAtIndexPath(item.indexPath) as! TDetailsTableViewCell
-            //                viewCell.details.text = "order_take_inside".localized
-            //                viewCell.details.textColor = UIColor.blackColor()
-            //            })
-            //
-            //            let cancel = UIAlertAction(title: "action_cancel".localized, style: .Cancel, handler: nil)
-            //
-            //            alert.addAction(takeAwayAction)
-            //            alert.addAction(eatInsideAction)
-            //            alert.addAction(cancel)
-            //
-            //            self.presentViewController(alert, animated: true, completion: nil)
-            //
-            //            break
             
         case .orderDescription:
             

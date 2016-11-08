@@ -40,6 +40,8 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
     
     var company: TCompanyAddress?
     
+    var addressId: Int?
+    
     var companyImage: TImage?
     
     var dataSource = TableViewDataSource()
@@ -59,6 +61,19 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
     
     @IBOutlet weak var buttonMakeOrder: UIButton!
     
+    
+    class func controllerInstance() -> TCompanyMenuTableViewController {
+        
+        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MenuController") as! TCompanyMenuTableViewController
+    }
+    
+    class func controllerInstance(addressId: Int) -> TCompanyMenuTableViewController {
+        
+        let controller = self.controllerInstance()
+        controller.addressId = addressId
+        
+        return controller
+    }
     
     @IBAction func makeOrderAction(_ sender: AnyObject) {
     
@@ -621,12 +636,14 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
             
             self.loadingStatus = .loading
             
-            if let superview = self.view.superview {
-                
-                SwiftOverlays.showCenteredWaitOverlay(superview)
-            }
+//            if let superview = self.view.superview {
+//                
+//                SwiftOverlays.showCenteredWaitOverlay(superview)
+//            }
 
-            Api.sharedInstance.loadCompanyMenu(companyId: company.companyId, pageNumber: self.pageNumber, pageSize: self.pageSize)
+            Api.sharedInstance.loadCompanyMenu(companyId: company.companyId,
+                                               pageNumber: self.pageNumber,
+                                               pageSize: self.pageSize)
                 
                 .onSuccess(callback: { [weak self] menuPage in
                     

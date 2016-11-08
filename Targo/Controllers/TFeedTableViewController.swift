@@ -58,6 +58,13 @@ class TFeedTableViewController: UITableViewController {
                                                                 style: .plain,
                                                                 target: nil,
                                                                 action: nil)
+        
+        let nib1 = UINib(nibName: String(describing: TCompanyNewsTableViewCell.self), bundle: nil)
+        self.tableView.register(nib1, forCellReuseIdentifier: TCompanyNewsTableViewCell.identifier())
+        
+        let nib2 = UINib(nibName: String(describing: TNewsTableViewCell.self), bundle: nil)
+        self.tableView.register(nib2, forCellReuseIdentifier: TNewsTableViewCell.identifier())
+        
         self.loadNews()
         
         // Uncomment the following line to preserve selection between presentations
@@ -154,7 +161,7 @@ class TFeedTableViewController: UITableViewController {
                 
                 if company.alias == "targo" {
                     
-                    section.initializeCellWithReusableIdentifierOrNibName(identifier: "TargoNews", item: item, bindingAction: { (cell, item) in
+                    section.initializeCellWithReusableIdentifierOrNibName(identifier: TNewsTableViewCell.identifier(), item: item, bindingAction: { (cell, item) in
                         
                         if item.indexPath.row + 10
                             >= self.dataSource.sections[item.indexPath.section].items.count
@@ -165,13 +172,50 @@ class TFeedTableViewController: UITableViewController {
                         }
                         
                         let newsItem = item.item as! TFeedItem
-                        let viewCell = cell as! TFeedTargoNewsTableViewCell
+                        let viewCell = cell as! TNewsTableViewCell
                         
                         viewCell.layoutIfNeeded()
+                        viewCell.selectionStyle = .none
+                        viewCell.newsImage.image = UIImage(named: "food")
                         
-                        viewCell.more.setTitle("action_more".localized, for: UIControlState())
-                        viewCell.more.tintColor = UIColor(hexString: kHexMainPinkColor)
-                        viewCell.more.isUserInteractionEnabled = false
+                        viewCell.actionButton.tintColor = UIColor.white
+                        
+                        switch newsItem.actionId {
+                            
+                        case 0:
+                            
+                            viewCell.actionButtonHeight.priority = 250
+                            viewCell.actionButtonZeroHeight.priority = 900
+                            
+                            break
+                            
+                        case 1:
+                            
+                            viewCell.actionButton.setTitle("feed_open_menu_action".localized, for: .normal)
+                            viewCell.actionButton.bnd_tap.observe(with: { event in
+                                
+                                // TODO open company menu
+                                
+                            }).disposeIn(viewCell.bag)
+                            
+                            break
+                            
+                        case 2:
+                            
+                            viewCell.actionButton.setTitle("feed_open_company_info_action".localized, for: .normal)
+                            viewCell.actionButton.bnd_tap.observe(with: { event in
+                                
+                                // TODO open company info
+                                
+                            }).disposeIn(viewCell.bag)
+                            
+                            break
+                            
+                        default:
+                            break
+                        }
+                        
+                        viewCell.actionButton.backgroundColor = UIColor(hexString: kHexMainPinkColor)
                         viewCell.newsDetails.text = newsItem.feedItemDescription
                         
                         let formatter = DateFormatter()
@@ -183,13 +227,13 @@ class TFeedTableViewController: UITableViewController {
                             formatter.dateStyle = .short
                             formatter.timeStyle = .none
                             
-                            viewCell.date.text = formatter.string(from: date)
+                            viewCell.dateTime.text = formatter.string(from: date)
                         }
                     })
                 }
                 else {
                     
-                    section.initializeCellWithReusableIdentifierOrNibName(identifier: "CompanyNews", item: item, bindingAction: { (cell, item) in
+                    section.initializeCellWithReusableIdentifierOrNibName(identifier: TCompanyNewsTableViewCell.identifier(), item: item, bindingAction: { (cell, item) in
                         
                         if item.indexPath.row + 10
                             >= self.dataSource.sections[item.indexPath.section].items.count
@@ -200,14 +244,17 @@ class TFeedTableViewController: UITableViewController {
                         }
                         
                         let newsItem = item.item as! TFeedItem
-                        let viewCell = cell as! TFeedCompanyNewsTableViewCell
+                        let viewCell = cell as! TCompanyNewsTableViewCell
                         
                         viewCell.layoutIfNeeded()
                         
-                        viewCell.more.setTitle("action_more".localized, for: UIControlState())
-                        viewCell.more.tintColor = UIColor(hexString: kHexMainPinkColor)
-                        viewCell.more.isUserInteractionEnabled = false
-                        viewCell.companyTitle.text = company.title
+                        viewCell.newsImage.image = UIImage(named: "food")
+                        
+                        viewCell.actionButton.tintColor = UIColor.white
+                        viewCell.actionButton.setTitle("action_more".localized, for: .normal)
+                        viewCell.actionButton.backgroundColor = UIColor(hexString: kHexMainPinkColor)
+                        
+                        viewCell.companyName.text = company.title
                         viewCell.newsDetails.text = newsItem.feedItemDescription
                         
                         let formatter = DateFormatter()
@@ -219,7 +266,7 @@ class TFeedTableViewController: UITableViewController {
                             formatter.dateStyle = .short
                             formatter.timeStyle = .none
                             
-                            viewCell.date.text = formatter.string(from: date)
+                            viewCell.dateTime.text = formatter.string(from: date)
                         }
                     })
                 }
@@ -227,22 +274,22 @@ class TFeedTableViewController: UITableViewController {
         }
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let controller = self.instantiateViewControllerWithIdentifierOrNibName("FeedDetails") as! TFeedDetailsTableViewController
-        
-        if let news = self.dataSource.sections[(indexPath as NSIndexPath).section].items[(indexPath as NSIndexPath).row].item as? TFeedItem {
-            
-            controller.news = news
-            
-            if let company = self.companies.filter({ $0.id == news.companyId }).first {
-                
-                controller.company = company
-            }
-        }
-        
-        self.navigationController?.pushViewController(controller, animated: true)
-    }
+//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        
+//        let controller = self.instantiateViewControllerWithIdentifierOrNibName("FeedDetails") as! TFeedDetailsTableViewController
+//        
+//        if let news = self.dataSource.sections[(indexPath as NSIndexPath).section].items[(indexPath as NSIndexPath).row].item as? TFeedItem {
+//            
+//            controller.news = news
+//            
+//            if let company = self.companies.filter({ $0.id == news.companyId }).first {
+//                
+//                controller.company = company
+//            }
+//        }
+//        
+//        self.navigationController?.pushViewController(controller, animated: true)
+//    }
     
     // MARK: - Table view data source
     /*

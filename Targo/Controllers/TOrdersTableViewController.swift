@@ -329,7 +329,7 @@ class TOrdersTableViewController: UITableViewController {
             
             self.loading = true
             
-            Api.sharedInstance.loadCompaniesByIds(companiesIds: ids)
+            Api.sharedInstance.loadCompanies(companiesIds: ids)
                 
                 .onSuccess(callback: {[weak self] companies in
                     

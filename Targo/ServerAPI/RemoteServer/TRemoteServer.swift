@@ -156,9 +156,9 @@ struct TRemoteServer: PRemoteServerV1 {
         }
         
         var params: [String : Any] = [ "items" : goods,
-                                             "address_id" : addressId,
-                                             "card_id" : cardId,
-                                             "service_id" : serviceId]
+                                       "address_id" : addressId,
+                                       "card_id" : cardId,
+                                       "service_id" : serviceId]
         if let date = date {
             
             let formatter = DateFormatter()
@@ -187,12 +187,12 @@ struct TRemoteServer: PRemoteServerV1 {
         return self.request(method: .get, remotePath: baseURLString + "/shop-order/" + String(orderStatus))
     }
     
-    func loadCompanyById(companyId: Int) -> DataRequest {
+    func loadCompany(companyId: Int) -> DataRequest {
         
         return self.request(method: .get, remotePath: baseURLString + "/company/" + String(companyId))
     }
     
-    func loadCompaniesByIds(companiesIds: [Int]) -> DataRequest {
+    func loadCompanies(companiesIds: [Int]) -> DataRequest {
         
         let params: [String : Any] = ["filters" : [ "id" : companiesIds ]]
         return self.request(method: .get, remotePath: baseURLString + "/company", parameters: params)
@@ -340,10 +340,10 @@ struct TRemoteServer: PRemoteServerV1 {
         let request = TRemoteServer.alamofireManager.request(remotePath,
                                                              method: method,
                                                              parameters: parameters,
-                                                             encoding: URLEncoding.methodDependent,
+                                                             encoding: method != .post ? URLEncoding.default : JSONEncoding.default,
                                                              headers: headers)
         
-        print(request)
+        print("request: \(request), parameters: \(parameters)")
         return request
     }
 }
