@@ -9,6 +9,7 @@
 import UIKit
 import AlamofireImage
 import PhoneNumberKit
+import SwiftOverlays
 
 enum InfoSectionEnum {
     
@@ -27,6 +28,7 @@ class TCompanyInfoTableViewController: UITableViewController {
     
     fileprivate let bookmarkButton = UIButton(type: .custom)
     
+    fileprivate var loadingStatus = TLoadingStatusEnum.idle
     
     var company: TCompanyAddress?
     
@@ -42,6 +44,19 @@ class TCompanyInfoTableViewController: UITableViewController {
     deinit {
         
         print("\(typeName(self)) \(#function)")
+    }
+    
+    class func controllerInstance() -> TCompanyInfoTableViewController {
+        
+        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CompanyInfoController") as! TCompanyInfoTableViewController
+    }
+    
+    class func controllerInstance(addressId: Int) -> TCompanyInfoTableViewController {
+        
+        let controller = self.controllerInstance()
+        controller.loadCompanyAddress(addressId: addressId)
+        
+        return controller
     }
     
     override func viewDidLoad() {
@@ -62,7 +77,10 @@ class TCompanyInfoTableViewController: UITableViewController {
         bookmarkButton.addTarget(self, action: #selector(TCompanyInfoTableViewController.makeFavorite), for: .touchUpInside)
         bookmarkButton.sizeToFit()
         
-        bookmarkButton.isSelected = self.company!.isFavorite
+        if let company = self.company {
+            
+            bookmarkButton.isSelected = company.isFavorite
+        }
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: bookmarkButton)
         
@@ -84,6 +102,21 @@ class TCompanyInfoTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        
+        super.viewDidAppear(animated)
+        
+        if self.loadingStatus != .loading {
+            
+            return
+        }
+        
+        if let superview = self.view.superview {
+            
+            SwiftOverlays.showCenteredWaitOverlay(superview)
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -313,14 +346,62 @@ class TCompanyInfoTableViewController: UITableViewController {
         }
     }
     
+    //MARK: - Private methods
     
-    // MARK: - Private methods
+    fileprivate func loadCompanyAddress(addressId: Int) {
+        
+        self.loadingStatus = .loading
+        
+        Api.sharedInstance.loadCompanyAddress(addressId: addressId)
+            
+            .onSuccess { [unowned self] company in
+                
+                self.company = company
+                self.title = company.companyTitle
+                self.bookmarkButton.isSelected = company.isFavorite
+                
+                Api.sharedInstance.loadImage(imageId: company.companyImageId.value!)
+                    
+                    .onSuccess(callback: { [unowned self] image in
+                        
+                        self.loadingStatus = .loaded
+                        self.companyImage = image
+                        self.createDataSource()
+                        self.tableView.reloadData()
+                    })
+                    .onFailure(callback: { [unowned self] error in
+                        
+                        self.loadingStatus = .failed
+                        
+                        if let superview = self.view.superview {
+                            
+                            SwiftOverlays.removeAllOverlaysFromView(superview)
+                        }
+                    })
+            }
+            .onFailure(callback: { [unowned self] error in
+                
+                self.loadingStatus = .failed
+                
+                if let superview = self.view.superview {
+                    
+                    SwiftOverlays.removeAllOverlaysFromView(superview)
+                }
+            })
+    }
+    
     fileprivate func createDataSource() {
     
+        guard self.company != nil else {
+            
+            return
+        }
+        
         let section = CollectionSection()
         section.sectionType = InfoSectionEnum.companyImage
         
-        section.initializeCellWithReusableIdentifierOrNibName(identifier: "CompanyImageMenu", item: self.companyImage) { (cell, item) in
+        section.initializeItem(reusableIdentifierOrNibName: "CompanyImageMenu",
+                               item: self.companyImage) { (cell, item) in
             
             let viewCell = cell as! TCompanyImageMenuTableViewCell
             
@@ -359,19 +440,19 @@ class TCompanyInfoTableViewController: UITableViewController {
             
             let day = calendar.weekdaySymbols[weekDay]
             
-            workingHoursSection.initializeCellWithReusableIdentifierOrNibName(identifier: "WorkingHoursCell",
-                                                                              item: day,
-                                                                              bindingAction: { (cell, item) in
-                                                                                
-                                                                                let viewCell = cell as! TWorkingHoursTableViewCell
-                                                                                viewCell.weekday.text = item.item as? String
-                                                                                
-                                                                                if let day = self.company?.backingWorkingTime[index] {
-                                                                                    
-                                                                                    viewCell.hours.text = "\(day.begin) - \(day.end)"
-                                                                                }
-                                                                                
-                                                                                viewCell.selectionStyle = .none
+            workingHoursSection.initializeItem(reusableIdentifierOrNibName: "WorkingHoursCell",
+                                               item: day,
+                                               bindingAction: { (cell, item) in
+                                                
+                                                let viewCell = cell as! TWorkingHoursTableViewCell
+                                                viewCell.weekday.text = item.item as? String
+                                                
+                                                if let day = self.company?.backingWorkingTime[index] {
+                                                    
+                                                    viewCell.hours.text = "\(day.begin) - \(day.end)"
+                                                }
+                                                
+                                                viewCell.selectionStyle = .none
             })
         }
         
@@ -380,15 +461,15 @@ class TCompanyInfoTableViewController: UITableViewController {
         let aboutSection = CollectionSection()
         aboutSection.sectionType = InfoSectionEnum.additionalInfo
         
-        aboutSection.initializeCellWithReusableIdentifierOrNibName(identifier: self.companyAboutIdentifier,
-                                                                   item: self.company?.companyDescription) { (cell, item) in
-                                                                    
-                                                                    let viewCell = cell as! TCompanyAboutTableViewCell
-                                                                    let text = item.item as! String
-                                                                    
-                                                                    viewCell.title.text = "company_info_about_us".localized
-                                                                    viewCell.companyInfo.text = text
-                                                                    viewCell.selectionStyle = .none
+        aboutSection.initializeItem(reusableIdentifierOrNibName: self.companyAboutIdentifier,
+                                    item: self.company?.companyDescription) { (cell, item) in
+                                        
+                                        let viewCell = cell as! TCompanyAboutTableViewCell
+                                        let text = item.item as! String
+                                        
+                                        viewCell.title.text = "company_info_about_us".localized
+                                        viewCell.companyInfo.text = text
+                                        viewCell.selectionStyle = .none
         }
         
         self.itemsSource.sections.append(aboutSection)

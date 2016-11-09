@@ -337,7 +337,7 @@ class TOrdersTableViewController: UITableViewController {
                     let set = Set<Int>(imageIds)
                     let ids = Array(set)
                     
-                    Api.sharedInstance.loadImagesByIds(imageIds: ids)
+                    Api.sharedInstance.loadImages(imageIds: ids)
                         
                         .onSuccess(callback: {[weak self] images in
                             

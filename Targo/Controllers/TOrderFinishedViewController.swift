@@ -45,24 +45,24 @@ class TOrderFinishedViewController: UIViewController {
         
         let section = CollectionSection()
         
-        section.initializeCellWithReusableIdentifierOrNibName(identifier: "OrderCompanyNameCell",
-                                                              item: self.shopOrder) { (cell, item) in
-                                                                
-                                                                let viewCell = cell as! TBillCompanyNameTableViewCell
-                                                                let order = item.item as? TShopOrder
-                                                                viewCell.companyName.text = self.companyName
-                                                                
-                                                                let formatter = DateFormatter()
-                                                                formatter.dateFormat = kDateTimeFormat
-                                                                
-                                                                if let date = formatter.date(from: order!.created) {
-                                                                    
-                                                                    let formatter = DateFormatter()
-                                                                    formatter.dateStyle = .medium
-                                                                    formatter.timeStyle = .none
-                                                                    
-                                                                    viewCell.orderDate.text = formatter.string(from: date)
-                                                                }
+        section.initializeItem(reusableIdentifierOrNibName: "OrderCompanyNameCell",
+                               item: self.shopOrder) { (cell, item) in
+                                
+                                let viewCell = cell as! TBillCompanyNameTableViewCell
+                                let order = item.item as? TShopOrder
+                                viewCell.companyName.text = self.companyName
+                                
+                                let formatter = DateFormatter()
+                                formatter.dateFormat = kDateTimeFormat
+                                
+                                if let date = formatter.date(from: order!.created) {
+                                    
+                                    let formatter = DateFormatter()
+                                    formatter.dateStyle = .medium
+                                    formatter.timeStyle = .none
+                                    
+                                    viewCell.orderDate.text = formatter.string(from: date)
+                                }
         }
         
         var totalPrice = 0
@@ -72,32 +72,32 @@ class TOrderFinishedViewController: UIViewController {
             for item in order.items {
                 
                 totalPrice += item.count * item.price
-                section.initializeCellWithReusableIdentifierOrNibName(identifier: "OrderMenuItemCell",
-                                                                      item: item) { (cell, item) in
-                                                                        
-                                                                        let viewCell = cell as! TBillMenuItemTableViewCell
-                                                                        let good = item.item as? TShopGood
-                                                                        
-                                                                        viewCell.itemName.text = good!.title
-                                                                        viewCell.itemPrice.text = String(good!.count)
-                                                                            + " x " + String(good!.price) + " \u{20BD}"
+                section.initializeItem(reusableIdentifierOrNibName: "OrderMenuItemCell",
+                                       item: item) { (cell, item) in
+                                        
+                                        let viewCell = cell as! TBillMenuItemTableViewCell
+                                        let good = item.item as? TShopGood
+                                        
+                                        viewCell.itemName.text = good!.title
+                                        viewCell.itemPrice.text = String(good!.count)
+                                            + " x " + String(good!.price) + " \u{20BD}"
                 }
             }
         }
         
-        section.initializeCellWithReusableIdentifierOrNibName(identifier: "OrderCompanyNameCell",
-                                                              item: nil, itemType: 1) { (cell, item) in
-                                                                
-                                                                let viewCell = cell as! TBillCompanyNameTableViewCell
-                                                                
-                                                                viewCell.companyName.text = "order_review_total_price".localized
-                                                                viewCell.companyName.textAlignment = .right
-                                                                viewCell.orderDate.text = String(totalPrice) + " \u{20BD}"
-                                                                let color = DynamicColor(hexString: "F0F0F0")
-                                                                viewCell.contentView.backgroundColor = color
+        section.initializeItem(reusableIdentifierOrNibName: "OrderCompanyNameCell",
+                               item: nil, itemType: 1) { (cell, item) in
+                                
+                                let viewCell = cell as! TBillCompanyNameTableViewCell
+                                
+                                viewCell.companyName.text = "order_review_total_price".localized
+                                viewCell.companyName.textAlignment = .right
+                                viewCell.orderDate.text = String(totalPrice) + " \u{20BD}"
+                                let color = DynamicColor(hexString: "F0F0F0")
+                                viewCell.contentView.backgroundColor = color
         }
         
-        section.initializeCellWithReusableIdentifierOrNibName(identifier: "OrderRatingCell", item: nil) { (cell, item) in
+        section.initializeItem(reusableIdentifierOrNibName: "OrderRatingCell", item: nil) { (cell, item) in
             
             let viewCell = cell as! TOrderRatingTableViewCell
             viewCell.unratedColor = UIColor.lightGray
@@ -114,7 +114,7 @@ class TOrderFinishedViewController: UIViewController {
             
             viewCell.rating = rating!
             viewCell.ratingDidSetAction = { ratingMark in
-            
+                
                 self.ratingMark = ratingMark
                 item.userData = ratingMark
             }

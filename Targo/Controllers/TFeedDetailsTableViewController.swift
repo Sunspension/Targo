@@ -52,51 +52,51 @@ class TFeedDetailsTableViewController: UITableViewController {
         
         if company.alias == "targo" {
             
-            section.initializeCellWithReusableIdentifierOrNibName(identifier: "TagoNewsDetails",
-                                                                  item: self.news,
-                                                                  bindingAction: { (cell, item) in
-                                                                    
-                                                                    let news = item.item as! TFeedItem
-                                                                    let viewCell = cell as! TFeedTargoNewsDetailsTableViewCell
-                                                                    
-                                                                    viewCell.newsDetails.text = news.feedItemDescription
-                                                                    
-                                                                    let formatter = DateFormatter()
-                                                                    formatter.dateFormat = kDateTimeFormat
-                                                                    
-                                                                    if let date = formatter.date(from: news.createdAt) {
-                                                                        
-                                                                        let formatter = DateFormatter()
-                                                                        formatter.dateStyle = .short
-                                                                        formatter.timeStyle = .short
-                                                                        
-                                                                        viewCell.date.text = formatter.string(from: date)
-                                                                    }
+            section.initializeItem(reusableIdentifierOrNibName: "TagoNewsDetails",
+                                   item: self.news,
+                                   bindingAction: { (cell, item) in
+                                    
+                                    let news = item.item as! TFeedItem
+                                    let viewCell = cell as! TFeedTargoNewsDetailsTableViewCell
+                                    
+                                    viewCell.newsDetails.text = news.feedItemDescription
+                                    
+                                    let formatter = DateFormatter()
+                                    formatter.dateFormat = kDateTimeFormat
+                                    
+                                    if let date = formatter.date(from: news.createdAt) {
+                                        
+                                        let formatter = DateFormatter()
+                                        formatter.dateStyle = .short
+                                        formatter.timeStyle = .short
+                                        
+                                        viewCell.date.text = formatter.string(from: date)
+                                    }
             })
         }
         else {
             
-            section.initializeCellWithReusableIdentifierOrNibName(identifier: "CompanyNewsDetails",
-                                                                  item: self.news,
-                                                                  bindingAction: { (cell, item) in
-                                                                    
-                                                                    let news = item.item as! TFeedItem
-                                                                    let viewCell = cell as! TFeedCompanyNewsDetailsTableViewCell
-                                                                    
-                                                                    viewCell.companyTitle.text = self.company.title
-                                                                    viewCell.newsDetails.text = news.feedItemDescription
-                                                                    
-                                                                    let formatter = DateFormatter()
-                                                                    formatter.dateFormat = kDateTimeFormat
-                                                                    
-                                                                    if let date = formatter.date(from: news.createdAt) {
-                                                                        
-                                                                        let formatter = DateFormatter()
-                                                                        formatter.dateStyle = .short
-                                                                        formatter.timeStyle = .short
-                                                                        
-                                                                        viewCell.date.text = formatter.string(from: date)
-                                                                    }
+            section.initializeItem(reusableIdentifierOrNibName: "CompanyNewsDetails",
+                                   item: self.news,
+                                   bindingAction: { (cell, item) in
+                                    
+                                    let news = item.item as! TFeedItem
+                                    let viewCell = cell as! TFeedCompanyNewsDetailsTableViewCell
+                                    
+                                    viewCell.companyTitle.text = self.company.title
+                                    viewCell.newsDetails.text = news.feedItemDescription
+                                    
+                                    let formatter = DateFormatter()
+                                    formatter.dateFormat = kDateTimeFormat
+                                    
+                                    if let date = formatter.date(from: news.createdAt) {
+                                        
+                                        let formatter = DateFormatter()
+                                        formatter.dateStyle = .short
+                                        formatter.timeStyle = .short
+                                        
+                                        viewCell.date.text = formatter.string(from: date)
+                                    }
             })
         }
     }

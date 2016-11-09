@@ -84,24 +84,24 @@ class TSettingsTableViewController: UITableViewController, UITextFieldDelegate {
         
         for item in personalItems {
             
-            personalDataSection.initializeCellWithReusableIdentifierOrNibName(identifier: "SettingsCell",
-                                                                              item: self.user,
-                                                                              itemType: item,
-                                                                              bindingAction: self.binding)
+            personalDataSection.initializeItem(reusableIdentifierOrNibName: "SettingsCell",
+                                               item: self.user,
+                                               itemType: item,
+                                               bindingAction: self.binding)
         }
         
         let contactDataSection = CollectionSection(title: "settings_contact_data_title".localized)
         self.dataSource.sections.append(contactDataSection)
         
-        contactDataSection.initializeCellWithReusableIdentifierOrNibName(identifier: "SettingsPhoneCell",
-                                                                         item: self.user,
-                                                                         itemType: ItemTypeEnum.phone,
-                                                                         bindingAction: self.binding)
+        contactDataSection.initializeItem(reusableIdentifierOrNibName: "SettingsPhoneCell",
+                                          item: self.user,
+                                          itemType: ItemTypeEnum.phone,
+                                          bindingAction: self.binding)
         
-        contactDataSection.initializeCellWithReusableIdentifierOrNibName(identifier: "SettingsCell",
-                                                                         item: self.user,
-                                                                         itemType: ItemTypeEnum.email,
-                                                                         bindingAction: self.binding)
+        contactDataSection.initializeItem(reusableIdentifierOrNibName: "SettingsCell",
+                                          item: self.user,
+                                          itemType: ItemTypeEnum.email,
+                                          bindingAction: self.binding)
         
         // Uncomment the following line to preserve selection between presentations
 //         self.clearsSelectionOnViewWillAppear = false

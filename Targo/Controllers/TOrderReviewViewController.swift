@@ -212,186 +212,186 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
                 
                 totalPrice += item.count * item.item.price
                 
-                section.initializeCellWithReusableIdentifierOrNibName(identifier: "OrderItemCell",
-                                                                      item: item,
-                                                                      bindingAction: { (cell, item) in
-                                                                        
-                                                                        let good = item.item as! (item: TShopGood, count: Int)
-                                                                        let viewCell = cell as! TOrderItemTableViewCell
-                                                                        
-                                                                        viewCell.title.text = good.item.title
-                                                                        viewCell.details.text = good.item.goodDescription
-                                                                        viewCell.sum.text = String(good.count) + " x " + String(good.item.price) + " \u{20BD}"
-                                                                        viewCell.selectionStyle = .none
+                section.initializeItem(reusableIdentifierOrNibName: "OrderItemCell",
+                                       item: item,
+                                       bindingAction: { (cell, item) in
+                                        
+                                        let good = item.item as! (item: TShopGood, count: Int)
+                                        let viewCell = cell as! TOrderItemTableViewCell
+                                        
+                                        viewCell.title.text = good.item.title
+                                        viewCell.details.text = good.item.goodDescription
+                                        viewCell.sum.text = String(good.count) + " x " + String(good.item.price) + " \u{20BD}"
+                                        viewCell.selectionStyle = .none
                 })
             }
             
-            section.initializeDefaultCell(cellStyle: .value1,
-                                          item: self.company,
-                                          bindingAction: { (cell, item) in
-                                            
-                                            let company = item.item as! TCompanyAddress
-                                            cell.textLabel?.text = "order_targo_discount".localized
-                                            cell.detailTextLabel?.text = "- \(company.discount)%"
-                                            cell.detailTextLabel?.textColor = UIColor(hexString: kHexMainPinkColor)
+            section.initializeItem(cellStyle: .value1,
+                                   item: self.company,
+                                   bindingAction: { (cell, item) in
+                                    
+                                    let company = item.item as! TCompanyAddress
+                                    cell.textLabel?.text = "order_targo_discount".localized
+                                    cell.detailTextLabel?.text = "- \(company.discount)%"
+                                    cell.detailTextLabel?.textColor = UIColor(hexString: kHexMainPinkColor)
             })
             
-            section.initializeCellWithReusableIdentifierOrNibName(identifier: "OrderTotalPriceCell",
-                                                                  item: totalPrice - Int((Double(totalPrice) * (Double(self.company!.discount) / 100))),
-                                                                  bindingAction: { (cell, item) in
-                                                                    
-                                                                    let viewCell = cell as! TOrderTotalPriceTableViewCell
-                                                                    viewCell.details.text = "order_review_total_price".localized
-                                                                    viewCell.price.text = String(item.item as! Int) + " \u{20BD}"
-                                                                    viewCell.selectionStyle = .none
+            section.initializeItem(reusableIdentifierOrNibName: "OrderTotalPriceCell",
+                                   item: totalPrice - Int((Double(totalPrice) * (Double(self.company!.discount) / 100))),
+                                   bindingAction: { (cell, item) in
+                                    
+                                    let viewCell = cell as! TOrderTotalPriceTableViewCell
+                                    viewCell.details.text = "order_review_total_price".localized
+                                    viewCell.price.text = String(item.item as! Int) + " \u{20BD}"
+                                    viewCell.selectionStyle = .none
             })
             
             if let cards = self.cards , cards.count > 0 {
                 
                 self.selectedCardIndex = cards.count - 1
                 
-                section.initializeCellWithReusableIdentifierOrNibName(identifier: "PaymentMethodCell",
-                                                                      item: cards.last,
-                                                                      itemType: ItemTypeEnum.paymentMetod,
-                                                                      bindingAction: { (cell, item) in
-                                                                        
-                                                                        let viewCell = cell as! TPaymentMethodTableViewCell
-                                                                        let card = item.item as! TCreditCard
-                                                                        
-                                                                        viewCell.title.text = "credit_card_payment_method".localized
-                                                                        viewCell.details.text = card.mask
-                                                                        
-                                                                        switch card.type {
-                                                                            
-                                                                        case "Visa":
-                                                                            
-                                                                            viewCell.icon.image = UIImage(named: "visa")
-                                                                            
-                                                                            break
-                                                                            
-                                                                        case "MasterCard":
-                                                                            
-                                                                            viewCell.icon.image = UIImage(named: "mastercard")
-                                                                            
-                                                                            break
-                                                                            
-                                                                        default:
-                                                                            
-                                                                            break
-                                                                        }
+                section.initializeItem(reusableIdentifierOrNibName: "PaymentMethodCell",
+                                       item: cards.last,
+                                       itemType: ItemTypeEnum.paymentMetod,
+                                       bindingAction: { (cell, item) in
+                                        
+                                        let viewCell = cell as! TPaymentMethodTableViewCell
+                                        let card = item.item as! TCreditCard
+                                        
+                                        viewCell.title.text = "credit_card_payment_method".localized
+                                        viewCell.details.text = card.mask
+                                        
+                                        switch card.type {
+                                            
+                                        case "Visa":
+                                            
+                                            viewCell.icon.image = UIImage(named: "visa")
+                                            
+                                            break
+                                            
+                                        case "MasterCard":
+                                            
+                                            viewCell.icon.image = UIImage(named: "mastercard")
+                                            
+                                            break
+                                            
+                                        default:
+                                            
+                                            break
+                                        }
                 })
             }
             else {
                 
-                section.initializeCellWithReusableIdentifierOrNibName(identifier: "PaymentMethodCell",
-                                                                      item: nil,
-                                                                      itemType: ItemTypeEnum.addNewCard,
-                                                                      bindingAction: { (cell, item) in
-                                                                        
-                                                                        let viewCell = cell as! TPaymentMethodTableViewCell
-                                                                        
-                                                                        viewCell.title.text = "credit_card_payment_method".localized
-                                                                        viewCell.details.text = "credit_card_add_new_one".localized
-                                                                        viewCell.icon.image = UIImage(named: "icon-new-card")
-                                                                        viewCell.icon.tintColor = UIColor(hexString: kHexMainPinkColor)
+                section.initializeItem(reusableIdentifierOrNibName: "PaymentMethodCell",
+                                       item: nil,
+                                       itemType: ItemTypeEnum.addNewCard,
+                                       bindingAction: { (cell, item) in
+                                        
+                                        let viewCell = cell as! TPaymentMethodTableViewCell
+                                        
+                                        viewCell.title.text = "credit_card_payment_method".localized
+                                        viewCell.details.text = "credit_card_add_new_one".localized
+                                        viewCell.icon.image = UIImage(named: "icon-new-card")
+                                        viewCell.icon.tintColor = UIColor(hexString: kHexMainPinkColor)
                 })
             }
             
-            section.initializeCellWithReusableIdentifierOrNibName(identifier: "DeliveryCell",
-                                                                  item: nil,
-                                                                  itemType: ItemTypeEnum.deliveryType,
-                                                                  bindingAction: { (cell, item) in
-                                                                    
-                                                                    let viewCell = cell as! TDeliveryMethodTableViewCell
-                                                                    
-                                                                    viewCell.deliveryMethod.tintColor = UIColor(hexString: kHexMainPinkColor)
-                                                                    viewCell.selectionStyle = .none
-                                                                    viewCell.deliveryMethod.setTitle("order_not_chosen".localized, forSegmentAt: 0)
-                                                                    viewCell.deliveryMethod.setTitle("order_take_away".localized, forSegmentAt: 1)
-                                                                    viewCell.deliveryMethod.setTitle("order_take_inside".localized, forSegmentAt: 2)
-                                                                    
-                                                                    let _ = viewCell.deliveryMethod
-                                                                        .bnd_selectedSegmentIndex
-                                                                        .observe(with: { (event: Event<Int, NoError>) in
-                                                                        
-                                                                        switch event {
-                                                                            
-                                                                        case .next(let index):
-                                                                            
-                                                                            self.serviceId = index
-                                                                            break
-                                                                            
-                                                                            default:
-                                                                            break
-                                                                        }
-                                                                    })
-                })
-            
-            section.initializeCellWithReusableIdentifierOrNibName(identifier: "NumberOfPersonsCell",
-                                                                  item: nil,
-                                                                  itemType: ItemTypeEnum.numberOfPersons,
-                                                                  bindingAction: { (cell, item) in
-                                                                    
-                                                                    let viewCell = cell as! TOrderNumberOfPersons
-                                                                    
-                                                                    if item.userData == nil {
-                                                                        
-                                                                        item.userData = 1
-                                                                    }
-                                                                    
-                                                                    viewCell.title.text = "order_number_of_persons_title".localized
-                                                                    viewCell.quantityLabel.text = String(item.userData as! Int)
-                                                                    
-                                                                    viewCell.buttonPlus.bnd_tap.observe(with: {_ in 
-                                                                        
-                                                                        var count = item.userData as! Int
-                                                                        count += 1
-                                                                        item.userData = count
-                                                                        viewCell.quantityLabel.text = String(count)
-                                                                        
-                                                                    }).disposeIn(viewCell.bag)
-                                                                    
-                                                                    viewCell.buttonMinus.bnd_tap.observe(with: {_ in 
-                                                                        
-                                                                        if let count = item.userData as? Int , count > 1 {
-                                                                            
-                                                                            var quantity = count
-                                                                            quantity -= 1
-                                                                            item.userData = quantity
-                                                                            viewCell.quantityLabel.text = String(quantity)
-                                                                        }
-                                                                        
-                                                                    }).disposeIn(viewCell.bag)
-
+            section.initializeItem(reusableIdentifierOrNibName: "DeliveryCell",
+                                   item: nil,
+                                   itemType: ItemTypeEnum.deliveryType,
+                                   bindingAction: { (cell, item) in
+                                    
+                                    let viewCell = cell as! TDeliveryMethodTableViewCell
+                                    
+                                    viewCell.deliveryMethod.tintColor = UIColor(hexString: kHexMainPinkColor)
+                                    viewCell.selectionStyle = .none
+                                    viewCell.deliveryMethod.setTitle("order_not_chosen".localized, forSegmentAt: 0)
+                                    viewCell.deliveryMethod.setTitle("order_take_away".localized, forSegmentAt: 1)
+                                    viewCell.deliveryMethod.setTitle("order_take_inside".localized, forSegmentAt: 2)
+                                    
+                                    let _ = viewCell.deliveryMethod
+                                        .bnd_selectedSegmentIndex
+                                        .observe(with: { (event: Event<Int, NoError>) in
+                                            
+                                            switch event {
+                                                
+                                            case .next(let index):
+                                                
+                                                self.serviceId = index
+                                                break
+                                                
+                                            default:
+                                                break
+                                            }
+                                        })
             })
             
-            section.initializeCellWithReusableIdentifierOrNibName(identifier: "DetailsCell",
-                                                                  item: nil,
-                                                                  itemType: ItemTypeEnum.orderTime,
-                                                                  bindingAction: { (cell, item) in
-                                                                    
-                                                                    let viewCell = cell as! TDetailsTableViewCell
-                                                                    
-                                                                    viewCell.title.text = "order_time_title".localized
-                                                                    viewCell.details.text = "order_time_place_holder".localized
+            section.initializeItem(reusableIdentifierOrNibName: "NumberOfPersonsCell",
+                                   item: nil,
+                                   itemType: ItemTypeEnum.numberOfPersons,
+                                   bindingAction: { (cell, item) in
+                                    
+                                    let viewCell = cell as! TOrderNumberOfPersons
+                                    
+                                    if item.userData == nil {
+                                        
+                                        item.userData = 1
+                                    }
+                                    
+                                    viewCell.title.text = "order_number_of_persons_title".localized
+                                    viewCell.quantityLabel.text = String(item.userData as! Int)
+                                    
+                                    viewCell.buttonPlus.bnd_tap.observe(with: {_ in
+                                        
+                                        var count = item.userData as! Int
+                                        count += 1
+                                        item.userData = count
+                                        viewCell.quantityLabel.text = String(count)
+                                        
+                                    }).disposeIn(viewCell.bag)
+                                    
+                                    viewCell.buttonMinus.bnd_tap.observe(with: {_ in
+                                        
+                                        if let count = item.userData as? Int , count > 1 {
+                                            
+                                            var quantity = count
+                                            quantity -= 1
+                                            item.userData = quantity
+                                            viewCell.quantityLabel.text = String(quantity)
+                                        }
+                                        
+                                    }).disposeIn(viewCell.bag)
+                                    
             })
             
-            section.initializeCellWithReusableIdentifierOrNibName(identifier: "OrderDescriptionCell",
-                                                                  item: nil,
-                                                                  itemType: ItemTypeEnum.orderDescription,
-                                                                  bindingAction: { (cell, item) in
-                                                                    
-                                                                    let viewCell = cell as! TOrderDescriptionTableViewCell
-                                                                    
-                                                                    viewCell.title.text = "order_description_title".localized
-                                                                    let layer = viewCell.textView.layer
-                                                                    layer.borderWidth = 1
-                                                                    layer.borderColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 0.8).cgColor
-                                                                    
-                                                                    viewCell.textView.tintColor = UIColor(hexString: kHexMainPinkColor)
-                                                                    viewCell.textView.isUserInteractionEnabled = false
-                                                                    viewCell.textView.delegate = self
-                })
+            section.initializeItem(reusableIdentifierOrNibName: "DetailsCell",
+                                   item: nil,
+                                   itemType: ItemTypeEnum.orderTime,
+                                   bindingAction: { (cell, item) in
+                                    
+                                    let viewCell = cell as! TDetailsTableViewCell
+                                    
+                                    viewCell.title.text = "order_time_title".localized
+                                    viewCell.details.text = "order_time_place_holder".localized
+            })
+            
+            section.initializeItem(reusableIdentifierOrNibName: "OrderDescriptionCell",
+                                   item: nil,
+                                   itemType: ItemTypeEnum.orderDescription,
+                                   bindingAction: { (cell, item) in
+                                    
+                                    let viewCell = cell as! TOrderDescriptionTableViewCell
+                                    
+                                    viewCell.title.text = "order_description_title".localized
+                                    let layer = viewCell.textView.layer
+                                    layer.borderWidth = 1
+                                    layer.borderColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 0.8).cgColor
+                                    
+                                    viewCell.textView.tintColor = UIColor(hexString: kHexMainPinkColor)
+                                    viewCell.textView.isUserInteractionEnabled = false
+                                    viewCell.textView.delegate = self
+            })
             
         }
         

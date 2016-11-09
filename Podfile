@@ -46,7 +46,7 @@ pod 'KeychainSwift', '~> 7.0'
 
 #Events
 pod 'BrightFutures'
-pod 'Bond', '~> 5.0-beta10'
+pod 'Bond', '~> 5.0'
 
 #Loggin
 

@@ -161,7 +161,9 @@ class TFeedTableViewController: UITableViewController {
                 
                 if company.alias == "targo" {
                     
-                    section.initializeCellWithReusableIdentifierOrNibName(identifier: TNewsTableViewCell.identifier(), item: item, bindingAction: { (cell, item) in
+                    section.initializeItem(reusableIdentifierOrNibName: TNewsTableViewCell.identifier(),
+                                           item: item,
+                                           bindingAction: { (cell, item) in
                         
                         if item.indexPath.row + 10
                             >= self.dataSource.sections[item.indexPath.section].items.count
@@ -194,7 +196,9 @@ class TFeedTableViewController: UITableViewController {
                             viewCell.actionButton.setTitle("feed_open_menu_action".localized, for: .normal)
                             viewCell.actionButton.bnd_tap.observe(with: { event in
                                 
-                                // TODO open company menu
+                                let controller = TCompanyMenuTableViewController.controllerInstance(addressId: newsItem.addressId)
+                                
+                                self.navigationController?.pushViewController(controller, animated: true)
                                 
                             }).disposeIn(viewCell.bag)
                             
@@ -205,7 +209,9 @@ class TFeedTableViewController: UITableViewController {
                             viewCell.actionButton.setTitle("feed_open_company_info_action".localized, for: .normal)
                             viewCell.actionButton.bnd_tap.observe(with: { event in
                                 
-                                // TODO open company info
+                                let controller = TCompanyInfoTableViewController.controllerInstance(addressId: newsItem.addressId)
+                                
+                                self.navigationController?.pushViewController(controller, animated: true)
                                 
                             }).disposeIn(viewCell.bag)
                             
@@ -233,7 +239,7 @@ class TFeedTableViewController: UITableViewController {
                 }
                 else {
                     
-                    section.initializeCellWithReusableIdentifierOrNibName(identifier: TCompanyNewsTableViewCell.identifier(), item: item, bindingAction: { (cell, item) in
+                    section.initializeItem(reusableIdentifierOrNibName: TCompanyNewsTableViewCell.identifier(), item: item, bindingAction: { (cell, item) in
                         
                         if item.indexPath.row + 10
                             >= self.dataSource.sections[item.indexPath.section].items.count

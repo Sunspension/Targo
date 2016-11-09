@@ -25,6 +25,8 @@ class TFeedItem: NSObject, Mappable {
     
     var companyId = 0
     
+    var addressId = 0
+    
     var actionId = 0
     
     required convenience init?(map: Map) {
@@ -42,5 +44,6 @@ class TFeedItem: NSObject, Mappable {
         createdAt <- map["created_at"]
         updatedAt <- map["updated_at"]
         companyId <- map["company_id"]
+        addressId <- map["address_id"]
     }
 }

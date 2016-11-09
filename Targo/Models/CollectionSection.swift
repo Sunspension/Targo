@@ -26,37 +26,37 @@ class CollectionSection: NSObject {
         self.title = title;
     }
     
-    func initializeDefaultCell(_ reusableIdentifier: String? = nil,
-                               cellStyle: UITableViewCellStyle,
-                               item: Any?,
-                               itemType: Any? = nil,
-                               bindingAction: @escaping (_ cell:UITableViewCell, _ item: CollectionSectionItem) -> Void) {
-    
-        let item = CollectionSectionItem(reusableIdentifier: reusableIdentifier, cellStyle: cellStyle, item: item)
+    func initializeItem(reusableIdentifier identifier: String? = nil,
+                        cellStyle: UITableViewCellStyle,
+                        item: Any?,
+                        itemType: Any? = nil,
+                        bindingAction: @escaping (_ cell:UITableViewCell, _ item: CollectionSectionItem) -> Void) {
+        
+        let item = CollectionSectionItem(reusableIdentifier: identifier, cellStyle: cellStyle, item: item)
         item.bindingAction = bindingAction
         item.itemType = itemType
         self.items.append(item)
     }
     
-    func initializeCellWithReusableIdentifierOrNibName(identifier identifierOrNibName: String,
-                                                       item: Any?,
-                                                       itemType: Any? = nil,
-                                                       bindingAction: @escaping (_ cell:UITableViewCell, _ item: CollectionSectionItem) -> Void) {
+    func initializeItem(reusableIdentifierOrNibName identifier: String,
+                        item: Any?,
+                        itemType: Any? = nil,
+                        bindingAction: @escaping (_ cell:UITableViewCell, _ item: CollectionSectionItem) -> Void) {
         
-        let item = CollectionSectionItem(reusableIdentifierOrNibName: identifierOrNibName, item: item)
+        let item = CollectionSectionItem(reusableIdentifierOrNibName: identifier, item: item)
         item.itemType = itemType
         item.bindingAction = bindingAction
         self.items.append(item)
     }
     
-    func initializeSwappableCellWithReusableIdentifierOrNibName(firstIdentifier firstIdentifierOrNibName: String,
-                                                                secondIdentifier secondIdentifierOrNibName: String,
-                                                                item: Any?,
-                                                                itemType: Any? = nil,
-                                                                bindingAction: @escaping (_ cell:UITableViewCell, _ item: CollectionSectionItem) -> Void) {
+    func initializeSwappableItem(firstIdentifierOrNibName firstIdentifier: String,
+                                 secondIdentifierOrNibName secondIdentifier: String,
+                                 item: Any?,
+                                 itemType: Any? = nil,
+                                 bindingAction: @escaping (_ cell:UITableViewCell, _ item: CollectionSectionItem) -> Void) {
         
-        let item = CollectionSectionItem(firstReusableIdentifierOrNibName: firstIdentifierOrNibName,
-                                         secondReusableIdentifierOrNibName: secondIdentifierOrNibName, item: item)
+        let item = CollectionSectionItem(firstReusableIdentifierOrNibName: firstIdentifier,
+                                         secondReusableIdentifierOrNibName: secondIdentifier, item: item)
         item.bindingAction = bindingAction
         item.itemType = itemType
         self.items.append(item)

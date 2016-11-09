@@ -305,7 +305,7 @@ struct Api {
         
         if let session = realm.objects(UserSession.self).last {
             
-            server.loadUserById(userId: session.userId)
+            server.loadUser(userId: session.userId)
                 
                 .responseJSON { response in
                     
@@ -338,6 +338,38 @@ struct Api {
                     p.success(user)
                 }
         }
+        
+        return p.future
+    }
+    
+    func loadCompanyAddress(addressId: Int) -> Future<TCompanyAddress, TargoError> {
+        
+        let p = Promise<TCompanyAddress, TargoError>()
+        
+        server.loadCompanyAddress(addressId: addressId)
+            
+            .responseJSON { response in
+            
+                if let error = response.result.error {
+                    
+                    print("Response error: \(error)")
+                }
+                else {
+                    
+                    print("Response result: \(response.result.value)")
+                }
+            }
+            .responseObject(keyPath: "data") { (response: DataResponse<TCompanyAddress>) in
+                
+                guard response.result.error == nil else {
+                    
+                    p.failure(.error(error: response.result.error!))
+                    return
+                }
+                
+                let result = response.result.value!
+                p.success(result)
+            }
         
         return p.future
     }
@@ -660,11 +692,11 @@ struct Api {
         return p.future
     }
     
-    func loadImageById(imageId: Int) -> Future<TImage, TargoError> {
+    func loadImage(imageId: Int) -> Future<TImage, TargoError> {
         
         let p = Promise<TImage, TargoError>()
         
-        server.loadImageById(imageId: imageId)
+        server.loadImage(imageId: imageId)
             
             .responseJSON { response in
                 
@@ -677,7 +709,7 @@ struct Api {
                     print("Response result: \(response.result.value)")
                 }
                 
-            }.responseObject(keyPath: "data.image") { (response: DataResponse<TImage>) in
+            }.responseObject(keyPath: "data") { (response: DataResponse<TImage>) in
                 
                 guard response.result.error == nil else {
                     
@@ -691,11 +723,11 @@ struct Api {
         return p.future
     }
     
-    func loadImagesByIds(imageIds: [Int]) -> Future<[TImage], TargoError> {
+    func loadImages(imageIds: [Int]) -> Future<[TImage], TargoError> {
         
         let p = Promise<[TImage], TargoError>()
         
-        server.loadImagesByIds(imageIds: imageIds)
+        server.loadImages(imageIds: imageIds)
             
             .responseJSON { response in
             

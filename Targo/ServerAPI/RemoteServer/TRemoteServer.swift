@@ -54,13 +54,13 @@ struct TRemoteServer: PRemoteServerV1 {
         let applicationVersion = info?["CFBundleShortVersionString"]
         
         var params: [String: Any] = ["phone" : phoneNumber,
-                                           "code" : code,
-                                           "device_type" : deviceType,
-                                           "device_token" : deviceToken,
-                                           "type" : "code",
-                                           "application" : bundleId ?? "",
-                                           "system_version" : systemVersion,
-                                           "application_version" : applicationVersion ?? ""]
+                                     "code" : code,
+                                     "device_type" : deviceType,
+                                     "device_token" : deviceToken,
+                                     "type" : "code",
+                                     "application" : bundleId ?? "",
+                                     "system_version" : systemVersion,
+                                     "application_version" : applicationVersion ?? ""]
         
         if parameters != nil {
             
@@ -75,11 +75,19 @@ struct TRemoteServer: PRemoteServerV1 {
         return self.request(method: .delete, remotePath: baseURLString + "/auth")
     }
     
-    func loadUserById(userId: Int) -> DataRequest {
+    func loadUser(userId: Int) -> DataRequest {
         
         return self.request(method: .get,
                             remotePath: baseURLString + "/user/\(userId)",
                             parameters: ["extend" : "image"])
+    }
+    
+    func loadCompanyAddress(addressId: Int) -> DataRequest {
+        
+        let params: [String : Any] = ["extend" : "image"]
+        
+        return self.request(method: .get,
+                            remotePath: baseURLString + "/company-address" + "/\(addressId)", parameters: params)
     }
     
     func loadCompanyAddresses(location: CLLocation,
@@ -94,11 +102,11 @@ struct TRemoteServer: PRemoteServerV1 {
         //                                           "conditions" : ["dist" : ["<" : 3000]]]
         
         var params: [String: Any] = ["lat" : location.coordinate.latitude,
-                                           "lon" : location.coordinate.longitude as Any,
-                                           "order" : ["dist" : "asc"],
-                                           "extend" : "image",
-                                           "page_size" : pageSize,
-                                           "page" : pageNumber]
+                                     "lon" : location.coordinate.longitude,
+                                     "order" : ["dist" : "asc"],
+                                     "extend" : "image",
+                                     "page_size" : pageSize,
+                                     "page" : pageNumber]
         
         if let query = query {
             
@@ -198,12 +206,12 @@ struct TRemoteServer: PRemoteServerV1 {
         return self.request(method: .get, remotePath: baseURLString + "/company", parameters: params)
     }
     
-    func loadImageById(imageId: Int) -> DataRequest {
+    func loadImage(imageId: Int) -> DataRequest {
         
         return self.request(method: .get, remotePath: baseURLString + "/image/" + String(imageId))
     }
     
-    func loadImagesByIds(imageIds: [Int]) -> DataRequest {
+    func loadImages(imageIds: [Int]) -> DataRequest {
         
         let params: [String : Any] = ["filters" : [ "id" : imageIds ]]
         return self.request(method: .get, remotePath: baseURLString + "/image", parameters: params)
@@ -322,6 +330,7 @@ struct TRemoteServer: PRemoteServerV1 {
         
         return self.request(method: .put, remotePath: baseURLString + "/shop-order/\(orderId)", parameters: ["mark" : mark])
     }
+    
     
     // MARK: - Private methods
     

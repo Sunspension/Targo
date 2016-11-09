@@ -128,42 +128,42 @@ class UserProfileTableViewController: UITableViewController, UIImagePickerContro
             cell.textLabel?.text = item.item as? String
         }
         
-        userInfo.initializeCellWithReusableIdentifierOrNibName(identifier: headerIdentifier,
-                                                               item: nil,
-                                                               itemType: ItemTypeEnum.userInfo,
-                                                               bindingAction: headerCellBinding)
+        userInfo.initializeItem(reusableIdentifierOrNibName: headerIdentifier,
+                                item: nil,
+                                itemType: ItemTypeEnum.userInfo,
+                                bindingAction: headerCellBinding)
         self.dataSource.sections.append(userInfo)
         
         
         let mainSection = CollectionSection()
         self.dataSource.sections.append(mainSection)
         
-        mainSection.initializeDefaultCell(identifier,
-                                          cellStyle: .default,
-                                          item: "profile_item_my_cards".localized,
-                                          itemType: ItemTypeEnum.myCards,
-                                          bindingAction: bindingClosure)
+        mainSection.initializeItem(reusableIdentifier: identifier,
+                                   cellStyle: .default,
+                                   item: "profile_item_my_cards".localized,
+                                   itemType: ItemTypeEnum.myCards,
+                                   bindingAction: bindingClosure)
         
-        mainSection.initializeDefaultCell(identifier,
-                                          cellStyle: .default,
-                                          item: "profile_item_information".localized,
-                                          itemType: ItemTypeEnum.information,
-                                          bindingAction: bindingClosure)
+        mainSection.initializeItem(reusableIdentifier: identifier,
+                                   cellStyle: .default,
+                                   item: "profile_item_information".localized,
+                                   itemType: ItemTypeEnum.information,
+                                   bindingAction: bindingClosure)
         
-        mainSection.initializeDefaultCell(identifier,
-                                          cellStyle: .default,
-                                          item: "profile_item_settings".localized,
-                                          itemType: ItemTypeEnum.settings,
-                                          bindingAction: bindingClosure)
+        mainSection.initializeItem(reusableIdentifier: identifier,
+                                   cellStyle: .default,
+                                   item: "profile_item_settings".localized,
+                                   itemType: ItemTypeEnum.settings,
+                                   bindingAction: bindingClosure)
         
         let logout = CollectionSection()
         self.dataSource.sections.append(logout)
         
-        logout.initializeDefaultCell(identifier,
-                                     cellStyle: .default,
-                                     item: "profile_item_logout".localized,
-                                     itemType: ItemTypeEnum.logout,
-                                     bindingAction: bindingClosure)
+        logout.initializeItem(reusableIdentifier: identifier,
+                              cellStyle: .default,
+                              item: "profile_item_logout".localized,
+                              itemType: ItemTypeEnum.logout,
+                              bindingAction: bindingClosure)
         
         self.tableView.dataSource = self.dataSource
         self.tableView.delegate = self

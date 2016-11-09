@@ -18,9 +18,11 @@ protocol PRemoteServerV1 {
     
     func deauthorization() -> DataRequest
     
-    func loadUserById(userId: Int) -> DataRequest
+    func loadUser(userId: Int) -> DataRequest
     
     func loadCompanyAddresses(location: CLLocation, pageNumber: Int, pageSize: Int, query: String?, distance: Int?) -> DataRequest
+    
+    func loadCompanyAddress(addressId: Int) -> DataRequest
     
     func loadCompanyMenu(companyId: Int, pageNumber: Int, pageSize: Int) -> DataRequest
     
@@ -44,9 +46,9 @@ protocol PRemoteServerV1 {
     
     func loadCompanies(companiesIds: [Int]) -> DataRequest
     
-    func loadImageById(imageId: Int) -> DataRequest
+    func loadImage(imageId: Int) -> DataRequest
     
-    func loadImagesByIds(imageIds: [Int]) -> DataRequest
+    func loadImages(imageIds: [Int]) -> DataRequest
     
     func loadShopOrders(updatedDate: String, olderThen: Bool, pageSize: Int) -> DataRequest
     
