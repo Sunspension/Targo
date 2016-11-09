@@ -39,6 +39,16 @@ class TFeedTableViewController: UITableViewController {
     
     fileprivate var canLoadNext = false
     
+    fileprivate var dummyView: UILabel = {
+        
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 70))
+        label.textColor = UIColor.gray
+        label.textAlignment = .center
+        label.text = "Нет новостей"
+        
+        return label
+    }()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -136,6 +146,16 @@ class TFeedTableViewController: UITableViewController {
                 }
                 
                 self?.createDataSource()
+                
+                if self?.news.count == 0 {
+                    
+                    self?.tableView.tableFooterView = self?.dummyView
+                }
+                else {
+                    
+                    self?.tableView.tableFooterView = UIView()
+                }
+
                 self?.tableView.reloadData()
             }
             .onFailure {[unowned self] error in

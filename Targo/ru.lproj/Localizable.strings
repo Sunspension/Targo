@@ -48,9 +48,9 @@
 
 "order_status_new" = "Заказ отправлен";
 
-"order_status_seen" = "Заказ просмотрен";
+"order_status_seen" = "Заказ просматривается";
 
-"order_status_processing" = "Заказ будет скоро готов";
+"order_status_processing" = "Заказ в обработке";
 
 "order_status_canceled" = "Заказ отменен";
 
@@ -58,7 +58,7 @@
 
 "order_status_ready" = "Заказ готов";
 
-"order_status_finished" = "Заказ выполнен";
+"order_status_finished" = "Заказ выдан";
 
 "order_status_pay_success" = "Заказ выполняется";
 

@@ -269,6 +269,10 @@ class TOrderStatusViewController: UIViewController {
                             
                             self?.timerLabel.attributedText = self?.makeAttributedTimeString(time: time)
                         }
+                        else {
+                            
+                            self?.timerLabel.attributedText = nil
+                        }
                     })
                     
                     countDownTimer?.startTimer()

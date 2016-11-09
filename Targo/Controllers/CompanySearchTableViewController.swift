@@ -67,6 +67,16 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
     
     fileprivate var bookmarkButton = UIButton(type: .custom)
     
+    fileprivate var dummyView: UILabel = {
+       
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 70))
+        label.textColor = UIColor.gray
+        label.textAlignment = .center
+        label.text = "Нет заведений"
+        
+        return label
+    }()
+    
     
     deinit {
         
@@ -309,7 +319,7 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
                 pageNumber: self.pageNumber,
                 pageSize: self.pageSize)
                 
-                .onSuccess(callback: { companyPage in
+                .onSuccess(callback: { [unowned self] companyPage in
                     
                     self.loadingStatus = .loaded
                     
@@ -334,9 +344,19 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
                     
                     self.section.items.removeAll()
                     self.createDataSource()
+                    
+                    if self.section.items.count == 0 {
+                        
+                        self.tableView.tableFooterView = self.dummyView
+                    }
+                    else {
+                        
+                        self.tableView.tableFooterView = UIView()
+                    }
+                    
                     self.tableView.reloadData()
                     
-                    }).onFailure(callback: { error in
+                    }).onFailure(callback: { [unowned self] error in
                         
                         self.loadingStatus = .failed
                         
@@ -396,6 +416,16 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
                 
                 self.companiesPage = companyPage
                 self.createDataSource()
+                
+                if self.section.items.count == 0 {
+                    
+                    self.tableView.tableFooterView = self.dummyView
+                }
+                else {
+                    
+                    self.tableView.tableFooterView = UIView()
+                }
+                
                 self.tableView.reloadData()
                 
                 if self.pageSize == companyPage.companies.count {
@@ -550,6 +580,16 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
                 }
                 
                 self.createFavoriteDataSource(companyPage)
+                
+                if self.favoriteSection.items.count == 0 {
+                    
+                    self.tableView.tableFooterView = self.dummyView
+                }
+                else {
+                    
+                    self.tableView.tableFooterView = UIView()
+                }
+                
                 self.tableView.reloadData()
                 
                 //                    if self.pageSize == companyPage.companies.count {
@@ -717,6 +757,16 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
                 
                 // apply received data
                 self.createSearchDataSource()
+                
+                if self.searchSection.items.count == 0 {
+                    
+                    self.tableView.tableFooterView = self.dummyView
+                }
+                else {
+                    
+                    self.tableView.tableFooterView = UIView()
+                }
+                
                 self.tableView.reloadData()
                 
                 }).onFailure(callback: { error in

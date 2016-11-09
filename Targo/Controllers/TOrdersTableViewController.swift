@@ -21,7 +21,21 @@ private enum ShopOrdersSectionEnum: Int {
 
 class TOrdersTableViewController: UITableViewController {
 
-    var dataSource: GenericTableViewDataSource<THistoryOrderItemTableViewCell, TShopOrder>?
+    fileprivate var dataSource: GenericTableViewDataSource<THistoryOrderItemTableViewCell, TShopOrder>?
+    
+    fileprivate var dummyView: UILabel = {
+        
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 70))
+        label.textColor = UIColor.gray
+        label.textAlignment = .center
+        label.text = "Нет заказов"
+        
+        return label
+    }()
+    
+    fileprivate var loading = false
+    
+    fileprivate var timer: Timer?
     
     var companies: [TCompany]?
     
@@ -29,11 +43,7 @@ class TOrdersTableViewController: UITableViewController {
     
     var companyImages: [TImage]?
     
-    var loading = false
-    
     var checkingOrdersLoadingStatus = TLoadingStatusEnum.idle
-    
-    var timer: Timer?
     
     
     deinit {
@@ -43,16 +53,16 @@ class TOrdersTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        NotificationCenter.default.addObserver(self,
-                                                         selector: #selector(TOrdersTableViewController.onOrdersLoadNotification(_:)),
-                                                         name: NSNotification.Name(rawValue: kTargoDidLoadOrdersNotification),
-                                                         object: nil)
         
         NotificationCenter.default.addObserver(self,
-                                                         selector: #selector(TOrdersTableViewController.onOrdersLoadNotification(_:)),
-                                                         name: NSNotification.Name(rawValue: kTargoUserDidCancelOrderNotification),
-                                                         object: nil)
+                                               selector: #selector(TOrdersTableViewController.onOrdersLoadNotification(_:)),
+                                               name: NSNotification.Name(rawValue: kTargoDidLoadOrdersNotification),
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(TOrdersTableViewController.onOrdersLoadNotification(_:)),
+                                               name: NSNotification.Name(rawValue: kTargoUserDidCancelOrderNotification),
+                                               object: nil)
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
@@ -352,6 +362,16 @@ class TOrdersTableViewController: UITableViewController {
                             self?.companyImages = images
                             
                             self?.createDataSource()
+                            
+                            if self?.orders?.count == 0 {
+                                
+                                self?.tableView.tableFooterView = self?.dummyView
+                            }
+                            else {
+                                
+                                self?.tableView.tableFooterView = UIView()
+                            }
+                            
                             self?.tableView.reloadData()
                             
                             }).onFailure(callback: {[weak self] error in

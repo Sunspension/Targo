@@ -48,9 +48,9 @@
 
 "order_status_new" = "Order was sent";
 
-"order_status_seen" = "Order have been seen";
+"order_status_seen" = "Order is being seen";
 
-"order_status_processing" = "Order be ready very soon";
+"order_status_processing" = "Order in progress";
 
 "order_status_canceled" = "Order is canceled";
 

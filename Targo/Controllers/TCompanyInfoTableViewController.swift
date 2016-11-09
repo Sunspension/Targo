@@ -235,7 +235,29 @@ class TCompanyInfoTableViewController: UITableViewController {
     
     func openMapAction() {
         
-        self.openMapNavigationAction?()
+        guard self.openMapNavigationAction != nil else {
+            
+            if let mapViewController = self.instantiateViewControllerWithIdentifierOrNibName("CompaniesOnMaps") as? TCompaniesOnMapsViewController {
+                
+                if let company = self.company {
+                    
+                    mapViewController.companies = [company]
+                }
+                
+                if let image = self.companyImage {
+                    
+                    mapViewController.images = [image]
+                }
+                
+                mapViewController.reason = OpenMapsReasonEnum.oneCompany
+                
+                self.navigationController?.pushViewController(mapViewController, animated: true)
+            }
+            
+            return
+        }
+        
+        self.openMapNavigationAction!()
     }
     
     func makeCall() {
@@ -319,7 +341,27 @@ class TCompanyInfoTableViewController: UITableViewController {
     
     func openCompanyMenu() {
         
-        self.makeOrderNavigationAction?()
+        guard self.makeOrderNavigationAction != nil else {
+            
+            if let controller = self.instantiateViewControllerWithIdentifierOrNibName("MenuController") as? TCompanyMenuTableViewController {
+
+                if let company = self.company {
+                    
+                    controller.company = company
+                }
+                
+                if let image = self.companyImage {
+                    
+                    controller.companyImage = image
+                }
+                
+                self.navigationController?.pushViewController(controller, animated: true)
+            }
+            
+            return
+        }
+        
+        self.makeOrderNavigationAction!()
     }
 
     func makeFavorite() {
