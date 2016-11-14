@@ -1896,7 +1896,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Y5N-Jg-6wT" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Profile" image="icon-user" id="Unl-v9-NUi"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="2w6-t8-eaU">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="2w6-t8-eaU">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1931,6 +1931,10 @@
         <scene sceneID="YJa-Y0-a9Y">
             <objects>
                 <viewController useStoryboardIdentifierAsRestorationIdentifier="YES" id="RW0-rA-Qwf" customClass="TIntroPageController" customModule="Targo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="gzi-lE-TrD"/>
+                        <viewControllerLayoutGuide type="bottom" id="Yg8-59-SCg"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="1hq-4a-mdK">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="436"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

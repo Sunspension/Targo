@@ -158,8 +158,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         
-        
-        let token = deviceToken.description.components(separatedBy: CharacterSet.alphanumerics.inverted).joined(separator: "")
+        let token =  deviceToken.map { String(format: "%02.2hhx", arguments: [$0]) }.joined()
         
         let defaults = UserDefaults.standard
         

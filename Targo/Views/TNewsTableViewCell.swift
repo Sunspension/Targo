@@ -21,7 +21,7 @@ class TNewsTableViewCell: UITableViewCell {
     
     @IBOutlet weak var imageAcpectRatio: NSLayoutConstraint!
     
-    @IBOutlet weak var imageHeight: NSLayoutConstraint!
+    @IBOutlet weak var imageZeroHeight: NSLayoutConstraint!
     
     @IBOutlet weak var actionButtonHeight: NSLayoutConstraint!
     
@@ -39,12 +39,16 @@ class TNewsTableViewCell: UITableViewCell {
         bag.dispose()
         actionButtonHeight.priority = 750
         actionButtonZeroHeight.priority = 250
+        imageZeroHeight.priority = 750
+        imageAcpectRatio.priority = 250
         actionButton.setTitle("", for: .normal)
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        imageZeroHeight.priority = 750
+        imageAcpectRatio.priority = 250
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

@@ -21,13 +21,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qEX-qg-eXi">
-                        <rect key="frame" x="16" y="8" width="238" height="21"/>
+                        <rect key="frame" x="16" y="8" width="242.5" height="21"/>
                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PUS-M8-fuc">
-                        <rect key="frame" x="16" y="37" width="288" height="79"/>
+                        <rect key="frame" x="16" y="36" width="288" height="80"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
@@ -43,12 +43,12 @@
                         <rect key="frame" x="16" y="294" width="288" height="40"/>
                         <constraints>
                             <constraint firstAttribute="height" priority="750" constant="40" id="Brt-pS-XA9"/>
-                            <constraint firstAttribute="height" priority="750" id="aMq-fR-pUY"/>
+                            <constraint firstAttribute="height" priority="250" id="aMq-fR-pUY"/>
                         </constraints>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CCv-vy-cyL">
-                        <rect key="frame" x="262" y="8" width="42" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <rect key="frame" x="266.5" y="10" width="37.5" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -56,7 +56,7 @@
                 <constraints>
                     <constraint firstItem="qEX-qg-eXi" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="4jC-gd-B4t"/>
                     <constraint firstItem="qEX-qg-eXi" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="4lu-an-dqh"/>
-                    <constraint firstItem="PUS-M8-fuc" firstAttribute="top" secondItem="CCv-vy-cyL" secondAttribute="bottom" constant="8" id="88S-6g-54r"/>
+                    <constraint firstItem="PUS-M8-fuc" firstAttribute="top" secondItem="CCv-vy-cyL" secondAttribute="bottom" constant="8" symbolic="YES" id="88S-6g-54r"/>
                     <constraint firstItem="zYc-xu-oHb" firstAttribute="top" secondItem="oQe-x1-KLR" secondAttribute="bottom" constant="8" id="FOY-hU-wmL"/>
                     <constraint firstItem="CCv-vy-cyL" firstAttribute="leading" secondItem="qEX-qg-eXi" secondAttribute="trailing" constant="8" id="Iiw-JL-56N"/>
                     <constraint firstAttribute="trailingMargin" secondItem="CCv-vy-cyL" secondAttribute="trailing" constant="8" id="Kvy-ga-hwQ"/>
@@ -78,7 +78,7 @@
                 <outlet property="companyName" destination="qEX-qg-eXi" id="gRC-yd-P4W"/>
                 <outlet property="dateTime" destination="CCv-vy-cyL" id="ds3-CD-eYy"/>
                 <outlet property="imageAcpectRatio" destination="ECA-Yy-v4y" id="P1X-5n-vXe"/>
-                <outlet property="imageHeight" destination="nCf-GM-XSh" id="Hqd-Ch-BHU"/>
+                <outlet property="imageZeroHeight" destination="nCf-GM-XSh" id="V2b-bE-glJ"/>
                 <outlet property="newsDetails" destination="PUS-M8-fuc" id="XDP-3g-BzG"/>
                 <outlet property="newsImage" destination="oQe-x1-KLR" id="PRJ-6Z-JaC"/>
             </connections>

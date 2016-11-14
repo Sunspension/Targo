@@ -238,7 +238,7 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         
         if shouldShowSearchResults {
             
-            if let height = self.searchDataSource?.sections[(indexPath as NSIndexPath).section].items[(indexPath as NSIndexPath).row].cellHeight {
+            if let height = self.searchDataSource?.sections[indexPath.section].items[indexPath.row].cellHeight {
                 
                 return height
             }
@@ -269,7 +269,7 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         
         if shouldShowSearchResults {
             
-            if let item = self.searchDataSource?.sections[(indexPath as NSIndexPath).section].items[(indexPath as NSIndexPath).row] {
+            if let item = self.searchDataSource?.sections[indexPath.section].items[indexPath.row] {
                 
                 item.cellHeight = viewCell.frame.height
                 getCompanyImage(item, viewCell: viewCell)
@@ -277,7 +277,7 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         }
         else if self.bookmarkButton.isSelected {
             
-            if let item = self.favoriteDataSource?.sections[(indexPath as NSIndexPath).section].items[(indexPath as NSIndexPath).row] {
+            if let item = self.favoriteDataSource?.sections[indexPath.section].items[indexPath.row] {
                 
                 item.cellHeight = viewCell.frame.height
                 getCompanyImage(item, viewCell: viewCell)
@@ -286,7 +286,7 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
             
         else {
             
-            if let item = self.dataSource?.sections[(indexPath as NSIndexPath).section].items[(indexPath as NSIndexPath).row] {
+            if let item = self.dataSource?.sections[indexPath.section].items[indexPath.row] {
                 
                 item.cellHeight = viewCell.frame.height
                 getCompanyImage(item, viewCell: viewCell)
@@ -684,11 +684,15 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         }
         
         let company = item.item!
+        
+        let distance = company.distance / 1000
+        
+        let distanceString = distance < 1 ? String(Int(company.distance)) + " m"
+            : String(format:"%.1f", distance) + " km"
+        
         cell.companyTitle.text = company.companyTitle
         cell.additionalInfo.text = company.companyCategoryTitle
-            + ", "
-            + String(Int(company.distance))
-            + " m"
+            + ", " + distanceString + ", " + company.title
         
         cell.ratingText.text = String(format:"%.1f", company.rating)
         cell.ratingProgress.setProgress(1 / 5 * company.rating, animated: false)

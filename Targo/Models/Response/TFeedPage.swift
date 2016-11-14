@@ -15,6 +15,8 @@ class TFeedPage: NSObject, Mappable {
     
     var companies: [TCompany] = []
     
+    var images: [TImage]? = []
+    
     required convenience init?(map: Map) {
         
         self.init()
@@ -24,5 +26,6 @@ class TFeedPage: NSObject, Mappable {
         
         news <- map["promotion"]
         companies <- map["company"]
+        images <- map["image"]
     }
 }
