@@ -43,6 +43,11 @@
 		D42AF22C1DA5A97900F20945 /* TImageUploadResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42AF22B1DA5A97900F20945 /* TImageUploadResponse.swift */; };
 		D42F190E1D764A3F0091C3E1 /* TOrderDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42F190C1D764A3F0091C3E1 /* TOrderDescriptionTableViewCell.swift */; };
 		D42F190F1D764A3F0091C3E1 /* TOrderDescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D42F190D1D764A3F0091C3E1 /* TOrderDescriptionTableViewCell.xib */; };
+		D43FF4DD1DD8802700A3B3EC /* TWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FF4DC1DD8802700A3B3EC /* TWebViewController.swift */; };
+		D43FF4E01DD88AA700A3B3EC /* agreement.docx in Resources */ = {isa = PBXBuildFile; fileRef = D43FF4DE1DD8833F00A3B3EC /* agreement.docx */; };
+		D43FF4E51DD8927200A3B3EC /* TIntroContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FF4E21DD8927200A3B3EC /* TIntroContainerViewController.swift */; };
+		D43FF4E61DD8927200A3B3EC /* TIntroPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FF4E31DD8927200A3B3EC /* TIntroPageController.swift */; };
+		D43FF4E71DD8927200A3B3EC /* TIntroImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FF4E41DD8927200A3B3EC /* TIntroImageViewController.swift */; };
 		D447B5F71DA8E1AA0002B91A /* TSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D447B5F61DA8E1AA0002B91A /* TSettingsTableViewController.swift */; };
 		D447B5FE1DA8F0850002B91A /* TSettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D447B5FD1DA8F0850002B91A /* TSettingsTableViewCell.swift */; };
 		D447B6011DA9055C0002B91A /* TSettingsPhoneTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D447B6001DA9055C0002B91A /* TSettingsPhoneTableViewCell.swift */; };
@@ -175,6 +180,11 @@
 		D42AF22B1DA5A97900F20945 /* TImageUploadResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TImageUploadResponse.swift; path = Models/Response/TImageUploadResponse.swift; sourceTree = "<group>"; };
 		D42F190C1D764A3F0091C3E1 /* TOrderDescriptionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TOrderDescriptionTableViewCell.swift; sourceTree = "<group>"; };
 		D42F190D1D764A3F0091C3E1 /* TOrderDescriptionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TOrderDescriptionTableViewCell.xib; sourceTree = "<group>"; };
+		D43FF4DC1DD8802700A3B3EC /* TWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TWebViewController.swift; sourceTree = "<group>"; };
+		D43FF4DE1DD8833F00A3B3EC /* agreement.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = agreement.docx; sourceTree = "<group>"; };
+		D43FF4E21DD8927200A3B3EC /* TIntroContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TIntroContainerViewController.swift; sourceTree = "<group>"; };
+		D43FF4E31DD8927200A3B3EC /* TIntroPageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TIntroPageController.swift; sourceTree = "<group>"; };
+		D43FF4E41DD8927200A3B3EC /* TIntroImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TIntroImageViewController.swift; sourceTree = "<group>"; };
 		D447B5F61DA8E1AA0002B91A /* TSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TSettingsTableViewController.swift; sourceTree = "<group>"; };
 		D447B5FD1DA8F0850002B91A /* TSettingsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TSettingsTableViewCell.swift; sourceTree = "<group>"; };
 		D447B6001DA9055C0002B91A /* TSettingsPhoneTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TSettingsPhoneTableViewCell.swift; sourceTree = "<group>"; };
@@ -354,6 +364,16 @@
 			name = CustomViews;
 			sourceTree = "<group>";
 		};
+		D43FF4E11DD8926500A3B3EC /* Intro */ = {
+			isa = PBXGroup;
+			children = (
+				D43FF4E21DD8927200A3B3EC /* TIntroContainerViewController.swift */,
+				D43FF4E31DD8927200A3B3EC /* TIntroPageController.swift */,
+				D43FF4E41DD8927200A3B3EC /* TIntroImageViewController.swift */,
+			);
+			name = Intro;
+			sourceTree = "<group>";
+		};
 		D447B5F81DA8E1CF0002B91A /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -511,6 +531,7 @@
 		D49C7E871D281D7F004408AF /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				D43FF4E11DD8926500A3B3EC /* Intro */,
 				D447B5FC1DA8E2500002B91A /* Registration */,
 				D447B5FB1DA8E2270002B91A /* Maps */,
 				D447B5FA1DA8E2080002B91A /* Feed */,
@@ -526,6 +547,7 @@
 				D4151E111D688D0B00DB26C0 /* TOrderStatusViewController.swift */,
 				D413357C1D6E4FCE00542BA1 /* TOrderBillTableViewController.swift */,
 				D4553CE31D932985009A3E16 /* TOrderFinishedViewController.swift */,
+				D43FF4DC1DD8802700A3B3EC /* TWebViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -668,6 +690,7 @@
 				D467AED71D2B0F8C00319966 /* App */,
 				E5C062DC1D2106BF002074C4 /* Main.storyboard */,
 				E5C062DF1D2106BF002074C4 /* Assets.xcassets */,
+				D43FF4DE1DD8833F00A3B3EC /* agreement.docx */,
 				E5C062E41D2106BF002074C4 /* Info.plist */,
 				D498D49D1D2825EC002F0E88 /* Localizable.strings */,
 			);
@@ -772,6 +795,7 @@
 				D4DD9DDA1D41830A009C28D5 /* TMenuItemSmallTableViewCell.xib in Resources */,
 				D42F190F1D764A3F0091C3E1 /* TOrderDescriptionTableViewCell.xib in Resources */,
 				D498D49B1D2825EC002F0E88 /* Localizable.strings in Resources */,
+				D43FF4E01DD88AA700A3B3EC /* agreement.docx in Resources */,
 				D4FD14061D441BE500AC9722 /* TShortCompanyOnMapInfo.xib in Resources */,
 				E5C062E01D2106BF002074C4 /* Assets.xcassets in Resources */,
 				D4FF40051D76362B00019195 /* TDetailsTableViewCell.xib in Resources */,
@@ -905,6 +929,7 @@
 				D420B2CB1D293748003FDC83 /* RegistrationCodeViewController.swift in Sources */,
 				D470DFB91D384D74003473E6 /* TCompanyTableViewCell.swift in Sources */,
 				D4F84B431D24591300263D1A /* AppExtensions.swift in Sources */,
+				D43FF4E61DD8927200A3B3EC /* TIntroPageController.swift in Sources */,
 				D41D9D8E1D46A1AB00358961 /* TCompanyInfoTableViewController.swift in Sources */,
 				D47569B91DC6504C00A98636 /* TCompanyMenuCompanyImageTableViewCell.swift in Sources */,
 				D4F2136E1D6E55D000D94B62 /* TBillCompanyNameTableViewCell.swift in Sources */,
@@ -920,6 +945,7 @@
 				D45F9FAC1D61055E00623A34 /* TOrderItemTableViewCell.swift in Sources */,
 				D42AF2231DA58A0B00F20945 /* CirlceImage.swift in Sources */,
 				D4F464D51D400A17009015FC /* TShopCategory.swift in Sources */,
+				D43FF4DD1DD8802700A3B3EC /* TWebViewController.swift in Sources */,
 				D49C7E891D281DB1004408AF /* RegistrationPhoneViewController.swift in Sources */,
 				E5C062D91D2106BF002074C4 /* AppDelegate.swift in Sources */,
 				D42AF2261DA5915600F20945 /* CircleButton.swift in Sources */,
@@ -945,6 +971,7 @@
 				D45F9FB01D610CBD00623A34 /* TPaymentMethodTableViewCell.swift in Sources */,
 				D4F84B491D24668400263D1A /* User.swift in Sources */,
 				D47569BC1DC66C0C00A98636 /* GradientView.swift in Sources */,
+				D43FF4E71DD8927200A3B3EC /* TIntroImageViewController.swift in Sources */,
 				D4DD9DDC1D418DC9009C28D5 /* TBaseTableViewCell.swift in Sources */,
 				D46E29B01DA434C0001377E6 /* ListRealmStringTransform.swift in Sources */,
 				D44986511D8F3AB5007C9AF0 /* TLoadingStatusEnum.swift in Sources */,
@@ -981,6 +1008,7 @@
 				D4F464D81D400E14009015FC /* RealmInt.swift in Sources */,
 				D4036A111D36D08900CA8E38 /* TCompaniesPage.swift in Sources */,
 				D47196A21DA18A2C001FA295 /* TOrderNumberOfPersons.swift in Sources */,
+				D43FF4E51DD8927200A3B3EC /* TIntroContainerViewController.swift in Sources */,
 				D45391D11D2DBE0900669669 /* UserSession.swift in Sources */,
 				D403017A1D39936A00B7B610 /* TShopGood.swift in Sources */,
 				D4151E121D688D0B00DB26C0 /* TOrderStatusViewController.swift in Sources */,

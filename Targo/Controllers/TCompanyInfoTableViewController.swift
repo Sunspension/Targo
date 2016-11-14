@@ -73,8 +73,8 @@ class TCompanyInfoTableViewController: UITableViewController {
         
         bookmarkButton.setImage(UIImage(named: "icon-star"), for: UIControlState())
         bookmarkButton.setImage(UIImage(named: "icon-fullStar"), for: .selected)
-        bookmarkButton.tintColor = UIColor.yellow
-        bookmarkButton.addTarget(self, action: #selector(TCompanyInfoTableViewController.makeFavorite), for: .touchUpInside)
+        bookmarkButton.tintColor = UIColor(hexString: "#f1c40f")
+        bookmarkButton.addTarget(self, action: #selector(self.makeFavorite), for: .touchUpInside)
         bookmarkButton.sizeToFit()
         
         if let company = self.company {

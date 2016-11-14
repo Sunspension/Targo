@@ -68,6 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            print("Caught an error when was trying to make commit to Realm")
 //        }
         
+        UIApplication.shared.statusBarStyle = .lightContent
         
         if realm.objects(UserSession.self).first != nil {
             
@@ -78,14 +79,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         else {
             
-//            let defaults = UserDefaults.standard
-            
-            // temporary solution
-            let controller = storyBoard.instantiateViewController(withIdentifier: "RegistrationPhone")
-            let navigation = UINavigationController(rootViewController: controller)
-            
-            self.window?.rootViewController = navigation
-            self.window?.makeKeyAndVisible()
+            let defaults = UserDefaults.standard
+            if let _ = defaults.object(forKey: kTargoNeedIntro) as? Bool {
+                
+                // temporary solution
+                let controller = storyBoard.instantiateViewController(withIdentifier: "RegistrationPhone")
+                let navigation = UINavigationController(rootViewController: controller)
+                
+                self.window?.rootViewController = navigation
+                self.window?.makeKeyAndVisible()
+            }
+            else {
+                
+//                let controller = TIntroContainerViewController.controllerInstance()
+//                let navigation = UINavigationController(rootViewController: controller)
+                
+                self.window?.rootViewController = TIntroContainerViewController.controllerInstance()
+                self.window?.makeKeyAndVisible()
+                
+                UIApplication.shared.statusBarStyle = .default
+            }
             
 //            if defaults.boolForKey(kTargoCodeSent) == true {
 //                
@@ -105,11 +118,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            }
         }
         
-        NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.logoutAction), name: NSNotification.Name(rawValue: kTargoUserLoggedOutSuccessfully), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.logoutAction), name: NSNotification.Name(rawValue: kTargoUserLoggedOutSuccessfully), object: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.loginAction), name: NSNotification.Name(rawValue: kTargoUserLoggedInSuccessfully), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.loginAction), name: NSNotification.Name(rawValue: kTargoUserLoggedInSuccessfully), object: nil)
         
-        UIApplication.shared.statusBarStyle = .lightContent
+         NotificationCenter.default.addObserver(self, selector: #selector(self.introEnded), name: NSNotification.Name(rawValue: kTargoIntroHasEndedNotification), object: nil)
         
         return true
     }
@@ -157,6 +170,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         defaults.set(token, forKey: kTargoDeviceToken)
         defaults.synchronize()
+    }
+    
+    func introEnded() {
+        
+        let defaults = UserDefaults.standard
+        defaults.set(false, forKey: kTargoNeedIntro)
+        defaults.synchronize()
+        
+        UIApplication.shared.statusBarStyle = .lightContent
+        
+        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        let controller = storyBoard.instantiateViewController(withIdentifier: "RegistrationPhone")
+        let navigation = UINavigationController(rootViewController: controller)
+        self.changeRootViewController(navigation)
     }
     
     func logoutAction() {

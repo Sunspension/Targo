@@ -252,7 +252,7 @@ struct TRemoteServer: PRemoteServerV1 {
     
     func feed(pageNumber: Int, pageSize: Int = 20) -> DataRequest {
         
-        let params: [String : Any] = ["page" : pageNumber, "page_size" : pageSize, "extend" : "company"]
+        let params: [String : Any] = ["page" : pageNumber, "page_size" : pageSize, "extend" : "company,image"]
         return self.request(method: .get, remotePath: baseURLString + "/promotion", parameters : params)
     }
     

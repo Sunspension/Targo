@@ -11,6 +11,7 @@ import Alamofire
 import DynamicColor
 import SHSPhoneComponent
 import SwiftOverlays
+import ReactiveKit
 
 class RegistrationPhoneViewController: UIViewController {
     
@@ -20,6 +21,14 @@ class RegistrationPhoneViewController: UIViewController {
     
     @IBOutlet weak var phoneNumber: SHSPhoneTextField!
     
+    @IBOutlet weak var buttonUserAgreement: UIButton!
+    
+    var bag: Disposable?
+    
+    deinit {
+        
+        bag?.dispose()
+    }
     
     override func viewDidLoad() {
         
@@ -35,7 +44,7 @@ class RegistrationPhoneViewController: UIViewController {
         
         phoneNumber.formatter.setDefaultOutputPattern(" (###) ### ####")
         phoneNumber.formatter.prefix = "+7"
-        phoneNumber.becomeFirstResponder()
+//        phoneNumber.becomeFirstResponder()
         phoneNumber.tintColor = DynamicColor(hexString: kHexMainPinkColor)
         phoneNumber.textDidChangeBlock = { textfield in
             
@@ -58,6 +67,31 @@ class RegistrationPhoneViewController: UIViewController {
         }
         
         separator.backgroundColor = UIColor.lightGray
+        
+        let string1 = "user_registration_confidential_part1".localized
+        
+        let attributedString1 = NSMutableAttributedString(string: string1, attributes: [NSForegroundColorAttributeName : UIColor.black])
+        
+        let string2 = "user_registration_confidential_part2".localized
+        
+        let attributedString2 = NSMutableAttributedString(string: string2, attributes: [NSForegroundColorAttributeName : UIColor(hexString: kHexMainPinkColor)])
+        
+        attributedString1.append(attributedString2)
+        
+        buttonUserAgreement.setAttributedTitle(attributedString1, for: .normal)
+        buttonUserAgreement.titleLabel?.textAlignment = .center
+        
+        self.bag = buttonUserAgreement.bnd_tap.observeNext {
+            
+            if let path = Bundle.main.path(forResource: "agreement", ofType: "docx") {
+                
+                let controller = TWebViewController.controllerInstance(url: URL(fileURLWithPath: path))
+                controller.title = "user_agreement_title".localized
+                let navigationController = UINavigationController(rootViewController: controller)
+                
+                self.present(navigationController, animated: true, completion: nil)
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

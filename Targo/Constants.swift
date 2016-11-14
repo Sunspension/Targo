@@ -11,6 +11,7 @@ import Foundation
 let kTargoDeviceToken = "kTargoDeviceToken"
 let kTargoLastSessionPhone = "kTargoLastSessionPhone"
 let kTargoCodeSent = "kTargoCodeSent"
+let kTargoNeedIntro = "kTargoNeedIntro"
 
 // Notifications
 let kTargoUserLoggedOutSuccessfully = "kTargoUserLoggedOutSuccessfully"
@@ -21,6 +22,7 @@ let kTargoDidLoadOrdersNotification = "kTargoDidLoadOrdersNotification"
 let kTargoUserDidCancelOrderNotification = "kTargoUserDidCancelOrderNotification"
 let kTargoDidAddNewCardNotification = "kTargoDidAddNewCardNotification"
 let kTargoDidUpdateUserProfileNotification = "kTargoDidUpdateUserProfileNotification"
+let kTargoIntroHasEndedNotification = "kTargoIntroHasEndedNotification"
 
 // Colors
 let kHexLoginTextColor = "#625375"

@@ -123,7 +123,8 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         
         self.bookmarkButton.setImage(UIImage(named: "icon-star"), for: UIControlState())
         self.bookmarkButton.setImage(UIImage(named: "icon-fullStar"), for: .selected)
-        self.bookmarkButton.addTarget(self, action: #selector(CompanySearchTableViewController.loadBookmarks), for: .touchUpInside)
+        self.bookmarkButton.tintColor = UIColor(hexString: "#f1c40f")
+        self.bookmarkButton.addTarget(self, action: #selector(self.loadBookmarks), for: .touchUpInside)
         self.bookmarkButton.sizeToFit()
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: self.bookmarkButton)

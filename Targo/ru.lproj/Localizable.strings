@@ -8,6 +8,12 @@
 
 "registration_phone_title" = "Регистрация";
 
+"user_registration_confidential_part1" = "Регистрируясь, Вы принимаете\n";
+
+"user_registration_confidential_part2" = " пользовательское соглашение";
+
+"user_agreement_title" = "Соглашение";
+
 "login_empty_code" = "Это поле не может быть пустым";
 
 "menu_working_time" = "часы работы";
@@ -87,6 +93,10 @@
 
 "action_save" = "Сохранить";
 
+"action_skip" = "Пропустить";
+
+"action_next" = "Далее";
+
 
 "company_info_make_call_title" = "Позвонить";
 
@@ -142,7 +152,7 @@
 
 "profile_item_settings" = "Настройки";
 
-"minutes" = "минут";
+"minutes" = "мин";
 
 
 "photo_action_choose" = "Выбрать фото";

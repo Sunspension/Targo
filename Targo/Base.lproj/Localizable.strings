@@ -8,6 +8,12 @@
 
 "registration_phone_title" = "Registration";
 
+"user_registration_confidential_part1" = "By registering you are agree to the\n";
+
+"user_registration_confidential_part2" = "service rules";
+
+"user_agreement_title" = "Service rules";
+
 "login_empty_code" = "This field can't be empty";
 
 "menu_working_time" = "working hours";
@@ -88,6 +94,10 @@
 
 "action_save" = "Save";
 
+"action_skip" = "Skip";
+
+"action_next" = "Next";
+
 
 "company_info_make_call_title" = "Make call";
 
@@ -143,7 +153,7 @@
 
 "profile_item_settings" = "Settings";
 
-"minutes" = "minutes";
+"minutes" = "min";
 
 
 "photo_action_choose" = "Choose Photo";
