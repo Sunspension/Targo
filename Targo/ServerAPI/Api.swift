@@ -47,7 +47,6 @@ struct Api {
                     print("Response error: \(error)")
                 }
             })
-            .validate()
             .responseObject(keyPath: "data", completionHandler: { (response: DataResponse<TAuthorizationResponse>) in
                 
                 guard response.result.error == nil else {
@@ -149,7 +148,6 @@ struct Api {
                         print("Response result: \(response.result.value)")
                     }
                 }
-                .validate()
                 .responseObject(keyPath: "data", completionHandler: { (response: DataResponse<UserSession>) in
                     
                     guard response.result.error == nil else {
@@ -254,7 +252,6 @@ struct Api {
                     print("Response result: \(response.result.value)")
                 }
             }
-            .validate()
             .responseObject(keyPath: "data") { (response: DataResponse<UserSession>) in
                 
                 guard response.result.error == nil else {

@@ -166,11 +166,11 @@ class TCompanyInfoTableViewController: UITableViewController {
                 header.title.text = self.itemsSource.sections[section].title
                 
                 let button = header.buttonMakeOrder
-                button?.titleLabel?.textAlignment = .center
+//                button?.titleLabel?.textAlignment = .center
                 button?.isHidden = false
                 button?.addTarget(self, action: #selector(TCompanyInfoTableViewController.openCompanyMenu),
                                  for: .touchUpInside)
-                button?.setTitle("order_make_order_button_title_new_line".localized, for: UIControlState())
+//                button?.setTitle("order_make_order_button_title_new_line".localized, for: UIControlState())
                 
                 return header
             }
@@ -213,11 +213,11 @@ class TCompanyInfoTableViewController: UITableViewController {
             
         case 1:
             
-            return 55
+            return 40
             
         case 2:
             
-            return 60
+            return 50
             
         default:
              return 0.01

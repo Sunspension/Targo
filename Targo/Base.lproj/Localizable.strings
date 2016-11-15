@@ -155,6 +155,13 @@
 
 "minutes" = "min";
 
+"meters" ="m";
+
+"kilometers" = "km";
+
+"asap" = "ASAP";
+
+"time" = "Time";
 
 "photo_action_choose" = "Choose Photo";
 

@@ -687,8 +687,8 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         
         let distance = company.distance / 1000
         
-        let distanceString = distance < 1 ? String(Int(company.distance)) + " m"
-            : String(format:"%.1f", distance) + " km"
+        let distanceString = distance < 1 ? String(Int(company.distance)) + " " + "meters".localized
+            : String(format:"%.1f", distance) + " " + "kilometers".localized
         
         cell.companyTitle.text = company.companyTitle
         cell.additionalInfo.text = company.companyCategoryTitle

@@ -59,6 +59,8 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
     
     var orderDescription: String?
     
+    var selectedDate: String?
+    
     
     deinit {
         
@@ -226,18 +228,19 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
                 })
             }
             
+            let discount = Int((Double(totalPrice) * (Double(self.company!.discount) / 100)))
+            
             section.initializeItem(cellStyle: .value1,
                                    item: self.company,
                                    bindingAction: { (cell, item) in
                                     
-                                    let company = item.item as! TCompanyAddress
                                     cell.textLabel?.text = "order_targo_discount".localized
-                                    cell.detailTextLabel?.text = "- \(company.discount)%"
+                                    cell.detailTextLabel?.text = "- \(discount)%"
                                     cell.detailTextLabel?.textColor = UIColor(hexString: kHexMainPinkColor)
             })
             
             section.initializeItem(reusableIdentifierOrNibName: "OrderTotalPriceCell",
-                                   item: totalPrice - Int((Double(totalPrice) * (Double(self.company!.discount) / 100))),
+                                   item: totalPrice - discount,
                                    bindingAction: { (cell, item) in
                                     
                                     let viewCell = cell as! TOrderTotalPriceTableViewCell
@@ -464,33 +467,71 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
             
         case .orderTime:
             
-            let components = DateComponents()
-            (components as NSDateComponents).setValue(1, forComponent: .hour)
+            let date = Date()
             
-            let expirationDate = (Calendar.current as NSCalendar).date(byAdding: components, to: Date(),
-                                                                                     options: NSCalendar.Options(rawValue: 0))
-            
-            let viewCell = tableView.cellForRow(at: item.indexPath as IndexPath) as! TDetailsTableViewCell
-            
-            ActionSheetDatePicker.show(withTitle: "order_time_title".localized,
-                                                      datePickerMode: .time,
-                                                      selectedDate: self.preparedDate ?? expirationDate,
-                                                      minimumDate: expirationDate,
-                                                      maximumDate: expirationDate?.endOfDay,
-                                                      doneBlock: {[weak self] (picker, selectedDate, view) in
-                                                        
-                                                        self?.preparedDate = selectedDate as? Date;
-                                                        
-                                                        if let date = selectedDate as? Date {
-                                                            
-                                                            viewCell.details.text = date.stringFromFormat("HH:mm")
-                                                            viewCell.details.textColor = UIColor.black
-                                                        }
-                                                        
-                }, cancel: { picker in
+            if let workingHours = self.company!.todayWorkingHours {
+                
+                if workingHours.count == 2 {
                     
+                    var closeTime = workingHours[1]
                     
-                }, origin: self.view.superview)
+                    let beginingOfDay = date.beginningOfDay
+                    
+                    closeTime = closeTime.components(separatedBy: ":")[0]
+                    
+                    let timeToClose = beginingOfDay.change(hour: Int(closeTime))!
+                    
+                    var times = [String]()
+                    
+                    var end = false
+                    
+                    let formatter = DateFormatter()
+                    formatter.dateFormat = "HH:mm"
+                    
+                    var futureDate = date
+                    
+                    while !end {
+                        
+                        if futureDate < timeToClose {
+                            
+                            let difference = futureDate.timeIntervalSince(date)
+                            
+                            if difference == 0 {
+                                
+                                times.append("asap".localized)
+                            }
+                            else {
+                                
+                                let futureInterval = futureDate.timeIntervalSince(date)
+                                let futureDate = Date(timeInterval: futureInterval, since: date)
+                                
+                                times.append(futureDate.stringFromFormat("HH:mm"))
+                            }
+                            
+                            futureDate.addTimeInterval(15 * 60)
+                        }
+                        else {
+                            
+                            end = true
+                        }
+                    }
+             
+                    let viewCell = tableView.cellForRow(at: item.indexPath as IndexPath) as! TDetailsTableViewCell
+                    
+                    ActionSheetStringPicker.show(withTitle: "time".localized,
+                                                 rows: times,
+                                                 initialSelection: 0,
+                                                 doneBlock: { (picker, selectedIndex, view) in
+                                                    
+                                                    viewCell.details.text = times[selectedIndex]
+                                                    viewCell.details.textColor = UIColor.black
+                    }, cancel: { picker in
+                        
+                        
+                        
+                    }, origin: self.view.superview)
+                }
+            }
             
             break
             

@@ -20,18 +20,19 @@
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ymb-fq-xK6">
-                    <rect key="frame" x="16" y="4" width="190" height="57"/>
+                    <rect key="frame" x="16" y="4" width="215" height="57"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.41176470588235292" green="0.47843137254901963" blue="0.47843137254901963" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="Mrj-XN-HOi">
-                    <rect key="frame" x="210" y="-42.5" width="85" height="85"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="Mrj-XN-HOi">
+                    <rect key="frame" x="235" y="-30" width="60" height="60"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="85" id="lqn-c3-Zc0"/>
-                        <constraint firstAttribute="height" constant="85" id="prI-LE-VPo"/>
+                        <constraint firstAttribute="width" constant="60" id="lqn-c3-Zc0"/>
+                        <constraint firstAttribute="height" constant="60" id="prI-LE-VPo"/>
                     </constraints>
-                    <state key="normal">
+                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <state key="normal" image="icon-places">
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                 </button>
@@ -39,7 +40,7 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="Mrj-XN-HOi" secondAttribute="trailing" constant="16" id="DX1-Ts-03D"/>
-                <constraint firstItem="Mrj-XN-HOi" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="-42" id="Et6-69-7y9"/>
+                <constraint firstItem="Mrj-XN-HOi" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="-30" id="Et6-69-7y9"/>
                 <constraint firstItem="Mrj-XN-HOi" firstAttribute="leading" secondItem="ymb-fq-xK6" secondAttribute="trailing" constant="4" id="PLT-V8-Ugh"/>
                 <constraint firstItem="S6e-G1-P1M" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="VZW-Ft-aRI"/>
                 <constraint firstItem="ymb-fq-xK6" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="4" id="WLO-kI-O1y"/>
@@ -57,4 +58,7 @@
             <point key="canvasLocation" x="315.5" y="376.5"/>
         </view>
     </objects>
+    <resources>
+        <image name="icon-places" width="30" height="30"/>
+    </resources>
 </document>

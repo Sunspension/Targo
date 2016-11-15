@@ -15,8 +15,8 @@ struct TRemoteServer: PRemoteServerV1 {
     static let alamofireManager: Alamofire.SessionManager = {
         
         let configuration = URLSessionConfiguration.default
-        configuration.timeoutIntervalForRequest = 10
-        configuration.timeoutIntervalForResource = 10
+        configuration.timeoutIntervalForRequest = 15
+        configuration.timeoutIntervalForResource = 15
         
         return Alamofire.SessionManager(configuration: configuration)
     }()
@@ -24,6 +24,8 @@ struct TRemoteServer: PRemoteServerV1 {
     let dev = "http://dev.targo.club/api"
     
     let prod = "https://api.targo.club/api"
+    
+    let noSSLProd = "http://api.targo.club/api"
     
     var baseURLString: String {
         

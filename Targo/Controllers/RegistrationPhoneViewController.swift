@@ -44,7 +44,7 @@ class RegistrationPhoneViewController: UIViewController {
         
         phoneNumber.formatter.setDefaultOutputPattern(" (###) ### ####")
         phoneNumber.formatter.prefix = "+7"
-//        phoneNumber.becomeFirstResponder()
+        phoneNumber.becomeFirstResponder()
         phoneNumber.tintColor = DynamicColor(hexString: kHexMainPinkColor)
         phoneNumber.textDidChangeBlock = { textfield in
             
