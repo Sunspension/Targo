@@ -383,6 +383,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
                                                                 viewCell.buttonCheck.tintColor =
                                                                     UIColor(hexString: kHexMainPinkColor)
                                                                 self.orderItems.append(item)
+                                                                itemState.checked = true
                                                             }
                                                             
                                                             item.userData = itemState
@@ -404,6 +405,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
                                                                         
                                                                         viewCell.buttonCheck.tintColor = UIColor.lightGray
                                                                         self.orderItems.remove(at: index)
+                                                                        itemState.checked = false
                                                                     }
                                                                 }
                                                                 

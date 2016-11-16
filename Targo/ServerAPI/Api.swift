@@ -539,6 +539,7 @@ struct Api {
                        addressId: Int,
                        serviceId: Int,
                        date: Date? = nil,
+                       asap: Bool? = nil,
                        numberOfPersons: Int? = nil,
                        description: String? = nil) -> Future<TShopOrder, TargoError> {
         
@@ -549,6 +550,7 @@ struct Api {
             addressId: addressId,
             serviceId: serviceId,
             date: date,
+            asap: asap,
             numberOfPersons: numberOfPersons,
             description: description)
             

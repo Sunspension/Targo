@@ -155,6 +155,7 @@ struct TRemoteServer: PRemoteServerV1 {
                        addressId: Int,
                        serviceId: Int,
                        date: Date?,
+                       asap: Bool? = nil,
                        numberOfPersons: Int? = nil,
                        description: String? = nil) -> DataRequest {
         
@@ -177,6 +178,11 @@ struct TRemoteServer: PRemoteServerV1 {
             let dateString = formatter.string(from: date as Date)
             
             params["prepared_at"] = dateString
+        }
+        
+        if asap != nil {
+            
+            params["asap"] = asap
         }
         
         if numberOfPersons != nil {

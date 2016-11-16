@@ -37,6 +37,7 @@ protocol PRemoteServerV1 {
                        addressId: Int,
                        serviceId: Int,
                        date: Date?,
+                       asap: Bool?,
                        numberOfPersons: Int?,
                        description: String?) -> DataRequest
     

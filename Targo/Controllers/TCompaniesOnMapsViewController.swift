@@ -100,7 +100,7 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
         
         self.failedtimer = Timer.scheduledTimer(timeInterval: 15,
                                                                   target: self,
-                                                                  selector: #selector(TCompaniesOnMapsViewController.onFailedLoadCompaniesTimerEvent),
+                                                                  selector: #selector(self.onFailedLoadCompaniesTimerEvent),
                                                                   userInfo: nil,
                                                                   repeats: false)
     }
@@ -175,16 +175,39 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
             
             self.mapsMarkers.removeAll()
             
+            let isLocationsEqual: (_ location: CLLocationCoordinate2D, _ otherLocation: CLLocationCoordinate2D) -> Bool = { (location, otherLocation) in
+                
+                return location.latitude == otherLocation.latitude
+                    && location.longitude == otherLocation.longitude
+            }
+            
             for company in companies {
                 
+                let position = CLLocationCoordinate2D(latitude: company.latitude, longitude: company.longitude)
+                
                 let marker = GMSMarker()
-                marker.position = CLLocationCoordinate2D(latitude: company.latitude, longitude: company.longitude)
+                marker.position = position
                 marker.title = company.companyTitle
                 marker.snippet = company.companyDescription
                 marker.userData = company
                 marker.map = self.mapView
-                marker.icon = GMSMarker.markerImage(with: UIColor.red)
-                marker.appearAnimation = kGMSMarkerAnimationPop
+                
+                if let selectedMarker = self.selectedMarker {
+                    
+                    if isLocationsEqual(position, selectedMarker.position) {
+                        
+                        marker.icon = UIImage(named: "icon-selected-pin")
+                        self.selectedMarker = marker
+                    }
+                    else {
+                        
+                        marker.icon = UIImage(named: "icon-pin")
+                    }
+                }
+                else {
+                    
+                    marker.icon = UIImage(named: "icon-pin")
+                }
                 
                 self.mapsMarkers.append(marker)
                 
@@ -199,8 +222,7 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
     
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         
-        self.selectedMarker?.icon = GMSMarker.markerImage(with: UIColor.red)
-        
+        self.selectedMarker?.icon = UIImage(named: "icon-pin")
         self.displayCompanyInfo(marker)
         
         return true
@@ -209,7 +231,7 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
     func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
         
         self.companyView.alpha = 0
-        self.selectedMarker?.icon = GMSMarker.markerImage(with: UIColor.red)
+        self.selectedMarker?.icon = UIImage(named: "icon-pin")
         self.selectedMarker = nil
     }
     
@@ -292,7 +314,7 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
     
     fileprivate func displayCompanyInfo(_ marker: GMSMarker) {
         
-        marker.icon = GMSMarker.markerImage(with: UIColor(hexString: kHexMainPinkColor))
+        marker.icon = UIImage(named: "icon-selected-pin")
         let company = marker.userData as! TCompanyAddress
         
         let transition = CATransition()
@@ -303,7 +325,13 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
         
         self.companyTitle.text = company.companyTitle
         self.companyAddress.text = company.title
-        self.companyInfo.text = company.companyCategoryTitle + ", " + String(Int(company.distance)) + " m"
+        
+        let distance = company.distance / 1000
+        
+        let distanceString = distance < 1 ? String(Int(company.distance)) + " " + "meters".localized
+            : String(format:"%.1f", distance) + " " + "kilometers".localized
+        
+        self.companyInfo.text = company.companyCategoryTitle + ", " + distanceString
         
         if let image = self.images?.filter({$0.id == company.companyImageId.value}).first {
             

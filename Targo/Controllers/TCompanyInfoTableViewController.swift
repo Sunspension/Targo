@@ -389,7 +389,6 @@ class TCompanyInfoTableViewController: UITableViewController {
     }
     
     //MARK: - Private methods
-    
     fileprivate func loadCompanyAddress(addressId: Int) {
         
         self.loadingStatus = .loading
@@ -448,7 +447,6 @@ class TCompanyInfoTableViewController: UITableViewController {
             let viewCell = cell as! TCompanyImageMenuTableViewCell
             
             viewCell.layoutIfNeeded()
-            
             viewCell.addBlurEffect()
             
             if let companyImage = item.item as? TImage {
@@ -466,7 +464,6 @@ class TCompanyInfoTableViewController: UITableViewController {
             }
             
             viewCell.point.backgroundColor = UIColor.green
-            
             viewCell.selectionStyle = .none
         }
         
