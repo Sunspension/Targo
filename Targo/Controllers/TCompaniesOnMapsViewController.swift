@@ -279,32 +279,13 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
             return
         }
         
-        if let controller =  self.instantiateViewControllerWithIdentifierOrNibName("CompanyInfoController") as? TCompanyInfoTableViewController {
+        if let controller = self.instantiateViewControllerWithIdentifierOrNibName("MenuController") as? TCompanyMenuTableViewController {
             
             let company = self.selectedMarker?.userData as? TCompanyAddress
             
             controller.company = company
-            
-            if let image = self.images?.filter({$0.id == company?.companyImageId.value}).first {
-                
-                controller.companyImage = image
-                
-                controller.makeOrderNavigationAction = {
-                    
-                    if let controller = self.instantiateViewControllerWithIdentifierOrNibName("MenuController") as? TCompanyMenuTableViewController {
-                        
-                        controller.company = company
-                        controller.companyImage = image
-                        
-                        self.navigationController?.pushViewController(controller, animated: true)
-                    }
-                }
-                
-                controller.openMapNavigationAction = {
-                    
-                    let _ = self.navigationController?.popViewController(animated: true)
-                }
-            }
+            controller.companyImage = self.images?.filter({$0.id == company?.companyImageId.value}).first
+            controller.showButtonInfo = true
             
             self.navigationController?.pushViewController(controller, animated: true)
         }

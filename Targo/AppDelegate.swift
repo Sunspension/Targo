@@ -162,7 +162,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let defaults = UserDefaults.standard
         
-        if (defaults.object(forKey: kTargoDeviceToken) as? String) != nil {
+        guard (defaults.object(forKey: kTargoDeviceToken) as? String) == nil else {
             
             return
         }

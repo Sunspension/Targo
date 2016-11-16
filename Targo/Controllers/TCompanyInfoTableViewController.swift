@@ -443,32 +443,54 @@ class TCompanyInfoTableViewController: UITableViewController {
         
         section.initializeItem(reusableIdentifierOrNibName: "CompanyImageMenu",
                                item: self.companyImage) { (cell, item) in
-            
-            let viewCell = cell as! TCompanyImageMenuTableViewCell
-            
-            viewCell.layoutIfNeeded()
-            viewCell.addBlurEffect()
-            
-            if let companyImage = item.item as? TImage {
-                
-                let filter = AspectScaledToFillSizeFilter(size: viewCell.companyImage.bounds.size)
-                viewCell.companyImage.af_setImage(withURL: URL(string: companyImage.url)!, filter: filter)
-            }
-            
-            if let workingHours = self.company!.todayWorkingHours {
-                
-                if workingHours.count == 2 {
-                    
-                    viewCell.title.text = String(format: "company_info_opened_text".localized, "\(workingHours[0]) - \(workingHours[1])")
-                }
-            }
-            
-            viewCell.point.backgroundColor = UIColor.green
-            viewCell.selectionStyle = .none
+                                
+                                let viewCell = cell as! TCompanyImageMenuTableViewCell
+                                
+                                viewCell.layoutIfNeeded()
+                                viewCell.addBlurEffect()
+                                
+                                if let companyImage = item.item as? TImage {
+                                    
+                                    let filter = AspectScaledToFillSizeFilter(size: viewCell.companyImage.bounds.size)
+                                    viewCell.companyImage.af_setImage(withURL: URL(string: companyImage.url)!, filter: filter)
+                                }
+                                
+                                if let workingHours = self.company!.todayWorkingHours {
+                                    
+                                    if workingHours.count == 2 {
+                                        
+                                        viewCell.title.text = String(format: "company_info_opened_text".localized, "\(workingHours[0]) - \(workingHours[1])")
+                                        
+                                        let date = Date()
+                                        
+                                        let beginingOfDay = date.beginningOfDay
+                                        
+                                        var closeTime = workingHours[1]
+                                        closeTime = closeTime.components(separatedBy: ":")[0]
+                                        
+                                        let timeToClose = beginingOfDay.change(hour: Int(closeTime))!
+                                        
+                                        var openTime = workingHours[0]
+                                        openTime = openTime.components(separatedBy: ":")[0]
+                                        
+                                        let timeToOpen = beginingOfDay.change(hour: Int(openTime))!
+                                        
+                                        if timeToOpen > date || date > timeToClose {
+                                            
+                                            viewCell.point.backgroundColor = UIColor.red
+                                        }
+                                        else {
+                                            
+                                            viewCell.point.backgroundColor = UIColor.green
+                                        }
+                                    }
+                                }
+                                
+                                viewCell.selectionStyle = .none
         }
         
         self.itemsSource.sections.append(section)
-
+        
         let workingHoursSection = CollectionSection(title: "company_info_working_hours".localized)
         
         let calendar = Calendar.current
