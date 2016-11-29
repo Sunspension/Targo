@@ -10,6 +10,7 @@ import UIKit
 import AlamofireImage
 import PhoneNumberKit
 import SwiftOverlays
+import CoreLocation
 
 enum InfoSectionEnum {
     
@@ -29,6 +30,8 @@ class TCompanyInfoTableViewController: UITableViewController {
     fileprivate let bookmarkButton = UIButton(type: .custom)
     
     fileprivate var loadingStatus = TLoadingStatusEnum.idle
+    
+    fileprivate var userLocation: CLLocation?
     
     var company: TCompanyAddress?
     
@@ -54,7 +57,7 @@ class TCompanyInfoTableViewController: UITableViewController {
     class func controllerInstance(addressId: Int) -> TCompanyInfoTableViewController {
         
         let controller = self.controllerInstance()
-        controller.loadCompanyAddress(addressId: addressId)
+        controller.loadCompanyAddress(location: TLocationManager.sharedInstance.lastLocation, addressId: addressId)
         
         return controller
     }
@@ -93,6 +96,8 @@ class TCompanyInfoTableViewController: UITableViewController {
         self.tableView.register(UINib(nibName: "TCompanyInfoContactsHeader", bundle: nil),
                                    forHeaderFooterViewReuseIdentifier: self.companyContactsIdentifier)
         
+        TLocationManager.sharedInstance.subscribeObjectForLocationChange(self, selector: #selector(self.userLocationChanged))
+        
         self.createDataSource()
         
         // Uncomment the following line to preserve selection between presentations
@@ -115,11 +120,6 @@ class TCompanyInfoTableViewController: UITableViewController {
             
             SwiftOverlays.showCenteredWaitOverlay(superview)
         }
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
@@ -282,63 +282,6 @@ class TCompanyInfoTableViewController: UITableViewController {
         }
     }
     
-    // MARK: - Table view data source
-
-    /*
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
-
-        // Configure the cell...
-
-        return cell
-    }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
     func openCompanyMenu() {
         
         guard self.makeOrderNavigationAction != nil else {
@@ -388,12 +331,17 @@ class TCompanyInfoTableViewController: UITableViewController {
         }
     }
     
+    func userLocationChanged() {
+        
+        self.userLocation = TLocationManager.sharedInstance.lastLocation
+    }
+    
     //MARK: - Private methods
-    fileprivate func loadCompanyAddress(addressId: Int) {
+    fileprivate func loadCompanyAddress(location: CLLocation?, addressId: Int) {
         
         self.loadingStatus = .loading
         
-        Api.sharedInstance.loadCompanyAddress(addressId: addressId)
+        Api.sharedInstance.loadCompanyAddress(location: location, addressId: addressId)
             
             .onSuccess { [unowned self] company in
                 

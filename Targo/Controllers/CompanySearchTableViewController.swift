@@ -145,13 +145,12 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         
         self.tableView.dataSource = self.dataSource
         
-        TLocationManager.sharedInstance.subscribeObjectForLocationChange(self,
-                                                                         selector: #selector(CompanySearchTableViewController.userLocationChanged))
+        TLocationManager.sharedInstance.subscribeObjectForLocationChange(self, selector: #selector(self.userLocationChanged))
         
         self.navigationItem.titleView = UIImageView(image: UIImage(named: "icon-logo"))
         
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(CompanySearchTableViewController.onUIApplicationWillEnterForegroundNotification),
+                                               selector: #selector(self.onUIApplicationWillEnterForegroundNotification),
                                                name: NSNotification.Name.UIApplicationWillEnterForeground,
                                                object: nil)
         
@@ -568,7 +567,7 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
     
     func loadFavoriteCompanyAddresses(_ forceRefresh: Bool = false) {
         
-        Api.sharedInstance.favoriteComanyAddresses(location: self.userLocation!)
+        Api.sharedInstance.favoriteCompanyAddresses(location: self.userLocation!)
             
             .onSuccess(callback: { [unowned self] companyPage in
                 

@@ -34,7 +34,7 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
     @IBOutlet weak var companyInfo: UILabel!
     
     @IBOutlet weak var companyImage: UIImageView!
-
+    
     
     fileprivate var userLocation: CLLocation?
     
@@ -54,7 +54,7 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
     
     var failedtimer: Timer?
     
-
+    
     deinit {
         
         print("\(typeName(self)) \(#function)")
@@ -75,15 +75,14 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
         self.mapView.bringSubview(toFront: self.companyView)
         self.companyView.alpha = 0
         
-        TLocationManager.sharedInstance.subscribeObjectForLocationChange(self,
-                                                                         selector: #selector(TCompaniesOnMapsViewController.userLocationChanged))
+        TLocationManager.sharedInstance.subscribeObjectForLocationChange(self, selector: #selector(self.userLocationChanged))
         
         if self.reason == .oneCompany {
             
             self.addMarkers()
         }
         else {
-
+            
             self.mapView.alpha = 0
         }
     }
@@ -99,10 +98,10 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
     func startFailedTimer() {
         
         self.failedtimer = Timer.scheduledTimer(timeInterval: 15,
-                                                                  target: self,
-                                                                  selector: #selector(self.onFailedLoadCompaniesTimerEvent),
-                                                                  userInfo: nil,
-                                                                  repeats: false)
+                                                target: self,
+                                                selector: #selector(self.onFailedLoadCompaniesTimerEvent),
+                                                userInfo: nil,
+                                                repeats: false)
     }
     
     func onFailedLoadCompaniesTimerEvent() {
@@ -153,15 +152,15 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
                 
                 self.addMarkers()
                 
-                }).onFailure(callback: { [unowned self] error in
-                    
-                    self.loadingStatus = .failed
-                    
-                    self.startFailedTimer()
-                    self.removeAllOverlays()
-                    
-                    print(error)
-                })
+            }).onFailure(callback: { [unowned self] error in
+                
+                self.loadingStatus = .failed
+                
+                self.startFailedTimer()
+                self.removeAllOverlays()
+                
+                print(error)
+            })
     }
     
     func addMarkers() {
@@ -259,7 +258,7 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
                             
                             self.mapView.alpha = 1
                             
-                            }, completion: nil)
+                        }, completion: nil)
                     })
                 }
                 else {
@@ -273,7 +272,7 @@ class TCompaniesOnMapsViewController: UIViewController, GMSMapViewDelegate {
     }
     
     @IBAction func openCompanyInfo(_ sender: AnyObject) {
-
+        
         guard self.reason != .oneCompany else {
             
             return

@@ -602,9 +602,16 @@
                                     <action selector="makeOrderAction:" destination="7C7-e0-oY3" eventType="touchUpInside" id="cUm-7N-B7B"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="400 р" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dM8-D5-74y">
+                                <rect key="frame" x="268.5" y="448.5" width="31.5" height="13.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="dM8-D5-74y" secondAttribute="trailing" constant="4" id="8VB-zW-kJb"/>
                             <constraint firstItem="faP-0U-Dbw" firstAttribute="leading" secondItem="uwm-lV-D2c" secondAttribute="leadingMargin" constant="-20" id="939-un-plZ"/>
                             <constraint firstItem="b02-oC-MtN" firstAttribute="top" secondItem="uwm-lV-D2c" secondAttribute="top" id="DO4-NQ-2M9"/>
                             <constraint firstAttribute="trailingMargin" secondItem="faP-0U-Dbw" secondAttribute="trailing" constant="-20" id="cKx-gf-M2g"/>
@@ -612,11 +619,13 @@
                             <constraint firstAttribute="trailing" secondItem="b02-oC-MtN" secondAttribute="trailing" id="lEM-Wp-j70"/>
                             <constraint firstItem="b02-oC-MtN" firstAttribute="leading" secondItem="uwm-lV-D2c" secondAttribute="leading" id="s9G-Ln-haD"/>
                             <constraint firstItem="faP-0U-Dbw" firstAttribute="bottom" secondItem="uwm-lV-D2c" secondAttribute="bottomMargin" id="vD4-Pn-QbB"/>
+                            <constraint firstItem="dM8-D5-74y" firstAttribute="centerY" secondItem="faP-0U-Dbw" secondAttribute="centerY" id="vN5-sN-vWM"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="buttonMakeOrder" destination="faP-0U-Dbw" id="50H-FY-4yb"/>
                         <outlet property="tableView" destination="b02-oC-MtN" id="xMA-dt-Uq6"/>
+                        <outlet property="totalPrice" destination="dM8-D5-74y" id="Jhx-WM-9Ut"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Snc-mg-eWk" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1524,14 +1533,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="249" image="icon-checked" translatesAutoresizingMaskIntoConstraints="NO" id="IJ2-lc-tHS">
-                                                    <rect key="frame" x="16" y="15" width="25" height="25"/>
+                                                    <rect key="frame" x="16" y="17" width="20" height="20"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="25" id="lfz-fb-les"/>
-                                                        <constraint firstAttribute="height" constant="25" id="mOF-za-K8F"/>
+                                                        <constraint firstAttribute="width" constant="20" id="lfz-fb-les"/>
+                                                        <constraint firstAttribute="height" constant="20" id="mOF-za-K8F"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c3h-Mc-xp9">
-                                                    <rect key="frame" x="49" y="12" width="205" height="30"/>
+                                                    <rect key="frame" x="44" y="12" width="210" height="30"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1543,7 +1552,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SVY-RB-1Se">
-                                                    <rect key="frame" x="49" y="42" width="205" height="18"/>
+                                                    <rect key="frame" x="44" y="42" width="210" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1982,7 +1991,7 @@
         <image name="icon-avatar" width="320" height="320"/>
         <image name="icon-basket" width="30" height="30"/>
         <image name="icon-canceled" width="50" height="50"/>
-        <image name="icon-checked" width="25" height="25"/>
+        <image name="icon-checked" width="20" height="20"/>
         <image name="icon-feed" width="30" height="30"/>
         <image name="icon-logo" width="60" height="60"/>
         <image name="icon-next" width="30" height="30"/>

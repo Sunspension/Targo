@@ -35,6 +35,7 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
     
     @IBOutlet weak var makeOrder: UIButton!
     
+    
     var itemSource: [(item: TShopGood, count: Int)]?
     
     var dataSource = TableViewDataSource()
@@ -96,11 +97,11 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
                                                                 action: nil)
         
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(TOrderReviewViewController.onDidAddCardNotification),
+                                               selector: #selector(self.onDidAddCardNotification),
                                                name: NSNotification.Name(rawValue: kTargoDidAddNewCardNotification),
                                                object: nil)
         
-        self.makeOrder.addTarget(self, action: #selector(TOrderReviewViewController.sendOrder),
+        self.makeOrder.addTarget(self, action: #selector(self.sendOrder),
                                  for: .touchUpInside)
         self.makeOrder.setTitle("order_make_order_button_title".localized, for: UIControlState())
         self.makeOrder.backgroundColor = UIColor(hexString: kHexMainPinkColor)

@@ -339,11 +339,11 @@ struct Api {
         return p.future
     }
     
-    func loadCompanyAddress(addressId: Int) -> Future<TCompanyAddress, TargoError> {
+    func loadCompanyAddress(location: CLLocation?, addressId: Int) -> Future<TCompanyAddress, TargoError> {
         
         let p = Promise<TCompanyAddress, TargoError>()
         
-        server.loadCompanyAddress(addressId: addressId)
+        server.loadCompanyAddress(location: location, addressId: addressId)
             
             .responseJSON { response in
             
@@ -946,11 +946,11 @@ struct Api {
         return p.future
     }
     
-    func favoriteComanyAddresses(location: CLLocation, pageNumber: Int? = nil, pageSize: Int? = nil) -> Future<TCompanyAddressesPage, TargoError> {
+    func favoriteCompanyAddresses(location: CLLocation, pageNumber: Int? = nil, pageSize: Int? = nil) -> Future<TCompanyAddressesPage, TargoError> {
         
         let p = Promise<TCompanyAddressesPage, TargoError>()
         
-        server.favoriteComanyAddresses(location: location, pageNumber: pageNumber, pageSize: pageSize)
+        server.favoriteCompanyAddresses(location: location, pageNumber: pageNumber, pageSize: pageSize)
             
             .responseJSON { response in
                 

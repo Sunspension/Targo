@@ -22,7 +22,7 @@ protocol PRemoteServerV1 {
     
     func loadCompanyAddresses(location: CLLocation, pageNumber: Int, pageSize: Int, query: String?, distance: Int?) -> DataRequest
     
-    func loadCompanyAddress(addressId: Int) -> DataRequest
+    func loadCompanyAddress(location: CLLocation?, addressId: Int) -> DataRequest
     
     func loadCompanyMenu(companyId: Int, pageNumber: Int, pageSize: Int) -> DataRequest
     
@@ -63,7 +63,7 @@ protocol PRemoteServerV1 {
     
     func removeBookmark(companyAddressId: Int) -> DataRequest
     
-    func favoriteComanyAddresses(location: CLLocation, pageNumber: Int?, pageSize: Int?) -> DataRequest
+    func favoriteCompanyAddresses(location: CLLocation, pageNumber: Int?, pageSize: Int?) -> DataRequest
     
     func uploadImage(image: UIImage, encodingCompletion: ((SessionManager.MultipartFormDataEncodingResult) -> Void)?)
     

@@ -84,9 +84,11 @@ struct TRemoteServer: PRemoteServerV1 {
                             parameters: ["extend" : "image"])
     }
     
-    func loadCompanyAddress(addressId: Int) -> DataRequest {
+    func loadCompanyAddress(location: CLLocation?, addressId: Int) -> DataRequest {
         
-        let params: [String : Any] = ["extend" : "image"]
+        let params: [String : Any] = ["extend" : "image",
+                                      "lat" : location?.coordinate.latitude ?? 0.0,
+                                      "lon" : location?.coordinate.longitude ?? 0.0]
         
         return self.request(method: .get,
                             remotePath: baseURLString + "/company-address" + "/\(addressId)", parameters: params)
@@ -274,7 +276,7 @@ struct TRemoteServer: PRemoteServerV1 {
         return self.request(method: .put, remotePath: baseURLString + "/company-address" + "/\(companyAddressId)", parameters: ["is_favorite" : false])
     }
     
-    func favoriteComanyAddresses(location: CLLocation, pageNumber: Int?, pageSize: Int?) -> DataRequest {
+    func favoriteCompanyAddresses(location: CLLocation, pageNumber: Int?, pageSize: Int?) -> DataRequest {
         
         var params: [String: Any] = ["lat" : location.coordinate.latitude,
                                            "lon" : location.coordinate.longitude,

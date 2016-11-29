@@ -12,6 +12,7 @@ import SwiftOverlays
 import AlamofireImage
 import Bond
 import ReactiveKit
+import CoreLocation
 
 private enum SectionTypeEnum: Int {
     
@@ -38,6 +39,8 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
     
     fileprivate var categories = Set<TShopCategory>()
     
+    fileprivate var userLocation: CLLocation?
+    
     var company: TCompanyAddress?
     
     var addressId: Int?
@@ -61,6 +64,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
     
     @IBOutlet weak var buttonMakeOrder: UIButton!
     
+    @IBOutlet weak var totalPrice: UILabel!
     
     class func controllerInstance() -> TCompanyMenuTableViewController {
         
@@ -70,7 +74,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
     class func controllerInstance(addressId: Int) -> TCompanyMenuTableViewController {
         
         let controller = self.controllerInstance()
-        controller.loadCompanyAddress(addressId: addressId)
+        controller.loadCompanyAddress(location: TLocationManager.sharedInstance.lastLocation, addressId: addressId)
         controller.showButtonInfo = true
         
         return controller
@@ -122,7 +126,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 20, 0)
         
         self.bag = self.orderItems.observeNext(with: { event in
-            
+         
             UIView.beginAnimations("buton", context: nil)
             
             UIView.animate(withDuration: 0.2, animations: {
@@ -144,7 +148,10 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         
         if showButtonInfo {
             
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "icon-info"), style: .plain, target: self, action: #selector(TCompanyMenuTableViewController.openInfo))
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "icon-info"),
+                                                                     style: .plain,
+                                                                     target: self,
+                                                                     action: #selector(self.openInfo))
         }
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
@@ -166,6 +173,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         self.tableView.register(UINib(nibName: name, bundle: nil),
                                 forCellReuseIdentifier: TCompanyMenuCompanyImageTableViewCell.reusableIdentifier())
         
+        self.calculateTotalPrice()
         self.loadCompanyMenu()
         
         // Uncomment the following line to preserve selection between presentations
@@ -321,7 +329,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
                                                             }
                                                             
                                                             item.userData = itemState
-                                                            
+                                                            self.calculateTotalPrice()
                                                             self.tableView.reloadRows(at: indices, with: .fade)
                                                             
                                                         }).disposeIn(viewCell.bag)
@@ -355,7 +363,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
                                                             }
                                                             
                                                             item.userData = itemState
-                                                            
+                                                            self.calculateTotalPrice()
                                                             self.tableView.reloadRows(at: [indexPath], with: .fade)
                                                             
                                                         }).disposeIn(viewCell.bag)
@@ -387,6 +395,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
                                                             }
                                                             
                                                             item.userData = itemState
+                                                            self.calculateTotalPrice()
                                                             viewCell.quantity.text = String(itemState.quantity)
                                                             
                                                         }).disposeIn(viewCell.bag)
@@ -410,6 +419,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
                                                                 }
                                                                 
                                                                 item.userData = itemState
+                                                                self.calculateTotalPrice()
                                                                 viewCell.quantity.text = String(itemState.quantity)
                                                             }
                                                             
@@ -594,13 +604,12 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         tableView.reloadRows(at: indices, with: .fade)
     }
     
-    
     //MARK: - Private methods
-    fileprivate func loadCompanyAddress(addressId: Int) {
+    fileprivate func loadCompanyAddress(location: CLLocation?, addressId: Int) {
         
         self.loadingStatus = .loading
         
-        Api.sharedInstance.loadCompanyAddress(addressId: addressId)
+        Api.sharedInstance.loadCompanyAddress(location: self.userLocation, addressId: addressId)
             
             .onSuccess { [unowned self] company in
 
@@ -693,6 +702,20 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         }
     }
     
+    fileprivate func calculateTotalPrice() {
+        
+        var totalPrice = 0
+        
+        for item in self.orderItems {
+            
+            let itemState = item.userData as! MenuItemState
+            
+            let itemGood = item.item as! TShopGood
+            totalPrice += itemGood.price * itemState.quantity
+        }
+        
+        self.totalPrice.text = "\(totalPrice) " + " \u{20BD}"
+    }
     
     /*
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
