@@ -156,7 +156,7 @@
 "enH-Fk-TxI.text" = "Label";
 
 /* Class = "UIButton"; normalTitle = "Order review"; ObjectID = "faP-0U-Dbw"; */
-"faP-0U-Dbw.normalTitle" = "Просмотр заказа";
+"faP-0U-Dbw.normalTitle" = "Оформить заказ";
 
 /* Class = "UILabel"; text = "Order 345"; ObjectID = "gxU-ax-sUP"; */
 "gxU-ax-sUP.text" = "Order 345";

@@ -129,16 +129,16 @@ class TOrderStatusViewController: UIViewController {
     
     func makeAttributedTimeString(time: String) -> NSAttributedString {
         
-//        let minutes = "minutes".localized
+        let minutes = "minutes".localized
         let attrubuteTime = [NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: UIFont.systemFont(ofSize: 80)]
         
-//        let attrubuteMinutes = [NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: UIFont.systemFont(ofSize: 30)]
+        let attrubuteMinutes = [NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: UIFont.systemFont(ofSize: 30)]
         
-        let text1 = NSAttributedString(string: time, attributes: attrubuteTime)
-//        let text2 = NSAttributedString(string: minutes, attributes: attrubuteMinutes)
+        let text1 = NSAttributedString(string: time + "\n", attributes: attrubuteTime)
+        let text2 = NSAttributedString(string: minutes, attributes: attrubuteMinutes)
         
         let attributedText = NSMutableAttributedString(attributedString: text1)
-//        attributedText.append(text2)
+        attributedText.append(text2)
         
         return attributedText
     }
@@ -283,98 +283,99 @@ class TOrderStatusViewController: UIViewController {
     
     fileprivate func setOrderStatus(_ orderSatus: Int) {
         
-        let status = ShopOrderStatusEnum(rawValue: orderSatus)!
-        
-        switch status {
+        if let status = ShopOrderStatusEnum(rawValue: orderSatus) {
             
-            // 1
-        case .new:
-            
-            changeStatusText("order_status_new".localized)
-            self.cancelOrder.isHidden = false
-            self.cancelLabel.isHidden = false
-            
-            break
-            
-            // 2
-        case .canceledByUser:
-            
-            changeStatusText("order_status_canceled_by_user".localized)
-            self.cancelOrder.isHidden = true
-            self.cancelLabel.isHidden = true
-            
-            break
-            
-            // 3
-        case .view:
-            
-            changeStatusText("order_status_seen".localized)
-            self.cancelOrder.isHidden = false
-            self.cancelLabel.isHidden = false
-            
-            break
-
-            // 4
-        case .canceled:
-            
-            changeStatusText("order_status_canceled".localized)
-            self.cancelOrder.isHidden = true
-            self.cancelLabel.isHidden = true
-            
-            break
-
-            // 5
-        case .processing:
-
-            if previousOrderStatus != ShopOrderStatusEnum.processing.rawValue {
+            switch status {
                 
-                self.previousOrderStatus = status.rawValue
-                changeStatusText("order_status_processing".localized)
+            // 1
+            case .new:
+                
+                changeStatusText("order_status_new".localized)
+                self.cancelOrder.isHidden = false
+                self.cancelLabel.isHidden = false
+                
+                break
+                
+            // 2
+            case .canceledByUser:
+                
+                changeStatusText("order_status_canceled_by_user".localized)
+                self.cancelOrder.isHidden = true
+                self.cancelLabel.isHidden = true
+                
+                break
+                
+            // 3
+            case .view:
+                
+                changeStatusText("order_status_seen".localized)
+                self.cancelOrder.isHidden = false
+                self.cancelLabel.isHidden = false
+                
+                break
+                
+            // 4
+            case .canceled:
+                
+                changeStatusText("order_status_canceled".localized)
+                self.cancelOrder.isHidden = true
+                self.cancelLabel.isHidden = true
+                
+                break
+                
+            // 5
+            case .processing:
+                
+                if previousOrderStatus != ShopOrderStatusEnum.processing.rawValue {
+                    
+                    self.previousOrderStatus = status.rawValue
+                    changeStatusText("order_status_processing".localized)
+                    self.cancelOrder.isHidden = true
+                    self.cancelLabel.isHidden = true
+                }
+                
+                break
+                
+            // 6
+            case .complete:
+                
+                changeStatusText("order_status_ready".localized)
+                self.cancelOrder.isHidden = true
+                self.cancelLabel.isHidden = true
+                
+                break;
+                
+            // 7
+            case .finished:
+                
+                changeStatusText("order_status_finished".localized)
+                self.cancelOrder.isHidden = true
+                self.cancelLabel.isHidden = true
+                
+                break
+                
+            // 8
+            case .payError:
+                
+                changeStatusText("order_status_pay_error".localized)
+                self.cancelOrder.isHidden = true
+                self.cancelLabel.isHidden = true
+                
+                break
+                
+            // 9
+            case .paySuccess:
+                
+                changeStatusText("order_status_pay_success".localized)
                 self.cancelOrder.isHidden = true
                 self.cancelLabel.isHidden = true
                 self.enableTimerIfNeeded()
+                
+                break
+                
+            default:
+                break
             }
-            
-            break
-            
-            // 6
-        case .complete:
-
-            changeStatusText("order_status_ready".localized)
-            self.cancelOrder.isHidden = true
-            self.cancelLabel.isHidden = true
-            
-            break;
-            
-            // 7
-        case .finished:
-            
-            changeStatusText("order_status_finished".localized)
-            self.cancelOrder.isHidden = true
-            self.cancelLabel.isHidden = true
-            
-            break
-            
-            // 8
-        case .paySuccess:
-        
-            changeStatusText("order_status_pay_success".localized)
-            self.cancelOrder.isHidden = true
-            self.cancelLabel.isHidden = true
-            
-            break
-            
-            // 9
-        case .payError:
-            
-            changeStatusText("order_status_pay_error".localized)
-            self.cancelOrder.isHidden = true
-            self.cancelLabel.isHidden = true
-            
-            break
-            
-        default:
-            break
         }
     }
     

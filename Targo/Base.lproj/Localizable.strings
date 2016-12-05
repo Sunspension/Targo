@@ -46,7 +46,7 @@
 
 "order_title" = "Order";
 
-"order_review_title" = "Order review";
+"order_review_title" = "Make order";
 
 "order_review_total_price" = "Total price";
 
@@ -56,7 +56,7 @@
 
 "order_status_seen" = "Order is being seen";
 
-"order_status_processing" = "Order in progress";
+"order_status_processing" = "Order in progress and will be ready in";
 
 "order_status_canceled" = "Order is canceled";
 
@@ -66,7 +66,7 @@
 
 "order_status_finished" = "Order has been finished";
 
-"order_status_pay_success" = "Your order is in progress";
+"order_status_pay_success" = "Your order is in progress and will be ready in";
 
 "order_status_pay_error" = "Payment error";
 
@@ -129,7 +129,7 @@
 
 "order_description_title" = "Order description";
 
-"order_make_order_button_title" = "Make order";
+"order_make_order_button_title" = "Make payment";
 
 "order_make_order_button_title_new_line" = "Make \norder";
 
