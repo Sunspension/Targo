@@ -210,14 +210,12 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
             item = section.items[(indexPath as NSIndexPath).row]
         }
         
-        if let controller = self.instantiateViewControllerWithIdentifierOrNibName("MenuController") as? TCompanyMenuTableViewController {
-            
-            controller.company = item.item
-            controller.companyImage = self.companyImages.filter({$0.id == item.item!.companyImageId.value}).first
-            controller.showButtonInfo = true
-                
-            self.navigationController?.pushViewController(controller, animated: true)
-        }
+        let controller = TCompanyMenuTableViewController.controllerInstance()
+        controller.company = item.item
+        controller.companyImage = self.companyImages.filter({$0.id == item.item!.companyImageId.value}).first
+        controller.showButtonInfo = true
+        
+        self.navigationController?.pushViewController(controller, animated: true)
     }
     
     func openMap() {

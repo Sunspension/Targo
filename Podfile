@@ -19,6 +19,9 @@ pod 'ObjectMapper', '~> 2.1'
 
 pod 'AlamofireObjectMapper', '~> 4.0'
 
+#Font
+#pod 'FontAwesome.swift'
+
 #Images
 pod 'AlamofireImage', '~> 3.1'
 

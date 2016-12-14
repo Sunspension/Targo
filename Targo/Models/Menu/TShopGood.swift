@@ -24,6 +24,8 @@ class TShopGood: Object, Mappable {
     
     dynamic var price = 0
     
+    dynamic var discountPrice = 0
+    
     dynamic var count = 0
     
     dynamic var externalId = 0
@@ -74,6 +76,7 @@ class TShopGood: Object, Mappable {
         companyId <- map["company_id"]
         shopCategoryId <- map["shop_category_id"]
         price <- map["price"]
+        discountPrice <- map["discount_price"]
         persistentId <- map["persistent_id"]
         createdAt <- map["created_at"]
         updatedAt <- map["updated_at"]
