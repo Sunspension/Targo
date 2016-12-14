@@ -356,18 +356,18 @@ class TOrderStatusViewController: UIViewController {
             break
             
             // 8
-        case .paySuccess:
-        
-            changeStatusText("order_status_pay_success".localized)
+        case .payError:
+            
+            changeStatusText("order_status_pay_error".localized)
             self.cancelOrder.isHidden = true
             self.cancelLabel.isHidden = true
             
             break
             
             // 9
-        case .payError:
-            
-            changeStatusText("order_status_pay_error".localized)
+        case .paySuccess:
+        
+            changeStatusText("order_status_pay_success".localized)
             self.cancelOrder.isHidden = true
             self.cancelLabel.isHidden = true
             

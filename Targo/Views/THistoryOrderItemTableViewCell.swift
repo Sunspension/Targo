@@ -13,11 +13,14 @@ class THistoryOrderItemTableViewCell: UITableViewCell {
     
     @IBOutlet weak var companyName: UILabel!
     
-    @IBOutlet weak var orderDescription: UILabel!
+    @IBOutlet weak var orderStatus: UILabel!
     
-    @IBOutlet weak var orderDate: UILabel!
+    @IBOutlet weak var orderNumber: UILabel!
     
     @IBOutlet weak var bgView: UIView!
+    
+    @IBOutlet weak var price: UILabel!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()

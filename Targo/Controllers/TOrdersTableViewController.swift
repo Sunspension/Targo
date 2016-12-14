@@ -77,23 +77,7 @@ class TOrdersTableViewController: UITableViewController {
                                                                 .first {
                                                                 
                                                                 cell.companyName.text = company.title
-                                                                
-                                                                let items = item.item!.items
-                                                                
-                                                                var orderDesription = ""
-                                                                
-                                                                for index in 0 ... items.count - 1 {
-                                                                    
-                                                                    let orderItem = items[index]
-                                                                    orderDesription += orderItem.title
-                                                                    
-                                                                    if (index != items.count - 1) {
-                                                                        
-                                                                        orderDesription += ", "
-                                                                    }
-                                                                }
-                                                                
-                                                                cell.orderDescription.text = orderDesription
+                                                                cell.orderStatus.text = item.item?.orderStatusDescription
                                                                 
                                                                 if item.item!.isNew {
                                                                     
@@ -117,7 +101,7 @@ class TOrdersTableViewController: UITableViewController {
                                                                     formatter.dateStyle = .short
                                                                     formatter.timeStyle = .none
                                                                     
-                                                                    cell.orderDate.text = formatter.string(from: date)
+                                                                    cell.orderNumber.text = formatter.string(from: date)
                                                                 }
                                                             }
                                                         }
@@ -153,10 +137,10 @@ class TOrdersTableViewController: UITableViewController {
         super.viewDidAppear(animated)
         
         self.timer = Timer.scheduledTimer(timeInterval: 10,
-                                                            target: self,
-                                                            selector: #selector(TOrdersTableViewController.checkActiveOrdersStatus),
-                                                            userInfo: nil,
-                                                            repeats: true)
+                                          target: self,
+                                          selector: #selector(TOrdersTableViewController.checkActiveOrdersStatus),
+                                          userInfo: nil,
+                                          repeats: true)
         
         if let superview = self.view.superview {
             
