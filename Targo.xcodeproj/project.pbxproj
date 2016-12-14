@@ -188,8 +188,8 @@
 		D447B5F61DA8E1AA0002B91A /* TSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TSettingsTableViewController.swift; sourceTree = "<group>"; };
 		D447B5FD1DA8F0850002B91A /* TSettingsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TSettingsTableViewCell.swift; sourceTree = "<group>"; };
 		D447B6001DA9055C0002B91A /* TSettingsPhoneTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TSettingsPhoneTableViewCell.swift; sourceTree = "<group>"; };
-		D447B6031DA939750002B91A /* TOrderRatingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TOrderRatingTableViewCell.swift; sourceTree = "<group>"; };
-		D447B6041DA939750002B91A /* TOrderRatingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TOrderRatingTableViewCell.xib; sourceTree = "<group>"; };
+		D447B6031DA939750002B91A /* TOrderRatingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TOrderRatingTableViewCell.swift; path = ../Views/TOrderRatingTableViewCell.swift; sourceTree = "<group>"; };
+		D447B6041DA939750002B91A /* TOrderRatingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TOrderRatingTableViewCell.xib; path = ../Views/TOrderRatingTableViewCell.xib; sourceTree = "<group>"; };
 		D44930911D49494800ADF70A /* TTestOrder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TTestOrder.swift; path = Models/Response/TTestOrder.swift; sourceTree = "<group>"; };
 		D44930931D495D5100ADF70A /* TAddCreditCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TAddCreditCardViewController.swift; sourceTree = "<group>"; };
 		D449864A1D8EF48B007C9AF0 /* TFeedPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TFeedPage.swift; path = Models/Response/TFeedPage.swift; sourceTree = "<group>"; };
@@ -235,7 +235,7 @@
 		D498D49C1D2825EC002F0E88 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D49C7E881D281DB1004408AF /* RegistrationPhoneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationPhoneViewController.swift; sourceTree = "<group>"; };
 		D4A392071D6BBBC9005B2047 /* TCompanyAddress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TCompanyAddress.swift; path = Models/Company/TCompanyAddress.swift; sourceTree = "<group>"; };
-		D4A392091D6BBBF2005B2047 /* THistoryOrderItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = THistoryOrderItemTableViewCell.swift; sourceTree = "<group>"; };
+		D4A392091D6BBBF2005B2047 /* THistoryOrderItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = THistoryOrderItemTableViewCell.swift; path = ../Views/THistoryOrderItemTableViewCell.swift; sourceTree = "<group>"; };
 		D4B05FBD1D4FE202000E494E /* TAuthorizationResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TAuthorizationResponse.swift; path = Models/Response/TAuthorizationResponse.swift; sourceTree = "<group>"; };
 		D4B81B391D4FE8AE00F9103C /* TServerError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TServerError.swift; path = Models/Response/TServerError.swift; sourceTree = "<group>"; };
 		D4B81B3B1D4FF22300F9103C /* TBadRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TBadRequest.swift; path = Models/Response/TBadRequest.swift; sourceTree = "<group>"; };
@@ -256,7 +256,7 @@
 		D4E0B1CC1D2F061F00B65B96 /* UserRegistrationError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRegistrationError.swift; sourceTree = "<group>"; };
 		D4EE595F1D3AC98A0002022F /* TCompanyImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TCompanyImage.swift; path = Models/Company/TCompanyImage.swift; sourceTree = "<group>"; };
 		D4EE59621D3AFAF40002022F /* TTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TTabBarController.swift; sourceTree = "<group>"; };
-		D4EE59641D3AFDE30002022F /* TOrdersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TOrdersTableViewController.swift; sourceTree = "<group>"; };
+		D4EE59641D3AFDE30002022F /* TOrdersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TOrdersTableViewController.swift; path = Controllers/TOrdersTableViewController.swift; sourceTree = "<group>"; };
 		D4EE59661D3AFE1E0002022F /* TFeedTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFeedTableViewController.swift; sourceTree = "<group>"; };
 		D4EE59681D3AFEE90002022F /* TCompanyMenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCompanyMenuTableViewController.swift; sourceTree = "<group>"; };
 		D4F2136D1D6E55D000D94B62 /* TBillCompanyNameTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TBillCompanyNameTableViewCell.swift; sourceTree = "<group>"; };
@@ -430,8 +430,6 @@
 		D447B6021DA939400002B91A /* Order */ = {
 			isa = PBXGroup;
 			children = (
-				D447B6031DA939750002B91A /* TOrderRatingTableViewCell.swift */,
-				D447B6041DA939750002B91A /* TOrderRatingTableViewCell.xib */,
 			);
 			name = Order;
 			sourceTree = "<group>";
@@ -474,7 +472,6 @@
 				D447B5FF1DA905310002B91A /* Settings */,
 				D42AF2211DA589DF00F20945 /* CustomViews */,
 				D42AF21C1DA587F300F20945 /* Profile */,
-				D4A392091D6BBBF2005B2047 /* THistoryOrderItemTableViewCell.swift */,
 				D470DFB81D384D74003473E6 /* TCompanyTableViewCell.swift */,
 				D4FDE6791D3C007E003EF2CC /* TWorkingTimeTableViewCell.swift */,
 				D40E101F1D3EAEE60012DCF4 /* TCompanyImageMenuTableViewCell.swift */,
@@ -538,7 +535,6 @@
 				D447B5F91DA8E1E50002B91A /* Search */,
 				D447B5F81DA8E1CF0002B91A /* Profile */,
 				D4EE59621D3AFAF40002022F /* TTabBarController.swift */,
-				D4EE59641D3AFDE30002022F /* TOrdersTableViewController.swift */,
 				D4EE59681D3AFEE90002022F /* TCompanyMenuTableViewController.swift */,
 				D41D9D8D1D46A1AB00358961 /* TCompanyInfoTableViewController.swift */,
 				D44930931D495D5100ADF70A /* TAddCreditCardViewController.swift */,
@@ -677,6 +673,7 @@
 			isa = PBXGroup;
 			children = (
 				D4876FB71D8B711100FFC1A3 /* Targo.entitlements */,
+				E5E2291D1E01542C005036F1 /* Orders */,
 				D41C3A261D6F880900539ABD /* Services */,
 				D4C47FCF1D5FE6E4000D1AA2 /* Controls */,
 				D470DFB71D384D44003473E6 /* Views */,
@@ -704,6 +701,26 @@
 				E5F457141DA4E8EE00821AD1 /* CompanyAddressExtension.swift */,
 			);
 			name = Extensions;
+			sourceTree = "<group>";
+		};
+		E5E2291C1E01540A005036F1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D4A392091D6BBBF2005B2047 /* THistoryOrderItemTableViewCell.swift */,
+				D447B6031DA939750002B91A /* TOrderRatingTableViewCell.swift */,
+				D447B6041DA939750002B91A /* TOrderRatingTableViewCell.xib */,
+			);
+			name = Views;
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		E5E2291D1E01542C005036F1 /* Orders */ = {
+			isa = PBXGroup;
+			children = (
+				E5E2291C1E01540A005036F1 /* Views */,
+				D4EE59641D3AFDE30002022F /* TOrdersTableViewController.swift */,
+			);
+			name = Orders;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

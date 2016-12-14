@@ -12,25 +12,81 @@ import RealmSwift
 
 enum ShopOrderStatusEnum: Int {
     
-    case undefined
+    case undefined // 0
     
-    case new
+    case new // 1
     
-    case canceledByUser
+    case canceledByUser // 2
     
-    case view
+    case view // 3
     
-    case canceled
+    case canceled // 4
     
-    case processing
+    case processing // 5
     
-    case complete
+    case complete // 6
     
-    case finished
+    case finished // 7
     
-    case payError
+    case paySuccess // 8
     
-    case paySuccess
+    case payError // 9
+    
+    
+    static func statusDescriptionFromPaymentStatus(paymentStatus: Int) -> String? {
+        
+        if let item = ShopOrderStatusEnum(rawValue: paymentStatus) {
+            
+            return item.statusDescription()
+        }
+        
+        return nil;
+    }
+    
+    func statusDescription() -> String {
+        
+        switch self {
+            
+        case .new:
+            
+            return "order_status_new".localized
+            
+        case .canceledByUser:
+            
+            return "order_status_canceled_by_user".localized
+            
+        case .view:
+            
+            return "order_status_seen".localized
+            
+        case .canceled:
+            
+            return "order_status_canceled".localized
+            
+        case .processing:
+            
+            return "order_status_processing".localized
+            
+        case .complete:
+            
+            return "order_status_ready".localized
+            
+        case .finished:
+            
+            return "order_status_finished".localized
+            
+        case .paySuccess:
+            
+            return "order_status_pay_success".localized
+            
+        case .payError:
+            
+            return "order_status_pay_error".localized
+            
+        default:
+            return "Undefined"
+        }
+    }
 }
 
 
@@ -93,5 +149,13 @@ class TShopOrder: Object, Mappable {
         addressId <- map["address_id"]
         prepared <- map["prepared_at"]
         items <- (map["items"], ListTransform<TShopGood>())
+    }
+}
+
+extension TShopOrder {
+    
+    var orderStatusDescription: String? {
+        
+        return ShopOrderStatusEnum.statusDescriptionFromPaymentStatus(paymentStatus: self.paymentStatus)
     }
 }
