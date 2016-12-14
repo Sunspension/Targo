@@ -8,9 +8,9 @@
 
 "registration_phone_title" = "Регистрация";
 
-"user_registration_confidential_part1" = "Регистрируясь, Вы принимаете\n";
+"user_registration_confidential_part1" = "Регистрируясь, Вы соглашаетесь с\n";
 
-"user_registration_confidential_part2" = "Пользовательское соглашение";
+"user_registration_confidential_part2" = "Договором-офертой";
 
 "user_agreement_title" = "Соглашение";
 
@@ -46,7 +46,7 @@
 
 "order_title" = "Заказ";
 
-"order_review_title" = "Просмотр заказа";
+"order_review_title" = "Оформить заказ";
 
 "order_review_total_price" = "Итого";
 
@@ -56,17 +56,17 @@
 
 "order_status_seen" = "Заказ просматривается";
 
-"order_status_processing" = "Заказ в обработке";
+"order_status_processing" = "Заказ оплачен";
 
 "order_status_canceled" = "Заказ отменен";
 
 "order_status_canceled_by_user" = "Вы отменили заказ";
 
-"order_status_ready" = "Заказ готов";
+"order_status_ready" = "Заказ готов.\nПриятного аппетита";
 
 "order_status_finished" = "Заказ выдан";
 
-"order_status_pay_success" = "Заказ выполняется";
+"order_status_pay_success" = "Заказ в обработке и будет готов через";
 
 "order_status_pay_error" = "Ошибка оплаты";
 
@@ -130,7 +130,7 @@
 
 "order_description_title" = "Коментарий к заказу";
 
-"order_make_order_button_title" = "Сделать заказ";
+"order_make_order_button_title" = "Оплатить заказ";
 
 "order_make_order_button_title_new_line" = "Сделать \nзаказ";
 
