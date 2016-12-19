@@ -51,6 +51,9 @@ pod 'KeychainSwift', '~> 7.0'
 pod 'BrightFutures'
 pod 'Bond', '~> 5.0'
 
+#FireBase
+pod 'Firebase/Crash'
+
 #Loggin
 
 #Menu

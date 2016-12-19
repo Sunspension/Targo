@@ -10,6 +10,7 @@ import UIKit
 import RealmSwift
 import GoogleMaps
 import Alamofire
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,6 +24,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil);
         application.registerUserNotificationSettings(settings)
         application.registerForRemoteNotifications()
+        
+        // Firebase configure
+        FIRApp.configure()
         
         // register google maps
         GMSServices.provideAPIKey("AIzaSyBj0pr7Cxm3b4tsM9O1gyIXdguRHvMmeW0")
@@ -74,6 +78,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             // User logged in
             // Open main controller
+            
+            loadHistoryOrders()
+            
             self.window?.rootViewController = storyBoard.instantiateViewController(withIdentifier: "TTabBar")
             self.window?.makeKeyAndVisible()
         }
@@ -118,11 +125,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            }
         }
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.logoutAction), name: NSNotification.Name(rawValue: kTargoUserLoggedOutSuccessfully), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.logoutAction), name: Notification.Name(rawValue: kTargoUserLoggedOutSuccessfully), object: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.loginAction), name: NSNotification.Name(rawValue: kTargoUserLoggedInSuccessfully), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.loginAction), name: Notification.Name(rawValue: kTargoUserLoggedInSuccessfully), object: nil)
         
-         NotificationCenter.default.addObserver(self, selector: #selector(self.introEnded), name: NSNotification.Name(rawValue: kTargoIntroHasEndedNotification), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.introEnded), name: Notification.Name(rawValue: kTargoIntroHasEndedNotification), object: nil)
         
         return true
     }
@@ -200,7 +207,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.changeRootViewController(navigation)
     }
     
-    func loginAction() {
+    func loadHistoryOrders() {
         
         let realm = try! Realm()
         
@@ -208,6 +215,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             TOrderLoader().loadOrders()
         }
+    }
+    
+    func loginAction() {
+        
+        loadHistoryOrders()
+        
+//        let storage = HTTPCookieStorage.shared
+//        
+//        if let cookies = storage.cookies(for: URL(string: "targo.club")!) {
+//            
+//            for cookie in cookies {
+//                
+//                
+//            }
+//        }
         
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         
@@ -228,6 +250,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                     UIView.setAnimationsEnabled(oldState)
                                     
             }, completion: nil)
+    }
+    
+    deinit {
+        
+        NotificationCenter.default.removeObserver(self)
     }
     
 //    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {

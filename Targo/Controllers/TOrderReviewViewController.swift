@@ -476,75 +476,75 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
                     
                     let date = Date()
                     
-                    let beginingOfDay = date.beginningOfDay
-                    
-                    var closeTime = workingHours[1]
-                    closeTime = closeTime.components(separatedBy: ":")[0]
-                    
-                    let timeToClose = beginingOfDay.change(hour: Int(closeTime))!
-                    
-                    var openTime = workingHours[0]
-                    openTime = openTime.components(separatedBy: ":")[0]
-                    
-                    let timeToOpen = beginingOfDay.change(hour: Int(openTime))!
-                    
-                    if timeToOpen > date || date > timeToClose {
-                        
-                        showOkAlert("Закрыто", message: "Заведение сейчас закрыто, дождитесь рабочих часов")
-                        return
-                    }
-                    
-                    var times = [String]()
-                    
-                    var end = false
-                    
-                    var futureDate = date
-                    
-                    let interval: TimeInterval = 15 * 60 // 15 minutes
-                    
-                    while !end {
-                        
-                        futureDate.addTimeInterval(interval)
-                        
-                        if futureDate < timeToClose {
-                            
-                            let difference = futureDate.timeIntervalSince(date)
-                            
-                            if difference == interval {
-                                
-                                self.dates.append(futureDate)
-                                times.append("asap".localized)
-                            }
-                            else {
-                                
-                                let futureInterval = futureDate.timeIntervalSince(date)
-                                let futureDate = Date(timeInterval: futureInterval, since: date)
-                                
-                                self.dates.append(futureDate)
-                                times.append(futureDate.stringFromFormat("HH:mm"))
-                            }
-                        }
-                        else {
-                            
-                            end = true
-                        }
-                    }
+//                    let beginingOfDay = date.beginningOfDay
+//                    
+//                    var closeTime = workingHours[1]
+//                    closeTime = closeTime.components(separatedBy: ":")[0]
+//                    
+//                    let timeToClose = beginingOfDay.change(hour: Int(closeTime))!
+//                    
+//                    var openTime = workingHours[0]
+//                    openTime = openTime.components(separatedBy: ":")[0]
+//                    
+//                    let timeToOpen = beginingOfDay.change(hour: Int(openTime))!
+//                    
+//                    if timeToOpen > date || date > timeToClose {
+//                        
+//                        showOkAlert("Закрыто", message: "Заведение сейчас закрыто, дождитесь рабочих часов")
+//                        return
+//                    }
+//                    
+//                    var times = [String]()
+//                    
+//                    var end = false
+//                    
+//                    var futureDate = date
+//                    
+//                    let interval: TimeInterval = 15 * 60 // 15 minutes
+//                    
+//                    while !end {
+//                        
+//                        futureDate.addTimeInterval(interval)
+//                        
+//                        if futureDate < timeToClose {
+//                            
+//                            let difference = futureDate.timeIntervalSince(date)
+//                            
+//                            if difference == interval {
+//                                
+//                                self.dates.append(futureDate)
+//                                times.append("asap".localized)
+//                            }
+//                            else {
+//                                
+//                                let futureInterval = futureDate.timeIntervalSince(date)
+//                                let futureDate = Date(timeInterval: futureInterval, since: date)
+//                                
+//                                self.dates.append(futureDate)
+//                                times.append(futureDate.stringFromFormat("HH:mm"))
+//                            }
+//                        }
+//                        else {
+//                            
+//                            end = true
+//                        }
+//                    }
              
-                    let viewCell = tableView.cellForRow(at: item.indexPath as IndexPath) as! TDetailsTableViewCell
-                    
-                    ActionSheetStringPicker.show(withTitle: "time".localized,
-                                                 rows: times,
-                                                 initialSelection: 0,
-                                                 doneBlock: { (picker, selectedIndex, view) in
-                                                    
-                                                    self.selectedDate = self.dates[selectedIndex]
-                                                    viewCell.details.text = times[selectedIndex]
-                                                    viewCell.details.textColor = UIColor.black
-                    }, cancel: { picker in
-                        
-                        
-                        
-                    }, origin: self.view.superview)
+//                    let viewCell = tableView.cellForRow(at: item.indexPath as IndexPath) as! TDetailsTableViewCell
+//                    
+//                    ActionSheetStringPicker.show(withTitle: "time".localized,
+//                                                 rows: times,
+//                                                 initialSelection: 0,
+//                                                 doneBlock: { (picker, selectedIndex, view) in
+//                                                    
+//                                                    self.selectedDate = self.dates[selectedIndex]
+//                                                    viewCell.details.text = times[selectedIndex]
+//                                                    viewCell.details.textColor = UIColor.black
+//                    }, cancel: { picker in
+//                        
+//                        
+//                        
+//                    }, origin: self.view.superview)
                 }
             }
             
@@ -571,23 +571,23 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
                 
                 let date = Date()
                 
-                let beginingOfDay = date.beginningOfDay
+//                let beginingOfDay = date.beginningOfDay
                 
-                var closeTime = workingHours[1]
-                closeTime = closeTime.components(separatedBy: ":")[0]
-                
-                let timeToClose = beginingOfDay.change(hour: Int(closeTime))!
-                
-                var openTime = workingHours[0]
-                openTime = openTime.components(separatedBy: ":")[0]
-                
-                let timeToOpen = beginingOfDay.change(hour: Int(openTime))!
-                
-                if timeToOpen > date || date > timeToClose {
-                    
-                    showOkAlert("Закрыто", message: "Заведение сейчас закрыто, дождитесь рабочих часов")
-                    return
-                }
+//                var closeTime = workingHours[1]
+//                closeTime = closeTime.components(separatedBy: ":")[0]
+//                
+//                let timeToClose = beginingOfDay.change(hour: Int(closeTime))!
+//                
+//                var openTime = workingHours[0]
+//                openTime = openTime.components(separatedBy: ":")[0]
+//                
+//                let timeToOpen = beginingOfDay.change(hour: Int(openTime))!
+//                
+//                if timeToOpen > date || date > timeToClose {
+//                    
+//                    showOkAlert("Закрыто", message: "Заведение сейчас закрыто, дождитесь рабочих часов")
+//                    return
+//                }
                 
                 guard self.cards != nil && self.company != nil else {
                     

@@ -320,26 +320,26 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
                             
                             let date = Date()
                             
-                            let beginingOfDay = date.beginningOfDay
-                            
-                            var closeTime = workingHours[1]
-                            closeTime = closeTime.components(separatedBy: ":")[0]
-                            
-                            let timeToClose = beginingOfDay.change(hour: Int(closeTime))!
-                            
-                            var openTime = workingHours[0]
-                            openTime = openTime.components(separatedBy: ":")[0]
-                            
-                            let timeToOpen = beginingOfDay.change(hour: Int(openTime))!
-                            
-                            if timeToOpen > date || date > timeToClose {
-                                
-                                viewCell.pointView.backgroundColor = UIColor.red
-                            }
-                            else {
-                                
-                                viewCell.pointView.backgroundColor = UIColor.green
-                            }
+//                            let beginingOfDay = date.beginningOfDay
+//                            
+//                            var closeTime = workingHours[1]
+//                            closeTime = closeTime.components(separatedBy: ":")[0]
+//                            
+//                            let timeToClose = beginingOfDay.change(hour: Int(closeTime))!
+//                            
+//                            var openTime = workingHours[0]
+//                            openTime = openTime.components(separatedBy: ":")[0]
+//                            
+//                            let timeToOpen = beginingOfDay.change(hour: Int(openTime))!
+//                            
+//                            if timeToOpen > date || date > timeToClose {
+//                                
+//                                viewCell.pointView.backgroundColor = UIColor.red
+//                            }
+//                            else {
+//                                
+//                                viewCell.pointView.backgroundColor = UIColor.green
+//                            }
                             
                             viewCell.iconImage.image = UIImage(named: "icon-time")!.imageWithColor(UIColor.white)
                         }

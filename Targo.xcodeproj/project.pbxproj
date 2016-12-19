@@ -137,6 +137,8 @@
 		E5C062D91D2106BF002074C4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C062D81D2106BF002074C4 /* AppDelegate.swift */; };
 		E5C062DE1D2106BF002074C4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5C062DC1D2106BF002074C4 /* Main.storyboard */; };
 		E5C062E01D2106BF002074C4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5C062DF1D2106BF002074C4 /* Assets.xcassets */; };
+		E5C3B6331E07D86E00DDFE9B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E5C3B6321E07D86E00DDFE9B /* GoogleService-Info.plist */; };
+		E5C3B6361E07DCDD00DDFE9B /* targo-9570f-firebase-crashreporting-zpyc3-fbde1796c1.json in Resources */ = {isa = PBXBuildFile; fileRef = E5C3B6351E07DCDD00DDFE9B /* targo-9570f-firebase-crashreporting-zpyc3-fbde1796c1.json */; };
 		E5EEEF541DA242FC009ADF7E /* TAddRemoveBookmarkResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EEEF531DA242FC009ADF7E /* TAddRemoveBookmarkResponse.swift */; };
 		E5F457151DA4E8EE00821AD1 /* CompanyAddressExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F457141DA4E8EE00821AD1 /* CompanyAddressExtension.swift */; };
 /* End PBXBuildFile section */
@@ -281,6 +283,8 @@
 		E5C062DD1D2106BF002074C4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E5C062DF1D2106BF002074C4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E5C062E41D2106BF002074C4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E5C3B6321E07D86E00DDFE9B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E5C3B6351E07DCDD00DDFE9B /* targo-9570f-firebase-crashreporting-zpyc3-fbde1796c1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "targo-9570f-firebase-crashreporting-zpyc3-fbde1796c1.json"; sourceTree = "<group>"; };
 		E5EEEF531DA242FC009ADF7E /* TAddRemoveBookmarkResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TAddRemoveBookmarkResponse.swift; path = Models/Response/TAddRemoveBookmarkResponse.swift; sourceTree = "<group>"; };
 		E5F457141DA4E8EE00821AD1 /* CompanyAddressExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompanyAddressExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -688,6 +692,8 @@
 				E5C062DC1D2106BF002074C4 /* Main.storyboard */,
 				E5C062DF1D2106BF002074C4 /* Assets.xcassets */,
 				D43FF4DE1DD8833F00A3B3EC /* agreement.docx */,
+				E5C3B6321E07D86E00DDFE9B /* GoogleService-Info.plist */,
+				E5C3B6351E07DCDD00DDFE9B /* targo-9570f-firebase-crashreporting-zpyc3-fbde1796c1.json */,
 				E5C062E41D2106BF002074C4 /* Info.plist */,
 				D498D49D1D2825EC002F0E88 /* Localizable.strings */,
 			);
@@ -739,6 +745,7 @@
 				F366E6960F32C734F1E199C8 /* [CP] Copy Pods Resources */,
 				B2A31494E0E7D7E20F385A07 /* 📦 Embed Pods Frameworks */,
 				ABD10A1B87A339F7F702EBC6 /* 📦 Copy Pods Resources */,
+				E5C3B6341E07DBEF00DDFE9B /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -756,7 +763,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = Targo;
 				TargetAttributes = {
 					E5C062D41D2106BF002074C4 = {
@@ -799,6 +806,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D40E10221D3EAEE60012DCF4 /* TCompanyImageMenuTableViewCell.xib in Resources */,
+				E5C3B6361E07DCDD00DDFE9B /* targo-9570f-firebase-crashreporting-zpyc3-fbde1796c1.json in Resources */,
 				D41D9D941D46B47300358961 /* TWorkingHoursHeader.xib in Resources */,
 				D4540A081DD12B09001F3781 /* TNewsTableViewCell.xib in Resources */,
 				D4D4B68D1D42C67300278E2D /* TMenuItemFullTableViewCell.xib in Resources */,
@@ -818,6 +826,7 @@
 				D4FF40051D76362B00019195 /* TDetailsTableViewCell.xib in Resources */,
 				D47196A31DA18A2C001FA295 /* TOrderNumberOfPersons.xib in Resources */,
 				E5C062DE1D2106BF002074C4 /* Main.storyboard in Resources */,
+				E5C3B6331E07D86E00DDFE9B /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -898,6 +907,19 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
+		};
+		E5C3B6341E07DBEF00DDFE9B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Replace this with the GOOGLE_APP_ID from your GoogleService-Info.plist file\nGOOGLE_APP_ID=1:735099194299:ios:8058ed9fcadb7226\n\n# Replace the /Path/To/ServiceAccount.json with the path to the key you just downloaded\n\"${PODS_ROOT}\"/FirebaseCrash/upload-sym \"${SRCROOT}/targo-9570f-firebase-crashreporting-zpyc3-fbde1796c1.json\"";
 		};
 		F366E6960F32C734F1E199C8 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;

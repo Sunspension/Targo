@@ -409,28 +409,29 @@ class TCompanyInfoTableViewController: UITableViewController {
                                         
                                         viewCell.title.text = String(format: "company_info_opened_text".localized, "\(workingHours[0]) - \(workingHours[1])")
                                         
-                                        let date = Date()
-                                        
-                                        let beginingOfDay = date.beginningOfDay
-                                        
-                                        var closeTime = workingHours[1]
-                                        closeTime = closeTime.components(separatedBy: ":")[0]
-                                        
-                                        let timeToClose = beginingOfDay.change(hour: Int(closeTime))!
-                                        
-                                        var openTime = workingHours[0]
-                                        openTime = openTime.components(separatedBy: ":")[0]
-                                        
-                                        let timeToOpen = beginingOfDay.change(hour: Int(openTime))!
-                                        
-                                        if timeToOpen > date || date > timeToClose {
-                                            
-                                            viewCell.point.backgroundColor = UIColor.red
-                                        }
-                                        else {
-                                            
-                                            viewCell.point.backgroundColor = UIColor.green
-                                        }
+//                                        let date = Date()
+//                                        
+//                                        let beginingOfDay = date.startOfDay
+//                                        
+//                                        var closeTime = workingHours[1]
+//                                        closeTime = closeTime.components(separatedBy: ":")[0]
+//                                        
+//                                        let timeToClose = beginingOfDay.addingTimeInterval(TimeInterval(closeTime)!)
+//                                        
+//                                        var openTime = workingHours[0]
+//                                        openTime = openTime.components(separatedBy: ":")[0]
+//                                        
+////                                        let timeToOpen = beginingOfDay.hour + Int(openTime)!
+//                                        let timeToOpen = beginingOfDay.addingTimeInterval(TimeInterval(openTime)!)
+//                                        
+//                                        if timeToOpen > date || date > timeToClose {
+//                                            
+//                                            viewCell.point.backgroundColor = UIColor.red
+//                                        }
+//                                        else {
+//                                            
+//                                            viewCell.point.backgroundColor = UIColor.green
+//                                        }
                                     }
                                 }
                                 

@@ -12,6 +12,8 @@ import CoreLocation
 
 protocol PRemoteServerV1 {
     
+    var baseURLString: String { get }
+    
     func registration(phoneNumber: String, deviceToken: String, parameters: [String : Any]?) -> DataRequest
     
     func authorization(phoneNumber: String, code: String, deviceToken: String, parameters: [String : Any]?) -> DataRequest
