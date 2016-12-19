@@ -676,7 +676,6 @@
 		E5C062D71D2106BF002074C4 /* Targo */ = {
 			isa = PBXGroup;
 			children = (
-				D4876FB71D8B711100FFC1A3 /* Targo.entitlements */,
 				E5E2291D1E01542C005036F1 /* Orders */,
 				D41C3A261D6F880900539ABD /* Services */,
 				D4C47FCF1D5FE6E4000D1AA2 /* Controls */,
@@ -692,6 +691,7 @@
 				E5C062DC1D2106BF002074C4 /* Main.storyboard */,
 				E5C062DF1D2106BF002074C4 /* Assets.xcassets */,
 				D43FF4DE1DD8833F00A3B3EC /* agreement.docx */,
+				D4876FB71D8B711100FFC1A3 /* Targo.entitlements */,
 				E5C3B6321E07D86E00DDFE9B /* GoogleService-Info.plist */,
 				E5C3B6351E07DCDD00DDFE9B /* targo-9570f-firebase-crashreporting-zpyc3-fbde1796c1.json */,
 				E5C062E41D2106BF002074C4 /* Info.plist */,
@@ -919,7 +919,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Replace this with the GOOGLE_APP_ID from your GoogleService-Info.plist file\nGOOGLE_APP_ID=1:735099194299:ios:8058ed9fcadb7226\n\n# Replace the /Path/To/ServiceAccount.json with the path to the key you just downloaded\n\"${PODS_ROOT}\"/FirebaseCrash/upload-sym \"${SRCROOT}/targo-9570f-firebase-crashreporting-zpyc3-fbde1796c1.json\"";
+			shellScript = "# Replace this with the GOOGLE_APP_ID from your GoogleService-Info.plist file\nGOOGLE_APP_ID=1:735099194299:ios:8058ed9fcadb7226\n\n# Replace the /Path/To/ServiceAccount.json with the path to the key you just downloaded\n\"${PODS_ROOT}\"/FirebaseCrash/upload-sym \"${PROJECT_DIR}/Targo/targo-9570f-firebase-crashreporting-zpyc3-fbde1796c1.json\"";
 		};
 		F366E6960F32C734F1E199C8 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
