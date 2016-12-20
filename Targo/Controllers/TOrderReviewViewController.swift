@@ -474,77 +474,78 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
                 
                 if workingHours.count == 2 {
                     
-                    let date = Date()
+                    let open = self.company!.isOpenNow
                     
-//                    let beginingOfDay = date.beginningOfDay
-//                    
-//                    var closeTime = workingHours[1]
-//                    closeTime = closeTime.components(separatedBy: ":")[0]
-//                    
-//                    let timeToClose = beginingOfDay.change(hour: Int(closeTime))!
-//                    
-//                    var openTime = workingHours[0]
-//                    openTime = openTime.components(separatedBy: ":")[0]
-//                    
-//                    let timeToOpen = beginingOfDay.change(hour: Int(openTime))!
-//                    
-//                    if timeToOpen > date || date > timeToClose {
-//                        
-//                        showOkAlert("Закрыто", message: "Заведение сейчас закрыто, дождитесь рабочих часов")
-//                        return
-//                    }
-//                    
-//                    var times = [String]()
-//                    
-//                    var end = false
-//                    
-//                    var futureDate = date
-//                    
-//                    let interval: TimeInterval = 15 * 60 // 15 minutes
-//                    
-//                    while !end {
-//                        
-//                        futureDate.addTimeInterval(interval)
-//                        
-//                        if futureDate < timeToClose {
-//                            
-//                            let difference = futureDate.timeIntervalSince(date)
-//                            
-//                            if difference == interval {
-//                                
-//                                self.dates.append(futureDate)
-//                                times.append("asap".localized)
-//                            }
-//                            else {
-//                                
-//                                let futureInterval = futureDate.timeIntervalSince(date)
-//                                let futureDate = Date(timeInterval: futureInterval, since: date)
-//                                
-//                                self.dates.append(futureDate)
-//                                times.append(futureDate.stringFromFormat("HH:mm"))
-//                            }
-//                        }
-//                        else {
-//                            
-//                            end = true
-//                        }
-//                    }
+                    guard open != nil else {
+                        
+                        return
+                    }
+                    
+                    if !open! {
+                        
+                        showOkAlert("Закрыто", message: "Заведение сейчас закрыто, дождитесь рабочих часов")
+                        return
+                    }
+                    
+                    
+                    var times = [String]()
+                    var end = false
+                    
+                    let date = Date()
+                    var futureDate = date
+                    
+                    let interval: TimeInterval = 15 * 60 // 15 minutes
+                    
+                    let closeDate = self.company!.closeDate
+                    
+                    guard closeDate != nil else {
+                        
+                        return
+                    }
+                    
+                    while !end {
+                        
+                        futureDate.addTimeInterval(interval)
+                        
+                        if futureDate < closeDate! {
+                            
+                            let difference = futureDate.timeIntervalSince(date)
+                            
+                            if difference == interval {
+                                
+                                self.dates.append(futureDate)
+                                times.append("asap".localized)
+                            }
+                            else {
+                                
+                                let futureInterval = futureDate.timeIntervalSince(date)
+                                let futureDate = Date(timeInterval: futureInterval, since: date)
+                                
+                                self.dates.append(futureDate)
+                                times.append(futureDate.toString(format: "HH:mm"))
+                            }
+                        }
+                        else {
+                            
+                            end = true
+                        }
+                    }
              
-//                    let viewCell = tableView.cellForRow(at: item.indexPath as IndexPath) as! TDetailsTableViewCell
-//                    
-//                    ActionSheetStringPicker.show(withTitle: "time".localized,
-//                                                 rows: times,
-//                                                 initialSelection: 0,
-//                                                 doneBlock: { (picker, selectedIndex, view) in
-//                                                    
-//                                                    self.selectedDate = self.dates[selectedIndex]
-//                                                    viewCell.details.text = times[selectedIndex]
-//                                                    viewCell.details.textColor = UIColor.black
-//                    }, cancel: { picker in
-//                        
-//                        
-//                        
-//                    }, origin: self.view.superview)
+                    let viewCell = tableView.cellForRow(at: item.indexPath as IndexPath) as! TDetailsTableViewCell
+                    
+                    ActionSheetStringPicker.show(withTitle: "time".localized,
+                                                 rows: times,
+                                                 initialSelection: 0,
+                                                 doneBlock: { (picker, selectedIndex, view) in
+                                                    
+                                                    self.selectedDate = self.dates[selectedIndex]
+                                                    viewCell.details.text = times[selectedIndex]
+                                                    viewCell.details.textColor = UIColor.black
+                    }, cancel: { picker in
+                        
+                        
+                        
+                    }, origin: self.view.superview)
                 }
             }
             
@@ -565,97 +566,84 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
     
     func sendOrder(_ sender: AnyObject) {
         
-        if let workingHours = self.company!.todayWorkingHours {
+        guard self.cards != nil && self.company != nil else {
             
-            if workingHours.count == 2 {
+            return
+        }
+        
+        let open = self.company!.isOpenNow
+        
+        guard open != nil else {
+            
+            return
+        }
+        
+        if !open! {
+            
+            showOkAlert("Закрыто", message: "Заведение сейчас закрыто, дождитесь рабочих часов")
+            return
+        }
+        
+        guard self.cards!.count > 0 else {
+            
+            self.showOkAlert("error".localized, message: "have_no_cards_alert_message".localized)
+            return
+        }
+        
+        guard self.serviceId != 0 else {
+            
+            self.showOkAlert("error".localized, message: "oder_delivery_service_empty".localized)
+            return
+        }
+        
+        let card = self.cards![self.selectedCardIndex]
+        var items: [Int : Int] = [:]
+        
+        for item in self.itemSource! {
+            
+            items[item.item.id] = item.count
+        }
+        
+        self.showWaitOverlay()
+        
+        let numberOfPersons = self.dataSource.sections.flatMap({ $0.items.filter({ $0.itemType as? ItemTypeEnum == ItemTypeEnum.numberOfPersons }) }).first
+        
+        let preparedDate = self.selectedDate ?? Date().addingTimeInterval(15 * 60) // 15 minutes
+        
+        Api.sharedInstance.makeShopOrder(cardId: card.id,
+                                         items: items,
+                                         addressId: self.company!.id,
+                                         serviceId: self.serviceId,
+                                         date: preparedDate,
+                                         asap: self.selectedDate == nil,
+                                         numberOfPersons: numberOfPersons?.userData as? Int,
+                                         description: self.orderDescription)
+            
+            .onSuccess {[weak self] shopOrder in
                 
-                let date = Date()
+                self?.removeAllOverlays()
                 
-//                let beginingOfDay = date.beginningOfDay
+                NotificationCenter.default.post(Notification(name: Notification.Name(rawValue: kTargoDidLoadOrdersNotification), object: nil))
                 
-//                var closeTime = workingHours[1]
-//                closeTime = closeTime.components(separatedBy: ":")[0]
-//                
-//                let timeToClose = beginingOfDay.change(hour: Int(closeTime))!
-//                
-//                var openTime = workingHours[0]
-//                openTime = openTime.components(separatedBy: ":")[0]
-//                
-//                let timeToOpen = beginingOfDay.change(hour: Int(openTime))!
-//                
-//                if timeToOpen > date || date > timeToClose {
-//                    
-//                    showOkAlert("Закрыто", message: "Заведение сейчас закрыто, дождитесь рабочих часов")
-//                    return
-//                }
-                
-                guard self.cards != nil && self.company != nil else {
+                if let controller = self?.instantiateViewControllerWithIdentifierOrNibName("OrderStatus") as? TOrderStatusViewController {
                     
-                    return
+                    controller.companyName = self?.company?.companyTitle
+                    controller.shopOrder = shopOrder
+                    controller.companyImage = self?.companyImage
+                    controller.reason = .afterOrder
+                    
+                    self?.navigationController?.pushViewController(controller, animated: true)
                 }
                 
-                guard self.cards!.count > 0 else {
-                    
-                    self.showOkAlert("error".localized, message: "have_no_cards_alert_message".localized)
-                    return
-                }
+            }.onFailure {[weak self] error in
                 
-                guard self.serviceId != 0 else {
-                    
-                    self.showOkAlert("error".localized, message: "oder_delivery_service_empty".localized)
-                    return
-                }
+                self?.removeAllOverlays()
                 
-                let card = self.cards![self.selectedCardIndex]
-                var items: [Int : Int] = [:]
+                let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+                let action = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+                alert.addAction(action)
+                self?.present(alert, animated: true, completion: nil)
                 
-                for item in self.itemSource! {
-                    
-                    items[item.item.id] = item.count
-                }
-                
-                self.showWaitOverlay()
-                
-                let numberOfPersons = self.dataSource.sections.flatMap({ $0.items.filter({ $0.itemType as? ItemTypeEnum == ItemTypeEnum.numberOfPersons }) }).first
-                
-                let preparedDate = self.selectedDate ?? Date().addingTimeInterval(15 * 60) // 15 minutes
-                
-                Api.sharedInstance.makeShopOrder(cardId: card.id,
-                                                 items: items,
-                                                 addressId: self.company!.id,
-                                                 serviceId: self.serviceId,
-                                                 date: preparedDate,
-                                                 asap: self.selectedDate == nil,
-                                                 numberOfPersons: numberOfPersons?.userData as? Int,
-                                                 description: self.orderDescription)
-                    
-                    .onSuccess {[weak self] shopOrder in
-                        
-                        self?.removeAllOverlays()
-                        
-                        NotificationCenter.default.post(Notification(name: Notification.Name(rawValue: kTargoDidLoadOrdersNotification), object: nil))
-                        
-                        if let controller = self?.instantiateViewControllerWithIdentifierOrNibName("OrderStatus") as? TOrderStatusViewController {
-                            
-                            controller.companyName = self?.company?.companyTitle
-                            controller.shopOrder = shopOrder
-                            controller.companyImage = self?.companyImage
-                            controller.reason = .afterOrder
-                            
-                            self?.navigationController?.pushViewController(controller, animated: true)
-                        }
-                        
-                    }.onFailure {[weak self] error in
-                        
-                        self?.removeAllOverlays()
-                        
-                        let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
-                        let action = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
-                        alert.addAction(action)
-                        self?.present(alert, animated: true, completion: nil)
-                        
-                }
-            }
         }
     }
 }

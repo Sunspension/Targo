@@ -108,6 +108,8 @@ class TShopOrder: Object, Mappable {
     
     dynamic var paymentStatus = 0
     
+    dynamic var discountAmount = 0
+    
     dynamic var cardId = 0
     
     dynamic var orderStatus = 0
@@ -148,6 +150,7 @@ class TShopOrder: Object, Mappable {
         companyId <- map["company_id"]
         addressId <- map["address_id"]
         prepared <- map["prepared_at"]
+        discountAmount <- map["discount_amount"]
         items <- (map["items"], ListTransform<TShopGood>())
     }
 }
@@ -156,6 +159,6 @@ extension TShopOrder {
     
     var orderStatusDescription: String? {
         
-        return ShopOrderStatusEnum.statusDescriptionFromPaymentStatus(paymentStatus: self.paymentStatus)
+        return ShopOrderStatusEnum.statusDescriptionFromPaymentStatus(paymentStatus: self.orderStatus)
     }
 }

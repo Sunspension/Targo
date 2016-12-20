@@ -403,38 +403,22 @@ class TCompanyInfoTableViewController: UITableViewController {
                                     viewCell.companyImage.af_setImage(withURL: URL(string: companyImage.url)!, filter: filter)
                                 }
                                 
-                                if let workingHours = self.company!.todayWorkingHours {
+                                let open = self.company!.isOpenNow
+                                
+                                guard open != nil else {
                                     
-                                    if workingHours.count == 2 {
-                                        
-                                        viewCell.title.text = String(format: "company_info_opened_text".localized, "\(workingHours[0]) - \(workingHours[1])")
-                                        
-//                                        let date = Date()
-//                                        
-//                                        let beginingOfDay = date.startOfDay
-//                                        
-//                                        var closeTime = workingHours[1]
-//                                        closeTime = closeTime.components(separatedBy: ":")[0]
-//                                        
-//                                        let timeToClose = beginingOfDay.addingTimeInterval(TimeInterval(closeTime)!)
-//                                        
-//                                        var openTime = workingHours[0]
-//                                        openTime = openTime.components(separatedBy: ":")[0]
-//                                        
-////                                        let timeToOpen = beginingOfDay.hour + Int(openTime)!
-//                                        let timeToOpen = beginingOfDay.addingTimeInterval(TimeInterval(openTime)!)
-//                                        
-//                                        if timeToOpen > date || date > timeToClose {
-//                                            
-//                                            viewCell.point.backgroundColor = UIColor.red
-//                                        }
-//                                        else {
-//                                            
-//                                            viewCell.point.backgroundColor = UIColor.green
-//                                        }
-                                    }
+                                    return
                                 }
                                 
+                                guard self.company!.openHour != nil, self.company!.closeHour != nil else {
+                                    
+                                    return
+                                }
+                                
+                                viewCell.title.text = String(format: "company_info_opened_text".localized,
+                                                             "\(self.company!.openHour!) - \(self.company!.closeHour!)")
+                                
+                                viewCell.point.backgroundColor = open! ? UIColor.green : UIColor.red
                                 viewCell.selectionStyle = .none
         }
         

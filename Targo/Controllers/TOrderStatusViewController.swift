@@ -67,7 +67,7 @@ class TOrderStatusViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "icon-bill"),
                                                                  style: .plain,
                                                                  target: self,
-                                                                 action: #selector(TOrderStatusViewController.openBill))
+                                                                 action: #selector(self.openBill))
         
         if self.reason == .afterOrder {
             
@@ -75,7 +75,7 @@ class TOrderStatusViewController: UIViewController {
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "action_close".localized,
                                                                     style: .plain,
                                                                     target: self,
-                                                                    action: #selector(TOrderStatusViewController.backAction))
+                                                                    action: #selector(self.backAction))
         }
         
         if let order = self.shopOrder {
@@ -374,8 +374,15 @@ class TOrderStatusViewController: UIViewController {
                 break
                 
             default:
+                
+                changeStatusText("")
+                
                 break
             }
+        }
+        else {
+            
+            changeStatusText("")
         }
     }
     

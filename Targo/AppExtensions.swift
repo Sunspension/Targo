@@ -263,4 +263,12 @@ extension Date {
         
         return (Calendar.current as NSCalendar).date(byAdding: components, to: startOfDay, options: NSCalendar.Options())
     }
+    
+    func toString(format: String) -> String {
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        
+        return dateFormatter.string(from: self)
+    }
 }
