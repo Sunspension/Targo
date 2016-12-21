@@ -23,8 +23,17 @@ class TCompanyTableViewCell: UITableViewCell {
     
     @IBOutlet weak var ratingText: UILabel!
     
+    @IBOutlet weak var stackView: UIStackView!
+    
+    @IBOutlet weak var closeLabel: UILabel!
+    
+    @IBOutlet weak var closeIcon: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        self.stackView.isHidden = true
+        closeIcon.tintColor = UIColor.white
         
         // Initialization code
     }
@@ -32,12 +41,44 @@ class TCompanyTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         
         ratingProgress.isHidden = true
+        
+        if self.companyImage.observationInfo != nil {
+            
+            self.companyImage.removeObserver(self, forKeyPath: "image")
+        }
+        
+        self.companyImage.image = nil
     }
 
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        
+        if let path = keyPath , path == "image" {
+            
+            if let change = change {
+                
+                self.companyImage.removeObserver(self, forKeyPath: "image")
+                
+                
+                if let newImage = change[NSKeyValueChangeKey.newKey] as? UIImage {
+                    
+                    self.companyImage.image = newImage.applyBlur(withRadius: 4,
+                                                                 tintColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0.5),
+                                                                 saturationDeltaFactor: 1, maskImage: nil)
+                }
+            }
+        }
+    }
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
+    }
+    
+    func closeCompany() {
+        
+        self.stackView.isHidden = false
+        self.companyImage.addObserver(self, forKeyPath: "image", options: .new, context: nil)
     }
     
     override func updateConstraints() {

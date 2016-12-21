@@ -365,7 +365,7 @@ struct TRemoteServer: PRemoteServerV1 {
                                                              encoding: method != .post ? URLEncoding.default : JSONEncoding.default,
                                                              headers: headers)
         
-        print("request: \(request), parameters: \(parameters)")
+        print("request: \(request)\n parameters: \(parameters)")
         return request
     }
 }
