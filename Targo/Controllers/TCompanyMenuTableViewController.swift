@@ -122,10 +122,18 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         self.buttonMakeOrder.backgroundColor = UIColor(hexString: kHexMainPinkColor)
         
         if let company = self.company {
+        
+            let open = company.isOpenNow
+            
+            if open == nil || !open! {
+                
+                self.buttonMakeOrder.setTitle("Закрыто", for: .normal)
+                self.totalPrice.isHidden = true
+            }
             
             if !company.isAvailable {
                 
-                self.buttonMakeOrder.setTitle("Закрыто", for: .normal)
+                self.buttonMakeOrder.setTitle("Офлайн", for: .normal)
                 self.totalPrice.isHidden = true
             }
         }
@@ -194,12 +202,6 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         
         self.calculateTotalPrice()
         self.loadCompanyMenu()
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
     override func viewDidAppear(_ animated: Bool) {

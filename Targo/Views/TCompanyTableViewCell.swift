@@ -58,12 +58,14 @@ class TCompanyTableViewCell: UITableViewCell {
                 
                 self.companyImage.removeObserver(self, forKeyPath: "image")
                 
-                
-                if let newImage = change[NSKeyValueChangeKey.newKey] as? UIImage {
+                DispatchQueue.main.async {
                     
-                    self.companyImage.image = newImage.applyBlur(withRadius: 4,
-                                                                 tintColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0.5),
-                                                                 saturationDeltaFactor: 1, maskImage: nil)
+                    if let newImage = change[NSKeyValueChangeKey.newKey] as? UIImage {
+                        
+                        self.companyImage.image = newImage.applyBlur(withRadius: 4,
+                                                                     tintColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0.5),
+                                                                     saturationDeltaFactor: 1, maskImage: nil)
+                    }
                 }
             }
         }
@@ -81,13 +83,13 @@ class TCompanyTableViewCell: UITableViewCell {
         self.companyImage.addObserver(self, forKeyPath: "image", options: .new, context: nil)
     }
     
-    override func updateConstraints() {
-        
-        super.updateConstraints()
-        
-        let layer = self.shadowView.layer
-        layer.shadowOffset = CGSize(width: 0, height: 1)
-        layer.shadowOpacity = 0.5
-        layer.shadowPath = UIBezierPath(rect: layer.bounds).cgPath
-    }
+//    override func layoutSubviews() {
+//        
+//        super.layoutSubviews()
+//        
+//        let layer = self.shadowView.layer
+//        layer.shadowOffset = CGSize(width: 0, height: 1)
+//        layer.shadowOpacity = 0.5
+//        layer.shadowPath = UIBezierPath(rect: layer.bounds).cgPath
+//    }
 }

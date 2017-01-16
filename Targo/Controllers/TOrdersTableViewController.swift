@@ -55,12 +55,12 @@ class TOrdersTableViewController: UITableViewController {
         super.viewDidLoad()
         
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(TOrdersTableViewController.onOrdersLoadNotification(_:)),
+                                               selector: #selector(self.onOrdersLoadNotification(_:)),
                                                name: NSNotification.Name(rawValue: kTargoDidLoadOrdersNotification),
                                                object: nil)
         
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(TOrdersTableViewController.onOrdersLoadNotification(_:)),
+                                               selector: #selector(self.onOrdersLoadNotification(_:)),
                                                name: NSNotification.Name(rawValue: kTargoUserDidCancelOrderNotification),
                                                object: nil)
         
@@ -127,8 +127,7 @@ class TOrdersTableViewController: UITableViewController {
             loadCompaniesAndImages()
         }
         
-        // Uncomment the following line to preserve selection between presentations
-         self.clearsSelectionOnViewWillAppear = true
+        self.clearsSelectionOnViewWillAppear = true
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
@@ -175,17 +174,15 @@ class TOrdersTableViewController: UITableViewController {
         let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "sectionHeader") as! TCompanyMenuHeaderView
         header.title.text = self.dataSource!.sections[section].title
         
+        DispatchQueue.main.async {
+            
+            header.background.backgroundColor = UIColor(hexString: kHexMainPinkColor)
+            header.layer.shadowPath = UIBezierPath(rect: header.layer.bounds).cgPath
+            header.layer.shadowOffset = CGSize(width: 0, height: 1)
+            header.layer.shadowOpacity = 0.5
+        }
+        
         return header;
-    }
-    
-    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        
-        let header = view as! TCompanyMenuHeaderView
-        
-        header.background.backgroundColor = UIColor(hexString: kHexMainPinkColor)
-        header.layer.shadowPath = UIBezierPath(rect: header.layer.bounds).cgPath
-        header.layer.shadowOffset = CGSize(width: 0, height: 1)
-        header.layer.shadowOpacity = 0.5
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

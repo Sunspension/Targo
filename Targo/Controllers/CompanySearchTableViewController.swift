@@ -258,44 +258,6 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         return UITableViewAutomaticDimension
     }
     
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        
-        let viewCell = cell as! TCompanyTableViewCell
-        
-        viewCell.layoutIfNeeded()
-        
-        if shouldShowSearchResults {
-            
-            if let item = self.searchDataSource?.sections[indexPath.section].items[indexPath.row] {
-                
-                item.cellHeight = viewCell.frame.height
-                getCompanyImage(item, viewCell: viewCell)
-            }
-        }
-        else if self.bookmarkButton.isSelected {
-            
-            if let item = self.favoriteDataSource?.sections[indexPath.section].items[indexPath.row] {
-                
-                item.cellHeight = viewCell.frame.height
-                getCompanyImage(item, viewCell: viewCell)
-            }
-        }
-            
-        else {
-            
-            if let item = self.dataSource?.sections[indexPath.section].items[indexPath.row] {
-                
-                item.cellHeight = viewCell.frame.height
-                getCompanyImage(item, viewCell: viewCell)
-            }
-        }
-        
-        let layer = viewCell.shadowView.layer
-        layer.shadowOffset = CGSize(width: 0, height: 1)
-        layer.shadowOpacity = 0.5
-        layer.shadowPath = UIBezierPath(rect: layer.bounds).cgPath
-    }
-    
     func userLocationChanged() {
         
         self.userLocation = TLocationManager.sharedInstance.lastLocation
@@ -560,6 +522,8 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
             self.tableView.tableHeaderView = searchController.searchBar
             self.tableView.dataSource = self.dataSource
             self.tableView.reloadData()
+            self.tableView.layoutIfNeeded()
+            self.tableView.contentOffset = CGPoint.zero
         }
     }
     
@@ -615,7 +579,6 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
     }
     
     //MARK: - Private methods
-    
     fileprivate func setupRefreshControl() {
         
         self.refreshControl = UIRefreshControl()
@@ -629,7 +592,9 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         if let image =
             self.companyImages.filter({$0.id == company.companyImageId.value}).first {
             
-            if !company.isAvailable {
+            let open = company.isOpenNow
+            
+            if open == nil || !open! {
                 
                 viewCell.closeCompany()
             }
@@ -700,6 +665,39 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         cell.ratingProgress.setProgress(1 / 5 * company.rating, animated: false)
         cell.ratingProgress.trackFillColor = UIColor(hexString: kHexMainPinkColor)
         cell.ratingProgress.isHidden = false
+        
+        DispatchQueue.main.async {
+            
+            if self.shouldShowSearchResults {
+                
+                if let item = self.searchDataSource?.sections[item.indexPath.section].items[item.indexPath.row] {
+                    
+                    item.cellHeight = cell.frame.height
+                    self.getCompanyImage(item, viewCell: cell)
+                }
+            }
+            else if self.bookmarkButton.isSelected {
+                
+                if let item = self.favoriteDataSource?.sections[item.indexPath.section].items[item.indexPath.row] {
+                    
+                    item.cellHeight = cell.frame.height
+                    self.getCompanyImage(item, viewCell: cell)
+                }
+            }
+            else {
+                
+                if let item = self.dataSource?.sections[item.indexPath.section].items[item.indexPath.row] {
+                    
+                    item.cellHeight = cell.frame.height
+                    self.getCompanyImage(item, viewCell: cell)
+                }
+            }
+            
+            let layer = cell.shadowView.layer
+            layer.shadowOffset = CGSize(width: 0, height: 1)
+            layer.shadowOpacity = 0.5
+            layer.shadowPath = UIBezierPath(rect: layer.bounds).cgPath
+        }
     }
     
     fileprivate func loadCompanyAddress(_ query:String, cancellationToken: Operation? = nil) {
