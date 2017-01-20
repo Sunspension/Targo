@@ -41,6 +41,8 @@ class TCompanyTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         
         ratingProgress.isHidden = true
+        stackView.isHidden = true
+        closeIcon.tintColor = UIColor.white
         
         if self.companyImage.observationInfo != nil {
             

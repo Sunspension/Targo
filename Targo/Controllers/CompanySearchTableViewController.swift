@@ -86,7 +86,8 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tableView.setup()
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.estimatedRowHeight = 200
         
         let backgroundView = UIView()
         backgroundView.backgroundColor = UIColor(hexString: kHexTableViewBackground)
@@ -229,35 +230,6 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         }
     }
     
-    
-    // Here is a magic to save height of current cell, otherwise you will get scrolling of table view content when cell will expand
-    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        if shouldShowSearchResults {
-            
-            if let height = self.searchDataSource?.sections[indexPath.section].items[indexPath.row].cellHeight {
-                
-                return height
-            }
-        }
-        else if self.bookmarkButton.isSelected {
-            
-            if let height = self.favoriteDataSource?.sections[(indexPath as NSIndexPath).section].items[(indexPath as NSIndexPath).row].cellHeight {
-                
-                return height
-            }
-        }
-        else {
-            
-            if let height = self.dataSource?.sections[(indexPath as NSIndexPath).section].items[(indexPath as NSIndexPath).row].cellHeight {
-                
-                return height
-            }
-        }
-        
-        return UITableViewAutomaticDimension
-    }
-    
     func userLocationChanged() {
         
         self.userLocation = TLocationManager.sharedInstance.lastLocation
@@ -313,7 +285,7 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
                         
                         self.tableView.tableFooterView = UIView()
                     }
-                    
+
                     self.tableView.reloadData()
                     
                     }).onFailure(callback: { [unowned self] error in
@@ -803,4 +775,16 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
         self.tableView.dataSource = shouldShowSearchResults ? searchDataSource : dataSource
         self.tableView.reloadData()
     }
+    
+//    fileprivate func reloadTableView() {
+//        
+//        UIView.transition(with: self.tableView,
+//                          duration: 0.2,
+//                          options: .transitionCrossDissolve,
+//                          animations: {
+//            
+//                            self.tableView.reloadData()
+//            
+//                        }, completion: nil)
+//    }
 }
