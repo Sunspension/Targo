@@ -21,11 +21,9 @@ struct TRemoteServer: PRemoteServerV1 {
         return Alamofire.SessionManager(configuration: configuration)
     }()
     
-    let dev = "http://dev.targo.club/api"
+    let dev = "http://dev.targoapp.com/api"
     
-    let prod = "https://api.targo.club/api"
-    
-    let noSSLProd = "http://api.targo.club/api"
+    let prod = "http://api.targoapp.com/api"
     
     var baseURLString: String {
         

@@ -121,7 +121,7 @@ class TOrdersTableViewController: UITableViewController {
         
         if let _ = realm.objects(TOrderLoaderCookie.self).first {
             
-            let orders = realm.objects(TShopOrder.self).sorted(byProperty: "id", ascending: false)
+            let orders = realm.objects(TShopOrder.self).sorted(byKeyPath: "id", ascending: false)
             self.orders = Array<TShopOrder>(orders)
             
             loadCompaniesAndImages()
@@ -298,7 +298,7 @@ class TOrdersTableViewController: UITableViewController {
     fileprivate func reloadFromDataBase() {
         
         let realm = try! Realm()
-        let orders = realm.objects(TShopOrder.self).sorted(byProperty: "id", ascending: false)
+        let orders = realm.objects(TShopOrder.self).sorted(byKeyPath: "id", ascending: false)
         self.orders = Array<TShopOrder>(orders)
         
         loadCompaniesAndImages()

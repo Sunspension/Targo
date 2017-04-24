@@ -193,8 +193,6 @@ class TFeedTableViewController: UITableViewController {
                                             
                                             let newsItem = item.item as! TFeedItem
                                             let viewCell = cell as! TNewsTableViewCell
-                                            
-                                            viewCell.layoutIfNeeded()
                                             viewCell.selectionStyle = .none
                                             
                                             if newsItem.imageIds.count > 0 {
@@ -230,7 +228,7 @@ class TFeedTableViewController: UITableViewController {
                                                     
                                                     self.navigationController?.pushViewController(controller, animated: true)
                                                     
-                                                }).disposeIn(viewCell.bag)
+                                                }).dispose(in: viewCell.bag)
                                                 
                                                 break
                                                 
@@ -243,7 +241,7 @@ class TFeedTableViewController: UITableViewController {
                                                     
                                                     self.navigationController?.pushViewController(controller, animated: true)
                                                     
-                                                }).disposeIn(viewCell.bag)
+                                                }).dispose(in: viewCell.bag)
                                                 
                                                 break
                                                 
@@ -251,7 +249,6 @@ class TFeedTableViewController: UITableViewController {
                                                 break
                                             }
                                             
-                                            viewCell.layoutIfNeeded()
                                             viewCell.actionButton.backgroundColor = UIColor(hexString: kHexMainPinkColor)
                                             viewCell.newsDetails.text = newsItem.feedItemDescription
                                             
@@ -284,8 +281,7 @@ class TFeedTableViewController: UITableViewController {
                                             
                                             let newsItem = item.item as! TFeedItem
                                             let viewCell = cell as! TCompanyNewsTableViewCell
-                                            
-                                            viewCell.layoutIfNeeded()
+                                            viewCell.selectionStyle = .none
                                             
                                             if newsItem.imageIds.count > 0 {
                                                 
@@ -320,7 +316,7 @@ class TFeedTableViewController: UITableViewController {
                                                     
                                                     self.navigationController?.pushViewController(controller, animated: true)
                                                     
-                                                }).disposeIn(viewCell.bag)
+                                                }).dispose(in: viewCell.bag)
                                                 
                                                 break
                                                 
@@ -333,7 +329,7 @@ class TFeedTableViewController: UITableViewController {
                                                     
                                                     self.navigationController?.pushViewController(controller, animated: true)
                                                     
-                                                }).disposeIn(viewCell.bag)
+                                                }).dispose(in: viewCell.bag)
                                                 
                                                 break
                                                 
@@ -341,7 +337,6 @@ class TFeedTableViewController: UITableViewController {
                                                 break
                                             }
                                             
-                                            viewCell.layoutIfNeeded()
                                             viewCell.actionButton.backgroundColor = UIColor(hexString: kHexMainPinkColor)
                                             
                                             viewCell.companyName.text = company.title

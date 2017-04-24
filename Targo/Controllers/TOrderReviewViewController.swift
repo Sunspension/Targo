@@ -355,7 +355,7 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
                                         item.userData = count
                                         viewCell.quantityLabel.text = String(count)
                                         
-                                    }).disposeIn(viewCell.bag)
+                                    }).dispose(in: viewCell.bag)
                                     
                                     viewCell.buttonMinus.bnd_tap.observe(with: {_ in
                                         
@@ -367,7 +367,7 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
                                             viewCell.quantityLabel.text = String(quantity)
                                         }
                                         
-                                    }).disposeIn(viewCell.bag)
+                                    }).dispose(in: viewCell.bag)
                                     
             })
             

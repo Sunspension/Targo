@@ -574,7 +574,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
                     self.calculateTotalPrice()
                     self.tableView.reloadRows(at: indices, with: .fade)
                     
-                }).disposeIn(viewCell.bag)
+                }).dispose(in: viewCell.bag)
             }
             else {
                 
@@ -608,7 +608,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
                     self.calculateTotalPrice()
                     self.tableView.reloadRows(at: [indexPath], with: .fade)
                     
-                }).disposeIn(viewCell.bag)
+                }).dispose(in: viewCell.bag)
                 
                 viewCell.buttonMore.setTitle("menu_more_ddetails".localized, for: UIControlState())
                 viewCell.quantityTitle.text = "menu_quantity".localized
@@ -655,7 +655,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
                     self.calculateTotalPrice()
                     viewCell.quantity.text = String(itemState.quantity)
                     
-                }).disposeIn(viewCell.bag)
+                }).dispose(in: viewCell.bag)
                 
                 viewCell.buttonMinus.bnd_tap.observe(with: {_ in
                     
@@ -680,7 +680,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
                         viewCell.quantity.text = String(itemState.quantity)
                     }
                     
-                }).disposeIn(viewCell.bag)
+                }).dispose(in: viewCell.bag)
             }
         }
     }

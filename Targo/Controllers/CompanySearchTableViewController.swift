@@ -155,15 +155,6 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
                                                name: NSNotification.Name.UIApplicationWillEnterForeground,
                                                object: nil)
         
-        
-
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        
         self.loadCompanyAddress()
     }
     
@@ -409,7 +400,6 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
     }
     
     //MARK: - UISearchBar delegate implementation
-
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         
         shouldShowSearchResults = true
@@ -423,7 +413,6 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
     }
     
     //MARK: - UISearchResultUpdating delegate implementation
-    
     func updateSearchResults(for searchController: UISearchController) {
         
         self.searchPageNumer = 1
@@ -554,7 +543,7 @@ class CompanySearchTableViewController: UITableViewController, UISearchResultsUp
     fileprivate func setupRefreshControl() {
         
         self.refreshControl = UIRefreshControl()
-        self.refreshControl?.addTarget(self, action: #selector(CompanySearchTableViewController.manualRefresh), for: .valueChanged)
+        self.refreshControl?.addTarget(self, action: #selector(self.manualRefresh), for: .valueChanged)
     }
     
     fileprivate func getCompanyImage(_ item: GenericCollectionSectionItem<TCompanyAddress>, viewCell: TCompanyTableViewCell) {
