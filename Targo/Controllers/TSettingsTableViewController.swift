@@ -72,7 +72,7 @@ class TSettingsTableViewController: UITableViewController, UITextFieldDelegate {
         
         self.tableView.dataSource = self.dataSource
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(TSettingsTableViewController.onTapAction))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.onTapAction))
         self.tableView.addGestureRecognizer(tapGesture)
         
         self.user = self.realm.objects(User.self).first
@@ -110,7 +110,7 @@ class TSettingsTableViewController: UITableViewController, UITextFieldDelegate {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "action_save".localized,
                                                                  style: .done,
                                                                  target: self,
-                                                                 action: #selector(TSettingsTableViewController.saveAction))
+                                                                 action: #selector(self.saveAction))
         
        
     }

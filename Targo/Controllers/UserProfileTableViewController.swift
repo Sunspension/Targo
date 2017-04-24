@@ -322,7 +322,7 @@ class UserProfileTableViewController: UITableViewController, UIImagePickerContro
         
         viewCell.selectionStyle = .none
         viewCell.buttonAvatar.addTarget(self,
-                                        action: #selector(UserProfileTableViewController.changePhoto),
+                                        action: #selector(self.changePhoto),
                                         for: .touchUpInside)
         
         if let user = self.user {
@@ -359,7 +359,7 @@ class UserProfileTableViewController: UITableViewController, UIImagePickerContro
             }
             else {
                 
-                let defaultImage = UIImage(named: "default")
+                let defaultImage = UIImage(named: "avatar")
                 
                 viewCell.imageViewBlur.image = defaultImage!.applyBlur(withRadius: 5,                                                                                                                                             tintColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0.4),                                                                                                                                                     saturationDeltaFactor: 1,                                                                                                                                                     maskImage: nil)
                 
