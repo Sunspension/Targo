@@ -30,11 +30,11 @@ class TMenuItemFullTableViewCell: TBaseTableViewCell {
     
     @IBOutlet weak var quantity: UILabel!
     
-    var bag = DisposeBag()
+    var disposeBag = DisposeBag()
     
     override func prepareForReuse() {
         
-        bag.dispose()
+        disposeBag = DisposeBag()
     }
     
     override func awakeFromNib() {

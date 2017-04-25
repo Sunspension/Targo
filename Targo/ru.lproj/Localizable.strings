@@ -191,3 +191,7 @@
 "feed_open_menu_action" = "Перейти в меню";
 
 "feed_open_company_info_action" = "Информация о компании";
+
+
+// Profile
+"page_information_terms_&_condictions_text" = "Условия соглашения";

@@ -228,7 +228,7 @@ class TFeedTableViewController: UITableViewController {
                                                     
                                                     self.navigationController?.pushViewController(controller, animated: true)
                                                     
-                                                }).dispose(in: viewCell.bag)
+                                                }).dispose(in: viewCell.disposeBag)
                                                 
                                                 break
                                                 
@@ -241,7 +241,7 @@ class TFeedTableViewController: UITableViewController {
                                                     
                                                     self.navigationController?.pushViewController(controller, animated: true)
                                                     
-                                                }).dispose(in: viewCell.bag)
+                                                }).dispose(in: viewCell.disposeBag)
                                                 
                                                 break
                                                 
@@ -316,7 +316,7 @@ class TFeedTableViewController: UITableViewController {
                                                     
                                                     self.navigationController?.pushViewController(controller, animated: true)
                                                     
-                                                }).dispose(in: viewCell.bag)
+                                                }).dispose(in: viewCell.disposeBag)
                                                 
                                                 break
                                                 
@@ -329,7 +329,7 @@ class TFeedTableViewController: UITableViewController {
                                                     
                                                     self.navigationController?.pushViewController(controller, animated: true)
                                                     
-                                                }).dispose(in: viewCell.bag)
+                                                }).dispose(in: viewCell.disposeBag)
                                                 
                                                 break
                                                 

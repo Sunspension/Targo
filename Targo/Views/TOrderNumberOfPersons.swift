@@ -20,11 +20,11 @@ class TOrderNumberOfPersons: UITableViewCell {
     
     @IBOutlet weak var title: UILabel!
     
-    var bag = DisposeBag()
+    var disposeBag = DisposeBag()
     
     override func prepareForReuse() {
         
-        bag.dispose()
+        disposeBag = DisposeBag()
     }
     
     override func awakeFromNib() {

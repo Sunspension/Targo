@@ -192,3 +192,6 @@
 "feed_open_menu_action" = "Open menu";
 
 "feed_open_company_info_action" = "Open company info";
+
+// Profile
+"page_information_terms_&_condictions_text" = "Terms & conditions";

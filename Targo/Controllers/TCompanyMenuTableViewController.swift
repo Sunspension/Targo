@@ -57,7 +57,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
 
     var cellHeightDictionary = [IndexPath : CGFloat]()
     
-    var bag: Disposable?
+    var disposable: Disposable?
     
     
     @IBOutlet weak var tableView: UITableView!
@@ -110,7 +110,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
     deinit {
         
         print("\(typeName(self)) \(#function)")
-        self.bag?.dispose()
+        self.disposable?.dispose()
     }
     
     override func viewDidLoad() {
@@ -147,7 +147,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
         
         self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 20, 0)
         
-        self.bag = self.orderItems.observeNext(with: { event in
+        self.disposable = self.orderItems.observeNext(with: { event in
          
             UIView.beginAnimations("buton", context: nil)
             
@@ -574,7 +574,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
                     self.calculateTotalPrice()
                     self.tableView.reloadRows(at: indices, with: .fade)
                     
-                }).dispose(in: viewCell.bag)
+                }).dispose(in: viewCell.disposeBag)
             }
             else {
                 
@@ -608,7 +608,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
                     self.calculateTotalPrice()
                     self.tableView.reloadRows(at: [indexPath], with: .fade)
                     
-                }).dispose(in: viewCell.bag)
+                }).dispose(in: viewCell.disposeBag)
                 
                 viewCell.buttonMore.setTitle("menu_more_ddetails".localized, for: UIControlState())
                 viewCell.quantityTitle.text = "menu_quantity".localized
@@ -655,7 +655,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
                     self.calculateTotalPrice()
                     viewCell.quantity.text = String(itemState.quantity)
                     
-                }).dispose(in: viewCell.bag)
+                }).dispose(in: viewCell.disposeBag)
                 
                 viewCell.buttonMinus.bnd_tap.observe(with: {_ in
                     
@@ -680,7 +680,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
                         viewCell.quantity.text = String(itemState.quantity)
                     }
                     
-                }).dispose(in: viewCell.bag)
+                }).dispose(in: viewCell.disposeBag)
             }
         }
     }

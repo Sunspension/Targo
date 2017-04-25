@@ -23,11 +23,11 @@ class RegistrationPhoneViewController: UIViewController {
     
     @IBOutlet weak var buttonUserAgreement: UIButton!
     
-    var bag: Disposable?
+    var disposable: Disposable?
     
     deinit {
         
-        bag?.dispose()
+        disposable?.dispose()
     }
     
     override func viewDidLoad() {
@@ -81,7 +81,7 @@ class RegistrationPhoneViewController: UIViewController {
         buttonUserAgreement.setAttributedTitle(attributedString1, for: .normal)
         buttonUserAgreement.titleLabel?.textAlignment = .center
         
-        self.bag = buttonUserAgreement.bnd_tap.observeNext {
+        self.disposable = buttonUserAgreement.bnd_tap.observeNext {
             
             if let path = Bundle.main.path(forResource: "agreement", ofType: "docx") {
                 

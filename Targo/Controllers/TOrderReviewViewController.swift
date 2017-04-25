@@ -54,8 +54,6 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
     
     var preparedDate: Date?
     
-    var bag = DisposeBag()
-    
     var keyboardListener: KeyboardNotificationListener?
     
     var orderDescription: String?
@@ -355,7 +353,7 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
                                         item.userData = count
                                         viewCell.quantityLabel.text = String(count)
                                         
-                                    }).dispose(in: viewCell.bag)
+                                    }).dispose(in: viewCell.disposeBag)
                                     
                                     viewCell.buttonMinus.bnd_tap.observe(with: {_ in
                                         
@@ -367,7 +365,7 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
                                             viewCell.quantityLabel.text = String(quantity)
                                         }
                                         
-                                    }).dispose(in: viewCell.bag)
+                                    }).dispose(in: viewCell.disposeBag)
                                     
             })
             

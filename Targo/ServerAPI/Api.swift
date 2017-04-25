@@ -27,7 +27,7 @@ struct Api {
         
         let deviceToken = UserDefaults.standard.object(forKey: kTargoDeviceToken) as? String
         
-        server.registration(phoneNumber: phoneNumber, deviceToken: deviceToken ?? "", parameters: nil)
+        server.registration(phoneNumber: phoneNumber, deviceToken: deviceToken ?? "1111-1111-1111-1111", parameters: nil)
             
             .responseJSON { response in
                 
@@ -133,73 +133,87 @@ struct Api {
         
         let defaults = UserDefaults.standard
         
-        if let token = defaults.object(forKey: kTargoDeviceToken) as? String {
+        let token = defaults.object(forKey: kTargoDeviceToken) as? String ?? "1111-1111-1111-1111"
+        
+        server.authorization(phoneNumber: phoneNumber, code: code, deviceToken: token, parameters: nil)
             
-            server.authorization(phoneNumber: phoneNumber, code: code, deviceToken: token, parameters: nil)
+            .responseJSON { response in
                 
-                .responseJSON { response in
+                if let error = response.result.error {
                     
-                    if let error = response.result.error {
-                        
-                        print("Response error: \(error)")
-                    }
-                    else {
-                        
-                        print("Response result: \(response.result.value)")
-                    }
+                    print("Response error: \(error)")
                 }
-                .responseObject(keyPath: "data", completionHandler: { (response: DataResponse<UserSession>) in
+                else {
                     
-                    guard response.result.error == nil else {
-                        
-                        p.failure(.error(error: response.result.error!))
-                        return
-                    }
+                    print("Response result: \(response.result.value)")
+                }
+            }
+            .responseObject(keyPath: "data", completionHandler: { (response: DataResponse<UserSession>) in
+                
+                guard response.result.error == nil else {
                     
-//                    guard let _ = response.result.value else {
-//                        
-//                        p.failure(UserRegistrationError.uknownError(description: response.result.error!.localizedDescription))
-//                        return
-//                    }
+                    p.failure(.error(error: response.result.error!))
+                    return
+                }
+                
+                let userSession = response.result.value!
+                
+                let realm = try! Realm()
+                
+                try! realm.write({
                     
-                    let userSession = response.result.value!
+                    realm.add(userSession, update: true)
+                })
+            })
+            .responseObject(keyPath: "data.user") { (response: DataResponse<User>) in
+                
+                if let user = response.result.value {
+                    
+                    print("user: \(user)")
                     
                     let realm = try! Realm()
                     
                     try! realm.write({
                         
-                        realm.add(userSession, update: true)
+                        realm.add(user, update: true)
                     })
-                })
-//                .responseObject(keyPath: "data") { (response: DataResponse<UserSession>) in
+                    
+                    // save user data to secure storage
+                    let keyChain = KeychainSwift()
+                    keyChain.set(code, forKey: phoneNumber)
+                    
+                    p.success(user)
+                }
+        }
+        
+//        if let token = defaults.object(forKey: kTargoDeviceToken) as? String {
+//            
+//            server.authorization(phoneNumber: phoneNumber, code: code, deviceToken: token, parameters: nil)
+//                
+//                .responseJSON { response in
 //                    
-//                    guard let _ = response.result.value else {
+//                    if let error = response.result.error {
 //                        
-//                        switch response.result.error! {
-//                            
-//                        case .BadRequest:
-//                            
-//                            let error = response.result.error?.userData as! TBadRequest
-//                            
-//                            switch error.message {
-//                                
-//                            case "Code not found":
-//                                
-//                                p.failure(.WrongCode)
-//                                return
-//                                
-//                            default:
-//                                break
-//                            }
-//                            
-//                        default:
-//                            break
-//                        }
+//                        print("Response error: \(error)")
+//                    }
+//                    else {
 //                        
-//                        p.failure(UserRegistrationError.UknownError(description: "Unknown error"))
+//                        print("Response result: \(response.result.value)")
+//                    }
+//                }
+//                .responseObject(keyPath: "data", completionHandler: { (response: DataResponse<UserSession>) in
+//                    
+//                    guard response.result.error == nil else {
 //                        
+//                        p.failure(.error(error: response.result.error!))
 //                        return
 //                    }
+//                    
+////                    guard let _ = response.result.value else {
+////                        
+////                        p.failure(UserRegistrationError.uknownError(description: response.result.error!.localizedDescription))
+////                        return
+////                    }
 //                    
 //                    let userSession = response.result.value!
 //                    
@@ -209,28 +223,67 @@ struct Api {
 //                        
 //                        realm.add(userSession, update: true)
 //                    })
+//                })
+////                .responseObject(keyPath: "data") { (response: DataResponse<UserSession>) in
+////                    
+////                    guard let _ = response.result.value else {
+////                        
+////                        switch response.result.error! {
+////                            
+////                        case .BadRequest:
+////                            
+////                            let error = response.result.error?.userData as! TBadRequest
+////                            
+////                            switch error.message {
+////                                
+////                            case "Code not found":
+////                                
+////                                p.failure(.WrongCode)
+////                                return
+////                                
+////                            default:
+////                                break
+////                            }
+////                            
+////                        default:
+////                            break
+////                        }
+////                        
+////                        p.failure(UserRegistrationError.UknownError(description: "Unknown error"))
+////                        
+////                        return
+////                    }
+////                    
+////                    let userSession = response.result.value!
+////                    
+////                    let realm = try! Realm()
+////                    
+////                    try! realm.write({
+////                        
+////                        realm.add(userSession, update: true)
+////                    })
+////                }
+//                .responseObject(keyPath: "data.user") { (response: DataResponse<User>) in
+//                    
+//                    if let user = response.result.value {
+//                        
+//                        print("user: \(user)")
+//                        
+//                        let realm = try! Realm()
+//                        
+//                        try! realm.write({
+//                            
+//                            realm.add(user, update: true)
+//                        })
+//                        
+//                        // save user data to secure storage
+//                        let keyChain = KeychainSwift()
+//                        keyChain.set(code, forKey: phoneNumber)
+//                        
+//                        p.success(user)
+//                    }
 //                }
-                .responseObject(keyPath: "data.user") { (response: DataResponse<User>) in
-                    
-                    if let user = response.result.value {
-                        
-                        print("user: \(user)")
-                        
-                        let realm = try! Realm()
-                        
-                        try! realm.write({
-                            
-                            realm.add(user, update: true)
-                        })
-                        
-                        // save user data to secure storage
-                        let keyChain = KeychainSwift()
-                        keyChain.set(code, forKey: phoneNumber)
-                        
-                        p.success(user)
-                    }
-                }
-        }
+//        }
         
         return p.future
     }

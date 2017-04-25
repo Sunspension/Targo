@@ -107,6 +107,7 @@ extension UIViewController {
         self.navigationController?.navigationBar.barTintColor = DynamicColor(hexString: kHexMainPinkColor)
         self.navigationController?.navigationBar.tintColor = UIColor.white
         self.navigationController?.navigationBar.titleTextAttributes = [ NSForegroundColorAttributeName : UIColor.white ]
+        self.navigationController?.view.backgroundColor = DynamicColor(hexString: kHexMainPinkColor)
     }
     
     func showOkAlert(_ title: String?, message: String?) {

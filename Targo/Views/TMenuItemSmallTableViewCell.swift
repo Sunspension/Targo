@@ -20,7 +20,7 @@ class TMenuItemSmallTableViewCell: TBaseTableViewCell {
     
     @IBOutlet weak var buttonCheck: UIButton!
     
-    var bag = DisposeBag()
+    var disposeBag = DisposeBag()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -30,7 +30,7 @@ class TMenuItemSmallTableViewCell: TBaseTableViewCell {
     
     override func prepareForReuse() {
         
-        bag.dispose()
+        disposeBag = DisposeBag()
     }
 
     

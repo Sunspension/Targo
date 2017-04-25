@@ -29,7 +29,7 @@ class TCompanyNewsTableViewCell: UITableViewCell {
     
     @IBOutlet weak var actionButtonZeroHeight: NSLayoutConstraint!
     
-    var bag = DisposeBag()
+    var disposeBag = DisposeBag()
     
     class func identifier() -> String {
         
@@ -38,7 +38,7 @@ class TCompanyNewsTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         
-        bag.dispose()
+        disposeBag = DisposeBag()
         actionButtonHeight.priority = 750
         actionButtonZeroHeight.priority = 250
         imageZeroHeight.priority = 750

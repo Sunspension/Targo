@@ -195,6 +195,19 @@ class UserProfileTableViewController: UITableViewController, UIImagePickerContro
             
             break
             
+        case .information:
+            
+            if let path = Bundle.main.path(forResource: "agreement", ofType: "docx") {
+                
+                let controller = TWebViewController.controllerInstance(url: URL(fileURLWithPath: path))
+                controller.title = "user_agreement_title".localized
+                let navigationController = UINavigationController(rootViewController: controller)
+                
+                self.present(navigationController, animated: true, completion: nil)
+            }
+            
+            break
+            
         case .settings:
             
             if let controller = self.instantiateViewControllerWithIdentifierOrNibName("EditSetting") {
