@@ -166,12 +166,9 @@ class TCompanyInfoTableViewController: UITableViewController {
                 header.title.text = self.itemsSource.sections[section].title
                 
                 let button = header.buttonMakeOrder
-//                button?.titleLabel?.textAlignment = .center
                 button?.isHidden = false
-                button?.addTarget(self, action: #selector(TCompanyInfoTableViewController.openCompanyMenu),
+                button?.addTarget(self, action: #selector(self.openCompanyMenu),
                                  for: .touchUpInside)
-//                button?.setTitle("order_make_order_button_title_new_line".localized, for: UIControlState())
-                
                 return header
             }
             else {
@@ -403,10 +400,9 @@ class TCompanyInfoTableViewController: UITableViewController {
                                     viewCell.companyImage.af_setImage(withURL: URL(string: companyImage.url)!, filter: filter)
                                 }
                                 
-                                let open = self.company!.isOpenNow
-                                
-                                guard open != nil else {
+                                guard let open = self.company!.isOpenNow else {
                                     
+                                    viewCell.title.text = "Закрыто"
                                     return
                                 }
                                 
@@ -415,10 +411,12 @@ class TCompanyInfoTableViewController: UITableViewController {
                                     return
                                 }
                                 
-                                viewCell.title.text = String(format: "company_info_opened_text".localized,
-                                                             "\(self.company!.openHour!) - \(self.company!.closeHour!)")
+                                viewCell.title.text = self.company!.isAroundTheClock
+                                    ? String(format: "company_info_opened_text".localized, "Круглосуточно")
+                                    : String(format: "company_info_opened_text".localized,
+                                             "\(self.company!.openHour!) - \(self.company!.closeHour!)")
                                 
-                                viewCell.point.backgroundColor = open! ? UIColor.green : UIColor.red
+                                viewCell.point.backgroundColor = open ? UIColor.green : UIColor.red
                                 viewCell.selectionStyle = .none
         }
         
@@ -443,7 +441,18 @@ class TCompanyInfoTableViewController: UITableViewController {
                                                 
                                                 if let day = self.company?.backingWorkingTime[index] {
                                                     
-                                                    viewCell.hours.text = "\(day.begin) - \(day.end)"
+                                                    var workigHoursText = "\(day.begin) - \(day.end)"
+                                                    
+                                                    if day.isClose {
+                                                        
+                                                        workigHoursText = "Закрыто"
+                                                    }
+                                                    else if day.isAroundTheClock {
+                                                        
+                                                        workigHoursText = "Круглосуточно"
+                                                    }
+                                                    
+                                                    viewCell.hours.text = workigHoursText
                                                 }
                                                 
                                                 viewCell.selectionStyle = .none

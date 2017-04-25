@@ -313,25 +313,26 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
                     let min = company.averageOrderTime[0].value
                     let max = company.averageOrderTime[1].value
                     
-                    let open = company.isOpenNow
-                    
-                    guard open != nil else {
+                    guard let open = company.isOpenNow, open != false else {
+                        
+                        viewCell.workingHours.text = "Закрыто"
+                        viewCell.handlingTime.isHidden = true
+                        viewCell.pointView.backgroundColor = UIColor.red
+                        viewCell.iconImage.isHidden = true
                         
                         return
                     }
                     
-                    if open! {
+                    guard company.openHour != nil, company.closeHour != nil else {
                         
-                        viewCell.workingHours.text = company.openHour! + " - " + company.closeHour!
-                        viewCell.handlingTime.text = String(min) + " - " + String(max) + " " + "minutes".localized
-                        
-                        viewCell.pointView.backgroundColor = UIColor.green
-                    }
-                    else {
-                        
-                        viewCell.pointView.backgroundColor = UIColor.red
+                        return
                     }
                     
+                    viewCell.workingHours.text = company.isAroundTheClock
+                        ? "Круглосуточно" : company.openHour! + " - " + company.closeHour!
+                    
+                    viewCell.handlingTime.text = String(min) + " - " + String(max) + " " + "minutes".localized
+                    viewCell.pointView.backgroundColor = UIColor.green
                     viewCell.iconImage.image = UIImage(named: "icon-time")!.imageWithColor(UIColor.white)
                 }
         }

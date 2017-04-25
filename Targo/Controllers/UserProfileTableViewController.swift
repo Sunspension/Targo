@@ -197,15 +197,7 @@ class UserProfileTableViewController: UITableViewController, UIImagePickerContro
             
         case .information:
             
-            if let path = Bundle.main.path(forResource: "agreement", ofType: "docx") {
-                
-                let controller = TWebViewController.controllerInstance(url: URL(fileURLWithPath: path))
-                controller.title = "user_agreement_title".localized
-                let navigationController = UINavigationController(rootViewController: controller)
-                
-                self.present(navigationController, animated: true, completion: nil)
-            }
-            
+            self.t_router_openInformationController()
             break
             
         case .settings:

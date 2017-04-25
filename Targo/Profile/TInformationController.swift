@@ -20,31 +20,58 @@ class TInformationController: UITableViewController {
         
         self.tableView.estimatedRowHeight = 44
         self.tableView.rowHeight = UITableViewAutomaticDimension
-        
-        
+        self.setupDataSource()
+        self.tableView.tableFooterView = UIView()
+        self.setCustomBackButton()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     
     fileprivate func setupDataSource() {
         
         self.dataSource.sections.append(self.section)
         
-        self.section.initializeItem(cellStyle: .default, item: <#T##Any?#>, bindingAction: <#T##(UITableViewCell, CollectionSectionItem) -> Void#>)
+        self.section.initializeItem(cellStyle: .default,
+                                    item: "page_information_terms_&_condictions_text".localized) { (cell, item) in
+                                        
+                                        cell.textLabel?.text = item.item as? String
+                                        cell.accessoryType = .disclosureIndicator
+        }
+        
+        self.section.initializeItem(cellStyle: .default,
+                                    item: "page_information_privacy_policy_text".localized) { (cell, item) in
+                                        
+                                        cell.textLabel?.text = item.item as? String
+                                        cell.accessoryType = .disclosureIndicator
+        }
+        
+        self.tableView.dataSource = self.dataSource
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        switch indexPath.row {
+            
+        case 0:
+            
+            if let path = Bundle.main.path(forResource: "agreement", ofType: "docx") {
+                
+                let title = "page_information_terms_&_condictions_text".localized
+                self.t_router_openDocumentController(url: URL(fileURLWithPath: path), title: title)
+            }
+            
+            break
+            
+        case 1:
+            
+            if let path = Bundle.main.path(forResource: "privacy-policy", ofType: "docx") {
+                
+                let title = "page_information_privacy_policy_text".localized
+                self.t_router_openDocumentController(url: URL(fileURLWithPath: path), title: title)
+            }
+            
+            break
+            
+        default:
+            break
+        }
     }
-    */
-
 }

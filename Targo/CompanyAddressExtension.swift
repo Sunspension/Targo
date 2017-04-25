@@ -149,4 +149,12 @@ extension TCompanyAddress {
         
         return nil
     }
+    
+    var isAroundTheClock: Bool {
+        
+        get {
+            
+            return self.openHour == "00:00" && self.closeHour == "24:00"
+        }
+    }
 }

@@ -15,20 +15,18 @@ class TDocumentViewController: UIViewController, WKNavigationDelegate {
     
     fileprivate var url: URL?
     
-    fileprivate var fileName: String?
-    
     
     required init?(coder aDecoder: NSCoder) {
         
         super.init(coder: aDecoder)
     }
     
-    init(url: URL, fileName: String) {
+    init(url: URL, title: String) {
         
         super.init(nibName: nil, bundle: nil)
         
         self.url = url
-        self.fileName = fileName
+        self.title = title
     }
     
     override func loadView() {
@@ -37,9 +35,6 @@ class TDocumentViewController: UIViewController, WKNavigationDelegate {
         
         self.webView.navigationDelegate = self
         self.view = self.webView
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done,
-                                                                target: self, action: #selector(self.close))
-        self.title = self.fileName
     }
     
     override func viewDidLoad() {

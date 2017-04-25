@@ -77,7 +77,7 @@ class TOrdersTableViewController: UITableViewController {
                                                                 .first {
                                                                 
                                                                 cell.companyName.text = company.title
-                                                                cell.orderStatus.text = item.item!.orderStatusDescription
+                                                                cell.orderStatus.text = item.item!.orderStatusTitle
                                                                 cell.orderNumber.text = "Заказ " + String(item.item!.id)
                                                                 
                                                                 var totalPrice = 0

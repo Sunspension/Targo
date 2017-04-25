@@ -16,26 +16,27 @@ class TCompanyWorkingDay: Object {
     
     dynamic var end = ""
     
+    dynamic var isClose: Bool {
+        
+        get {
+            
+            return self.begin == "00:00" && self.end == "00:00"
+        }
+    }
+    
+    dynamic var isAroundTheClock: Bool {
+        
+        get {
+        
+            return self.begin == "00:00" && self.end == "24:00"
+        }
+    }
+    
     convenience init(begin: String, end: String) {
         
         self.init()
         
         self.begin = begin
         self.end = end
-    }
-    
-    required init() {
-        
-        super.init()
-    }
-    
-    required init(realm: RLMRealm, schema: RLMObjectSchema) {
-        
-        super.init(realm: realm, schema: schema)
-    }
-    
-    required init(value: Any, schema: RLMSchema) {
-        
-        super.init(value: value, schema: schema)
     }
 }

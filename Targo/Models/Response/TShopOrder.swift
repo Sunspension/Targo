@@ -122,6 +122,8 @@ class TShopOrder: Object, Mappable {
     
     dynamic var isNew = false
     
+    dynamic var orderStatusTitle = ""
+    
     var items = List<TShopGood>()
     
     
@@ -152,6 +154,7 @@ class TShopOrder: Object, Mappable {
         prepared <- map["prepared_at"]
         discountAmount <- map["discount_amount"]
         items <- (map["items"], ListTransform<TShopGood>())
+        orderStatusTitle <- map["order_status_title"]
     }
 }
 

@@ -30,7 +30,7 @@ class CollectionSection: NSObject {
                         cellStyle: UITableViewCellStyle,
                         item: Any?,
                         itemType: Any? = nil,
-                        bindingAction: @escaping (_ cell:UITableViewCell, _ item: CollectionSectionItem) -> Void) {
+                        bindingAction: ((_ cell:UITableViewCell, _ item: CollectionSectionItem) -> Void)? = nil) {
         
         let item = CollectionSectionItem(reusableIdentifier: identifier, cellStyle: cellStyle, item: item)
         item.bindingAction = bindingAction
@@ -41,7 +41,7 @@ class CollectionSection: NSObject {
     func initializeItem(reusableIdentifierOrNibName identifier: String,
                         item: Any?,
                         itemType: Any? = nil,
-                        bindingAction: @escaping (_ cell:UITableViewCell, _ item: CollectionSectionItem) -> Void) {
+                        bindingAction: ((_ cell:UITableViewCell, _ item: CollectionSectionItem) -> Void)? = nil) {
         
         let item = CollectionSectionItem(reusableIdentifierOrNibName: identifier, item: item)
         item.itemType = itemType
@@ -53,7 +53,7 @@ class CollectionSection: NSObject {
                                  secondIdentifierOrNibName secondIdentifier: String,
                                  item: Any?,
                                  itemType: Any? = nil,
-                                 bindingAction: @escaping (_ cell:UITableViewCell, _ item: CollectionSectionItem) -> Void) {
+                                 bindingAction: ((_ cell:UITableViewCell, _ item: CollectionSectionItem) -> Void)? = nil) {
         
         let item = CollectionSectionItem(firstReusableIdentifierOrNibName: firstIdentifier,
                                          secondReusableIdentifierOrNibName: secondIdentifier, item: item)

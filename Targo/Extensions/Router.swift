@@ -10,9 +10,15 @@ import Foundation
 
 extension UIViewController {
     
-    func t_router_openDocumentController(url: URL, fileName: String) {
+    func t_router_openDocumentController(url: URL, title: String) {
         
-        let controller = TDocumentViewController(url: url, fileName: fileName)
+        let controller = TDocumentViewController(url: url, title: title)
+        self.navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    func t_router_openInformationController() {
+        
+        let controller = TInformationController()
         self.navigationController?.pushViewController(controller, animated: true)
     }
 }
