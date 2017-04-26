@@ -28,9 +28,9 @@ enum ShopOrderStatusEnum: Int {
     
     case finished // 7
     
-    case paySuccess // 8
+    case payError // 8
     
-    case payError // 9
+    case paySuccess // 9
     
     
     static func statusDescriptionFromPaymentStatus(paymentStatus: Int) -> String? {

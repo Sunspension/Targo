@@ -23,6 +23,7 @@ class TInformationController: UITableViewController {
         self.setupDataSource()
         self.tableView.tableFooterView = UIView()
         self.setCustomBackButton()
+        self.title = "page_information_title".localized
     }
     
     fileprivate func setupDataSource() {

@@ -37,6 +37,12 @@ class TOrdersTableViewController: UITableViewController {
     
     fileprivate var timer: Timer?
     
+    fileprivate let activeStatuses = [ShopOrderStatusEnum.new,
+                                      ShopOrderStatusEnum.view,
+                                      ShopOrderStatusEnum.processing,
+                                      ShopOrderStatusEnum.complete,
+                                      ShopOrderStatusEnum.paySuccess]
+    
     var companies: [TCompany]?
     
     var orders: [TShopOrder]?
@@ -235,56 +241,25 @@ class TOrdersTableViewController: UITableViewController {
         
         if let section = self.dataSource?.sections.filter({ ($0.sectionType as! ShopOrdersSectionEnum) == .inProgress }).first {
             
-            if let targetItem = section.items.max(by: {self.dateFromString($0.item!.updated)?.compare(self.dateFromString($1.item!.updated)!) == .orderedDescending }) {
+            if let targetItem = section.items.max(by: {
+                
+                self.dateFromString($0.item!.updated)?.compare(self.dateFromString($1.item!.updated)!) == .orderedDescending }) {
                 
                 self.checkingOrdersLoadingStatus = .loading
                 
                 Api.sharedInstance.loadShopOrders(updatedDate: targetItem.item!.updated, olderThen: true, pageSize: 1000)
                     
-                    .onSuccess(callback: {[weak self] orders in
+                    .onSuccess(callback: { [weak self] orders in
                         
                         self?.checkingOrdersLoadingStatus = .loaded
                         
-                        let realm = try! Realm()
-                        
-                        for order in orders {
-                            
-                            if let oldOrder = realm.object(ofType: TShopOrder.self, forPrimaryKey: order.id) {
-                                
-                                if let oldDate = self?.dateFromString(oldOrder.updated) {
-                                    
-                                    if let newDate = self?.dateFromString(order.updated) {
-                                        
-                                        if oldDate.compare(newDate) != .orderedSame {
-                                            
-                                            if order.orderStatus == ShopOrderStatusEnum.canceled.rawValue
-                                                || order.orderStatus == ShopOrderStatusEnum.finished.rawValue
-                                                || order.orderStatus == ShopOrderStatusEnum.payError.rawValue
-                                                || order.orderStatus == ShopOrderStatusEnum.canceledByUser.rawValue {
-                                                
-                                                order.isNew = false
-                                            }
-                                            else {
-                                                
-                                                order.isNew = true
-                                            }
-                                            
-                                            try! realm.write({
-                                                
-                                                realm.add(order, update: true)
-                                            })
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        
                         if orders.count > 0 {
                             
+                            self?.handlingOrders(orders)
                             self?.reloadFromDataBase()
                         }
                     })
-                    .onFailure(callback: {[weak self] error in
+                    .onFailure(callback: { [weak self] error in
                         
                         self?.checkingOrdersLoadingStatus = .failed
                     })
@@ -294,6 +269,42 @@ class TOrdersTableViewController: UITableViewController {
 
     
     //MARK: - Private methods
+    fileprivate func handlingOrders(_ orders: [TShopOrder]) {
+        
+        let realm = try! Realm()
+        
+        for order in orders {
+            
+            if let oldOrder = realm.object(ofType: TShopOrder.self, forPrimaryKey: order.id) {
+                
+                if let oldDate = self.dateFromString(oldOrder.updated) {
+                    
+                    if let newDate = self.dateFromString(order.updated) {
+                        
+                        if oldDate.compare(newDate) != .orderedSame {
+                            
+                            if order.orderStatus == ShopOrderStatusEnum.canceled.rawValue
+                                || order.orderStatus == ShopOrderStatusEnum.finished.rawValue
+                                || order.orderStatus == ShopOrderStatusEnum.payError.rawValue
+                                || order.orderStatus == ShopOrderStatusEnum.canceledByUser.rawValue {
+                                
+                                order.isNew = false
+                            }
+                            else {
+                                
+                                order.isNew = true
+                            }
+                            
+                            try! realm.write({
+                                
+                                realm.add(order, update: true)
+                            })
+                        }
+                    }
+                }
+            }
+        }
+    }
     
     fileprivate func reloadFromDataBase() {
         
@@ -383,54 +394,61 @@ class TOrdersTableViewController: UITableViewController {
         
         self.dataSource?.sections.removeAll()
         
+        let addItemToHistoryClosure: (_ order: TShopOrder) -> Void = { order in
+            
+            var sectionHistory =
+                self.dataSource!.sections.filter({ $0.sectionType as? ShopOrdersSectionEnum == .history }).first
+            
+            if sectionHistory == nil {
+                
+                sectionHistory = GenericCollectionSection<TShopOrder>(title: "order_history_order_title".localized)
+                sectionHistory!.sectionType = ShopOrdersSectionEnum.history
+                self.dataSource?.sections.append(sectionHistory!)
+            }
+            
+            let realm = try! Realm()
+            realm.beginWrite()
+            
+            order.isNew = false
+            
+            do {
+                
+                try realm.commitWrite()
+            }
+            catch {
+                
+                print("Caught an error when was trying to make commit to Realm")
+            }
+            
+            sectionHistory!.items.append(GenericCollectionSectionItem(item: order))
+        }
+        
         for order in self.orders! {
             
-            let orderStatus = ShopOrderStatusEnum(rawValue: order.orderStatus)
-            
-            if orderStatus == .canceled
-                || orderStatus == .finished
-                || orderStatus == .payError
-                || orderStatus == .canceledByUser {
+            if let orderStatus = ShopOrderStatusEnum(rawValue: order.orderStatus) {
                 
-                var sectionHistory =
-                    self.dataSource!.sections.filter({ $0.sectionType as? ShopOrdersSectionEnum == .history }).first
-                
-                if sectionHistory == nil {
+                if self.activeStatuses.contains(orderStatus) {
                     
-                    sectionHistory = GenericCollectionSection<TShopOrder>(title: "order_history_order_title".localized)
-                    sectionHistory!.sectionType = ShopOrdersSectionEnum.history
-                    self.dataSource?.sections.append(sectionHistory!)
-                }
-                
-                let realm = try! Realm()
-                realm.beginWrite()
-                
-                order.isNew = false
-                
-                do {
+                    var inProgress =
+                        self.dataSource!.sections.filter({ $0.sectionType as? ShopOrdersSectionEnum == .inProgress }).first
                     
-                    try realm.commitWrite()
-                }
-                catch {
+                    if inProgress == nil {
+                        
+                        inProgress = GenericCollectionSection<TShopOrder>(title: "order_in_progress_order_title".localized)
+                        inProgress!.sectionType = ShopOrdersSectionEnum.inProgress
+                        self.dataSource?.sections.append(inProgress!)
+                    }
                     
-                    print("Caught an error when was trying to make commit to Realm")
+                    inProgress!.items.append(GenericCollectionSectionItem(item: order))
                 }
-                
-                sectionHistory!.items.append(GenericCollectionSectionItem(item: order))
+                else {
+                    
+                    addItemToHistoryClosure(order)
+                }
             }
             else {
                 
-                var inProgress =
-                    self.dataSource!.sections.filter({ $0.sectionType as? ShopOrdersSectionEnum == .inProgress }).first
-                
-                if inProgress == nil {
-                    
-                    inProgress = GenericCollectionSection<TShopOrder>(title: "order_in_progress_order_title".localized)
-                    inProgress!.sectionType = ShopOrdersSectionEnum.inProgress
-                    self.dataSource?.sections.append(inProgress!)
-                }
-                
-                inProgress!.items.append(GenericCollectionSectionItem(item: order))
+                addItemToHistoryClosure(order)
             }
         }
         
