@@ -2021,14 +2021,14 @@
     </scenes>
     <resources>
         <image name="icon-avatar" width="320" height="320"/>
-        <image name="icon-basket" width="30" height="30"/>
+        <image name="icon-basket" width="25" height="25"/>
         <image name="icon-cancelled" width="50" height="50"/>
         <image name="icon-checked" width="20" height="20"/>
-        <image name="icon-feed" width="30" height="30"/>
+        <image name="icon-feed" width="25" height="25"/>
         <image name="icon-logo" width="60" height="60"/>
         <image name="icon-next" width="30" height="30"/>
-        <image name="icon-places" width="30" height="30"/>
-        <image name="icon-user" width="30" height="30"/>
+        <image name="icon-places" width="25" height="25"/>
+        <image name="icon-user" width="25" height="25"/>
         <image name="icon_send" width="30" height="30"/>
         <image name="intro-1" width="540" height="960"/>
         <image name="stars" width="651" height="134"/>

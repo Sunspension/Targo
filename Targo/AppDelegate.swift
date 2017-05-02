@@ -131,6 +131,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.introEnded), name: Notification.Name(rawValue: kTargoIntroHasEndedNotification), object: nil)
         
+        application.applicationIconBadgeNumber = 0
+        
         return true
     }
 
