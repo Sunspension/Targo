@@ -10,6 +10,11 @@ import Foundation
 
 extension UIViewController {
     
+    var appDelegate: AppDelegate? {
+        
+        return UIApplication.shared.delegate as? AppDelegate
+    }
+    
     func showBusy() {
         
         self.hideBusy()

@@ -27,11 +27,15 @@ struct TRemoteServer: PRemoteServerV1 {
     
     var baseURLString: String {
         
-        return dev
+        return prod
     }
     
     let deviceType = "ios"
     
+    func checkSession() -> DataRequest {
+        
+        return self.request(method: .get, remotePath: "/auth")
+    }
     
     func registration(phoneNumber: String, deviceToken: String, parameters: [String : Any]? = nil) -> DataRequest {
         
@@ -42,7 +46,7 @@ struct TRemoteServer: PRemoteServerV1 {
             params += parameters!
         }
         
-        return self.request(method: .post, remotePath: baseURLString + "/code", parameters: params)
+        return self.request(method: .post, remotePath: "/code", parameters: params)
     }
     
     func authorization(phoneNumber: String, code: String, deviceToken: String, parameters: [String : Any]? = nil) -> DataRequest {
@@ -67,18 +71,18 @@ struct TRemoteServer: PRemoteServerV1 {
             params += parameters!
         }
         
-        return self.request(method: .post, remotePath: baseURLString + "/auth", parameters: params)
+        return self.request(method: .post, remotePath: "/auth", parameters: params)
     }
 
     func deauthorization() -> DataRequest {
         
-        return self.request(method: .delete, remotePath: baseURLString + "/auth")
+        return self.request(method: .delete, remotePath: "/auth")
     }
     
     func loadUser(userId: Int) -> DataRequest {
         
         return self.request(method: .get,
-                            remotePath: baseURLString + "/user/\(userId)",
+                            remotePath: "/user/\(userId)",
                             parameters: ["extend" : "image"])
     }
     
@@ -89,7 +93,7 @@ struct TRemoteServer: PRemoteServerV1 {
                                       "lon" : location?.coordinate.longitude ?? 0.0]
         
         return self.request(method: .get,
-                            remotePath: baseURLString + "/company-address" + "/\(addressId)", parameters: params)
+                            remotePath: "/company-address" + "/\(addressId)", parameters: params)
     }
     
     func loadCompanyAddresses(location: CLLocation,
@@ -120,7 +124,7 @@ struct TRemoteServer: PRemoteServerV1 {
             params["conditions"] = ["dist" : ["<" : distance]]
         }
         
-        return self.request(method: .get, remotePath: baseURLString + "/company-address", parameters: params)
+        return self.request(method: .get, remotePath: "/company-address", parameters: params)
     }
     
     func loadCompanyMenu(companyId: Int, pageNumber: Int, pageSize: Int = 20) -> DataRequest {
@@ -131,23 +135,23 @@ struct TRemoteServer: PRemoteServerV1 {
                                              "page_size" : pageSize,
                                              "order" : ["shop_category_id" : "asc"]]
         
-        return self.request(method: .get, remotePath: baseURLString + "/shop-good", parameters: params)
+        return self.request(method: .get, remotePath: "/shop-good", parameters: params)
     }
     
     func makeTestOrder() -> DataRequest {
         
         let params: [String : Any] = [ "type" : 1]
-        return self.request(method: .post, remotePath: baseURLString + "/order", parameters: params)
+        return self.request(method: .post, remotePath: "/order", parameters: params)
     }
     
     func checkTestOrder(orderId: Int) -> DataRequest {
         
-        return self.request(method: .get, remotePath: baseURLString + "/order/" + String(orderId))
+        return self.request(method: .get, remotePath: "/order/" + String(orderId))
     }
     
     func loadCreditCards() -> DataRequest {
         
-        return self.request(method: .get, remotePath: baseURLString + "/card")
+        return self.request(method: .get, remotePath: "/card")
     }
     
     func makeShopOrder(cardId: Int,
@@ -195,34 +199,34 @@ struct TRemoteServer: PRemoteServerV1 {
             params["description"] = description
         }
         
-        return self.request(method: .post, remotePath: baseURLString + "/shop-order", parameters: params)
+        return self.request(method: .post, remotePath: "/shop-order", parameters: params)
     }
     
     func checkShopOrderStatus(orderStatus: Int) -> DataRequest {
         
-        return self.request(method: .get, remotePath: baseURLString + "/shop-order/" + String(orderStatus))
+        return self.request(method: .get, remotePath: "/shop-order/" + String(orderStatus))
     }
     
     func loadCompany(companyId: Int) -> DataRequest {
         
-        return self.request(method: .get, remotePath: baseURLString + "/company/" + String(companyId))
+        return self.request(method: .get, remotePath: "/company/" + String(companyId))
     }
     
     func loadCompanies(companiesIds: [Int]) -> DataRequest {
         
         let params: [String : Any] = ["filters" : [ "id" : companiesIds ]]
-        return self.request(method: .get, remotePath: baseURLString + "/company", parameters: params)
+        return self.request(method: .get, remotePath: "/company", parameters: params)
     }
     
     func loadImage(imageId: Int) -> DataRequest {
         
-        return self.request(method: .get, remotePath: baseURLString + "/image/" + String(imageId))
+        return self.request(method: .get, remotePath: "/image/" + String(imageId))
     }
     
     func loadImages(imageIds: [Int]) -> DataRequest {
         
         let params: [String : Any] = ["filters" : [ "id" : imageIds ]]
-        return self.request(method: .get, remotePath: baseURLString + "/image", parameters: params)
+        return self.request(method: .get, remotePath: "/image", parameters: params)
     }
     
     func loadShopOrders(updatedDate: String, olderThen: Bool, pageSize: Int = 20) -> DataRequest {
@@ -235,7 +239,7 @@ struct TRemoteServer: PRemoteServerV1 {
         params["page_size"] = pageSize
         params["order"] = ["id" : "desc"]
         
-        return self.request(method: .get, remotePath: baseURLString + "/shop-order", parameters: params)
+        return self.request(method: .get, remotePath: "/shop-order", parameters: params)
     }
     
     func loadShopOrders(pageNumber: Int, pageSize: Int = 20) -> DataRequest {
@@ -248,14 +252,14 @@ struct TRemoteServer: PRemoteServerV1 {
         params["page_size"] = pageSize
         params["order"] = ["id" : "desc"]
         
-        return self.request(method: .get, remotePath: baseURLString + "/shop-order", parameters: params)
+        return self.request(method: .get, remotePath: "/shop-order", parameters: params)
     }
     
     func updateOrderStatus(orderId: Int, orderStatus: Int) -> DataRequest {
         
         let params: [String : Any] = ["order_status" : orderStatus]
         
-        return self.request(method: .put, remotePath: baseURLString + "/shop-order/" + String(orderId), parameters: params)
+        return self.request(method: .put, remotePath: "/shop-order/" + String(orderId), parameters: params)
     }
     
     func feed(pageNumber: Int, pageSize: Int = 20) -> DataRequest {
@@ -264,17 +268,17 @@ struct TRemoteServer: PRemoteServerV1 {
                                       "page_size" : pageSize,
                                       "extend" : "company,image",
                                       "order" : ["id" : "desc"]]
-        return self.request(method: .get, remotePath: baseURLString + "/promotion", parameters : params)
+        return self.request(method: .get, remotePath: "/promotion", parameters : params)
     }
     
     func addBookmark(companyAddressId: Int) -> DataRequest {
         
-        return self.request(method: .put, remotePath: baseURLString + "/company-address" + "/\(companyAddressId)", parameters: ["is_favorite" : true])
+        return self.request(method: .put, remotePath: "/company-address" + "/\(companyAddressId)", parameters: ["is_favorite" : true])
     }
     
     func removeBookmark(companyAddressId: Int) -> DataRequest {
         
-        return self.request(method: .put, remotePath: baseURLString + "/company-address" + "/\(companyAddressId)", parameters: ["is_favorite" : false])
+        return self.request(method: .put, remotePath: "/company-address" + "/\(companyAddressId)", parameters: ["is_favorite" : false])
     }
     
     func favoriteCompanyAddresses(location: CLLocation, pageNumber: Int?, pageSize: Int?) -> DataRequest {
@@ -295,7 +299,7 @@ struct TRemoteServer: PRemoteServerV1 {
             params["page_size"] = pageSize
         }
         
-        return self.request(method: .get, remotePath: baseURLString + "/company-address", parameters: params)
+        return self.request(method: .get, remotePath: "/company-address", parameters: params)
     }
     
     func uploadImage(image: UIImage, encodingCompletion: ((SessionManager.MultipartFormDataEncodingResult) -> Void)?) {
@@ -307,12 +311,12 @@ struct TRemoteServer: PRemoteServerV1 {
                     multipartFormData.append(data, withName: "file", fileName: "jpg", mimeType: "image/jpeg")
                 }
         
-            }, to: baseURLString + "/image", encodingCompletion: encodingCompletion)
+            }, to: "/image", encodingCompletion: encodingCompletion)
     }
     
     func applyUserImage(userId: Int, imageId: Int) -> DataRequest {
         
-        return self.request(method: .put, remotePath: baseURLString + "/user/\(userId)", parameters: ["image_id" : imageId])
+        return self.request(method: .put, remotePath: "/user/\(userId)", parameters: ["image_id" : imageId])
     }
     
     func updateUserInformation(userId: Int, firstName: String?, lastName: String?, email: String?) -> DataRequest {
@@ -334,36 +338,36 @@ struct TRemoteServer: PRemoteServerV1 {
             params["email"] = email
         }
         
-        return self.request(method: .put, remotePath: baseURLString + "/user/\(userId)", parameters: params)
+        return self.request(method: .put, remotePath: "/user/\(userId)", parameters: params)
     }
     
     func setCompanyRating(orderId: Int, mark: Int) -> DataRequest {
         
-        return self.request(method: .put, remotePath: baseURLString + "/shop-order/\(orderId)", parameters: ["mark" : mark])
+        return self.request(method: .put, remotePath: "/shop-order/\(orderId)", parameters: ["mark" : mark])
     }
     
     
     // MARK: - Private methods
     
-    fileprivate func request(method: HTTPMethod, remotePath: URLConvertible) -> DataRequest {
+    fileprivate func request(method: HTTPMethod, remotePath: String) -> DataRequest {
         
         return self.request(method: method, remotePath: remotePath, parameters: nil)
     }
     
-    fileprivate func request(method: HTTPMethod, remotePath: URLConvertible, parameters: [String : Any]?) -> DataRequest {
+    fileprivate func request(method: HTTPMethod, remotePath: String, parameters: [String : Any]?) -> DataRequest {
         
         return self.request(method: method, remotePath: remotePath, parameters: parameters, headers: nil);
     }
     
-    fileprivate func request(method: HTTPMethod, remotePath: URLConvertible, parameters: Parameters?, headers: [String : String]?) -> DataRequest {
+    fileprivate func request(method: HTTPMethod, remotePath: String, parameters: Parameters?, headers: [String : String]?) -> DataRequest {
         
-        let request = TRemoteServer.alamofireManager.request(remotePath,
+        let request = TRemoteServer.alamofireManager.request(baseURLString + remotePath,
                                                              method: method,
                                                              parameters: parameters,
                                                              encoding: method != .post ? URLEncoding.default : JSONEncoding.default,
                                                              headers: headers)
         
-        print("request: \(request)\n parameters: \(parameters)")
+        print("request: \(request)\n parameters: \(String(describing: parameters))")
         return request
     }
 }

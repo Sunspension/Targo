@@ -9,6 +9,7 @@
 import UIKit
 import SHSPhoneComponent
 import DynamicColor
+import RealmSwift
 
 class RegistrationCodeViewController: UIViewController {
     
@@ -22,8 +23,6 @@ class RegistrationCodeViewController: UIViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
-//        self.setup()
         
         buttonNext.tintColor = DynamicColor(hexString: kHexMainPinkColor)
         self.title = "registration_phone_title".localized
@@ -87,6 +86,16 @@ class RegistrationCodeViewController: UIViewController {
                 .onSuccess { [weak self] user in
                     
                     self?.removeAllOverlays()
+                    
+                    let realm = try! Realm()
+                    
+                    if let session = realm.objects(UserSession.self).first {
+                        
+                        if session.userId != user.id {
+                            
+                            self?.appDelegate?.deleteAllShopOrders()
+                        }
+                    }
                     
                     NotificationCenter.default.post(Notification(name: Notification.Name(rawValue: kTargoUserLoggedInSuccessfully)))
                     

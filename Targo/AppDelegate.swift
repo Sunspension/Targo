@@ -42,94 +42,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Realm.Configuration.defaultConfiguration = config;
         
-        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-        
-        let realm = try! Realm()
-        
-//        Api.sharedInstance.userLogut().onSuccess(callback: { success in
-//            
-//            NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: kTargoUserLoggedOutSuccessfully, object: nil))
-//            
-//        }).onFailure(callback: { error in
-//            
-//            print("User logout error: \(error)")
-//        })
-        
-//        let sessions = realm.objects(UserSession)
-//
-//        let users = realm.objects(User)
-//        
-//        realm.beginWrite()
-//        realm.delete(sessions)
-//        realm.delete(users)
-//        
-//        do {
-//            
-//            try realm.commitWrite()
-//        }
-//        catch {
-//            
-//            print("Caught an error when was trying to make commit to Realm")
-//        }
-        
         UIApplication.shared.statusBarStyle = .lightContent
         
-        if realm.objects(UserSession.self).first != nil {
-            
-            // User logged in
-            // Open main controller
-            
-            loadHistoryOrders()
-            
-            self.window?.rootViewController = storyBoard.instantiateViewController(withIdentifier: "TTabBar")
-            self.window?.makeKeyAndVisible()
-        }
-        else {
-            
-            let defaults = UserDefaults.standard
-            if let _ = defaults.object(forKey: kTargoNeedIntro) as? Bool {
-                
-                // temporary solution
-                let controller = storyBoard.instantiateViewController(withIdentifier: "RegistrationPhone")
-                let navigation = UINavigationController(rootViewController: controller)
-                
-                self.window?.rootViewController = navigation
-                self.window?.makeKeyAndVisible()
-            }
-            else {
-                
-//                let controller = TIntroContainerViewController.controllerInstance()
-//                let navigation = UINavigationController(rootViewController: controller)
-                
-                self.window?.rootViewController = TIntroContainerViewController.controllerInstance()
-                self.window?.makeKeyAndVisible()
-                
-                UIApplication.shared.statusBarStyle = .default
-            }
-            
-//            if defaults.boolForKey(kTargoCodeSent) == true {
-//                
-//                let controller = storyBoard.instantiateViewControllerWithIdentifier("RegistrationCode")
-//                let navigation = UINavigationController(rootViewController: controller)
-//                
-//                self.window?.rootViewController = navigation
-//                self.window?.makeKeyAndVisible()
-//            }
-//            else {
-//                
-//                let controller = storyBoard.instantiateViewControllerWithIdentifier("RegistrationPhone")
-//                let navigation = UINavigationController(rootViewController: controller)
-//                
-//                self.window?.rootViewController = navigation
-//                self.window?.makeKeyAndVisible()
-//            }
-        }
+        self.checkSession()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.logoutAction), name: Notification.Name(rawValue: kTargoUserLoggedOutSuccessfully), object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(self.loginAction), name: Notification.Name(rawValue: kTargoUserLoggedInSuccessfully), object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(self.introEnded), name: Notification.Name(rawValue: kTargoIntroHasEndedNotification), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.logoutAction), name: Notification.Name(kTargoUserLoggedOutSuccessfully), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.loginAction), name: Notification.Name(kTargoUserLoggedInSuccessfully), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.introEnded), name: Notification.Name(kTargoIntroHasEndedNotification), object: nil)
         
         application.applicationIconBadgeNumber = 0
         
@@ -188,8 +107,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UIApplication.shared.statusBarStyle = .lightContent
         
-        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyBoard.instantiateViewController(withIdentifier: "RegistrationPhone")
+        let controller = AppSettings.sharedInstance.storyBoard.instantiateViewController(withIdentifier: "RegistrationPhone")
         let navigation = UINavigationController(rootViewController: controller)
         self.changeRootViewController(navigation)
     }
@@ -203,8 +121,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             realm.deleteAll()
         })
         
-        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyBoard.instantiateViewController(withIdentifier: "RegistrationPhone")
+        let controller = AppSettings.sharedInstance.storyBoard.instantiateViewController(withIdentifier: "RegistrationPhone")
         let navigation = UINavigationController(rootViewController: controller)
         self.changeRootViewController(navigation)
     }
@@ -221,25 +138,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func loginAction() {
         
-        loadHistoryOrders()
+        self.loadHistoryOrders()
         
-//        let storage = HTTPCookieStorage.shared
-//        
-//        if let cookies = storage.cookies(for: URL(string: "targo.club")!) {
-//            
-//            for cookie in cookies {
-//                
-//                
-//            }
-//        }
-        
-        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-        
-        let viewController = storyBoard.instantiateViewController(withIdentifier: "TTabBar")
+        let viewController = AppSettings.sharedInstance.storyBoard.instantiateViewController(withIdentifier: "TTabBar")
         self.changeRootViewController(viewController)
     }
     
     func changeRootViewController(_ viewController: UIViewController) {
+        
+        if self.window == nil {
+            
+            self.window = UIWindow(frame: UIScreen.main.bounds)
+            self.window?.rootViewController = viewController
+            self.window?.makeKeyAndVisible()
+            return
+        }
         
         UIView.transition(with: self.window!,
                                   duration: 0.5,
@@ -252,6 +165,54 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                     UIView.setAnimationsEnabled(oldState)
                                     
             }, completion: nil)
+    }
+    
+    func deleteAllShopOrders() {
+        
+        let realm = try! Realm()
+        let orders = realm.objects(TShopOrder.self)
+        
+        if orders.count > 0 {
+            
+            realm.delete(orders)
+        }
+    }
+    
+    fileprivate func checkSession() {
+        
+        Api.sharedInstance.checkSession()
+            
+            .onSuccess { [unowned self] session in
+            
+                if !session.isExpired {
+                    
+                    self.loadHistoryOrders()
+                    
+                    let controller = AppSettings.sharedInstance.storyBoard.instantiateViewController(withIdentifier: "TTabBar")
+                    self.changeRootViewController(controller)
+                }
+                else {
+                    
+                    let defaults = UserDefaults.standard
+                    if let _ = defaults.object(forKey: kTargoNeedIntro) as? Bool {
+                        
+                        // temporary solution
+                        let controller = AppSettings.sharedInstance.storyBoard.instantiateViewController(withIdentifier: "RegistrationPhone")
+                        let navigation = UINavigationController(rootViewController: controller)
+                        self.changeRootViewController(navigation)
+                    }
+                    else {
+                        
+                        let controller = TIntroContainerViewController.controllerInstance()
+                        self.changeRootViewController(controller)
+                        UIApplication.shared.statusBarStyle = .default
+                    }
+                }
+            }
+            .onFailure { error in
+                
+                print(error)
+            }
     }
     
     deinit {

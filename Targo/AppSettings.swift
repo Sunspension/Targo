@@ -12,6 +12,8 @@ class AppSettings: NSObject {
 
     static let sharedInstance = AppSettings()
     
+    let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+    
     var lastSessionPhoneNumber: String? {
         
         get {

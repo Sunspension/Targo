@@ -21,6 +21,37 @@ struct Api {
     
     let server: PRemoteServerV1 = TRemoteServer()
     
+    func checkSession() -> Future<UserSession ,TargoError> {
+        
+        let p = Promise<UserSession, TargoError>()
+        
+        server.checkSession()
+            .responseJSON { response in
+                
+                if let error = response.result.error {
+                    
+                    print("Response error: \(error)")
+                }
+                else {
+                    
+                    print("Response result: \(response.result.value ?? "")")
+                }
+            }
+            .responseObject(keyPath: "data") { (response: DataResponse<UserSession>) in
+                
+                guard response.result.error == nil else {
+                    
+                    p.failure(.error(error: response.result.error!))
+                    return
+                }
+                
+                let session = response.result.value!
+                p.success(session)
+        }
+        
+        return p.future
+    }
+    
     func userRegistration(phoneNumber: String) -> Future<Bool, UserRegistrationError> {
         
         let p = Promise<Bool, UserRegistrationError>()
@@ -37,7 +68,7 @@ struct Api {
                 }
                 else {
                     
-                    print("Response result: \(response.result.value)")
+                    print("Response result: \(String(describing: response.result.value))")
                 }
             }
             .responseObject(mapToObject: TBadRequest(), completionHandler: { (response: DataResponse<TBadRequest>) in
@@ -145,7 +176,7 @@ struct Api {
                 }
                 else {
                     
-                    print("Response result: \(response.result.value)")
+                    print("Response result: \(response.result.value ?? "")")
                 }
             }
             .responseObject(keyPath: "data", completionHandler: { (response: DataResponse<UserSession>) in
@@ -302,7 +333,7 @@ struct Api {
                 }
                 else {
                     
-                    print("Response result: \(response.result.value)")
+                    print("Response result: \(response.result.value ?? "")")
                 }
             }
             .responseObject(keyPath: "data") { (response: DataResponse<UserSession>) in
@@ -365,7 +396,7 @@ struct Api {
                     }
                     else {
                         
-                        print("Response result: \(response.result.value)")
+                        print("Response result: \(response.result.value ?? "")")
                     }
                 }
                 .responseObject(keyPath: "data") { (response: DataResponse<User>) in
@@ -406,7 +437,7 @@ struct Api {
                 }
                 else {
                     
-                    print("Response result: \(response.result.value)")
+                    print("Response result: \(response.result.value ?? "")")
                 }
             }
             .responseObject(keyPath: "data") { (response: DataResponse<TCompanyAddress>) in
@@ -442,7 +473,7 @@ struct Api {
                 }
                 else {
                     
-                    print("Response result: \(response.result.value)")
+                    print("Response result: \(response.result.value ?? "")")
                 }
             }
             .responseObject(keyPath: "data") { (response: DataResponse<TCompanyAddressesPage>) in
@@ -476,7 +507,7 @@ struct Api {
                 }
                 else {
                     
-                    print("Response result: \(response.result.value)")
+                    print("Response result: \(response.result.value ?? "")")
                 }
             }
             .responseObject(keyPath: "data") { (response: DataResponse<TCompanyMenuPage>) in
@@ -508,7 +539,7 @@ struct Api {
                 }
                 else {
                     
-                    print("Response result: \(response.result.value)")
+                    print("Response result: \(response.result.value ?? "")")
                 }
             }
             .responseObject(keyPath: "data") { (response: DataResponse<TTestOrder>) in
@@ -539,7 +570,7 @@ struct Api {
                 }
                 else {
                     
-                    print("Response result: \(response.result.value)")
+                    print("Response result: \(response.result.value ?? "")")
                 }
             }
             .responseObject(keyPath: "data") { (response: DataResponse<TTestOrder>) in
@@ -570,7 +601,7 @@ struct Api {
                 }
                 else {
                     
-                    print("Response result: \(response.result.value)")
+                    print("Response result: \(response.result.value ?? "")")
                 }
             }
             .responseArray(keyPath: "data.card") { (response: DataResponse<[TCreditCard]>) in
@@ -615,7 +646,7 @@ struct Api {
                 }
                 else {
                     
-                    print("Response result: \(response.result.value)")
+                    print("Response result: \(response.result.value ?? "")")
                 }
                 
 //                let request = String(data: response.request!.HTTPBody!, encoding: String.Encoding.utf8)
@@ -657,7 +688,7 @@ struct Api {
                 }
                 else {
                     
-                    print("Response result: \(response.result.value)")
+                    print("Response result: \(response.result.value ?? "")")
                 }
                 
             }.responseObject(keyPath: "data") { (response: DataResponse<TShopOrder>) in
@@ -695,7 +726,7 @@ struct Api {
                 }
                 else {
                     
-                    print("Response result: \(response.result.value)")
+                    print("Response result: \(response.result.value ?? "")")
                 }
                 
             }.responseObject(keyPath: "data") { (response: DataResponse<TCompany>) in
@@ -726,7 +757,7 @@ struct Api {
                 }
                 else {
                     
-                    print("Response result: \(response.result.value)")
+                    print("Response result: \(response.result.value ?? "")")
                 }
                 
             }.responseArray(keyPath: "data.company") { (response: DataResponse<[TCompany]>) in
@@ -758,7 +789,7 @@ struct Api {
                 }
                 else {
                     
-                    print("Response result: \(response.result.value)")
+                    print("Response result: \(response.result.value ?? "")")
                 }
                 
             }.responseObject(keyPath: "data") { (response: DataResponse<TImage>) in
@@ -789,7 +820,7 @@ struct Api {
                 }
                 else {
                     
-                    print("Response result: \(response.result.value)")
+                    print("Response result: \(response.result.value ?? "")")
                 }
                 
             }.responseArray(keyPath: "data.image") { (response: DataResponse<[TImage]>) in
@@ -820,7 +851,7 @@ struct Api {
                 }
                 else {
                     
-                    print("Response result: \(response.result.value)")
+                    print("Response result: \(response.result.value ?? "")")
                 }
             
             }.responseArray(keyPath: "data.shop-order") { (response: DataResponse<[TShopOrder]>) in
@@ -851,7 +882,7 @@ struct Api {
                 }
                 else {
                     
-                    print("Response result: \(response.result.value)")
+                    print("Response result: \(response.result.value ?? "")")
                 }
                 
             }.responseArray(keyPath: "data.shop-order") { (response: DataResponse<[TShopOrder]>) in
@@ -882,7 +913,7 @@ struct Api {
                 }
                 else {
                     
-                    print("Response result: \(response.result.value)")
+                    print("Response result: \(response.result.value ?? "")")
                 }
                 
             }.responseObject(keyPath: "data") { (response: DataResponse<TShopOrder>) in
@@ -920,7 +951,7 @@ struct Api {
                 }
                 else {
                     
-                    print("Response result: \(response.result.value)")
+                    print("Response result: \(response.result.value ?? "")")
                 }
             }
             .responseObject(keyPath: "data") { (response: DataResponse<TFeedPage>) in
@@ -951,7 +982,7 @@ struct Api {
                 }
                 else {
                     
-                    print("Response result: \(response.result.value)")
+                    print("Response result: \(response.result.value ?? "")")
                 }
             }
             .responseObject { (response: DataResponse<TAddRemoveBookmarkResponse>) in
@@ -982,7 +1013,7 @@ struct Api {
                 }
                 else {
                     
-                    print("Response result: \(response.result.value)")
+                    print("Response result: \(response.result.value ?? "")")
                 }
             }
             .responseObject { (response: DataResponse<TAddRemoveBookmarkResponse>) in
@@ -1013,7 +1044,7 @@ struct Api {
                 }
                 else {
                     
-                    print("Response result: \(response.result.value)")
+                    print("Response result: \(response.result.value ?? "")")
                 }
             }
             .responseObject(keyPath: "data") { (response: DataResponse<TCompanyAddressesPage>) in
@@ -1088,7 +1119,7 @@ struct Api {
                 }
                 else {
                     
-                    print("Response result: \(response.result.value)")
+                    print("Response result: \(response.result.value ?? "")")
                 }
             }
             .responseObject(keyPath: "data") { (response: DataResponse<User>) in
@@ -1119,7 +1150,7 @@ struct Api {
                 }
                 else {
                     
-                    print("Response result: \(response.result.value)")
+                    print("Response result: \(response.result.value ?? "")")
                 }
             }
             .responseObject(keyPath: "data") { (response: DataResponse<User>) in
@@ -1150,7 +1181,7 @@ struct Api {
                 }
                 else {
                     
-                    print("Response result: \(response.result.value)")
+                    print("Response result: \(response.result.value ?? "")")
                 }
             }
             .responseObject(keyPath: "data") { (response: DataResponse<TShopOrder>) in

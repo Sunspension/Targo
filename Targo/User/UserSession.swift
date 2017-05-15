@@ -16,6 +16,12 @@ class UserSession: Object, Mappable {
     
     dynamic var sid = ""
     
+    var isExpired: Bool {
+        
+        return userId == 0
+    }
+
+    
     required convenience init?(map: Map) {
         
         self.init()
