@@ -311,7 +311,7 @@ struct TRemoteServer: PRemoteServerV1 {
                     multipartFormData.append(data, withName: "file", fileName: "jpg", mimeType: "image/jpeg")
                 }
         
-            }, to: "/image", encodingCompletion: encodingCompletion)
+            }, to: baseURLString + "/image", encodingCompletion: encodingCompletion)
     }
     
     func applyUserImage(userId: Int, imageId: Int) -> DataRequest {

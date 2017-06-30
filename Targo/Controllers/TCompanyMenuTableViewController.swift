@@ -294,7 +294,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
                 let viewCell = cell as! TCompanyMenuCompanyImageTableViewCell
                 
                 viewCell.selectionStyle = .none
-                viewCell.layoutIfNeeded()
+//                viewCell.layoutIfNeeded()
                 
                 let color1 = UIColor(red: 0, green: 0, blue: 0, alpha: 0).cgColor
                 let color2 = UIColor(red: 0, green: 0, blue: 0, alpha: 0.7).cgColor
@@ -492,7 +492,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
             self.loadCompanyMenu()
         }
         
-        cell.layoutIfNeeded()
+//        cell.layoutIfNeeded()
         
         if item.swappable {
             
@@ -611,7 +611,7 @@ class TCompanyMenuTableViewController: UIViewController, UITableViewDelegate {
                     
                 }).dispose(in: viewCell.disposeBag)
                 
-                viewCell.buttonMore.setTitle("menu_more_ddetails".localized, for: UIControlState())
+//                viewCell.buttonMore.setTitle("menu_more_ddetails".localized, for: UIControlState())
                 viewCell.quantityTitle.text = "menu_quantity".localized
                 
                 viewCell.addSeparator()
