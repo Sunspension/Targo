@@ -99,9 +99,8 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
                                                name: NSNotification.Name(rawValue: kTargoDidAddNewCardNotification),
                                                object: nil)
         
-        self.makeOrder.addTarget(self, action: #selector(self.sendOrder),
-                                 for: .touchUpInside)
-        self.makeOrder.setTitle("order_make_order_button_title".localized, for: UIControlState())
+        self.makeOrder.addTarget(self, action: #selector(self.sendOrder), for: .touchUpInside)
+        self.makeOrder.setTitle("order_make_order_button_title".localized, for: .normal)
         self.makeOrder.backgroundColor = UIColor(hexString: kHexMainPinkColor)
         
         self.loadCards()

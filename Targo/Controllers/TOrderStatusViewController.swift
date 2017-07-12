@@ -60,6 +60,8 @@ class TOrderStatusViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        timerLabel.textAlignment = .center
+        
         self.cancelLabel.text = "order_cancel_order".localized
         self.cancelOrder.addTarget(self, action: #selector(TOrderStatusViewController.cancelOrderAction), for: .touchUpInside)
         
@@ -271,12 +273,20 @@ class TOrderStatusViewController: UIViewController {
                         }
                         else {
                             
-                            self?.timerLabel.attributedText = nil
+                            self?.timerLabel.attributedText = self?.makeAttributedTimeString(time: "0")
                         }
                     })
                     
                     countDownTimer?.startTimer()
                 }
+                else {
+                    
+                    self.timerLabel.attributedText = self.makeAttributedTimeString(time: "0")
+                }
+            }
+            else {
+                
+                self.timerLabel.attributedText = self.makeAttributedTimeString(time: "0")
             }
         }
     }
@@ -328,9 +338,9 @@ class TOrderStatusViewController: UIViewController {
             break
             
         // 5
-        case .processing:
+        case .paymentSuccess:
             
-            if previousOrderStatus != ShopOrderStatusEnum.processing.rawValue {
+            if previousOrderStatus != ShopOrderStatusEnum.paymentSuccess.rawValue {
                 
                 self.previousOrderStatus = status.rawValue
                 self.cancelOrder.isHidden = true
@@ -356,7 +366,7 @@ class TOrderStatusViewController: UIViewController {
             break
             
         // 8
-        case .paySuccess:
+        case .payError:
             
             self.cancelOrder.isHidden = true
             self.cancelLabel.isHidden = true
@@ -364,7 +374,7 @@ class TOrderStatusViewController: UIViewController {
             break
             
         // 9
-        case .payError:
+        case .inProgress:
             
             self.cancelOrder.isHidden = true
             self.cancelLabel.isHidden = true

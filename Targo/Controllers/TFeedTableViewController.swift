@@ -289,7 +289,6 @@ class TFeedTableViewController: UITableViewController {
                                                     
                                                     viewCell.imageZeroHeight.priority = 250
                                                     viewCell.imageAcpectRatio.priority = 900
-//                                                    viewCell.layoutIfNeeded()
                                                     
                                                     let filter = AspectScaledToFillSizeFilter(size: viewCell.newsImage.bounds.size)
                                                     viewCell.newsImage.af_setImage(withURL: URL(string: image.url)!, filter: filter)

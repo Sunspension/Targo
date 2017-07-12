@@ -39,9 +39,9 @@ class TOrdersTableViewController: UITableViewController {
     
     fileprivate let activeStatuses = [ShopOrderStatusEnum.new,
                                       ShopOrderStatusEnum.view,
-                                      ShopOrderStatusEnum.processing,
+                                      ShopOrderStatusEnum.paymentSuccess,
                                       ShopOrderStatusEnum.complete,
-                                      ShopOrderStatusEnum.paySuccess]
+                                      ShopOrderStatusEnum.inProgress]
     
     var companies: [TCompany]?
     

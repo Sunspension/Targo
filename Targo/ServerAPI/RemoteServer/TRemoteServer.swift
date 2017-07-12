@@ -23,11 +23,11 @@ struct TRemoteServer: PRemoteServerV1 {
     
     let dev = "http://dev.targoapp.com/api"
     
-    let prod = "http://api.targoapp.com/api"
+    let prod = "https://api.targoapp.com/api"
     
     var baseURLString: String {
         
-        return prod
+        return dev
     }
     
     let deviceType = "ios"

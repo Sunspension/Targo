@@ -15,7 +15,7 @@
 "1ej-Ua-dcu.text" = "Company title";
 
 /* Class = "UILabel"; text = "Where to eat"; ObjectID = "20F-lC-wAl"; */
-"20F-lC-wAl.text" = "Как поесть?";
+"20F-lC-wAl.text" = "Выберите подачу";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "2DJ-uW-aAr"; */
 "2DJ-uW-aAr.text" = "Label";
@@ -132,7 +132,7 @@
 "W5k-EY-Ln4.segmentTitles[1]" = "Взять с собой";
 
 /* Class = "UISegmentedControl"; W5k-EY-Ln4.segmentTitles[2] = "Eat inside"; ObjectID = "W5k-EY-Ln4"; */
-"W5k-EY-Ln4.segmentTitles[2]" = "Есть внутри";
+"W5k-EY-Ln4.segmentTitles[2]" = "Поесть в заведении";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "Wp4-C6-3dG"; */
 "Wp4-C6-3dG.text" = "Label";

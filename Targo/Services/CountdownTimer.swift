@@ -65,7 +65,7 @@ class CountdownTimer: NSObject {
         if dateFormatter == nil {
             
             dateFormatter = DateFormatter()
-            dateFormatter!.dateFormat = "mm:ss"
+            dateFormatter!.dateFormat = "m"
             dateFormatter!.timeZone = TimeZone(secondsFromGMT: 0)
         }
         

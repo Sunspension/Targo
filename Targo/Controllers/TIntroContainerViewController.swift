@@ -30,8 +30,8 @@ class TIntroContainerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.cancel.setTitle("action_skip".localized, for: UIControlState())
-        self.buttonNext.setTitle("action_next".localized, for: UIControlState())
+        self.cancel.setTitle("action_skip".localized, for: .normal)
+        self.buttonNext.setTitle("action_next".localized, for: .normal)
         
         self.buttonNext.addTarget(self, action: #selector(self.nextAction), for: .touchUpInside)
         self.cancel.addTarget(self, action: #selector(self.skipAction), for: .touchUpInside)
@@ -64,11 +64,11 @@ class TIntroContainerViewController: UIViewController {
 
                 if index == self.imagesName.count - 1 {
 
-                    self.buttonNext.setTitle("action_done".localized, for: UIControlState())
+                    self.buttonNext.setTitle("action_done".localized, for: .normal)
                 }
                 else  {
 
-                    self.buttonNext.setTitle("action_next".localized, for: UIControlState())
+                    self.buttonNext.setTitle("action_next".localized, for: .normal)
                 }
             }
 

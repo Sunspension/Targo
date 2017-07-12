@@ -126,7 +126,7 @@
 
 "oder_time_to_prepare_empty" = "Вы не указали к какому времени сделать заказ";
 
-"oder_delivery_service_empty" = "Вы не выбрали где поесть";
+"oder_delivery_service_empty" = "Вы не выбрали подачу";
 
 "order_description_title" = "Коментарий к заказу";
 

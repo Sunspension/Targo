@@ -8,7 +8,7 @@
 
 "registration_phone_title" = "Registration";
 
-"user_registration_confidential_part1" = "By registering you are agree to the\n";
+"user_registration_confidential_part1" = "By registering you agree to\n";
 
 "user_registration_confidential_part2" = "service rules";
 
@@ -125,7 +125,7 @@
 
 "oder_time_to_prepare_empty" = "You haven't chosen the order preparation time";
 
-"oder_delivery_service_empty" = "Please, choose how you are going to eat";
+"oder_delivery_service_empty" = "Please, choose eat here or to go";
 
 "order_description_title" = "Order description";
 

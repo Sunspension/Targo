@@ -22,7 +22,7 @@ enum ShopOrderStatusEnum: Int {
     
     case canceled // 4
     
-    case processing // 5
+    case paymentSuccess // 5
     
     case complete // 6
     
@@ -30,7 +30,7 @@ enum ShopOrderStatusEnum: Int {
     
     case payError // 8
     
-    case paySuccess // 9
+    case inProgress // 9
     
     
     static func statusDescriptionFromPaymentStatus(paymentStatus: Int) -> String? {
@@ -63,7 +63,7 @@ enum ShopOrderStatusEnum: Int {
             
             return "order_status_canceled".localized
             
-        case .processing:
+        case .paymentSuccess:
             
             return "order_status_processing".localized
             
@@ -75,7 +75,7 @@ enum ShopOrderStatusEnum: Int {
             
             return "order_status_finished".localized
             
-        case .paySuccess:
+        case .inProgress:
             
             return "order_status_pay_success".localized
             

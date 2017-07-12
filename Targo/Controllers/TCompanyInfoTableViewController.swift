@@ -74,7 +74,7 @@ class TCompanyInfoTableViewController: UITableViewController {
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
-        bookmarkButton.setImage(UIImage(named: "icon-star"), for: UIControlState())
+        bookmarkButton.setImage(UIImage(named: "icon-star"), for: .normal)
         bookmarkButton.setImage(UIImage(named: "icon-fullStar"), for: .selected)
         bookmarkButton.tintColor = UIColor(hexString: "#f1c40f")
         bookmarkButton.addTarget(self, action: #selector(self.makeFavorite), for: .touchUpInside)

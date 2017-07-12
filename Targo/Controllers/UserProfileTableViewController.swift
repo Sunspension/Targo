@@ -368,7 +368,7 @@ class UserProfileTableViewController: UITableViewController, UIImagePickerContro
                 
                 viewCell.imageViewBlur.image = defaultImage!.applyBlur(withRadius: 5,                                                                                                                                             tintColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0.4),                                                                                                                                                     saturationDeltaFactor: 1,                                                                                                                                                     maskImage: nil)
                 
-                viewCell.buttonAvatar.setImage(defaultImage, for: UIControlState())
+                viewCell.buttonAvatar.setImage(defaultImage, for: .normal)
                 let layer = viewCell.buttonAvatar.layer
                 layer.borderColor = UIColor.white.cgColor
                 layer.borderWidth = 2
