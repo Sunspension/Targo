@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.registerForRemoteNotifications()
         
         // Firebase configure
-        FIRApp.configure()
+        FirebaseApp.configure()
         
         // register google maps
         GMSServices.provideAPIKey("AIzaSyBj0pr7Cxm3b4tsM9O1gyIXdguRHvMmeW0")
@@ -219,26 +219,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         NotificationCenter.default.removeObserver(self)
     }
-    
-//    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-//        
-//        print(userInfo["id"])
-//        print(userInfo["payment_status"])
-//    }
-//    
-//    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
-//        
-//        print(userInfo)
-//    }
-//    
-//    func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forRemoteNotification userInfo: [NSObject : AnyObject], completionHandler: () -> Void) {
-//        
-//        
-//    }
-//    
-//    func application(application: UIApplication, willFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
-//        
-//        return true
-//    }
 }
 

@@ -27,7 +27,7 @@ struct TRemoteServer: PRemoteServerV1 {
     
     var baseURLString: String {
         
-        return dev
+        return prod
     }
     
     let deviceType = "ios"

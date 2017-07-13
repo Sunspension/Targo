@@ -1,11 +1,11 @@
+source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, ‘9.3’
 use_frameworks!
-source 'https://github.com/CocoaPods/Specs.git'
 
 target 'Targo' do
 
 #Network
-pod 'Alamofire', '~> 4.0'
+pod 'Alamofire', '~> 4.4'
 
 #PhoneNumbers
 pod 'PhoneNumberKit', '~> 1.0'
@@ -29,14 +29,14 @@ pod 'AlamofireImage', '~> 3.1'
 pod 'RealmSwift'
 
 #UI
-pod 'SwiftOverlays', :git => 'https://github.com/peterprokop/SwiftOverlays', :branch => 'swift-3.0'
+pod 'SwiftOverlays', '~> 3.0.0'
 
 pod 'SCLAlertView'
 pod 'CircleProgressView', :git => 'https://github.com/CardinalNow/iOS-CircleProgressView.git'
 pod 'ActionSheetPicker-3.0'
 #pod 'BRYXBanner'
 #pod 'Toast-Swift', '~> 2.0.0'
-pod 'LNRSimpleNotifications', :git => 'https://github.com/LISNR/LNRSimpleNotifications.git', :branch => 'swift3'
+#pod 'LNRSimpleNotifications', :git => 'https://github.com/LISNR/LNRSimpleNotifications.git', :branch => 'swift3'
 
 #Date
 pod 'Timepiece'

@@ -228,14 +228,14 @@ class TOrderReviewViewController: UIViewController, UITableViewDelegate, UITextV
                 })
             }
             
-            let discount = Int((Double(totalPrice) * (Double(self.company!.discount) / 100)))
+            let discount = Int((Double(totalPrice) * (Double(self.company!.discount) / 100)).rounded(.up))
             
             section.initializeItem(cellStyle: .value1,
                                    item: self.company,
                                    bindingAction: { (cell, item) in
                                     
                                     cell.textLabel?.text = "order_targo_discount".localized
-                                    cell.detailTextLabel?.text = "- \(discount)" + " \u{20BD}"
+                                    cell.detailTextLabel?.text = discount > 0 ? "- \(discount)" + " \u{20BD}" : "\(discount)" + " \u{20BD}"
                                     cell.detailTextLabel?.textColor = UIColor(hexString: kHexMainPinkColor)
             })
             

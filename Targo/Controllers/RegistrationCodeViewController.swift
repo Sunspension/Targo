@@ -93,7 +93,12 @@ class RegistrationCodeViewController: UIViewController {
                         
                         if session.userId != user.id {
                             
-                            self?.appDelegate?.deleteAllShopOrders()
+                            let orders = realm.objects(TShopOrder.self)
+                            
+                            try! realm.write({
+                                
+                                realm.delete(orders)
+                            })
                         }
                     }
                     
